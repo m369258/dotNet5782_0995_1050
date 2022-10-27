@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Stage0
+namespace Targil0
 {
     partial class Program
     {
@@ -12,6 +12,7 @@ namespace Stage0
          static partial void Welcome3114()
         {
             Console.Write("We happy to see ");
+            Console.WriteLine("shiraaaa");
         }
     }
     

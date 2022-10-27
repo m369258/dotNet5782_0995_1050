@@ -2,7 +2,7 @@
 //Console.WriteLine("Hello, World!");
 using System;
 
-namespace Stage0
+namespace Targil0
 {
   partial class Program
     {
