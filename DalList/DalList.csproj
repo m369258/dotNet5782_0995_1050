@@ -30,4 +30,8 @@
 		<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
+	</ItemGroup>
+
 </Project>

@@ -3,7 +3,7 @@
 /// <summary>
 /// 
 /// </summary>
-enum Category
+public enum Category
 {
     bracelet,
     chain,

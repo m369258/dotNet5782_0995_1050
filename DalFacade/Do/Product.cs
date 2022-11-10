@@ -18,7 +18,7 @@ public struct Product
     /// <summary>
     /// category
     /// </summary>
-     Category Category { get; set; }
+    public Category Category { get; set; }
 
     /// <summary>
     /// price
