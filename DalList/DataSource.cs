@@ -139,7 +139,17 @@ internal static class DataSource
     }
 
 
-
+    internal static void Add(Order order)
+    {
+        int ind = Config.indexOrder++;
+        orders[ind].ID=order.ID;
+        orders[ind].CustomerName=order.CustomerName;
+        orders[ind].CustomerEmail=order.CustomerEmail;
+        orders[ind].CustomerAddress = order.CustomerAddress;
+        orders[ind].OrderDate = order.OrderDate;
+        orders[ind].DeliveryDate= order.DeliveryDate;
+        orders[ind].ShipDate=order.ShipDate;
+    }
 
     //        private void createOrderItems()
     //    {
