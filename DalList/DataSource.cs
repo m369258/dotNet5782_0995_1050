@@ -138,37 +138,32 @@ internal static class DataSource
         return -1;
     }
 
-
+    /// <summary>
+    /// This operation adds a order 
+    /// </summary>
+    /// <param name="order">Order to add</param>
     internal static void Add(Order order)
     {
         int ind = Config.indexOrder++;
-        orders[ind].ID=order.ID;
-        orders[ind].CustomerName=order.CustomerName;
-        orders[ind].CustomerEmail=order.CustomerEmail;
-        orders[ind].CustomerAddress = order.CustomerAddress;
-        orders[ind].OrderDate = order.OrderDate;
-        orders[ind].DeliveryDate= order.DeliveryDate;
-        orders[ind].ShipDate=order.ShipDate;
+        orders[ind] = order;
     }
 
-    //        private void createOrderItems()
-    //    {
-    //        for (int i)
-    //        {
-    //            _orderItems.Add(
+    /// <summary>
+    /// This operation adds a product if its ID number is not in the system
+    /// </summary>
+    /// <param name="product">Product to add</param>
+    /// <exception cref="Exception">If the ID number exists, an error will be thrown</exception>
+    internal static void Add(Product product)
+    {
+        int i = 0;
+        //The loop checks if there is a product with the requested ID number, if so it will throw an error
+        while (i < Config.indexProduct && products[i].ID!=product.ID)
+        {
+            throw new Exception("this product is exsist");
+        }
+        int ind = Config.indexProduct++;
+        products[ind] = product;
+    }
 
-    //            )
-    //}
-
-
-
-
-
-
-
-
-
-
-    //        //static internal Order
 
 }
