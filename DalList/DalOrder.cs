@@ -91,7 +91,6 @@ public class DalOrder
     /// </summary>
     /// <param name="idOrder">Order ID number</param>
     /// <returns>Its position in the ordering system</returns>
-
     private int GetIndex(int idOrder)
     {
         int i = 0;
