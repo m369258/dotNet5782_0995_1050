@@ -1,5 +1,4 @@
 ﻿using Do;
-
 namespace Dal;
 
 public class DalOrder
@@ -24,7 +23,6 @@ public class DalOrder
         }
         return order.ID;
     }
-
 
 
     /// <summary>

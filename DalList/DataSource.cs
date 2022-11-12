@@ -155,9 +155,10 @@ internal static class DataSource
     /// <exception cref="Exception">If the ID number exists, an error will be thrown</exception>
     internal static void Add(Product product)
     {
-        int i = 0;
+        int i;
         //The loop checks if there is a product with the requested ID number, if so it will throw an error
-        while (i < Config.indexProduct && products[i].ID!=product.ID)
+        for (i = 0; i < Config.indexProduct && products[i].ID != product.ID ; i++);
+        if(i==Config.indexProduct)
         {
             throw new Exception("this product is exsist");
         }
@@ -165,5 +166,22 @@ internal static class DataSource
         products[ind] = product;
     }
 
+    internal static void Add(OrderItem orderItem)
+    {
+        int i;
+        for (i = 0; i < Config.indexProduct && products[i].ID != orderItem.ProductId; i++) ;
+        if(i==Config.indexProduct)
+        {
+            throw new Exception("this product is exsist");
+        }
+
+        for (i = 0; i < Config.indexOrder && orders[i].ID != orderItem.OrderId; i++) ;
+        if (i == Config.indexOrder)
+        {
+            throw new Exception("this order is exsist");
+        }
+        int ind = Config.indexOrderItem++;
+        orderItems[ind] = orderItem;
+    }
 
 }
