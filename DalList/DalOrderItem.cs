@@ -157,4 +157,22 @@ public class DalOrderItem
         else
             throw new Exception("there is no this id orderItem");
     }
+
+
+
+    /// <summary>
+    /// This returns all orderIAtems
+    /// </summary>
+    /// <returns>All orderItems</returns>
+    public OrderItem[] GetAllOrderItems()
+    {
+        OrderItem[] newOrderItems = new OrderItem[DataSource.Config.indexOrderItem];
+        //The loop performs the explicit copying of the array of orderItems
+        for (int i = 0; i < DataSource.Config.indexOrderItem; i++)
+        {
+            newOrderItems[i] = new OrderItem();
+            newOrderItems[i] = DataSource.orderItems[i];
+        }
+        return newOrderItems;
+    }
 }
