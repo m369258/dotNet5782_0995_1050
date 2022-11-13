@@ -49,63 +49,70 @@ class OurProgram
 
     private static void submenuOfProduct()
     {
-        string choice;
+        int choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
-a: add an order
-b: get an order by ID
-c: delete an order
-d: update an order
-e: get all orders");
+1: add an order
+2: get an order by ID
+3: get all orders 
+4: update an order
+5: delete an order ");
         //Accepting the user's choice
-        choice = Console.ReadLine();
+        if (!int.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
+        Options op=(Options)choice;
         int idProduct;
         Product p;
-        //
+        
         try
         {
-            switch (choice)
+            switch (op)
             {
-                case "a":
+                case Options.Add:
+                    Console.WriteLine("Adding a product");
                     Console.Write("enter idProduct with 6 numbers:");
-                    idProduct = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     p = InputProduct();
                     p.ID = idProduct;
                     Console.WriteLine(dalProduct.Add(p));
-                    Console.WriteLine("added");
+                    Console.WriteLine("Product whose number:{0} has been successfully added", idProduct);
                     break;
 
-                case "b":
+                case Options.Get:
+                    Console.WriteLine("Receiving a number by the ID");
                     Console.WriteLine("enter the id product");
-                    idProduct = int.Parse(Console.ReadLine());
-
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     Console.WriteLine(dalProduct.Get(idProduct));
                     break;
-                case "c":
 
+                case Options.GetAll:
                     Product[] products = dalProduct.GetAllProducts();
                     foreach (Product myProduct in products)
                     {
                         Console.WriteLine(myProduct);
                     }
                     break;
-                case "d":
-                    Console.WriteLine("enter id product");
-                    idProduct = int.Parse(Console.ReadLine());
-                    Console.WriteLine("before: ");
+
+                case Options.Update:
+                    Console.WriteLine("Product update:");
+                    Console.WriteLine("enter id product:");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    Console.WriteLine("The requested product before the change");
                     Console.WriteLine(dalProduct.Get(idProduct));
                     p = InputProduct();
                     p.ID = idProduct;
+                    //will update the product only if all the details have been verified
                     if (p.ID != null && p.Name != null && p.Category != null && p.InStock != null && p.Price != null)
                     {
                         dalProduct.Update(p);
-                        Console.WriteLine("after: ");
+                        Console.WriteLine("The requested product after the change");
                         Console.WriteLine(dalProduct.Get(idProduct));
                     }
                     break;
-                case "e":
+
+                case Options.Delete:
+                    Console.WriteLine("Product to be deleted");
                     Console.WriteLine("enter the id product");
-                    idProduct = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     dalProduct.Delete(idProduct);
                     break;
             }
@@ -115,17 +122,22 @@ e: get all orders");
             Console.WriteLine(ex);
         }
     }
-
+    /// <summary>
+    /// This action performs input from the user details about the product
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     private static Product InputProduct()
     {
-        int instock;
+        int instock,cat;
         double price;
         string name;
         Category category;
         Console.WriteLine("enter name, category, price, instock of product");
         name = Console.ReadLine();
-        category = (Category)int.Parse(Console.ReadLine());
-        price = double.Parse(Console.ReadLine());
+        if (!int.TryParse(Console.ReadLine(), out cat)) throw new Exception("category is in valid");
+        category = (Category)cat;
+        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
         if (!int.TryParse(Console.ReadLine(), out instock)) throw new Exception("inStock is in valid");
         Product p = new Product();
         p.Name = name;
