@@ -31,6 +31,8 @@ internal static class DataSource
             get { return ++automaticOrderItem; }
         }
 
+        static Config() => products[0] = new Product();
+
     }
 
 
@@ -47,6 +49,7 @@ internal static class DataSource
     /// </summary>
     private static void s_Initialize()
     {
+        Console.WriteLine("taaaaaaaaaaaaaaaaaaaaaaaaaaa");
         createProducts();
         createOrders();
         createOrderItems();
@@ -70,6 +73,7 @@ internal static class DataSource
                 products[i].InStock = 0;
             else
                 products[i].InStock = i * 100;
+            Config.indexProduct++;
         }
     }
 
@@ -84,9 +88,9 @@ internal static class DataSource
         {
             orders[i] = new Order();
             orders[i].ID = Config.AutomaticOrder;
-            orders[i].CustomerName = orderNames[i];
-            orders[i].CustomerEmail = orderNames[i] + "@gmail.com";//??האם צריך לבדוק את המקרה שאולי ל שתי אנשים הם בעלי אותו שם
-            orders[i].CustomerAddress = customerAddresses[i];
+            orders[i].CustomerName = "ppp";
+            orders[i].CustomerEmail = "@gmail.com";//??האם צריך לבדוק את המקרה שאולי ל שתי אנשים הם בעלי אותו שם
+            orders[i].CustomerAddress = "ioioioio";
             orders[i].OrderDate = DateTime.MinValue + new TimeSpan(rand.Next(2001, 2022) * 365, 0, 0, 0);
             if (i <= 0.8 * 20)
                 orders[i].DeliveryDate = orders[i].OrderDate + new TimeSpan(3, 0, 0, 0);
@@ -107,12 +111,11 @@ internal static class DataSource
         {
             for (int j = 0; j < rand.Next(1, 5); j++)
             {
-                orderItems[i] = new OrderItem();
-                orderItems[i].ID = Config.AutomaticOrderItem;// i + i * j;//!!לבדוק
-                orderItems[i].OrderId = i;
-                orderItems[i].ProductId = rand.Next(15);
-                orderItems[i].Price = ff(orderItems[i].ProductId);//??
-                orderItems[i].Amount = i + rand.Next(20, 100);
+                orderItems[cOrderItems].ID = Config.AutomaticOrderItem;// i + i * j;//!!לבדוק
+                orderItems[cOrderItems].OrderId = i;
+                orderItems[cOrderItems].ProductId = rand.Next(1, 10);
+                orderItems[cOrderItems].Price = 100;//ff(orderItems[i].ProductId);//??
+                orderItems[cOrderItems].Amount = i + rand.Next(20, 100);
                 cOrderItems++;
                 Config.indexOrderItem++;
             }
@@ -130,6 +133,7 @@ internal static class DataSource
     /// <returns></returns>
     private static double ff(int productId)
     {
+        Console.WriteLine(Config.indexOrder + "    Config.indexProduct");
         for (int i = 0; i < Config.indexProduct; i++)
         {
             if (productId == products[i].ID)
@@ -157,8 +161,8 @@ internal static class DataSource
     {
         int i;
         //The loop checks if there is a product with the requested ID number, if so it will throw an error
-        for (i = 0; i < Config.indexProduct && products[i].ID != product.ID ; i++);
-        if(i==Config.indexProduct)
+        for (i = 0; i < Config.indexProduct && products[i].ID != product.ID; i++) ;
+        if (i != Config.indexProduct)
         {
             throw new Exception("this product is exsist");
         }
@@ -170,7 +174,7 @@ internal static class DataSource
     {
         int i;
         for (i = 0; i < Config.indexProduct && products[i].ID != orderItem.ProductId; i++) ;
-        if(i==Config.indexProduct)
+        if (i == Config.indexProduct)
         {
             throw new Exception("this product is exsist");
         }

@@ -11,10 +11,11 @@ public class DalOrder
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
     public int Add(Order order)
     {
-        order.ID = DataSource.Config.AutomaticOrder;
         //Checking whether there is room to add an order otherwise an error will be thrown
         if (DataSource.orders.Length - 1 != DataSource.Config.indexOrder)
         {
+            order.ID = DataSource.Config.AutomaticOrder;
+
             DataSource.Add(order);
         }
         else

@@ -106,7 +106,7 @@ public class DalOrderItem
     /// <summary>
     /// This function receives an ID number of an order and returns its position in the array
     /// </summary>
-    /// <param name="idOrder">Order ID number</param>
+    /// <param name="idOrderItem">Order ID number</param>
     /// <returns>Its position in the ordering system</returns>
     private int GetIndex(int idOrderItem)
     {
@@ -170,7 +170,6 @@ public class DalOrderItem
         //The loop performs the explicit copying of the array of orderItems
         for (int i = 0; i < DataSource.Config.indexOrderItem; i++)
         {
-            newOrderItems[i] = new OrderItem();
             newOrderItems[i] = DataSource.orderItems[i];
         }
         return newOrderItems;

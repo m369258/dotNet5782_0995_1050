@@ -14,7 +14,7 @@ public class DalProduct
     {
         
         //Checking whether there is room to add an product otherwise an error will be thrown
-        if (DataSource.orders.Length - 1 != DataSource.Config.indexProduct)
+        if (DataSource.products.Length-1  != DataSource.Config.indexProduct)
         {
             try
             {
@@ -102,7 +102,7 @@ public class DalProduct
     {
         int i = 0;
         //The loop searches for the location of the requested product
-        while (i < DataSource.Config.indexProduct && DataSource.orders[i].ID != idProduct)
+        while (i < DataSource.Config.indexProduct && DataSource.products[i].ID != idProduct)
         {
             i++;
         }
