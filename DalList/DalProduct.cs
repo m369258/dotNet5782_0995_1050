@@ -58,11 +58,11 @@ public class DalProduct
     /// This returns all products
     /// </summary>
     /// <returns>All products</returns>
-    public Product[] GetAllOrders()
+    public Product[] GetAllProducts()
     {
         Product[] newProduct = new Product[DataSource.Config.indexProduct];
         //The loop performs the explicit copying of the array of products
-        for (int i = 0; i < DataSource.Config.indexOrder; i++)
+        for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
             newProduct[i] = new Product();
             newProduct[i] = DataSource.products[i];
