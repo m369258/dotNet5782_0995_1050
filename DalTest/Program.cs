@@ -37,10 +37,9 @@ class OurProgram
         {
             switch (choice)
             {
-
                 case "a":
                     {
-                        p = Input();
+                        p = InputProduct();
                         Console.WriteLine(dalProduct.Add(p));
                     }
                     break;
@@ -59,7 +58,7 @@ class OurProgram
                     }
                     break;
                 case "d":
-                    p = Input();
+                    p = InputProduct();
                     dalProduct.Update(p);
                     break;
                 case "e":
@@ -75,7 +74,7 @@ class OurProgram
         }
     }
 
-    private Product Input()
+    private Product InputProduct()
     {
         int id, instock;
         double price;
@@ -97,10 +96,96 @@ class OurProgram
 
         return p;
     }
+
+    /// <summary>
+    /// The method is a sub-menu for an order, you can choose to add an object, 
+    /// display an object, display a list of orders, update and delete an order.
+    /// </summary>
     private void submenuOfOrder()
     {
+        string choice;
         //Print the checklist for the entity
+        Console.WriteLine("enter your choice");
+        Console.WriteLine("a. Option to add an object to an entity's list\r\n" +
+            "b. Object display option by ID\r\n" +
+            "c. Entity list view option\r\n" +
+            "d. Option to update object data\r\n" +
+            "e. Option to delete an object from an entity's list"
+            );
+        //Accepting the user's choice
+        choice = Console.ReadLine();
 
+        int idOrder;
+        Order myOrder;
+
+        try
+        {
+            //
+            switch (choice)
+            {
+                case "a":
+                    {
+                        myOrder = InputOrder();
+                        Console.WriteLine(dalOrder.Add(myOrder));
+                    }
+                    break;
+
+                case "b":
+                    Console.WriteLine("enter the id order");
+                    idOrder = int.Parse(Console.ReadLine());
+
+                    Console.WriteLine(dalProduct.Get(idOrder));
+                    break;
+                case "c":
+                    Order[] orders = dalOrder.GetAllOrders();
+                    for (int i = 0; i < orders.Length; i++)
+                    {
+                        Console.WriteLine(orders[i]);
+                    }
+                    break;
+                case "d":
+                    myOrder = InputOrder();
+                    dalOrder.Update(myOrder);
+                    break;
+                case "e":
+                    Console.WriteLine("enter the id product");
+                    idOrder = int.Parse(Console.ReadLine());
+                    dalProduct.Delete(idOrder);
+                    break;
+            }
+        }
+        //In case of any error an appropriate error will be thrown
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
+    }
+
+    private Order InputOrder()
+    {
+        Order order = new Order();
+        int id;
+        string customerName, customerEmail, customerAddress;
+        DateTime orderDate, deliveryDate, shipDate;
+
+        Console.WriteLine("enter id, customer name, customer email, customer address, order date , delivery date, ship date");
+        id = int.Parse(Console.ReadLine());
+        customerName = Console.ReadLine();
+        customerEmail = Console.ReadLine();
+        customerAddress = Console.ReadLine();
+        orderDate = DateTime.Parse(Console.ReadLine());
+        deliveryDate = DateTime.Parse(Console.ReadLine());
+        shipDate = DateTime.Parse(Console.ReadLine());
+
+        order.ID = id;
+        order.CustomerName = customerName;
+        order.CustomerEmail = customerEmail;
+        order.CustomerAddress = customerAddress;
+        order.OrderDate = orderDate;
+        order.DeliveryDate = deliveryDate;
+        order.ShipDate = shipDate;
+
+        return order;
     }
 
     private void submenuOfOrderItem()
