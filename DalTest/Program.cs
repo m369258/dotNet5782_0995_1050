@@ -49,7 +49,7 @@ class OurProgram
 
     private static void submenuOfProduct()
     {
-        int choice;
+        Options choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
 1: add an order
@@ -58,14 +58,14 @@ class OurProgram
 4: update an order
 5: delete an order ");
         //Accepting the user's choice
-        if (!int.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
-        Options op=(Options)choice;
+        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
+        
         int idProduct;
         Product p;
-        
+  
         try
         {
-            switch (op)
+            switch (choice)
             {
                 case Options.Add:
                     Console.WriteLine("Adding a product");
@@ -125,8 +125,8 @@ class OurProgram
     /// <summary>
     /// This action performs input from the user details about the product
     /// </summary>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <returns>Returns a product with the details entered by the user</returns>
+    /// <exception cref="Exception">If one of the inputs was wrong</exception>
     private static Product InputProduct()
     {
         int instock,cat;
@@ -135,8 +135,7 @@ class OurProgram
         Category category;
         Console.WriteLine("enter name, category, price, instock of product");
         name = Console.ReadLine();
-        if (!int.TryParse(Console.ReadLine(), out cat)) throw new Exception("category is in valid");
-        category = (Category)cat;
+        if (!Category.TryParse(Console.ReadLine(), out category)) throw new Exception("category is in valid");
         if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
         if (!int.TryParse(Console.ReadLine(), out instock)) throw new Exception("inStock is in valid");
         Product p = new Product();
