@@ -13,11 +13,24 @@ class OurProgram
         choice = int.Parse(Console.ReadLine());
         while (choice != 0)
         {
-
+            switch (choice)
+            {
+                case 1:
+                   submenuOfProduct();
+                    break;
+                case 2:
+                    submenuOfOrder();
+                    break;
+                case 3:
+                    submenuOfOrderItems();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    private void submenuOfProduct()
+    private static void submenuOfProduct()
     {
         string choice;
         //Print the checklist for the entity
@@ -38,10 +51,8 @@ class OurProgram
             switch (choice)
             {
                 case "a":
-                    {
-                        p = InputProduct();
-                        Console.WriteLine(dalProduct.Add(p));
-                    }
+                    p = InputProduct();
+                    Console.WriteLine(dalProduct.Add(p));
                     break;
 
                 case "b":
@@ -52,14 +63,24 @@ class OurProgram
                     break;
                 case "c":
                     Product[] products = dalProduct.GetAllProducts();
-                    for (int i = 0; i < products.Length; i++)
+                    foreach (Product myProduct in products)
                     {
-                        Console.WriteLine(products[i]);
+                        Console.WriteLine(myProduct);
                     }
                     break;
                 case "d":
+                    Console.WriteLine("enter id product");
+                    idProduct = int.Parse(Console.ReadLine());
+                    Console.WriteLine("before: ");
+                    Console.WriteLine(dalProduct.Get(idProduct));
                     p = InputProduct();
-                    dalProduct.Update(p);
+                    p.ID = idProduct;
+                    if (p.ID != null && p.Name != null && p.Category != null && p.InStock != null && p.Price != null)
+                    {
+                        dalProduct.Update(p);
+                        Console.WriteLine("after: ");
+                        Console.WriteLine(dalProduct.Get(idProduct));
+                    }
                     break;
                 case "e":
                     Console.WriteLine("enter the id product");
@@ -76,19 +97,17 @@ class OurProgram
 
     private Product InputProduct()
     {
-        int id, instock;
+        int instock;
         double price;
         string name;
         Category category;
-        Console.WriteLine("enter id, name, category, price, instock of product");
-        id = int.Parse(Console.ReadLine());
+        Console.WriteLine("enter name, category, price, instock of product");
         name = Console.ReadLine();
         category = (Category)int.Parse(Console.ReadLine());
         price = double.Parse(Console.ReadLine());
         instock = int.Parse(Console.ReadLine());
 
         Product p = new Product();
-        p.ID = id;
         p.Name = name;
         p.Category = category;
         p.Price = price;
@@ -120,17 +139,20 @@ class OurProgram
 
         try
         {
-            //
+            //Checking what action the user wants to run
             switch (choice)
             {
                 case "a":
                     {
+                        //A call to an action that receives data for an order object
                         myOrder = InputOrder();
+                        //A call to action that adds an order to the system
                         Console.WriteLine(dalOrder.Add(myOrder));
                     }
                     break;
 
                 case "b":
+                    //Receipt of order ID number
                     Console.WriteLine("enter the id order");
                     idOrder = int.Parse(Console.ReadLine());
 
@@ -138,14 +160,25 @@ class OurProgram
                     break;
                 case "c":
                     Order[] orders = dalOrder.GetAllOrders();
-                    for (int i = 0; i < orders.Length; i++)
+                    foreach (Order currOrder in orders)
                     {
-                        Console.WriteLine(orders[i]);
+                        Console.WriteLine(currOrder);
                     }
                     break;
                 case "d":
+                    Console.WriteLine("enter id order");
+                    idOrder = int.Parse(Console.ReadLine());
+                    Console.WriteLine("before: ");
+                    Console.WriteLine(dalProduct.Get(idOrder));
                     myOrder = InputOrder();
-                    dalOrder.Update(myOrder);
+                    myOrder.ID = idOrder;
+                    if (myOrder.ID != null && myOrder.CustomerName != null && myOrder.CustomerEmail != null && myOrder.CustomerAddress != null &&
+                        myOrder.OrderDate != null && myOrder.DeliveryDate != null && myOrder.ShipDate != null)
+                    {
+                        dalOrder.Update(myOrder);
+                        Console.WriteLine("after: ");
+                        Console.WriteLine(dalProduct.Get(idOrder));
+                    }
                     break;
                 case "e":
                     Console.WriteLine("enter the id product");
@@ -164,12 +197,10 @@ class OurProgram
     private Order InputOrder()
     {
         Order order = new Order();
-        int id;
         string customerName, customerEmail, customerAddress;
         DateTime orderDate, deliveryDate, shipDate;
 
-        Console.WriteLine("enter id, customer name, customer email, customer address, order date , delivery date, ship date");
-        id = int.Parse(Console.ReadLine());
+        Console.WriteLine("enter customer name, customer email, customer address, order date , delivery date, ship date");
         customerName = Console.ReadLine();
         customerEmail = Console.ReadLine();
         customerAddress = Console.ReadLine();
@@ -177,7 +208,6 @@ class OurProgram
         deliveryDate = DateTime.Parse(Console.ReadLine());
         shipDate = DateTime.Parse(Console.ReadLine());
 
-        order.ID = id;
         order.CustomerName = customerName;
         order.CustomerEmail = customerEmail;
         order.CustomerAddress = customerAddress;
@@ -203,7 +233,7 @@ class OurProgram
             );
         //Accepting the user's choice
         choice = Console.ReadLine();
-        int idOrderItem,idOrder;
+        int idOrderItem, idOrder;
         OrderItem orderItem;
         //
         try
@@ -225,15 +255,26 @@ class OurProgram
                     break;
                 case "c":
                     OrderItem[] orderItems = dalOrderItem.GetAllOrderItems();
-                    for (int i = 0; i < orderItems.Length; i++)
+                    foreach (OrderItem currOrderItems in orderItems)
                     {
-                        Console.WriteLine(orderItems[i]);
+                        Console.WriteLine(currOrderItems);
                     }
                     break;
 
                 case "d":
+                    Console.WriteLine("enter id orderItem");
+                    idOrderItem = int.Parse(Console.ReadLine());
+                    Console.WriteLine("before: ");
+                    Console.WriteLine(dalProduct.Get(idOrderItem));
                     orderItem = InputOrderItem();
-                    dalOrderItem.Update(orderItem);
+                    orderItem.ID = idOrderItem;
+                    if (orderItem.ID != null && orderItem.OrderId != null && orderItem.ProductId != null && orderItem.Price != null && orderItem.Amount != null)
+                    {
+                        dalOrderItem.Update(orderItem);
+                        Console.WriteLine("after: ");
+                        Console.WriteLine(dalProduct.Get(idOrderItem));
+                    }
+
                     break;
                 case "e":
                     Console.WriteLine("enter the id idOrderItem");
@@ -242,14 +283,14 @@ class OurProgram
                     break;
                 case "f":
                     Console.WriteLine("enter the id order");
-                     idOrder = int.Parse(Console.ReadLine());
+                    idOrder = int.Parse(Console.ReadLine());
                     Console.WriteLine(dalOrderItem.GetByIdOrder(idOrder));
 
                     break;
                 case "g":
                     Console.WriteLine("enter the id order and id product");
                     idOrder = int.Parse(Console.ReadLine());
-                    int idProduct=int.Parse(Console.ReadLine());
+                    int idProduct = int.Parse(Console.ReadLine());
                     Console.WriteLine(dalOrderItem.Get(idOrder, idProduct));
                     break;
 
@@ -267,16 +308,14 @@ class OurProgram
     {
         int orderId, productId, amount;
         double price;
-      
-        Console.WriteLine("enter OrderId, ProductId, price, Amount of orderItem");
-        orderId = int.Parse(Console.ReadLine());
+
+        Console.WriteLine("enter ProductId, price, Amount of orderItem");
         productId = int.Parse(Console.ReadLine());
 
         price = double.Parse(Console.ReadLine());
         amount = int.Parse(Console.ReadLine());
 
         OrderItem ordIm = new OrderItem();
-        ordIm.OrderId = orderId;
         ordIm.ProductId = productId;
         ordIm.Price = price;
         ordIm.Amount = amount;
