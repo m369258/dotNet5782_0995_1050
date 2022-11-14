@@ -1,17 +1,13 @@
 ﻿namespace Do;
 
 /// <summary>
-/// 
+/// List of categories in this project
 /// </summary>
 public enum Category
 {
-    bracelet,
-    chain,
-    earring,
-    ring,
-    accessories
-}
-public struct Enums
-{
-
+    cupcakes,
+    cakes,
+    macarons,
+    sweets,
+    ballons,
 }

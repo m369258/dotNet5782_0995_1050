@@ -1,6 +1,4 @@
 ﻿using Do;
-using System.Net.NetworkInformation;
-
 namespace Dal;
 
 internal static class DataSource
@@ -93,7 +91,7 @@ internal static class DataSource
             orders[i] = new Order();
             orders[i].ID = Config.AutomaticOrder;
             orders[i].CustomerName = "ppp";
-            orders[i].CustomerEmail = "@gmail.com";//??האם צריך לבדוק את המקרה שאולי ל שתי אנשים הם בעלי אותו שם
+            orders[i].CustomerEmail = "@gmail.com";
             orders[i].CustomerAddress = "ioioioio";
             orders[i].OrderDate = DateTime.MinValue + new TimeSpan(rand.Next(2001, 2022) * 365, 0, 0, 0);
             if (i <= 0.8 * 20)
@@ -115,10 +113,10 @@ internal static class DataSource
         {
             for (int j = 0; j < rand.Next(1, 5); j++)
             {
-                orderItems[cOrderItems].ID = Config.AutomaticOrderItem;// i + i * j;//!!לבדוק
+                orderItems[cOrderItems].ID = Config.AutomaticOrderItem;
                 orderItems[cOrderItems].OrderId = i;
-                orderItems[cOrderItems].ProductId = rand.Next(1, 10);
-                orderItems[cOrderItems].Price = 100;//ff(orderItems[i].ProductId);//??
+                orderItems[cOrderItems].ProductId = products[rand.Next(1,Config.indexProduct)].ID;
+                orderItems[cOrderItems].Price = findPrice(orderItems[i].ProductId);
                 orderItems[cOrderItems].Amount = i + rand.Next(20, 100);
                 cOrderItems++;
                 Config.indexOrderItem++;
@@ -131,13 +129,12 @@ internal static class DataSource
     }
 
     /// <summary>
-    /// 
+    /// This operation imports the price of the product according to the product ID
     /// </summary>
-    /// <param name="productId"></param>
-    /// <returns></returns>
-    private static double ff(int productId)
+    /// <param name="productId">id product</param>
+    /// <returns>The price of the requested product in any other case will return -1</returns>
+    private static double findPrice(int productId)
     {
-        Console.WriteLine(Config.indexOrder + "    Config.indexProduct");
         for (int i = 0; i < Config.indexProduct; i++)
         {
             if (productId == products[i].ID)
@@ -174,24 +171,32 @@ internal static class DataSource
         products[ind] = product;
     }
 
+    /// <summary>
+    /// This action adds an order item
+    /// </summary>
+    /// <param name="orderItem">Order item to be added</param>
+    /// <exception cref="Exception">Throw an error if the product or order does not exist</exception>
     internal static void Add(OrderItem orderItem)
     {
         int i;
+        //Checking whether the product ID exists in any other case will throw an error
         for (i = 0; i < Config.indexProduct && products[i].ID != orderItem.ProductId; i++) ;
         if (i == Config.indexProduct)
         {
             throw new Exception("this product is exsist");
         }
 
+        //Checking if the order ID exists in any other case will throw an error
         for (i = 0; i < Config.indexOrder && orders[i].ID != orderItem.OrderId; i++) ;
         if (i == Config.indexOrder)
         {
             throw new Exception("this order is exsist");
         }
+
+        //Adding the order item to the database and updating the actual quantity
         int ind = Config.indexOrderItem++;
         orderItems[ind] = orderItem;
     }
-
 
 
 }
