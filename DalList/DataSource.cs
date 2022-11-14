@@ -4,7 +4,7 @@ namespace Dal;
 internal static class DataSource
 {
     //Declaration of a random variable
-    static Random rand = new Random(DateTime.Now.Millisecond); 
+    static Random rand = new Random(DateTime.Now.Millisecond);
     static int num = rand.Next();
 
     //Declaration + assignment of arrays of entities that are consumed
@@ -64,13 +64,15 @@ internal static class DataSource
     /// </summary>
     private static void createProducts()
     {
-        string[] productNames = { "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15" };
+        string[] productNames = { "מארז 12 קאפקייקס בינוני ליום הולדת", "בייבי בלו קייק", "קנדי קייק קטנה", "מיניקייק קרמל", "מארז גדול של מקרונים COOL BLUE", "מארז קטן של מקרונים PRIDE", "מארז גדול של מקרונים LOVE", "מארז קטן של מקרונים UNICORN", "מארז גדול של מקרונים CHOCOHOLIC", "בלונדיז", "נשיקות מרנג", "בלון לידת בת", "בלון לידת בן", "עוגת יום הולדת", "עוגת אוראו" };
+        int[] categories = { 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 2, 2 };
+        float[] prices = { 158, 285, 285, 125, 220, 85, 220, 85, 220, 42, 22, 28, 28, 200, 285 };
         for (int i = 0; i < 15; i++)
         {
             products[i].ID = (i + 1) * 1000000;
             products[i].Name = productNames[i];
-            products[i].Category = (Category)rand.Next(5);
-            products[i].Price = (i + 1) * 10;
+            products[i].Category = (Category)categories[i];
+            products[i].Price = prices[i];
             if (i <= productNames.Length * 0.05)
                 products[i].InStock = 0;
             else
@@ -115,7 +117,7 @@ internal static class DataSource
             {
                 orderItems[cOrderItems].ID = Config.AutomaticOrderItem;
                 orderItems[cOrderItems].OrderId = i;
-                orderItems[cOrderItems].ProductId = products[rand.Next(1,Config.indexProduct)].ID;
+                orderItems[cOrderItems].ProductId = products[rand.Next(1, Config.indexProduct)].ID;
                 orderItems[cOrderItems].Price = findPrice(orderItems[i].ProductId);
                 orderItems[cOrderItems].Amount = i + rand.Next(20, 100);
                 cOrderItems++;
