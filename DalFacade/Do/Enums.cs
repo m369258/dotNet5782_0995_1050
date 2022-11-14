@@ -5,7 +5,7 @@
 /// </summary>
 public enum Category
 {
-    cupcakes,
+    cupcakes=1,
     cakes,
     macarons,
     sweets,
