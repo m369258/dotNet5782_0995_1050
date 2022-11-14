@@ -156,11 +156,11 @@ class OurProgram
         Options choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
-a: add an order
-b: get an order by ID
-c: delete an order
-d: update an order
-e: get all orders");
+1: add an order
+2: get an order by ID
+3: get all orders
+4: update an order
+5: delete an order");
         //Accepting the user's choice
         if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is invalid");
         int idOrder;
@@ -276,7 +276,7 @@ e: get all orders");
 
         int idOrderItem, idOrder;
         OrderItem orderItem;
-        //
+        
         try
         {
             switch (choice)

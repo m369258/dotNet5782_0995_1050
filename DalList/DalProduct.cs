@@ -22,7 +22,7 @@ public class DalProduct
             }
             catch(Exception ex)
             {
-                throw ex;//??
+                throw ex;
             }
         }
         else
@@ -123,11 +123,10 @@ public class DalProduct
         int ind = GetIndex(updateProduct.ID);
         if (ind != -1)
         {
-            DataSource.products[ind] = updateProduct;//??האם זה נחשב להעתקה עמוקה
+            DataSource.products[ind] = updateProduct;
         }
         else { throw new Exception("there is no product like this"); }
     }
-
 
 }
 

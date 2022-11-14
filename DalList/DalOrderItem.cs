@@ -33,6 +33,7 @@ public class DalOrderItem
         return orderItem.ID;
     }
 
+
     /// <summary>
     /// This returns the correct order by some ID number
     /// </summary>
@@ -53,6 +54,7 @@ public class DalOrderItem
         throw new Exception("there are no order with this id");
     }
 
+
     /// <summary>
     /// This operation receives an order and product ID number and returns a requested order item
     /// </summary>
@@ -64,7 +66,7 @@ public class DalOrderItem
     {
         int i;
         //Search for the desired order item
-        for (i = 0; i < DataSource.Config.indexOrderItem && DataSource.orderItems[i].ProductId != idProduct || DataSource.orderItems[i].OrderId != idOrder; i++) ;
+        for (i = 0; i < DataSource.Config.indexOrderItem && (DataSource.orderItems[i].ProductId != idProduct || DataSource.orderItems[i].OrderId != idOrder); i++) ;
 
         //If not found, an error will be thrown
         if (DataSource.Config.indexOrderItem == i)
@@ -103,6 +105,7 @@ public class DalOrderItem
         return newOrderItems;
     }
 
+
     /// <summary>
     /// This function receives an ID number of an order and returns its position in the array
     /// </summary>
@@ -119,6 +122,7 @@ public class DalOrderItem
             return i;
         return -1;
     }
+
 
     /// <summary>
     /// This operation accepts an order and updates its details if it exists, otherwise it will throw an error
@@ -159,7 +163,6 @@ public class DalOrderItem
     }
 
 
-
     /// <summary>
     /// This returns all orderIAtems
     /// </summary>
@@ -174,4 +177,5 @@ public class DalOrderItem
         }
         return newOrderItems;
     }
+
 }

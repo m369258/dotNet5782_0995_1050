@@ -5,20 +5,26 @@ namespace Dal;
 
 internal static class DataSource
 {
-
-    static Random rand = new Random(DateTime.Now.Millisecond); //המחלקה של סטטי שדה
+    //Declaration of a random variable
+    static Random rand = new Random(DateTime.Now.Millisecond); 
     static int num = rand.Next();
 
+    //Declaration + assignment of arrays of entities that are consumed
     static internal Product[] products = new Product[50];
     static internal Order[] orders = new Order[100];
     static internal OrderItem[] orderItems = new OrderItem[200];
 
+    /// <summary>
+    /// An internal class for handling the automatic identifiers and saving the number of existing objects from each actual entity
+    /// </summary>
     internal static class Config
     {
+        //Variables for saving the amount of objects from each actual entity
         static internal int indexProduct = 0;
         static internal int indexOrder = 0;
         static internal int indexOrderItem = 0;
 
+        //Saving the entities' automatic identifiers
         static int automaticOrder = 0;
         static int automaticOrderItem = 0;
 
@@ -49,7 +55,6 @@ internal static class DataSource
     /// </summary>
     private static void s_Initialize()
     {
-        Console.WriteLine("taaaaaaaaaaaaaaaaaaaaaaaaaaa");
         createProducts();
         createOrders();
         createOrderItems();
@@ -64,8 +69,7 @@ internal static class DataSource
         string[] productNames = { "p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12", "p13", "p14", "p15" };
         for (int i = 0; i < 15; i++)
         {
-            products[i] = new Product();
-            products[i].ID = (i + 1) * 1000000;//??
+            products[i].ID = (i + 1) * 1000000;
             products[i].Name = productNames[i];
             products[i].Category = (Category)rand.Next(5);
             products[i].Price = (i + 1) * 10;
