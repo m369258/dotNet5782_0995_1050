@@ -129,7 +129,7 @@ class OurProgram
     /// <exception cref="Exception">If one of the inputs was wrong</exception>
     private static Product InputProduct()
     {
-        int instock,cat;
+        int instock;
         double price;
         string name;
         Category category;
@@ -247,21 +247,25 @@ e: get all orders");
 
         return order;
     }
-
+    /// <summary>
+    /// Sub menu for order details
+    /// </summary>
+    /// <exception cref="Exception">If one of the details entered by the user is incorrect, an error will be thrown</exception>
     private static void submenuOfOrderItem()
     {
-        string choice;
+        Options choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
-a: add an order
-b: get an order by ID
-c: delete an order
-d: update an order
-e: get all orders
-f: get all the products of a specific order
-g. get a specific itemOrder of a specific order and a specific product");
+1: add an order
+2: get an order by ID
+3: get all orders 
+4: update an order
+5: delete an order
+6: get all the products of a specific order
+7. get a specific itemOrder of a specific order and a specific product");
         //Accepting the user's choice
-        choice = Console.ReadLine();
+        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
+
         int idOrderItem, idOrder;
         OrderItem orderItem;
         //
@@ -270,62 +274,77 @@ g. get a specific itemOrder of a specific order and a specific product");
             switch (choice)
             {
 
-                case "a":
+                case Options.Add:
                     {
+                        Console.WriteLine("Item on order to be added");
                         orderItem = InputOrderItem();
                         Console.WriteLine(dalOrderItem.Add(orderItem));
+                        Console.WriteLine("Order item whose number {0} has been successfully added", orderItem.ID);
                     }
                     break;
 
-                case "b":
+                case Options.Get:
+                    Console.WriteLine("Item display on order according to the user's request");
                     Console.WriteLine("enter the id orderItem");
-                    idOrderItem = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Exception("idOrderItem is in valid");
                     Console.WriteLine(dalOrderItem.Get(idOrderItem));
                     break;
-                case "c":
+
+                case Options.GetAll:
+                    Console.WriteLine("Displaying all existing order details");
                     OrderItem[] orderItems = dalOrderItem.GetAllOrderItems();
+                    //Printing all existing order details
                     foreach (OrderItem currOrderItems in orderItems)
                     {
                         Console.WriteLine(currOrderItems);
                     }
                     break;
 
-                case "d":
+                case Options.Update:
+                    Console.WriteLine("Order item update requested");
                     Console.WriteLine("enter id orderItem");
-                    idOrderItem = int.Parse(Console.ReadLine());
-                    Console.WriteLine("before: ");
+                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Exception("idOrderItem is in valid");
+                    Console.WriteLine("Item on order before change");
                     Console.WriteLine(dalOrderItem.Get(idOrderItem));
                     orderItem = InputOrderItem();
                     orderItem.ID = idOrderItem;
+                    //Update an item in the order only if all the details have been entered by the user
                     if (orderItem.ID != null && orderItem.OrderId != null && orderItem.ProductId != null && orderItem.Price != null && orderItem.Amount != null)
                     {
                         dalOrderItem.Update(orderItem);
-                        Console.WriteLine("after: ");
+                        Console.WriteLine("Item on order after the change");
                         Console.WriteLine(dalOrderItem.Get(idOrderItem));
                     }
+                    break;
 
-                    break;
-                case "e":
+                case Options.Delete:
+                    Console.WriteLine("Deletion of an item in a requested order");
                     Console.WriteLine("enter the id idOrderItem");
-                    idOrderItem = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Exception("idOrderItem is in valid");
                     dalOrderItem.Delete(idOrderItem);
+                    Console.WriteLine("An item in the order whose number {0} has been successfully deleted", idOrderItem);
                     break;
-                case "f":
+                    
+                case Options.GetByIDOrder:
+                    Console.WriteLine("Display all products of a specific order");
                     Console.WriteLine("enter the id order");
-                    idOrder = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("idOrder is in valid");
                     OrderItem[] myOrderItems = dalOrderItem.GetByIdOrder(idOrder);
+                    Console.WriteLine("Printing all products of a specific order");
                     foreach (OrderItem currOrderItems in myOrderItems)
                     {
                         Console.WriteLine(currOrderItems);
                     }
                     break;
-                case "g":
+                    
+                case Options.GetByIDOrderAndIDProduct:
+                    Console.WriteLine("Displaying a specific item in a specific order");
                     Console.WriteLine("enter the id order and id product");
-                    idOrder = int.Parse(Console.ReadLine());
-                    int idProduct = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("idOrder is in valid");
+                    int idProduct;
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     Console.WriteLine(dalOrderItem.Get(idOrder, idProduct));
                     break;
-
 
             }
         }
@@ -335,18 +354,20 @@ g. get a specific itemOrder of a specific order and a specific product");
         }
     }
 
-
+    /// <summary>
+    /// Receiving details of a product ordered by the user
+    /// </summary>
+    /// <returns>Returns an item in the order with the data captured from the user</returns>
+    /// <exception cref="Exception">If one of the receptions was not successful</exception>
     private static OrderItem InputOrderItem()
     {
         int orderId, productId, amount;
         double price;
-
         Console.WriteLine("enter ProductId,orderId, price, Amount of orderItem");
-        productId = int.Parse(Console.ReadLine());
-        orderId = int.Parse(Console.ReadLine());
-        price = double.Parse(Console.ReadLine());
-        amount = int.Parse(Console.ReadLine());
-
+        if (!int.TryParse(Console.ReadLine(), out productId)) throw new Exception("productId is in valid");
+        if (!int.TryParse(Console.ReadLine(), out orderId)) throw new Exception("orderId is in valid");
+        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
+        if (!int.TryParse(Console.ReadLine(), out amount)) throw new Exception("amount is in valid");
         OrderItem ordIm = new OrderItem();
         ordIm.ProductId = productId;
         ordIm.Price = price;
