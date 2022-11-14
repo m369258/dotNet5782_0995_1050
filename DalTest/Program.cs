@@ -59,10 +59,10 @@ class OurProgram
 5: delete an order ");
         //Accepting the user's choice
         if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
-        
+
         int idProduct;
         Product p;
-  
+
         try
         {
             switch (choice)
@@ -153,7 +153,7 @@ class OurProgram
     /// </summary>
     private static void submenuOfOrder()
     {
-        string choice;
+        Options choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
 a: add an order
@@ -162,8 +162,7 @@ c: delete an order
 d: update an order
 e: get all orders");
         //Accepting the user's choice
-        choice = Console.ReadLine();
-
+        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is invalid");
         int idOrder;
         Order myOrder;
 
@@ -172,36 +171,36 @@ e: get all orders");
             //Checking what action the user wants to run
             switch (choice)
             {
-                case "a":
-                    {
-                        //A call to an action that receives data for an order object
-                        myOrder = InputOrder();
-                        //A call to action that adds an order to the system
-                        Console.WriteLine(dalOrder.Add(myOrder));
-                    }
+                case Options.Add:
+                    //A call to an action that receives data for an order object
+                    myOrder = InputOrder();
+                    //A call to action that adds an order to the system
+                    Console.WriteLine(dalOrder.Add(myOrder));
                     break;
 
-                case "b":
+                case Options.Get:
                     //Receipt of order ID number
                     Console.WriteLine("enter the id order");
-                    idOrder = int.Parse(Console.ReadLine());
-
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
                     Console.WriteLine(dalOrder.Get(idOrder));
                     break;
-                case "c":
+
+                case Options.GetAll:
                     Order[] orders = dalOrder.GetAllOrders();
                     foreach (Order currOrder in orders)
                     {
                         Console.WriteLine(currOrder);
                     }
                     break;
-                case "d":
+
+                case Options.Update:
                     Console.WriteLine("enter id order");
-                    idOrder = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
                     Console.WriteLine("before: ");
                     Console.WriteLine(dalOrder.Get(idOrder));
                     myOrder = InputOrder();
                     myOrder.ID = idOrder;
+                    //In the event that all order details have not been provided, this order will not be updated.
                     if (myOrder.ID != null && myOrder.CustomerName != null && myOrder.CustomerEmail != null && myOrder.CustomerAddress != null &&
                         myOrder.OrderDate != null && myOrder.DeliveryDate != null && myOrder.ShipDate != null)
                     {
@@ -210,9 +209,10 @@ e: get all orders");
                         Console.WriteLine(dalOrder.Get(idOrder));
                     }
                     break;
-                case "e":
+
+                case Options.Delete:
                     Console.WriteLine("enter the id order");
-                    idOrder = int.Parse(Console.ReadLine());
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
                     dalOrder.Delete(idOrder);
                     break;
             }
@@ -224,20 +224,28 @@ e: get all orders");
         }
     }
 
+
+    /// <summary>
+    /// Receiving order details from the user
+    /// </summary>
+    /// <returns>order with details from the user</returns>
+    /// <exception cref="Exception">In case incorrect details were provided</exception>
     private static Order InputOrder()
     {
         Order order = new Order();
         string customerName, customerEmail, customerAddress;
         DateTime orderDate, deliveryDate, shipDate;
 
+        //Receiving details from the user
         Console.WriteLine("enter customer name, customer email, customer address, order date , delivery date, ship date");
         customerName = Console.ReadLine();
         customerEmail = Console.ReadLine();
         customerAddress = Console.ReadLine();
-        orderDate = DateTime.Parse(Console.ReadLine());
-        deliveryDate = DateTime.Parse(Console.ReadLine());
-        shipDate = DateTime.Parse(Console.ReadLine());
+        if (!DateTime.TryParse(Console.ReadLine(), out orderDate)) throw new Exception("order date is invalid");
+        if (!DateTime.TryParse(Console.ReadLine(), out deliveryDate)) throw new Exception("delivery date is invalid");
+        if (!DateTime.TryParse(Console.ReadLine(), out shipDate)) throw new Exception("shipDate is invalid");
 
+        //Put the values received from the user into an order object
         order.CustomerName = customerName;
         order.CustomerEmail = customerEmail;
         order.CustomerAddress = customerAddress;
