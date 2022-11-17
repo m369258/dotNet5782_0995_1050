@@ -9,7 +9,7 @@ internal static class DataSource
 
     //Declaration + assignment of arrays of entities that are consumed
     static internal List<Product> products;
-    static internal Order[] orders = new Order[100];
+    static internal List<Order> orders;
     static internal List <OrderItem> orderItems;
 
     /// <summary>
@@ -99,7 +99,6 @@ internal static class DataSource
                 myOrder.DeliveryDate = orders[i].OrderDate + new TimeSpan(3, 0, 0, 0);
             if (i <= 0.6 * 20)
                 myOrder.ShipDate = orders[i].DeliveryDate + new TimeSpan(2, 0, 0, 0);
-            Config.indexOrder++;
         }
     }
 
@@ -117,7 +116,7 @@ internal static class DataSource
             {
                 orderItem.ID = Config.AutomaticOrderItem;
                 orderItem.OrderId = i;
-                orderItem.ProductId = products[rand.Next(1, Config.indexProduct)].ID;
+                orderItem.ProductId = products[rand.Next(1, products.Count)].ID;
                 orderItem.Price = findPrice(orderItems[i].ProductId);
                 orderItem.Amount = i + rand.Next(20, 100);
                 cOrderItems++;
@@ -137,11 +136,11 @@ internal static class DataSource
     /// <returns>The price of the requested product in any other case will return -1</returns>
     private static double findPrice(int productId)
     {
-      
-        foreach(var item in products)
+        Product p = products.First();
+       for(int i=0;i<products.Count;i++)
         {
-            if (productId == item.ID)
-                return item.Price;
+            if (productId == products[i].ID)
+                return products[i].Price;
         }
         return -1;
     }
@@ -152,8 +151,8 @@ internal static class DataSource
     /// <param name="order">Order to add</param>
     internal static void Add(Order order)
     {
-        int ind = Config.indexOrder++;
-        orders[ind] = order;
+        
+        orders.Add( order);
     }
 
     /// <summary>
@@ -165,13 +164,13 @@ internal static class DataSource
     {
         int i;
         //The loop checks if there is a product with the requested ID number, if so it will throw an error
-        for (i = 0; i < Config.indexProduct && products[i].ID != product.ID; i++) ;
-        if (i != Config.indexProduct)
+       
+        for (i = 0; i < products.Count && products[i].ID != product.ID; i++) ;
+        if (i != products.Count)
         {
             throw new Exception("this product is exsist");
         }
-        int ind = Config.indexProduct++;
-        products[ind] = product;
+        products.Add( product);
     }
 
     /// <summary>
@@ -183,22 +182,21 @@ internal static class DataSource
     {
         int i;
         //Checking whether the product ID exists in any other case will throw an error
-        for (i = 0; i < Config.indexProduct && products[i].ID != orderItem.ProductId; i++) ;
-        if (i == Config.indexProduct)
+        for (i = 0; i < products.Count && products[i].ID != orderItem.ProductId; i++) ;
+        if (i == products.Count)
         {
             throw new Exception("this product is exsist");
         }
 
         //Checking if the order ID exists in any other case will throw an error
-        for (i = 0; i < Config.indexOrder && orders[i].ID != orderItem.OrderId; i++) ;
-        if (i == Config.indexOrder)
+        for (i = 0; i < orders.Count && orders[i].ID != orderItem.OrderId; i++) ;
+        if (i == orders.Count)
         {
             throw new Exception("this order is exsist");
         }
 
         //Adding the order item to the database and updating the actual quantity
-        int ind = Config.indexOrderItem++;
-        orderItems[ind] = orderItem;
+        orderItems.Add(orderItem);
     }
 
 
