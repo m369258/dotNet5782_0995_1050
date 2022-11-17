@@ -8,19 +8,15 @@ internal static class DataSource
     static int num = rand.Next();
 
     //Declaration + assignment of arrays of entities that are consumed
-    static internal Product[] products = new Product[50];
+    static internal List<Product> products;
     static internal Order[] orders = new Order[100];
-    static internal OrderItem[] orderItems = new OrderItem[200];
+    static internal List <OrderItem> orderItems;
 
     /// <summary>
     /// An internal class for handling the automatic identifiers and saving the number of existing objects from each actual entity
     /// </summary>
     internal static class Config
     {
-        //Variables for saving the amount of objects from each actual entity
-        static internal int indexProduct = 0;
-        static internal int indexOrder = 0;
-        static internal int indexOrderItem = 0;
 
         //Saving the entities' automatic identifiers
         static int automaticOrder = 0;
@@ -64,20 +60,21 @@ internal static class DataSource
     /// </summary>
     private static void createProducts()
     {
+        Product product = new Product();
         string[] productNames = { "מארז 12 קאפקייקס בינוני ליום הולדת", "בייבי בלו קייק", "קנדי קייק קטנה", "מיניקייק קרמל", "מארז גדול של מקרונים COOL BLUE", "מארז קטן של מקרונים PRIDE", "מארז גדול של מקרונים LOVE", "מארז קטן של מקרונים UNICORN", "מארז גדול של מקרונים CHOCOHOLIC", "בלונדיז", "נשיקות מרנג", "בלון לידת בת", "בלון לידת בן", "עוגת יום הולדת", "עוגת אוראו" };
         int[] categories = { 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 2, 2 };
         float[] prices = { 158, 285, 285, 125, 220, 85, 220, 85, 220, 42, 22, 28, 28, 200, 285 };
         for (int i = 0; i < 15; i++)
         {
-            products[i].ID = (i + 1) * 1000000;
-            products[i].Name = productNames[i];
-            products[i].Category = (Category)categories[i];
-            products[i].Price = prices[i];
+            product.ID = (i + 1) * 1000000;
+            product.Name = productNames[i];
+            product.Category = (Category)categories[i];
+            product.Price = prices[i];
             if (i <= productNames.Length * 0.05)
-                products[i].InStock = 0;
+                product.InStock = 0;
             else
-                products[i].InStock = i * 100;
-            Config.indexProduct++;
+                product.InStock = i * 100;
+            products.Add(product);
         }
     }
 
@@ -109,19 +106,20 @@ internal static class DataSource
     /// </summary>
     private static void createOrderItems()
     {
+        OrderItem orderItem = new OrderItem();
         int cOrderItems = 0;//Lists the details of all orders that have joined
         //For each order adds between one and four items
         for (int i = 0; i < 20; i++)
         {
             for (int j = 0; j < rand.Next(1, 5); j++)
             {
-                orderItems[cOrderItems].ID = Config.AutomaticOrderItem;
-                orderItems[cOrderItems].OrderId = i;
-                orderItems[cOrderItems].ProductId = products[rand.Next(1, Config.indexProduct)].ID;
-                orderItems[cOrderItems].Price = findPrice(orderItems[i].ProductId);
-                orderItems[cOrderItems].Amount = i + rand.Next(20, 100);
+                orderItem.ID = Config.AutomaticOrderItem;
+                orderItem.OrderId = i;
+                orderItem.ProductId = products[rand.Next(1, Config.indexProduct)].ID;
+                orderItem.Price = findPrice(orderItems[i].ProductId);
+                orderItem.Amount = i + rand.Next(20, 100);
                 cOrderItems++;
-                Config.indexOrderItem++;
+                orderItems.Add(orderItem);
             }
             //In the event that 40 items were not added to all the orders,
             //we will perform another partial round so that at the end of the function there will be at least order details
@@ -137,10 +135,11 @@ internal static class DataSource
     /// <returns>The price of the requested product in any other case will return -1</returns>
     private static double findPrice(int productId)
     {
-        for (int i = 0; i < Config.indexProduct; i++)
+      
+        foreach(var item in products)
         {
-            if (productId == products[i].ID)
-                return products[i].Price;
+            if (productId == item.ID)
+                return item.Price;
         }
         return -1;
     }
