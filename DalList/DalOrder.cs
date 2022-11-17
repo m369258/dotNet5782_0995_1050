@@ -51,7 +51,7 @@ public class DalOrder
     /// This returns all orders
     /// </summary>
     /// <returns>All orders</returns>
-    public Order[] GetAllOrders()
+    public Order[] GetAll()
     {
         Order[] newOrders = new Order[DataSource.Config.indexOrder];
         //The loop performs the explicit copying of the array of orders

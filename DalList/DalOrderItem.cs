@@ -167,7 +167,7 @@ public class DalOrderItem
     /// This returns all orderIAtems
     /// </summary>
     /// <returns>All orderItems</returns>
-    public OrderItem[] GetAllOrderItems()
+    public OrderItem[] GetAll()
     {
         OrderItem[] newOrderItems = new OrderItem[DataSource.Config.indexOrderItem];
         //The loop performs the explicit copying of the array of orderItems
