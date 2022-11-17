@@ -84,19 +84,21 @@ internal static class DataSource
     private static void createOrders()
     {
         string[] customerNames = { "שירה נוסבכר", "מיכל גרינבוים", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
-        
-        string[] customerAddresses = { "בעל התניא 20 בני ברק", "גולומב 5 בני ברק", "יצחק אלחנן 2 תל-אביב-יפו", "גורדון 22 בני ברק", "שדרות ירושלים 66 רמת גן", "אבן גבירול 8 בני ברק", "רשי 5 בני ברק", "שבזי 2 בני ברק", "חרמון 3 רעננה", "הבנים 77 הוד השרון", "הרי גולן 113 הרצליה", "שבט נפתלי 1 אשדוד", "רחבת מבצע ארז 3 באר שבע", "גנתון 43 גינתון", "חברון 13 תל אביב - יפו", "כפר הס 9931 כפר הס", "דוד רמז 5 לוד", "עין ורד 159 עין ורד", "דקר 5 בני ברק" ,"ירושלים 11 בני ברק"};
+
+        string[] customerAddresses = { "בעל התניא 20 בני ברק", "גולומב 5 בני ברק", "יצחק אלחנן 2 תל-אביב-יפו", "גורדון 22 בני ברק", "שדרות ירושלים 66 רמת גן", "אבן גבירול 8 בני ברק", "רשי 5 בני ברק", "שבזי 2 בני ברק", "חרמון 3 רעננה", "הבנים 77 הוד השרון", "הרי גולן 113 הרצליה", "שבט נפתלי 1 אשדוד", "רחבת מבצע ארז 3 באר שבע", "גנתון 43 גינתון", "חברון 13 תל אביב - יפו", "כפר הס 9931 כפר הס", "דוד רמז 5 לוד", "עין ורד 159 עין ורד", "דקר 5 בני ברק", "ירושלים 11 בני ברק" };
+
+        Order myOrder = new Order();
         for (int i = 0; i < 20; i++)
         {
-            orders[i].ID = Config.AutomaticOrder;
-            orders[i].CustomerName = customerNames[i];
-            orders[i].CustomerEmail = customerNames[i]+"@gmail.com";
-            orders[i].CustomerAddress = customerAddresses[i];
-            orders[i].OrderDate = DateTime.MinValue + new TimeSpan(rand.Next(2001, 2022) * 365, 0, 0, 0);
+            myOrder.ID = Config.AutomaticOrder;
+            myOrder.CustomerName = customerNames[i];
+            myOrder.CustomerEmail = customerNames[i] + "@gmail.com";
+            myOrder.CustomerAddress = customerAddresses[i];
+            myOrder.OrderDate = DateTime.MinValue + new TimeSpan(rand.Next(2001, 2022) * 365, 0, 0, 0);
             if (i <= 0.8 * 20)
-                orders[i].DeliveryDate = orders[i].OrderDate + new TimeSpan(3, 0, 0, 0);
+                myOrder.DeliveryDate = orders[i].OrderDate + new TimeSpan(3, 0, 0, 0);
             if (i <= 0.6 * 20)
-                orders[i].ShipDate = orders[i].DeliveryDate + new TimeSpan(2, 0, 0, 0);
+                myOrder.ShipDate = orders[i].DeliveryDate + new TimeSpan(2, 0, 0, 0);
             Config.indexOrder++;
         }
     }
