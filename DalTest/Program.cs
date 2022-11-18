@@ -85,7 +85,7 @@ class OurProgram
                     break;
 
                 case Options.GetAll:
-                    Product[] products = dalProduct.GetAllProducts();
+                    Product[] products = dalProduct.GetAll();
                     foreach (Product myProduct in products)
                     {
                         Console.WriteLine(myProduct);
@@ -100,13 +100,9 @@ class OurProgram
                     Console.WriteLine(dalProduct.Get(idProduct));
                     p = InputProduct();
                     p.ID = idProduct;
-                    //will update the product only if all the details have been verified
-                    if (p.ID != null && p.Name != null && p.Category != null && p.InStock != null && p.Price != null)
-                    {
-                        dalProduct.Update(p);
-                        Console.WriteLine("The requested product after the change");
-                        Console.WriteLine(dalProduct.Get(idProduct));
-                    }
+                    dalProduct.Update(p);
+                    Console.WriteLine("The requested product after the change");
+                    Console.WriteLine(dalProduct.Get(idProduct));
                     break;
 
                 case Options.Delete:
@@ -122,6 +118,7 @@ class OurProgram
             Console.WriteLine(ex);
         }
     }
+
     /// <summary>
     /// This action performs input from the user details about the product
     /// </summary>
@@ -133,7 +130,15 @@ class OurProgram
         double price;
         string name;
         Category category;
-        Console.WriteLine("enter name, category, price, instock of product");
+        Console.WriteLine(@"enter name,
+category- 
+for cupcakes insert 1
+for cakes insert 2
+for macarons insert 3
+for sweets insert 4
+for ballons insert 5,
+price, 
+instock of product");
         name = Console.ReadLine();
         if (!Category.TryParse(Console.ReadLine(), out category)) throw new Exception("category is in valid");
         if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
@@ -186,7 +191,7 @@ class OurProgram
                     break;
 
                 case Options.GetAll:
-                    Order[] orders = dalOrder.GetAllOrders();
+                    Order[] orders = dalOrder.GetAll();
                     foreach (Order currOrder in orders)
                     {
                         Console.WriteLine(currOrder);
@@ -200,14 +205,10 @@ class OurProgram
                     Console.WriteLine(dalOrder.Get(idOrder));
                     myOrder = InputOrder();
                     myOrder.ID = idOrder;
-                    //In the event that all order details have not been provided, this order will not be updated.
-                    if (myOrder.ID != null && myOrder.CustomerName != null && myOrder.CustomerEmail != null && myOrder.CustomerAddress != null &&
-                        myOrder.OrderDate != null && myOrder.DeliveryDate != null && myOrder.ShipDate != null)
-                    {
-                        dalOrder.Update(myOrder);
-                        Console.WriteLine("after: ");
-                        Console.WriteLine(dalOrder.Get(idOrder));
-                    }
+
+                    dalOrder.Update(myOrder);
+                    Console.WriteLine("after: ");
+                    Console.WriteLine(dalOrder.Get(idOrder));
                     break;
 
                 case Options.Delete:
@@ -264,19 +265,19 @@ class OurProgram
         Options choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
-1: add an order
-2: get an order by ID
-3: get all orders 
-4: update an order
-5: delete an order
+1: add an orderItem
+2: get an orderItem by ID
+3: get all orderItems
+4: update an orderItem
+5: delete an orderItem
 6: get all the products of a specific order
-7. get a specific itemOrder of a specific order and a specific product");
+7. get a specific orderItem of a specific order and a specific product");
         //Accepting the user's choice
         if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
 
         int idOrderItem, idOrder;
         OrderItem orderItem;
-        
+
         try
         {
             switch (choice)
@@ -300,7 +301,7 @@ class OurProgram
 
                 case Options.GetAll:
                     Console.WriteLine("Displaying all existing order details");
-                    OrderItem[] orderItems = dalOrderItem.GetAllOrderItems();
+                    OrderItem[] orderItems = dalOrderItem.GetAll();
                     //Printing all existing order details
                     foreach (OrderItem currOrderItems in orderItems)
                     {
@@ -316,13 +317,10 @@ class OurProgram
                     Console.WriteLine(dalOrderItem.Get(idOrderItem));
                     orderItem = InputOrderItem();
                     orderItem.ID = idOrderItem;
-                    //Update an item in the order only if all the details have been entered by the user
-                    if (orderItem.ID != null && orderItem.OrderId != null && orderItem.ProductId != null && orderItem.Price != null && orderItem.Amount != null)
-                    {
-                        dalOrderItem.Update(orderItem);
-                        Console.WriteLine("Item on order after the change");
-                        Console.WriteLine(dalOrderItem.Get(idOrderItem));
-                    }
+
+                    dalOrderItem.Update(orderItem);
+                    Console.WriteLine("Item on order after the change");
+                    Console.WriteLine(dalOrderItem.Get(idOrderItem));
                     break;
 
                 case Options.Delete:
@@ -332,7 +330,7 @@ class OurProgram
                     dalOrderItem.Delete(idOrderItem);
                     Console.WriteLine("An item in the order whose number {0} has been successfully deleted", idOrderItem);
                     break;
-                    
+
                 case Options.GetByIDOrder:
                     Console.WriteLine("Display all products of a specific order");
                     Console.WriteLine("enter the id order");
@@ -344,7 +342,7 @@ class OurProgram
                         Console.WriteLine(currOrderItems);
                     }
                     break;
-                    
+
                 case Options.GetByIDOrderAndIDProduct:
                     Console.WriteLine("Displaying a specific item in a specific order");
                     Console.WriteLine("enter the id order and id product");

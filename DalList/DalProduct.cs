@@ -12,23 +12,20 @@ public class DalProduct
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
     public int Add(Product product)
     {
-        
         //Checking whether there is room to add an product otherwise an error will be thrown
-        if (DataSource.products.Length-1  != DataSource.Config.indexProduct)
+        if (DataSource.products.Length - 1 != DataSource.Config.indexProduct)
         {
-            try
+            int i;
+            //The loop checks if there is a product with the requested ID number, if so it will throw an error
+            for (i = 0; i < DataSource.Config.indexProduct && DataSource.products[i].ID != product.ID; i++) ;
+            if (i != DataSource.Config.indexProduct)
             {
-                DataSource.Add(product);
+                throw new Exception("this product is exsist");
             }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+            int ind = DataSource.Config.indexProduct++;
+            DataSource.products[ind] = product;
         }
-        else
-        {
-            throw new Exception("there is no place");
-        }
+        else { throw new Exception("there is no place"); }
         return product.ID;
     }
 
@@ -64,7 +61,6 @@ public class DalProduct
         //The loop performs the explicit copying of the array of products
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
-            newProduct[i] = new Product();
             newProduct[i] = DataSource.products[i];
         }
         return newProduct;
@@ -129,5 +125,4 @@ public class DalProduct
     }
 
 }
-
 

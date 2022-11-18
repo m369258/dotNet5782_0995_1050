@@ -15,13 +15,10 @@ public class DalOrder
         if (DataSource.orders.Length - 1 != DataSource.Config.indexOrder)
         {
             order.ID = DataSource.Config.AutomaticOrder;
-
-            DataSource.Add(order);
+            DataSource.orders[DataSource.Config.indexOrder] = order;
+            DataSource.Config.indexOrder++;
         }
-        else
-        {
-            throw new Exception("there is no place");
-        }
+        else { throw new Exception("there is no place"); }
         return order.ID;
     }
 
@@ -55,7 +52,7 @@ public class DalOrder
     {
         Order[] newOrders = new Order[DataSource.Config.indexOrder];
         //The loop performs the explicit copying of the array of orders
-        for (int i=0;i<DataSource.Config.indexOrder;i++)
+        for (int i = 0; i < DataSource.Config.indexOrder; i++)
         {
             newOrders[i] = new Order();
             newOrders[i] = DataSource.orders[i];
@@ -117,7 +114,7 @@ public class DalOrder
         int ind = GetIndex(updateOrder.ID);
         if (ind != -1)
         {
-            DataSource.orders[ind] = updateOrder;//??האם זה נחשב להעתקה עמוקה
+            DataSource.orders[ind] = updateOrder;
         }
         else { throw new Exception("there is no order like this"); }
     }

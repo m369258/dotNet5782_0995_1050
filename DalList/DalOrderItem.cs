@@ -12,24 +12,31 @@ public class DalOrderItem
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
     public int Add(OrderItem orderItem)
     {
-
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
         //Checking whether there is room to add an OrderItem otherwise an error will be thrown
         if (DataSource.orderItems.Length - 1 != DataSource.Config.indexOrderItem)
         {
-            try
+            int i;
+            //Checking whether the product ID exists in any other case will throw an error
+            for (i = 0; i < DataSource.Config.indexProduct && DataSource.products[i].ID != orderItem.ProductId; i++) ;
+            if (i == DataSource.Config.indexProduct)
             {
-                DataSource.Add(orderItem);
+                throw new Exception("this product is exsist");
             }
-            catch (Exception ex)
+
+            //Checking if the order ID exists in any other case will throw an error
+            for (i = 0; i < DataSource.Config.indexOrder && DataSource.orders[i].ID != orderItem.OrderId; i++) ;
+            if (i == DataSource.Config.indexOrder)
             {
-                throw ex;
+                throw new Exception("this order is exsist");
             }
+
+            //Adding the order item to the database and updating the actual quantity
+            int ind = DataSource.Config.indexOrderItem++;
+            DataSource.orderItems[ind] = orderItem;
         }
         else
-        {
             throw new Exception("there is no place");
-        }
         return orderItem.ID;
     }
 
@@ -177,5 +184,4 @@ public class DalOrderItem
         }
         return newOrderItems;
     }
-
 }
