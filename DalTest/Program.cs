@@ -55,7 +55,7 @@ class OurProgram
         Console.WriteLine(@"enter your choice:
 1: add an product
 2: get a product by ID
-3: get all products 
+3: gethhhhhhhhhhhhhhhhhh all products 
 4: update an product
 5: delete an product ");
         //Accepting the user's choice
