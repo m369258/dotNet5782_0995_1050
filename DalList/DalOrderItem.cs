@@ -1,7 +1,7 @@
 ﻿using Do;
 namespace Dal;
-
-public class DalOrderItem
+using DalApi;
+internal class DalOrderItem:IOrderItems
 {
 
     /// <summary>
@@ -10,13 +10,9 @@ public class DalOrderItem
     /// <param name="orderItem">OrderItem to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
-    public int Add(OrderItem orderItem)
+    public void Add(OrderItem orderItem)
     {
-
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
-        //Checking whether there is room to add an OrderItem otherwise an error will be thrown
-        if (DataSource.orderItems.Length - 1 != DataSource.Config.indexOrderItem)
-        {
             try
             {
                 DataSource.Add(orderItem);
@@ -25,12 +21,6 @@ public class DalOrderItem
             {
                 throw ex;
             }
-        }
-        else
-        {
-            throw new Exception("there is no place");
-        }
-        return orderItem.ID;
     }
 
 
@@ -45,7 +35,7 @@ public class DalOrderItem
         int i;
 
         //The loop searches for the location of the OrderItem
-        for (i = 0; i < DataSource.Config.indexOrderItem && DataSource.orderItems[i].ID != idOrderItem; i++) ;
+        for (i = 0; i < DataSource.orderItems.Count && DataSource.orderItems[i].ID != idOrderItem; i++) ;
 
         //Checking whether the requested OrderItem is found and returning it otherwise throws an error
         if (DataSource.orderItems[i].ID == idOrderItem)

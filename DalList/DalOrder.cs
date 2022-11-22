@@ -1,7 +1,7 @@
 ﻿using Do;
 namespace Dal;
-
-public class DalOrder
+using DalApi;
+public class DalOrder:IOrder
 {
     /// <summary>
     /// This action adds an order to the system if there is an available space
@@ -9,20 +9,10 @@ public class DalOrder
     /// <param name="order">Order to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
-    public int Add(Order order)
+    public void Add(Order order)
     {
-        //Checking whether there is room to add an order otherwise an error will be thrown
-        if (DataSource.orders.Length - 1 != DataSource.Config.indexOrder)
-        {
             order.ID = DataSource.Config.AutomaticOrder;
-
             DataSource.Add(order);
-        }
-        else
-        {
-            throw new Exception("there is no place");
-        }
-        return order.ID;
     }
 
 
@@ -36,7 +26,7 @@ public class DalOrder
     {
         int i = 0;
         //The loop searches for the location of the order
-        while (i < DataSource.Config.indexOrder && DataSource.orders[i].ID != idOrder)
+        while (i < DataSource.orders.Count && DataSource.orders[i].ID != idOrder)
         {
             i++;
         }
@@ -51,11 +41,11 @@ public class DalOrder
     /// This returns all orders
     /// </summary>
     /// <returns>All orders</returns>
-    public Order[] GetAll()
+    public IEnumerable <Order> GetAll()
     {
-        Order[] newOrders = new Order[DataSource.Config.indexOrder];
+        Order[] newOrders = new Order[DataSource.orders.Count];
         //The loop performs the explicit copying of the array of orders
-        for (int i=0;i<DataSource.Config.indexOrder;i++)
+        for (int i=0;i<DataSource.orders.Count; i++)
         {
             newOrders[i] = new Order();
             newOrders[i] = DataSource.orders[i];
@@ -75,12 +65,11 @@ public class DalOrder
         if (ind != -1)
         {
             //The loop narrows the hole created after deleting the requested order
-            for (int i = ind; i < DataSource.Config.indexOrder; i++)
+            for (int i = ind; i < DataSource.orders.Count; i++)
             {
                 DataSource.orders[i] = DataSource.orders[i + 1];
             }
             //Downloading the actual amount of members of the orders after deleting an order
-            DataSource.Config.indexOrder--;
         }
         else
             throw new Exception("there is no this id order");
@@ -96,7 +85,7 @@ public class DalOrder
     {
         int i = 0;
         //The loop searches for the location of the requested order
-        while (i < DataSource.Config.indexOrder && DataSource.orders[i].ID != idOrder)
+        while (i < DataSource.orders.Count && DataSource.orders[i].ID != idOrder)
         {
             i++;
         }

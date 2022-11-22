@@ -83,9 +83,9 @@ internal static class DataSource
     /// </summary>
     private static void createOrders()
     {
-        string[] customerNames = { "שירה נוסבכר", "מיכל גרינבוים", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
+        string[] customerNames = { "shira nussbacher", "michal grinboim", "zisi levi", " orit catz", "miri vizel ", "mimi rot", " chani cohen", " zipora adler", "noa lubin", "shani pories", "debi rozenberg", "nechami lev", "tammar praiman", "moshe shtaitemetz", "hila shtainemetz", "daniel weiss", "jonatan mualem", "noam levkovitch", "shulamit gugig", "meir rot" };
 
-        string[] customerAddresses = { "בעל התניא 20 בני ברק", "גולומב 5 בני ברק", "יצחק אלחנן 2 תל-אביב-יפו", "גורדון 22 בני ברק", "שדרות ירושלים 66 רמת גן", "אבן גבירול 8 בני ברק", "רשי 5 בני ברק", "שבזי 2 בני ברק", "חרמון 3 רעננה", "הבנים 77 הוד השרון", "הרי גולן 113 הרצליה", "שבט נפתלי 1 אשדוד", "רחבת מבצע ארז 3 באר שבע", "גנתון 43 גינתון", "חברון 13 תל אביב - יפו", "כפר הס 9931 כפר הס", "דוד רמז 5 לוד", "עין ורד 159 עין ורד", "דקר 5 בני ברק", "ירושלים 11 בני ברק" };
+        string[] customerAddresses = { "Baal Atania 20 Bnei Brak", " ", "יצחק אלחנן 2 תל-אביב-יפו", "גורדון 22 בני ברק", "שדרות ירושלים 66 רמת גן", "אבן גבירול 8 בני ברק", "רשי 5 בני ברק", "שבזי 2 בני ברק", "חרמון 3 רעננה", "הבנים 77 הוד השרון", "הרי גולן 113 הרצליה", "שבט נפתלי 1 אשדוד", "רחבת מבצע ארז 3 באר שבע", "גנתון 43 גינתון", "חברון 13 תל אביב - יפו", "כפר הס 9931 כפר הס", "דוד רמז 5 לוד", "עין ורד 159 עין ורד", "דקר 5 בני ברק", "ירושלים 11 בני ברק" };
 
         Order myOrder = new Order();
         for (int i = 0; i < 20; i++)
@@ -136,6 +136,7 @@ internal static class DataSource
     /// <returns>The price of the requested product in any other case will return -1</returns>
     private static double findPrice(int productId)
     {
+        
         Product p = products.First();
        for(int i=0;i<products.Count;i++)
         {

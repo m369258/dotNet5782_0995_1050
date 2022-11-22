@@ -1,15 +1,9 @@
-﻿using Do;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace DalApi
 {
     public interface ICrud <T>
     {
-       T Value { get; set; }
+       //T Value { get; set; }
 
         /// <summary>
         /// An operation receives a data entity and adds to the entity pool

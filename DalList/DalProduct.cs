@@ -1,7 +1,8 @@
-﻿using Do;
+﻿using DalApi;
+using Do;
 namespace Dal;
 
-public class DalProduct
+internal class DalProduct:IProduct
 {
 
     /// <summary>
@@ -10,12 +11,8 @@ public class DalProduct
     /// <param name="order">Product to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
-    public int Add(Product product)
+    public void Add(Product product)
     {
-        
-        //Checking whether there is room to add an product otherwise an error will be thrown
-        if (DataSource.products.Length-1  != DataSource.Config.indexProduct)
-        {
             try
             {
                 DataSource.Add(product);
@@ -24,12 +21,7 @@ public class DalProduct
             {
                 throw ex;
             }
-        }
-        else
-        {
-            throw new Exception("there is no place");
-        }
-        return product.ID;
+   
     }
 
 
@@ -43,7 +35,7 @@ public class DalProduct
     {
         int i = 0;
         //The loop searches for the location of the product
-        while (i < DataSource.Config.indexProduct && DataSource.products[i].ID != idProduct)
+        while (i < DataSource.products.Count && DataSource.products[i].ID != idProduct)
         {
             i++;
         }
@@ -58,11 +50,11 @@ public class DalProduct
     /// This returns all products
     /// </summary>
     /// <returns>All products</returns>
-    public Product[] GetAll()
+    public IEnumerable<Product>   GetAll()
     {
-        Product[] newProduct = new Product[DataSource.Config.indexProduct];
+        Product[] newProduct = new Product[DataSource.products.Count];
         //The loop performs the explicit copying of the array of products
-        for (int i = 0; i < DataSource.Config.indexProduct; i++)
+        for (int i = 0; i < DataSource.products.Count; i++)
         {
             newProduct[i] = new Product();
             newProduct[i] = DataSource.products[i];
@@ -82,12 +74,11 @@ public class DalProduct
         if (ind != -1)
         {
             //The loop narrows the hole created after deleting the requested product
-            for (int i = ind; i < DataSource.Config.indexProduct; i++)
+            for (int i = ind; i < DataSource.products.Count; i++)
             {
                 DataSource.products[i] = DataSource.products[i + 1];
             }
             //Downloading the actual amount of members of the orders after deleting an product
-            DataSource.Config.indexProduct--;
         }
         else
             throw new Exception("there is no this id product");
@@ -102,7 +93,7 @@ public class DalProduct
     {
         int i = 0;
         //The loop searches for the location of the requested product
-        while (i < DataSource.Config.indexProduct && DataSource.products[i].ID != idProduct)
+        while (i < DataSource.products.Count && DataSource.products[i].ID != idProduct)
         {
             i++;
         }
