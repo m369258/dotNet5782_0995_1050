@@ -123,6 +123,7 @@ class OurProgram
             Console.WriteLine(ex);
         }
     }
+
     /// <summary>
     /// This action performs input from the user details about the product
     /// </summary>
@@ -134,7 +135,15 @@ class OurProgram
         double price;
         string name;
         Category category;
-        Console.WriteLine("enter name, category, price, instock of product");
+        Console.WriteLine(@"enter name,
+category- 
+for cupcakes insert 1
+for cakes insert 2
+for macarons insert 3
+for sweets insert 4
+for ballons insert 5,
+price, 
+instock of product");
         name = Console.ReadLine();
         if (!Category.TryParse(Console.ReadLine(), out category)) throw new Exception("category is in valid");
         if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
@@ -265,19 +274,19 @@ class OurProgram
         Options choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
-1: add an order
-2: get an order by ID
-3: get all orders 
-4: update an order
-5: delete an order
+1: add an orderItem
+2: get an orderItem by ID
+3: get all orderItems
+4: update an orderItem
+5: delete an orderItem
 6: get all the products of a specific order
-7. get a specific itemOrder of a specific order and a specific product");
+7. get a specific orderItem of a specific order and a specific product");
         //Accepting the user's choice
         if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
 
         int idOrderItem, idOrder;
         OrderItem orderItem;
-        
+
         try
         {
             switch (choice)
@@ -333,7 +342,7 @@ class OurProgram
                     myDalList.orderItems.Delete(idOrderItem);
                     Console.WriteLine("An item in the order whose number {0} has been successfully deleted", idOrderItem);
                     break;
-                    
+
                 case Options.GetByIDOrder:
                     Console.WriteLine("Display all products of a specific order");
                     Console.WriteLine("enter the id order");
@@ -345,7 +354,7 @@ class OurProgram
                         Console.WriteLine(currOrderItems);
                     }
                     break;
-                    
+
                 case Options.GetByIDOrderAndIDProduct:
                     Console.WriteLine("Displaying a specific item in a specific order");
                     Console.WriteLine("enter the id order and id product");

@@ -49,7 +49,7 @@ public struct Order
     /// </summary>
     /// <returns>a string representing a order</returns>
     public override string ToString() => $@"
-    Product ID: {ID}
+    Order ID: {ID}
     CustomerName: {CustomerName}, 
     CustomerEmail: {CustomerEmail}
     CustomerAddress: {CustomerAddress}
