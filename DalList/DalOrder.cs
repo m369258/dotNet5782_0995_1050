@@ -1,7 +1,9 @@
 ﻿using Do;
 namespace Dal;
 using DalApi;
-public class DalOrder:IOrder
+using System;
+using System.Collections.Generic;
+internal class DalOrder : IOrder
 {
     /// <summary>
     /// This action adds an order to the system if there is an available space
@@ -9,12 +11,17 @@ public class DalOrder:IOrder
     /// <param name="order">Order to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
-    public void Add(Order order)
+    public int Add(Order order)
     {
-            order.ID = DataSource.Config.AutomaticOrder;
-            DataSource.Add(order);
-    }
+        Console.WriteLine("order add befor");
+        order.ID = DataSource.Config.AutomaticOrder;
+        Console.WriteLine("order add befor1");
 
+        DataSource.orders.Add(order);
+        Console.WriteLine("order add befor2");
+
+        return order.ID;
+    }
 
     /// <summary>
     /// This returns the correct order by some ID number
@@ -41,19 +48,19 @@ public class DalOrder:IOrder
     /// This returns all orders
     /// </summary>
     /// <returns>All orders</returns>
-    public IEnumerable <Order> GetAll()
+    public IEnumerable<Order> GetAll()
     {
-        Order[] newOrders = new Order[DataSource.orders.Count];
+        List<Order> newOrders = new List<Order>();
         //The loop performs the explicit copying of the array of orders
-        for (int i=0;i<DataSource.orders.Count; i++)
+        for (int i = 0; i < DataSource.orders.Count; i++)
         {
-            newOrders[i] = new Order();
-            newOrders[i] = DataSource.orders[i];
+
+            newOrders.Add(DataSource.orders[i]);
         }
         return newOrders;
     }
 
-
+    //???????????????????????????????????????????????????????
     /// <summary>
     /// This operation gets an order ID number and deletes it if it exists, otherwise an error will be thrown
     /// </summary>
@@ -69,7 +76,6 @@ public class DalOrder:IOrder
             {
                 DataSource.orders[i] = DataSource.orders[i + 1];
             }
-            //Downloading the actual amount of members of the orders after deleting an order
         }
         else
             throw new Exception("there is no this id order");
@@ -106,7 +112,7 @@ public class DalOrder:IOrder
         int ind = GetIndex(updateOrder.ID);
         if (ind != -1)
         {
-            DataSource.orders[ind] = updateOrder;//??האם זה נחשב להעתקה עמוקה
+            DataSource.orders[ind] = updateOrder;
         }
         else { throw new Exception("there is no order like this"); }
     }

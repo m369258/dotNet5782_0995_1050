@@ -1,6 +1,6 @@
-﻿using DalApi;
-using Do;
+﻿using Do;
 namespace Dal;
+using DalApi;
 
 internal class DalProduct:IProduct
 {
@@ -11,17 +11,19 @@ internal class DalProduct:IProduct
     /// <param name="order">Product to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
-    public void Add(Product product)
-    {
-            try
+    public int Add(Product product)
+    {   
+            int i;
+            //The loop checks if there is a product with the requested ID number, if so it will throw an error
+            for (i = 0; 
+            i < DataSource.products.Count && DataSource.products[i].ID != product.ID;
+            i++) ;
+            if (i != DataSource.products.Count)
             {
-                DataSource.Add(product);
+                throw new Exception("this product is exsist");
             }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-   
+            DataSource.products.Add( product);
+        return product.ID;
     }
 
 
@@ -50,19 +52,18 @@ internal class DalProduct:IProduct
     /// This returns all products
     /// </summary>
     /// <returns>All products</returns>
-    public IEnumerable<Product>   GetAll()
+    public IEnumerable< Product> GetAll()
     {
-        Product[] newProduct = new Product[DataSource.products.Count];
+        List<Product> newProduct = new List<Product> ();
         //The loop performs the explicit copying of the array of products
         for (int i = 0; i < DataSource.products.Count; i++)
         {
-            newProduct[i] = new Product();
-            newProduct[i] = DataSource.products[i];
+            newProduct.Add( DataSource.products[i]);
         }
         return newProduct;
     }
 
-
+    //??????????????????????????????????????
     /// <summary>
     /// This operation gets an product ID number and deletes it if it exists, otherwise an error will be thrown
     /// </summary>
@@ -78,7 +79,6 @@ internal class DalProduct:IProduct
             {
                 DataSource.products[i] = DataSource.products[i + 1];
             }
-            //Downloading the actual amount of members of the orders after deleting an product
         }
         else
             throw new Exception("there is no this id product");
@@ -120,5 +120,4 @@ internal class DalProduct:IProduct
     }
 
 }
-
 

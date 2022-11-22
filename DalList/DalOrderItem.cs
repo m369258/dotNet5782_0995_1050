@@ -1,6 +1,8 @@
 ﻿using Do;
 namespace Dal;
 using DalApi;
+using System;
+using System.Collections.Generic;
 internal class DalOrderItem:IOrderItems
 {
 
@@ -10,17 +12,28 @@ internal class DalOrderItem:IOrderItems
     /// <param name="orderItem">OrderItem to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
-    public void Add(OrderItem orderItem)
+    public int Add(OrderItem orderItem)
     {
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
-            try
-            {
-                DataSource.Add(orderItem);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+        int i;
+        //Checking whether the product ID exists in any other case will throw an error
+        for (i = 0; i < DataSource.products.Count && DataSource.products[i].ID != orderItem.ProductId; i++) ;
+        if (i == DataSource.products.Count)
+        {
+            throw new Exception("this product is exsist");
+        }
+
+        //Checking if the order ID exists in any other case will throw an error
+        for (i = 0; i < DataSource.orders.Count && DataSource.orders[i].ID != orderItem.OrderId; i++) ;
+        if (i == DataSource.orders.Count)
+        {
+            throw new Exception("this order is exsist");
+        }
+
+        //Adding the order item to the database and updating the actual quantity
+        DataSource.orderItems.Add(orderItem);
+
+        return orderItem.ID;
     }
 
 
@@ -56,10 +69,10 @@ internal class DalOrderItem:IOrderItems
     {
         int i;
         //Search for the desired order item
-        for (i = 0; i < DataSource.Config.indexOrderItem && (DataSource.orderItems[i].ProductId != idProduct || DataSource.orderItems[i].OrderId != idOrder); i++) ;
+        for (i = 0; i < DataSource.orderItems.Count && (DataSource.orderItems[i].ProductId != idProduct || DataSource.orderItems[i].OrderId != idOrder); i++) ;
 
         //If not found, an error will be thrown
-        if (DataSource.Config.indexOrderItem == i)
+        if (DataSource.orderItems.Count == i)
             throw new Exception("there is no orderItem with this idOrder and idProduct");
 
         return DataSource.orderItems[i];
@@ -71,25 +84,15 @@ internal class DalOrderItem:IOrderItems
     /// </summary>
     /// <param name="idOrder">Order ID number</param>
     /// <returns>All order details</returns>
-    public OrderItem[] GetByIdOrder(int idOrder)
+    public IEnumerable<OrderItem> GetByIdOrder(int idOrder)
     {
-        OrderItem[] newOrderItems;
-        int cntOrderItems = 0;
+        List<OrderItem> newOrderItems = new List<OrderItem>();
 
-        //The stock of all order details with a given ID number
-        for (int i = 0; i < DataSource.Config.indexOrderItem; i++)
-        {
-            if (DataSource.orderItems[i].OrderId == idOrder)
-                cntOrderItems++;
-        }
-        newOrderItems = new OrderItem[cntOrderItems];
-
-        int ind = 0;
         //Enter all order details of the given ID number
-        for (int i = 0; i < DataSource.Config.indexOrderItem; i++)
+        for (int i = 0; i < DataSource.orderItems.Count; i++)
         {
             if (DataSource.orderItems[i].OrderId == idOrder)
-                newOrderItems[ind++] = DataSource.orderItems[i];
+                newOrderItems.Add(DataSource.orderItems[i]);
         }
 
         return newOrderItems;
@@ -105,7 +108,7 @@ internal class DalOrderItem:IOrderItems
     {
         int i;
         //The loop searches for the location of the OrderItem
-        for (i = 0; i < DataSource.Config.indexOrderItem && DataSource.orderItems[i].ID != idOrderItem; i++) ;
+        for (i = 0; i < DataSource.orderItems.Count && DataSource.orderItems[i].ID != idOrderItem; i++) ;
 
         //Checking whether the requested OrderItem is found and returning it otherwise throws an error
         if (DataSource.orderItems[i].ID == idOrderItem)
@@ -124,12 +127,12 @@ internal class DalOrderItem:IOrderItems
         int ind = GetIndex(updateOrderItem.ID);
         if (ind != -1)
         {
-            DataSource.orderItems[ind] = updateOrderItem;//??האם זה נחשב להעתקה עמוקה
+            DataSource.orderItems[ind] = updateOrderItem;
         }
         else { throw new Exception("there is no orderItem like this"); }
     }
 
-
+    //?????????????????????????????????????????????????????????????
     /// <summary>
     /// This operation gets an order ID number and deletes it if it exists, otherwise an error will be thrown
     /// </summary>
@@ -141,12 +144,10 @@ internal class DalOrderItem:IOrderItems
         if (ind != -1)
         {
             //The loop narrows the hole created after deleting the requested order
-            for (int i = ind; i < DataSource.Config.indexOrderItem; i++)
+            for (int i = ind; i < DataSource.orderItems.Count; i++)
             {
                 DataSource.orderItems[i] = DataSource.orderItems[i + 1];
             }
-            //Downloading the actual amount of members of the orders after deleting an order
-            DataSource.Config.indexOrderItem--;
         }
         else
             throw new Exception("there is no this id orderItem");
@@ -157,15 +158,14 @@ internal class DalOrderItem:IOrderItems
     /// This returns all orderIAtems
     /// </summary>
     /// <returns>All orderItems</returns>
-    public OrderItem[] GetAll()
+    public IEnumerable<OrderItem> GetAll()
     {
-        OrderItem[] newOrderItems = new OrderItem[DataSource.Config.indexOrderItem];
+        List<OrderItem> newOrderItems = new List<OrderItem>();
         //The loop performs the explicit copying of the array of orderItems
-        for (int i = 0; i < DataSource.Config.indexOrderItem; i++)
+        for (int i = 0; i < DataSource.orderItems.Count; i++)
         {
-            newOrderItems[i] = DataSource.orderItems[i];
+            newOrderItems.Add(DataSource.orderItems[i]);
         }
         return newOrderItems;
     }
-
 }

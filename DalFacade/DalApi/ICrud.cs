@@ -3,13 +3,11 @@ namespace DalApi
 {
     public interface ICrud <T>
     {
-       //T Value { get; set; }
-
         /// <summary>
         /// An operation receives a data entity and adds to the entity pool
         /// </summary>
         /// <param name="entity">Data entity to be added</param>
-        public void Add(T entity);
+        public int Add(T entity);
 
         /// <summary>
         /// An operation accepts an entity ID number and will return the entity
