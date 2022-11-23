@@ -2,7 +2,7 @@
 namespace Dal;
 using DalApi;
 
-internal class DalProduct:IProduct
+internal class DalProduct : IProduct
 {
 
     /// <summary>
@@ -12,17 +12,18 @@ internal class DalProduct:IProduct
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
     public int Add(Product product)
-    {   
-            int i;
-            //The loop checks if there is a product with the requested ID number, if so it will throw an error
-            for (i = 0; 
-            i < DataSource.products.Count && DataSource.products[i].ID != product.ID;
-            i++) ;
-            if (i != DataSource.products.Count)
-            {
-                throw new Exception("this product is exsist");
-            }
-            DataSource.products.Add( product);
+    {
+        int i = 0;
+        //The loop checks if there is a product with the requested ID number, if so it will throw an error
+        for (i = 0;i < DataSource.products.Count
+        &&
+        DataSource.products[i].ID != product.ID;
+        i++) ;
+        if (i != DataSource.products.Count)
+        {
+            throw new Exception("this product is exsist");
+        }
+        DataSource.products.Add(product);
         return product.ID;
     }
 
@@ -52,13 +53,13 @@ internal class DalProduct:IProduct
     /// This returns all products
     /// </summary>
     /// <returns>All products</returns>
-    public IEnumerable< Product> GetAll()
+    public IEnumerable<Product> GetAll()
     {
-        List<Product> newProduct = new List<Product> ();
+        List<Product> newProduct = new List<Product>();
         //The loop performs the explicit copying of the array of products
         for (int i = 0; i < DataSource.products.Count; i++)
         {
-            newProduct.Add( DataSource.products[i]);
+            newProduct.Add(DataSource.products[i]);
         }
         return newProduct;
     }

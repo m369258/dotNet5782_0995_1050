@@ -8,9 +8,9 @@ internal static class DataSource
     static int num = rand.Next();
 
     //Declaration + assignment of arrays of entities that are consumed
-    static internal List<Product> products=new List<Product>();
-    static internal List <Order> orders=new List<Order>() ;
-    static internal List<OrderItem> orderItems=new List<OrderItem>();
+    internal static List<Product> products = new List<Product>();
+    internal static List<Order> orders = new List<Order>();
+    internal static List<OrderItem> orderItems = new List<OrderItem>();
 
     /// <summary>
     /// An internal class for handling the automatic identifiers and saving the number of existing objects from each actual entity
@@ -18,8 +18,8 @@ internal static class DataSource
     internal static class Config
     {
         //Saving the entities' automatic identifiers
-        static int automaticOrder = 1000;
-        static int automaticOrderItem = 1000;
+        static int automaticOrder = 1;
+        static int automaticOrderItem = 1;
 
         public static int AutomaticOrder
         {
@@ -73,7 +73,7 @@ internal static class DataSource
                 product.InStock = 0;
             else
                 product.InStock = i * 100;
-           products.Add(product); 
+            products.Add(product);
         }
     }
 
@@ -87,7 +87,7 @@ internal static class DataSource
         string[] customerAddresses = { "בעל התניא 20 בני ברק", "גולומב 5 בני ברק", "יצחק אלחנן 2 תל-אביב-יפו", "גורדון 22 בני ברק", "שדרות ירושלים 66 רמת גן", "אבן גבירול 8 בני ברק", "רשי 5 בני ברק", "שבזי 2 בני ברק", "חרמון 3 רעננה", "הבנים 77 הוד השרון", "הרי גולן 113 הרצליה", "שבט נפתלי 1 אשדוד", "רחבת מבצע ארז 3 באר שבע", "גנתון 43 גינתון", "חברון 13 תל אביב - יפו", "כפר הס 9931 כפר הס", "דוד רמז 5 לוד", "עין ורד 159 עין ורד", "דקר 5 בני ברק", "ירושלים 11 בני ברק" };
         for (int i = 0; i < 20; i++)
         {
-            Order order=new Order();
+            Order order = new Order();
             order.ID = Config.AutomaticOrder;
             order.CustomerName = customerNames[i];
             order.CustomerEmail = customerNames[i] + "@gmail.com";
@@ -96,14 +96,14 @@ internal static class DataSource
 
             //About 80% of the orders will have a delivery date that must be after the order creation time
             if (i <= 0.8 * 20)
-                order.ShipDate = orders[i].OrderDate + new TimeSpan(2, 0, 0, 0);
+                order.ShipDate = order.OrderDate + new TimeSpan(2, 0, 0, 0);
             else
-                order.ShipDate = orders[i].OrderDate;
+                order.ShipDate = order.OrderDate;
             //About 60% of orders sent will have a delivery date
             if (i <= 0.6 * 20)
-                order.DeliveryDate = orders[i].ShipDate + new TimeSpan(3, 0, 0, 0);
+                order.DeliveryDate = order.ShipDate + new TimeSpan(3, 0, 0, 0);
             else
-                order.DeliveryDate = orders[i].ShipDate;
+                order.DeliveryDate = order.ShipDate;
             orders.Add(order);
         }
     }
@@ -119,11 +119,11 @@ internal static class DataSource
         {
             for (int j = 0; j < rand.Next(1, 5); j++)
             {
-               OrderItem   orderItem=new OrderItem();
+                OrderItem orderItem = new OrderItem();
                 orderItem.ID = Config.AutomaticOrderItem;
                 orderItem.OrderId = i + 1001;
-                orderItem.ProductId = products[rand.Next(1,products.Count)].ID;
-                orderItem.Price = findPrice(orderItems[i].ProductId);
+                orderItem.ProductId = products[rand.Next(1, products.Count)].ID;
+                orderItem.Price = findPrice(orderItem.ProductId);
                 orderItem.Amount = i + rand.Next(20, 100);
                 cOrderItems++;
                 orderItems.Add(orderItem);

@@ -1,8 +1,8 @@
 ﻿using Do;
 namespace Dal;
 using DalApi;
-using System;
-using System.Collections.Generic;
+//using System;
+//using System.Collections.Generic;
 internal class DalOrder : IOrder
 {
     /// <summary>
@@ -16,7 +16,7 @@ internal class DalOrder : IOrder
         Console.WriteLine("order add befor");
         order.ID = DataSource.Config.AutomaticOrder;
         Console.WriteLine("order add befor1");
-
+        Console.WriteLine(order);
         DataSource.orders.Add(order);
         Console.WriteLine("order add befor2");
 

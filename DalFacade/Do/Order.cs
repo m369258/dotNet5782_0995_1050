@@ -48,7 +48,8 @@ public struct Order
     /// The function returns a string representing a order
     /// </summary>
     /// <returns>a string representing a order</returns>
-    public override string ToString() => $@"
+    public override string ToString() => 
+        $@"
     Order ID: {ID}
     CustomerName: {CustomerName}, 
     CustomerEmail: {CustomerEmail}

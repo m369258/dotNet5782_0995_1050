@@ -1,11 +1,14 @@
 ﻿using Do;
 using Dal;
 using DalApi;
+
+
 enum MainMenu { Exist = 0, Product, Order, OrderItem }
 enum Options { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
 class OurProgram
 {
-  static DalList1 myDalList=new DalList1();
+    //static DalList1 myDalList=new DalList1();
+    private static IDal myDalList = new  DalList1();
     ///// <summary>
     ///// A class variable for each entity and entity
     ///// </summary>
@@ -55,14 +58,14 @@ class OurProgram
         Console.WriteLine(@"enter your choice:
 1: add an product
 2: get a product by ID
-3: gethhhhhhhhhhhhhhhhhh all products 
+3: get all products 
 4: update an product
 5: delete an product ");
         //Accepting the user's choice
         if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
 
         int idProduct;
-        Product p;
+        Product p=new Product();
 
         try
         {
@@ -102,12 +105,9 @@ class OurProgram
                     p = InputProduct();
                     p.ID = idProduct;
                     //will update the product only if all the details have been verified
-                    if (p.ID != null && p.Name != null && p.Category != null && p.InStock != null && p.Price != null)
-                    {
                         myDalList.product.Update(p);
                         Console.WriteLine("The requested product after the change");
                         Console.WriteLine(myDalList.product.Get(idProduct));
-                    }
                     break;
 
                 case Options.Delete:
@@ -347,7 +347,7 @@ instock of product");
                     Console.WriteLine("Display all products of a specific order");
                     Console.WriteLine("enter the id order");
                     if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("idOrder is in valid");
-                  IEnumerable<OrderItem> myOrderItems = myDalList.orderItems.GetByIdOrder(idOrder);
+                    IEnumerable<OrderItem> myOrderItems = myDalList.orderItems.GetByIdOrder(idOrder);
                     Console.WriteLine("Printing all products of a specific order");
                     foreach (OrderItem currOrderItems in myOrderItems)
                     {
