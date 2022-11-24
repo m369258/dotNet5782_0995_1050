@@ -32,6 +32,7 @@ public class OrderItem
 
     /// <summary>
     /// Quantity per item
+    /// 
     /// </summary>
     public double TotalPrice { get; set; }
 }

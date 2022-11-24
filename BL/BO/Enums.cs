@@ -1,10 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace BO;
 
-namespace BO;
+/// <summary>
+/// List of categories in this project
+/// </summary>
+public enum Category
+{
+    cupcakes = 1,
+    cakes,
+    macarons,
+    sweets,
+    ballons,
+}
 
 public enum OrderStatus
 {
