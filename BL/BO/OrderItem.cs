@@ -2,7 +2,7 @@
 
 namespace BO;
 
-internal class OrderItem
+public class OrderItem
 {
     /// <summary>
     /// Unique ID number (automatic runner number)
