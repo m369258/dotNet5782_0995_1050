@@ -1,6 +1,6 @@
 ﻿namespace BO;
 
-internal class Order
+public class Order
 {
     /// <summary>
     /// Unique ID number (automatic runner number)
