@@ -2,7 +2,7 @@
 
 namespace BO;
 
-internal class OrderItem
+public class OrderItem
 {
     /// <summary>
     /// Unique ID number (automatic runner number)
@@ -32,6 +32,7 @@ internal class OrderItem
 
     /// <summary>
     /// Quantity per item
+    /// 
     /// </summary>
     public double TotalPrice { get; set; }
 }
