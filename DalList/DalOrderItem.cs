@@ -144,7 +144,7 @@ internal class DalOrderItem:IOrderItems
         if (ind != -1)
         {
             //The loop narrows the hole created after deleting the requested order
-            for (int i = ind; i < DataSource.orderItems.Count; i++)
+            for (int i = ind; i < DataSource.orderItems.Count-1; i++)
             {
                 DataSource.orderItems[i] = DataSource.orderItems[i + 1];
             }

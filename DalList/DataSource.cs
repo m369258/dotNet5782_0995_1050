@@ -18,8 +18,8 @@ internal static class DataSource
     internal static class Config
     {
         //Saving the entities' automatic identifiers
-        static int automaticOrder = 1;
-        static int automaticOrderItem = 1;
+        static int automaticOrder = 1000;
+        static int automaticOrderItem = 1000;
 
         public static int AutomaticOrder
         {

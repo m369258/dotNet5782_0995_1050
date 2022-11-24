@@ -76,8 +76,9 @@ internal class DalProduct : IProduct
         if (ind != -1)
         {
             //The loop narrows the hole created after deleting the requested product
-            for (int i = ind; i < DataSource.products.Count; i++)
+            for (int i = ind; i < DataSource.products.Count-1; i++)
             {
+                Console.WriteLine(i);
                 DataSource.products[i] = DataSource.products[i + 1];
             }
         }

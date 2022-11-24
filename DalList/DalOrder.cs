@@ -13,13 +13,8 @@ internal class DalOrder : IOrder
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
     public int Add(Order order)
     {
-        Console.WriteLine("order add befor");
         order.ID = DataSource.Config.AutomaticOrder;
-        Console.WriteLine("order add befor1");
-        Console.WriteLine(order);
         DataSource.orders.Add(order);
-        Console.WriteLine("order add befor2");
-
         return order.ID;
     }
 
@@ -72,7 +67,7 @@ internal class DalOrder : IOrder
         if (ind != -1)
         {
             //The loop narrows the hole created after deleting the requested order
-            for (int i = ind; i < DataSource.orders.Count; i++)
+            for (int i = ind; i < DataSource.orders.Count-1; i++)
             {
                 DataSource.orders[i] = DataSource.orders[i + 1];
             }
