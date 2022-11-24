@@ -13,6 +13,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="BlApi\**" />
+	  <Compile Remove="BlImplementation\**" />
+	  <EmbeddedResource Remove="BlApi\**" />
+	  <EmbeddedResource Remove="BlImplementation\**" />
+	  <None Remove="BlApi\**" />
+	  <None Remove="BlImplementation\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\DalFacade\DalFacade.csproj" />
 	  <ProjectReference Include="..\DalList\DalList.csproj" />
 	</ItemGroup>
