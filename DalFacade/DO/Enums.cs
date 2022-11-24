@@ -11,5 +11,3 @@ public enum Category
     sweets,
     ballons,
 }
-
-
