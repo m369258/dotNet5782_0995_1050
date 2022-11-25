@@ -1,6 +1,5 @@
-﻿namespace DO;
+﻿namespace BO;
 
 internal class Tools
 {
-
 }
