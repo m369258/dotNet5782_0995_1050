@@ -1,6 +1,6 @@
-﻿
-namespace BlApi;
+﻿namespace BlApi;
 
 public interface IOrder
 {
+
 }
