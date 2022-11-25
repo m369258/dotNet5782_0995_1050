@@ -1,7 +1,6 @@
 ﻿
-namespace BO
+namespace BO;
+
+internal class Exceptions
 {
-    internal class Exceptions
-    {
-    }
 }
