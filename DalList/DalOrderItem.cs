@@ -3,7 +3,7 @@ namespace Dal;
 using DalApi;
 using System;
 using System.Collections.Generic;
-internal class DalOrderItem:IOrderItems
+internal class DalOrderItem : IOrderItems
 {
 
     /// <summary>
@@ -143,11 +143,7 @@ internal class DalOrderItem:IOrderItems
         int ind = GetIndex(idOrderItem);
         if (ind != -1)
         {
-            //The loop narrows the hole created after deleting the requested order
-            for (int i = ind; i < DataSource.orderItems.Count-1; i++)
-            {
-                DataSource.orderItems[i] = DataSource.orderItems[i + 1];
-            }
+            DataSource.orderItems.RemoveAt(ind);
         }
         else
             throw new Exception("there is no this id orderItem");
