@@ -1,6 +1,8 @@
 ﻿
 namespace BO;
 
-internal class Exceptions
+
+public class NotEnoughInStock : Exception
 {
+    public NotEnoughInStock(string? message) : base(message) { }
 }
