@@ -66,11 +66,7 @@ internal class DalOrder : IOrder
         int ind = GetIndex(idOrder);
         if (ind != -1)
         {
-            //The loop narrows the hole created after deleting the requested order
-            for (int i = ind; i < DataSource.orders.Count-1; i++)
-            {
-                DataSource.orders[i] = DataSource.orders[i + 1];
-            }
+            DataSource.orders.RemoveAt(ind);
         }
         else
             throw new Exception("there is no this id order");

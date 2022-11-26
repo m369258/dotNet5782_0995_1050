@@ -6,8 +6,9 @@ internal class Product : BlApi.IProduct
     public DalApi.IDal myDal { get; set; }
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts()
     {
+        IEnumerable<Do.Product> doProducts = myDal.product.GetAll();
         List<BO.ProductForList> ListProducts = new List<BO.ProductForList>();
-        foreach (var item in myDal.product.GetAll())
+        foreach (var item in doProducts)
         {
             BO.ProductForList product = new BO.ProductForList
             {
@@ -25,24 +26,21 @@ internal class Product : BlApi.IProduct
     {
         if (idProduct > 0)
         {
-            try
+            Do.Product p1;
+            try { p1 = myDal.product.Get(idProduct); }
+            catch (Exception ex) { throw (ex); }//!!לדאוג לזריקת שגיאה מתאימה
+            BO.Product product = new BO.Product()
             {
-                BO.Product product = new BO.Product();
-                Do.Product p1 = myDal.product.Get(idProduct);
-                product.ID = p1.ID;
-                product.Name = p1.Name;
-                product.Price = p1.Price;
-                product.InStock = p1.InStock;
-                product.Category = (BO.Category)(p1.Category);
-                return product;
-            }
-            catch (Exception ex)
-            {
-                throw (ex);
-            }
+                ID = p1.ID,
+                Name = p1.Name,
+                Price = p1.Price,
+                InStock = p1.InStock,
+                Category = (BO.Category)(p1.Category),
+            };
+
+            return product;
         }
-        else
-            throw new BO.IncorrectIndex("Negative ID");
+        else throw new BO.IncorrectIndex("Negative ID");
     }
 
 
@@ -53,13 +51,15 @@ internal class Product : BlApi.IProduct
             try
             {
                 Do.Product p1 = myDal.product.Get(idProduct);
-                BO.ProductItem product = new BO.ProductItem { 
-                ProductID = p1.ID,
+                BO.ProductItem product = new BO.ProductItem
+                {
+                    ProductID = p1.ID,
                     Price = p1.Price,
                     Name = p1.Name,
                     Category = (BO.Category)(p1.Category),
                     InStock = p1.InStock > 0 ? true : false,
-                    Amount = p1.InStock };
+                    Amount = p1.InStock
+                };
                 return product;
             }
             catch (Exception ex)
@@ -74,12 +74,14 @@ internal class Product : BlApi.IProduct
 
     public void AddProduct(BO.Product product)
     {
-        Do.Product p1 = new Do.Product {
+        Do.Product p1 = new Do.Product
+        {
             ID = product.ID > 0 ? product.ID : throw new BO.IncorrectIndex(""),
-        Name = product.Name != null ? product.Name : throw new BO.InvalidField("Empty name"),
-        Price = product.Price >= 0 ? product.Price : throw new BO.InvalidField("Negative price"),
-        InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidField("Unfavorable inStock"),
-        Category = (Do.Category)(product.Category)};
+            Name = product.Name != null ? product.Name : throw new BO.InvalidField("Empty name"),
+            Price = product.Price >= 0 ? product.Price : throw new BO.InvalidField("Negative price"),
+            InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidField("Unfavorable inStock"),
+            Category = (Do.Category)(product.Category)
+        };
         try
         {
             myDal.product.Add(p1);
@@ -94,7 +96,7 @@ internal class Product : BlApi.IProduct
 
     public void DeleteProduct(int idProduct)
     {
-        IEnumerable<Do.Order> orders=new List<Do.Order>();
+        IEnumerable<Do.Order> orders = new List<Do.Order>();
         IEnumerable<Do.OrderItem> orderItems = new List<Do.OrderItem>();
         try
         {
@@ -139,4 +141,4 @@ internal class Product : BlApi.IProduct
     }
 
 
-    }
+}

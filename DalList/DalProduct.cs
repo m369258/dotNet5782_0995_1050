@@ -15,7 +15,7 @@ internal class DalProduct : IProduct
     {
         int i = 0;
         //The loop checks if there is a product with the requested ID number, if so it will throw an error
-        for (i = 0;i < DataSource.products.Count
+        for (i = 0; i < DataSource.products.Count
         &&
         DataSource.products[i].ID != product.ID;
         i++) ;
@@ -75,12 +75,7 @@ internal class DalProduct : IProduct
         int ind = GetIndex(idProduct);
         if (ind != -1)
         {
-            //The loop narrows the hole created after deleting the requested product
-            for (int i = ind; i < DataSource.products.Count-1; i++)
-            {
-                Console.WriteLine(i);
-                DataSource.products[i] = DataSource.products[i + 1];
-            }
+            DataSource.products.RemoveAt(ind);
         }
         else
             throw new Exception("there is no this id product");

@@ -1,6 +1,7 @@
 ﻿
 using BO;
 using DalApi;
+using Do;
 
 namespace BlImplementation;
 
@@ -75,7 +76,7 @@ internal class Cart : BlApi.ICart
             //אין מספיק במלאי
             if (item.QuantityPerItem > myProduct.InStock)
                 throw new InvalidField("No quantity in stock");
-            }
+        }
 
         //יצירת אובייקטט מDO
         Do.Order myOrder = new Do.Order()
@@ -141,10 +142,20 @@ internal class Cart : BlApi.ICart
             //אם הכמות קטנה
             else if (newQuantity < myCart.items[i].QuantityPerItem)
             {
-                int minusQuantity = newQuantity - myCart.items[i].QuantityPerItem;
-                myCart.items[i].QuantityPerItem = newQuantity;
-                myCart.items[i].productPrice -= myCart.items[i].productPrice * minusQuantity;
-                myCart.items[i].TotalPrice -= myCart.items[i].productPrice * minusQuantity;
+                int productId = myCart.items[i].ProductId;
+                Do.Product myProduct;
+                try { myProduct = MyDal.product.Get(productId); }
+                catch { throw; }//אי די של פריט זה אינו קיים
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
+                //יש לדאוג במקרה בו אני משנה את הכמות וכרגע יש פחות מהכמות שאני משנה
+                //יש לדאוג לכל הפרטים הקטנים בו למשל אני משנה משהו בסל וכבר פריט אחד אינו קיים וכו 
+                if (newQuantity <= myProduct.InStock)
+                {
+                    int minusQuantity = newQuantity - myCart.items[i].QuantityPerItem;
+                    myCart.items[i].QuantityPerItem = newQuantity;
+                    myCart.items[i].productPrice -= myCart.items[i].productPrice * minusQuantity;
+                    myCart.items[i].TotalPrice -= myCart.items[i].productPrice * minusQuantity;
+                }
             }
             //אם הכמות נהייתה 0
             else
