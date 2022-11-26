@@ -34,6 +34,7 @@ public interface IProduct
     /// <param name="idProduct">ID to delete a product</param>
     public void DeleteProduct(int idProduct);
 
+    public void UpDateProduct(BO.Product product);
 
 
 

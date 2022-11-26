@@ -14,5 +14,7 @@ public enum Category
 
 public enum OrderStatus
 {
-
+    OrderConfirmed=1,
+    OrderSend,
+    OrderProvided
 }
