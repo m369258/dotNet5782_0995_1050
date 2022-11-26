@@ -21,7 +21,9 @@ internal class Cart : BlApi.ICart
         if (!isExist)
         {
             int productId = myCart.items[i].ProductId;
-            Do.Product myProduct = MyDal.product.Get(productId);
+            Do.Product myProduct;
+            try { myProduct = MyDal.product.Get(productId); }
+            catch { throw; }//אי די של פריט לא קיים(זה יכול לקרות שעד שהזמינו הסירו את הפריט...)
             if (myCart.items[i].QuantityPerItem <= myProduct.InStock)
             {
                 myCart.items[i].productPrice = myProduct.Price;
@@ -32,7 +34,9 @@ internal class Cart : BlApi.ICart
         else//אם המוצר קיים בסל קניות:
         {
             int productId = myCart.items[i].ProductId;
-            Do.Product myProduct = MyDal.product.Get(productId);
+            Do.Product myProduct;
+            try { myProduct = MyDal.product.Get(productId); }
+            catch { throw; }//אי די של פריט לא קיים(זה יכול לקרות שעד שהזמינו הסירו את הפריט...)
             if (myCart.items[i].QuantityPerItem <= myProduct.InStock)
             {
                 myCart.items[i].QuantityPerItem++;
@@ -49,24 +53,60 @@ internal class Cart : BlApi.ICart
     {
         int productId;
         //במקרה בו השם או הכתובת של הלקוח ריקים תיזרק שגיאה
-        if(myCart.CustomerName==null||myCart.CustomerAddress==null)
-            //throw;//תיזרק שגיאה פרטי הלקוח ריקים
-        if(!myCart.CustomerEmail.Contains("@")||!myCart.CustomerEmail.Contains("."))
-                //throw;//זריקה כתובת מייל בלקוח אינו תקינה
+        if (myCart.CustomerName == null)
+            throw new InvalidField("empty customer name");
+        if (myCart.CustomerAddress == null)
+            throw new InvalidField("empty customer address");
+
+        if (!myCart.CustomerEmail.Contains("@") || !myCart.CustomerEmail.Contains("."))
+            throw new InvalidField("Invalid email");
 
         //בדיקה שכל המוצרים קיימים
         foreach (var item in myCart.items)
         {
             //בדיקה האם קיים במלאי
             productId = item.ProductId;
-            Do.Product myProduct = MyDal.product.Get(productId);//במקרה שלא קיים תיזרק שגיאה משכבת הנותנים
+            Do.Product myProduct;
+            try { myProduct = MyDal.product.Get(productId); }//במקרה שלא קיים תיזרק שגיאה משכבת הנותנים
+            catch (Exception ex) { throw; }//!!לטפל בשגיאה
             //בדיקה האם הכמויות חיוביות
-            if(item.QuantityPerItem <0)
-                //throw;//תיזרק שגיאה הכמות שלילית
-            //יש מספיק במלאי
+            if (item.QuantityPerItem < 0)
+                throw new InvalidField("negative quantity");
+            //אין מספיק במלאי
             if (item.QuantityPerItem > myProduct.InStock)
-                //throw;//אז תיזרק שגיאה של אין מספיק במלאי
-            
+                throw new InvalidField("No quantity in stock");
+            }
+
+        //יצירת אובייקטט מDO
+        Do.Order myOrder = new Do.Order()
+        {
+            CustomerName = myCart.CustomerName,
+            CustomerAddress = myCart.CustomerAddress,
+            CustomerEmail = myCart.CustomerEmail,
+            OrderDate = DateTime.Now,
+            ShipDate = new DateTime(),
+            DeliveryDate = new DateTime()
+        };
+
+        int orderId = MyDal.order.Add(myOrder);
+
+        foreach (var item in myCart.items)
+        {
+            Do.OrderItem myOrderItem = new Do.OrderItem()
+            {
+                OrderId = orderId,
+                ProductId = item.ProductId,
+                Price = item.productPrice,//???האם צריך מחיר רק למוצר יחיד או לכל המוצרים?????????????????????????
+                Amount = item.QuantityPerItem
+            };
+            try { MyDal.orderItems.Add(myOrderItem); }//לעשות כאן זריקת חריגה במקרה בו אין אפשרות להוסיף........
+            catch { throw; }//לזרוק שגיאה מתאימה!!!!
+
+            Do.Product product;
+            try { product = MyDal.product.Get(myOrderItem.ProductId); }
+            catch { throw; }//הפריט כבר קיים
+            product.InStock -= myOrderItem.Amount;
+            MyDal.product.Update(product);
         }
     }
 
@@ -86,7 +126,9 @@ internal class Cart : BlApi.ICart
             if (newQuantity > myCart.items[i].QuantityPerItem)
             {
                 int productId = myCart.items[i].ProductId;
-                Do.Product myProduct = MyDal.product.Get(productId);
+                Do.Product myProduct;
+                try { myProduct = MyDal.product.Get(productId); }
+                catch { throw; }//אי די של פריט זה אינו קיים
                 if (newQuantity <= myProduct.InStock)
                 {
                     int plusQuantity = newQuantity - myCart.items[i].QuantityPerItem;
