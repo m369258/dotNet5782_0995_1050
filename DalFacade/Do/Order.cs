@@ -1,7 +1,4 @@
-﻿using System.Diagnostics;
-using System.Xml.Linq;
-
-namespace Do;
+﻿namespace Do;
 
 
 /// <summary>
