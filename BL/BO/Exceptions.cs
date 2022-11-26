@@ -19,6 +19,7 @@ public class InvalidField: Exception
 public class CannotPerformThisOperation : Exception
 {
     public CannotPerformThisOperation(string? message) : base(message) { }
+
 }
 
 public class NotEnoughInStock : Exception
