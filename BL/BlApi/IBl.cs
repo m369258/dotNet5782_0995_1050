@@ -1,6 +1,11 @@
-﻿namespace BlApi;
+﻿using System.Security.Principal;
+
+namespace BlApi;
 
 public interface IBl
 {
-   //3 משתנים מטיפוסי 3 ממשקים
+    public IOrder order { get; }
+    public IProduct product { get; }
+    public ICart cart { get; }
+
 }

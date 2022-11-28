@@ -6,11 +6,12 @@ namespace BlTest;
 
 internal class Program
 {
+    private static IBl myBL = new Bl();
+
     enum MainMenu { Exist = 0, Product, Order, Cart }
-    enum Options { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
+    enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
     static void Main(string[] args)
     {
-            //private static IBl myBL;
 
     MainMenu choice;
         //Receiving a voluntary action number to perform
@@ -18,7 +19,7 @@ internal class Program
 0: exit
 1: prodeuct
 2: order
-3: order-item");
+3: cart");
         choice = (MainMenu)int.Parse(Console.ReadLine());
         //As long as 0 was not pressed to exit
         while (choice != 0)
@@ -41,7 +42,7 @@ internal class Program
 0: exit
 1: prodeuct
 2: order
-3: order-item");
+3: cart");
             choice = (MainMenu)int.Parse(Console.ReadLine());
         }
     }
@@ -49,7 +50,7 @@ internal class Program
 
     private static void submenuOfProduct()
     {
-        Options choice;
+        OptionsOfProducts choice;
         //Print the checklist for the entity
         Console.WriteLine(@"enter your choice:
 1: add an product
@@ -58,35 +59,35 @@ internal class Program
 4: update an product
 5: delete an product ");
         //Accepting the user's choice
-        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
+        if (!OptionsOfProducts.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
 
         int idProduct;
-       BO. Product p = new BO.Product();
+       BO.Product p = new BO.Product();
 
         try
         {
             switch (choice)
             {
-                case Options.Add:
+                case OptionsOfProducts.Add:
                     Console.WriteLine("Adding a product");
                     Console.Write("enter idProduct with 6 numbers:");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     p = InputProduct();
                     p.ID = idProduct;
-                    Console.WriteLine(myDalList.product.Add(p));
+                    myBL.product.AddProduct(p);
                     Console.WriteLine("Product whose number:{0} has been successfully added", idProduct);
                     break;
 
-                case Options.Get:
+                case OptionsOfProducts.Get:
                     Console.WriteLine("Receiving a number by the ID");
                     Console.WriteLine("enter the id product");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
-                    Console.WriteLine(myDalList.product.Get(idProduct));
+                    Console.WriteLine(myBL.product.Get(idProduct));
                     break;
 
-                case Options.GetAll:
-                    IEnumerable<Product> products = myDalList.product.GetAll();
-                    foreach (Product myProduct in products)
+                case OptionsOfProducts.GetAll:
+                    IEnumerable<BO.Product> products = myBL.product.GetAll();
+                    foreach (BO.Product myProduct in products)
                     {
                         Console.WriteLine(myProduct);
                     }
@@ -118,6 +119,34 @@ internal class Program
         {
             Console.WriteLine(ex);
         }
+    }
+
+
+    private static BO.Product InputProduct()
+    {
+        int instock;
+        double price;
+        string name;
+        BO.Category category;
+        Console.WriteLine(@"enter name,
+category- 
+for cupcakes insert 1
+for cakes insert 2
+for macarons insert 3
+for sweets insert 4
+for ballons insert 5,
+price, 
+instock of product");
+        name = Console.ReadLine();
+        if (!BO.Category.TryParse(Console.ReadLine(), out category)) throw new Exception("category is in valid");
+        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
+        if (!int.TryParse(Console.ReadLine(), out instock)) throw new Exception("inStock is in valid");
+        BO.Product p = new BO.Product();
+        p.Name = name;
+        p.Category = category;
+        p.Price = price;
+        p.InStock = instock;
+        return p;
     }
 
     private static void submenuOfOrder()
