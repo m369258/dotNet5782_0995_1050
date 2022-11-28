@@ -82,28 +82,68 @@ internal class Order : BlApi.IOrder
 
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
-        IEnumerable<Do.Order> myOrders = new List<Do.Order>();
-         BO.Order order = new BO.Order();
+        IEnumerable<Do.OrderItem> doOrderItems = new List<Do.OrderItem>();
+        List<BO.OrderItem> boOrderItems = new List<BO.OrderItem>();
+        double price = 0.0;
+        Do.Order doOrder = new Do.Order();
+        ////חריגות
+        try
+        {
+            doOrder = myDal.order.Get(idOrder);
+        }
+        catch { }
+
+        if (doOrder.ShipDate != null)
+            throw new Exception("ההזמנה כבר סופקה");
+        doOrder.ShipDate = DateTime.Now;
+        try
+        {
+            myDal.order.Update(doOrder);
+        }
+        catch { }
+        doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
+        foreach (var item in doOrderItems)
+        {
+            Do.Product doProduct = myDal.product.Get(item.ProductId);
+            BO.OrderItem boOrderItem = new BO.OrderItem
+            {
+                ID = item.ID,
+                ProductId = item.ProductId,
+                NameProduct = doProduct.Name,
+                productPrice = doProduct.Price,
+                QuantityPerItem = item.Amount,
+                TotalPrice = doProduct.Price * item.Amount
+            };
+            price += boOrderItem.TotalPrice;
+            boOrderItems.Add(boOrderItem);
+        }
+        BO.Order order = new BO.Order
+        {
+            ID = idOrder,
+            CustomerName = doOrder.CustomerName,
+            CustomerAddress=doOrder.CustomerAddress,
+            CustomerEmail=doOrder.CustomerEmail,
+            status = (BO.OrderStatus)((doOrder.DeliveryDate == null && doOrder.ShipDate == null) ? 1 : (doOrder.ShipDate == null) ? 2 : 3),
+            DeliveryDate = doOrder.DeliveryDate,
+            ShipDate = doOrder.ShipDate,
+            PaymentDate = doOrder.OrderDate,
+            items = boOrderItems,
+            totalPrice = price,
+        };
+
         return order;
     }
 
     public BO.OrderTracking OrderTracking(int idOrder)
     {
+        Do.Order doOrder=new Do.Order();
         ////חריגות
-        bool isExsist = false;
-        Do.Order doOrder = new Do.Order();
-        IEnumerable<Do.Order> boOrders = new List<Do.Order>();
-        boOrders = myDal.order.GetAll();
-        foreach(var item in boOrders)
-        {
-            if(item.ID==idOrder)
-            {
-                isExsist = true;
-                doOrder = item;
-            }
+        try {
+             doOrder = myDal.order.Get(idOrder);
         }
-        if (!isExsist)
-            throw new Exception("");
+        catch { }
+
+
         BO.OrderTracking myOrderTracking = new BO.OrderTracking
         {
             ID = idOrder,
@@ -111,7 +151,6 @@ internal class Order : BlApi.IOrder
             ///////tuple
         };
         return myOrderTracking;
-
     }
 
     public BO.Order OrderShippingUpdate(int orderId)
@@ -178,14 +217,6 @@ internal class Order : BlApi.IOrder
 
                 DeliveryDate = doOrder.DeliveryDate,
                 ShipDate = doOrder.ShipDate,
-
-
-
-
-
-
-
-
                 items = doItems.;
             };
         }
