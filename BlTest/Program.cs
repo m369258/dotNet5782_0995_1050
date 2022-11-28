@@ -1,7 +1,4 @@
 ﻿using BlApi;
-using Dal;
-using DalApi;
-
 namespace BlTest;
 
 internal class Program
@@ -9,7 +6,7 @@ internal class Program
     private static IBl myBL = new Bl();
 
     enum MainMenu { Exist = 0, Product, Order, Cart }
-    enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
+    enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDAndCart }
     static void Main(string[] args)
     {
 
@@ -82,37 +79,46 @@ internal class Program
                     Console.WriteLine("Receiving a number by the ID");
                     Console.WriteLine("enter the id product");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
-                    Console.WriteLine(myBL.product.Get(idProduct));
+                    Console.WriteLine(myBL.product.GetProduct(idProduct));
                     break;
 
                 case OptionsOfProducts.GetAll:
-                    IEnumerable<BO.Product> products = myBL.product.GetAll();
-                    foreach (BO.Product myProduct in products)
+                    IEnumerable<BO.ProductForList> products = myBL.product.GetListOfProducts();
+                    foreach (var myProduct in products)
                     {
                         Console.WriteLine(myProduct);
                     }
                     break;
 
-                case Options.Update:
+                case OptionsOfProducts.Update:
                     Console.WriteLine("Product update:");
                     Console.WriteLine("enter id product:");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     Console.WriteLine("The requested product before the change");
-                    Console.WriteLine(myDalList.product.Get(idProduct));
+                    Console.WriteLine(myBL.product.GetProduct(idProduct));
                     p = InputProduct();
                     p.ID = idProduct;
                     //will update the product only if all the details have been verified
-                    myDalList.product.Update(p);
+                    myBL.product.UpDateProduct(p);
                     Console.WriteLine("The requested product after the change");
-                    Console.WriteLine(myDalList.product.Get(idProduct));
+                    Console.WriteLine(myBL.product.GetProduct(idProduct));
                     break;
 
-                case Options.Delete:
+                case OptionsOfProducts.Delete:
                     Console.WriteLine("Product to be deleted");
                     Console.WriteLine("enter the id product");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
-                    myDalList.product.Delete(idProduct);
+                    myBL.product.DeleteProduct(idProduct);
                     break;
+
+                case OptionsOfProducts.GetByIDAndCart:
+                    Console.WriteLine("Receiving a number by the ID");
+                    Console.WriteLine("enter the id product");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    BO.Cart boCart = InputCart();
+                    Console.WriteLine(myBL.product.GetProduct(idProduct,boCart));
+                    break;
+
             }
         }
         catch (Exception ex)
@@ -147,6 +153,70 @@ instock of product");
         p.Price = price;
         p.InStock = instock;
         return p;
+    }
+
+    private static BO.Cart InputCart()
+    {
+        string CustomerName, CustomerEmail, CustomerAddress;
+        List<BO.OrderItem> items=new List<BO.OrderItem>();
+        BO.OrderItem boOrderItem=new BO.OrderItem();
+        double price;
+        Console.WriteLine(@"enter CustomerName,
+enter CustomerEmail,
+enter CustomerAddress,
+add order items till enter 0,
+enter price");
+        CustomerName = Console.ReadLine();
+        CustomerEmail = Console.ReadLine();
+        CustomerAddress = Console.ReadLine();
+        items.Add(InputOrderItem());
+        int addOrderItems=int.Parse(Console.ReadLine());
+        while(addOrderItems!=0)
+        {
+            items.Add(InputOrderItem());
+            addOrderItems = int.Parse(Console.ReadLine());
+        }
+        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
+        BO.Cart p = new BO.Cart
+        {
+            CustomerName= CustomerName,
+            CustomerEmail= CustomerEmail,
+            CustomerAddress= CustomerAddress,
+            items=items,
+            TotalPrice=price
+        };
+        return p;
+    }
+
+    private static BO.OrderItem InputOrderItem()
+    {
+        int id, idProduct, quantityPerItem;
+        string nameProduct;
+        double productPrice, totalPrice;
+        Console.WriteLine(@"enter ID,
+enter idProduct,
+enter nameProduct,
+enter productPrice,
+enter quantityPerItem,
+enter totalPrice");
+        if (!int.TryParse(Console.ReadLine(), out id)) throw new Exception("id is in valid");
+        if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("id is in valid");
+
+        nameProduct = Console.ReadLine();
+        if (!double.TryParse(Console.ReadLine(), out productPrice)) throw new Exception("productPrice is in valid");
+        if (!int.TryParse(Console.ReadLine(), out quantityPerItem)) throw new Exception("quantityPerItem is in valid");
+        if (!double.TryParse(Console.ReadLine(), out totalPrice)) throw new Exception("totalPrice is in valid");
+
+        BO.OrderItem boOrderItem = new BO.OrderItem
+        {
+            ID = id,
+            ProductId= idProduct,
+            QuantityPerItem= quantityPerItem,
+            NameProduct=nameProduct,
+            productPrice=productPrice,
+            TotalPrice=totalPrice
+        };
+        return boOrderItem;
     }
 
     private static void submenuOfOrder()
