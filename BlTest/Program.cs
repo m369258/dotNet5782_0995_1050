@@ -6,11 +6,12 @@ internal class Program
     private static IBl myBL = new Bl();
 
     enum MainMenu { Exist = 0, Product, Order, Cart }
-    enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDAndCart }
+    enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
+    enum OptionsOfOrders { GetListOfOrders, OrderShippingUpdate, GetOrderDetails, OrderDeliveryUpdate }
     static void Main(string[] args)
     {
 
-    MainMenu choice;
+        MainMenu choice;
         //Receiving a voluntary action number to perform
         Console.WriteLine(@"please choose one of the following:
 0: exit
@@ -59,7 +60,7 @@ internal class Program
         if (!OptionsOfProducts.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
 
         int idProduct;
-       BO.Product p = new BO.Product();
+        BO.Product p = new BO.Product();
 
         try
         {
@@ -221,7 +222,66 @@ enter totalPrice");
 
     private static void submenuOfOrder()
     {
+        OptionsOfOrders choice;
+        //Print the checklist for the entity
+        Console.WriteLine(@"enter your choice:
+1: get list of orders
+2: order shipping update
+3: get order details
+4: order delivery update");
+        //Accepting the user's choice
+        if (!OptionsOfOrders.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is invalid");
+        int idOrder;
+        BO.Order myOrder;
 
+        try
+        {
+            BO.Order boOrder;
+            //Checking what action the user wants to run
+            switch (choice)
+            {
+
+                case OptionsOfOrders.GetListOfOrders:
+                    IEnumerable<BO.OrderForList> orderForLists = myBL.order.GetListOfOrders();
+                    foreach (BO.OrderForList currOrderForList in orderForLists)
+                    {
+                        Console.WriteLine(currOrderForList);
+                    }
+                    break;
+
+                case OptionsOfOrders.OrderShippingUpdate:
+                    Console.WriteLine("enter id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    Console.WriteLine("before: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    boOrder = myBL.order.OrderShippingUpdate(idOrder);
+                    Console.WriteLine("after: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break;
+
+                case OptionsOfOrders.GetOrderDetails:
+                    //Receipt of order ID number
+                    Console.WriteLine("enter the id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break;
+
+                case OptionsOfOrders.OrderDeliveryUpdate:
+                    Console.WriteLine("enter id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    Console.WriteLine("before: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    boOrder = myBL.order.OrderDeliveryUpdate(idOrder);
+                    Console.WriteLine("after: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break;
+            }
+        }
+        //In case of any error an appropriate error will be thrown
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 
     private static void submenuOfCart()
