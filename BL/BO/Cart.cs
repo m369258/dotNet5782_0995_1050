@@ -1,5 +1,4 @@
-﻿
-namespace BO;
+﻿namespace BO;
 
 /// <summary>
 /// For the shopping basket management and order confirmation screen, which will contain the following.

@@ -18,3 +18,4 @@ public enum OrderStatus
     OrderSend,
     OrderProvided
 }
+
