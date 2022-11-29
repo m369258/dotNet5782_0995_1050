@@ -21,14 +21,20 @@ internal class Cart : BlApi.ICart
         //אם מוצר לא קיים בסל קניות
         if (!isExist)
         {
-            int productId = myCart.items[i].ProductId;
+            //int productId = myCart.items[i].ProductId;
             Do.Product myProduct;
-            try { myProduct = MyDal.product.Get(productId); }
+            try { myProduct = MyDal.product.Get(idProduct); }
             catch { throw; }//אי די של פריט לא קיים(זה יכול לקרות שעד שהזמינו הסירו את הפריט...)
-            if (myCart.items[i].QuantityPerItem <= myProduct.InStock)
+            if (myProduct.InStock >= 1)
             {
-                myCart.items[i].productPrice = myProduct.Price;
-                myCart.items[i].TotalPrice += myProduct.Price;
+                BO.OrderItem myOrderItem = new BO.OrderItem();
+                myOrderItem.ProductId = idProduct;
+                myOrderItem.NameProduct = myProduct.Name;
+                myOrderItem.productPrice = myProduct.Price;
+                myOrderItem.QuantityPerItem = 1;
+                myOrderItem.productPrice = myProduct.Price;
+                myOrderItem.TotalPrice = myProduct.Price;
+                myCart.items.Add(myOrderItem);
             }
             else throw new NotEnoughInStock("There is not enough stock of this product.");
         }
@@ -54,9 +60,9 @@ internal class Cart : BlApi.ICart
     {
         int productId;
         //במקרה בו השם או הכתובת של הלקוח ריקים תיזרק שגיאה
-        if (myCart.CustomerName == null)
+        if (myCart.CustomerName == "")
             throw new InvalidField("empty customer name");
-        if (myCart.CustomerAddress == null)
+        if (myCart.CustomerAddress == "")
             throw new InvalidField("empty customer address");
 
         if (!myCart.CustomerEmail.Contains("@") || !myCart.CustomerEmail.Contains("."))
@@ -85,8 +91,8 @@ internal class Cart : BlApi.ICart
             CustomerAddress = myCart.CustomerAddress,
             CustomerEmail = myCart.CustomerEmail,
             OrderDate = DateTime.Now,
-            ShipDate = new DateTime(),
-            DeliveryDate = new DateTime()
+            ShipDate = DateTime.MinValue,
+            DeliveryDate = DateTime.MinValue,
         };
 
         int orderId = MyDal.order.Add(myOrder);
