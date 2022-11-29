@@ -6,7 +6,7 @@ internal class Program
     private static IBl myBL = new Bl();
 
     enum MainMenu { Exist = 0, Product, Order, Cart }
-    enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
+    enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDAndCart }
     enum OptionsOfOrders { GetListOfOrders, OrderShippingUpdate, GetOrderDetails, OrderDeliveryUpdate }
     static void Main(string[] args)
     {
@@ -55,7 +55,8 @@ internal class Program
 2: get a product by ID
 3: get all products 
 4: update an product
-5: delete an product ");
+5: delete an product 
+6:get a product by ID and Cart");
         //Accepting the user's choice
         if (!OptionsOfProducts.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
 
@@ -113,7 +114,6 @@ internal class Program
                     break;
 
                 case OptionsOfProducts.GetByIDAndCart:
-                    Console.WriteLine("Receiving a number by the ID");
                     Console.WriteLine("enter the id product");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     BO.Cart boCart = InputCart();
@@ -156,6 +156,7 @@ instock of product");
         return p;
     }
 
+
     private static BO.Cart InputCart()
     {
         string CustomerName, CustomerEmail, CustomerAddress;
@@ -170,11 +171,13 @@ enter price");
         CustomerName = Console.ReadLine();
         CustomerEmail = Console.ReadLine();
         CustomerAddress = Console.ReadLine();
-        items.Add(InputOrderItem());
+
+        Console.WriteLine("enter 1 to add OrderItem and 0 to stop adding:");
         int addOrderItems=int.Parse(Console.ReadLine());
         while(addOrderItems!=0)
         {
             items.Add(InputOrderItem());
+            Console.WriteLine("enter 1 to add OrderItem and 0 to stop adding:");
             addOrderItems = int.Parse(Console.ReadLine());
         }
         if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
@@ -191,16 +194,14 @@ enter price");
 
     private static BO.OrderItem InputOrderItem()
     {
-        int id, idProduct, quantityPerItem;
+        int  idProduct, quantityPerItem;
         string nameProduct;
         double productPrice, totalPrice;
-        Console.WriteLine(@"enter ID,
-enter idProduct,
+        Console.WriteLine(@"enter idProduct,
 enter nameProduct,
 enter productPrice,
 enter quantityPerItem,
 enter totalPrice");
-        if (!int.TryParse(Console.ReadLine(), out id)) throw new Exception("id is in valid");
         if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("id is in valid");
 
         nameProduct = Console.ReadLine();
@@ -210,7 +211,6 @@ enter totalPrice");
 
         BO.OrderItem boOrderItem = new BO.OrderItem
         {
-            ID = id,
             ProductId= idProduct,
             QuantityPerItem= quantityPerItem,
             NameProduct=nameProduct,

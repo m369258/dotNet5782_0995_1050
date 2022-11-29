@@ -17,6 +17,7 @@ internal class Cart : BlApi.ICart
             if (myCart.items[i].ProductId == idProduct)
                 isExist = true;
         }
+        
 
         //אם מוצר לא קיים בסל קניות
         if (!isExist)
@@ -87,6 +88,7 @@ internal class Cart : BlApi.ICart
             OrderDate = DateTime.Now,
             ShipDate = new DateTime(),
             DeliveryDate = new DateTime()
+            
         };
 
         int orderId = MyDal.order.Add(myOrder);

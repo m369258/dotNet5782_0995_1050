@@ -8,7 +8,7 @@ enum Options { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderA
 class OurProgram
 {
     //static DalList1 myDalList=new DalList1();
-    private static IDal myDalList = new  DalList1();
+    private static IDal myDalList = new Dal.DalList();
     ///// <summary>
     ///// A class variable for each entity and entity
     ///// </summary>

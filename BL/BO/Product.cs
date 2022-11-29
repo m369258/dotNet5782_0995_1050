@@ -1,4 +1,7 @@
-﻿namespace BO;
+﻿using System.Diagnostics;
+using System.Xml.Linq;
+
+namespace BO;
 
 public class Product
 {
@@ -26,4 +29,12 @@ public class Product
     /// Units in Stock
     /// </summary>
     public int InStock { get; set; }
+
+public override string ToString() => $@"
+        Product ID: {ID}
+        Name: {Name}, 
+        category: {Category}
+    	Price: {Price}
+    	Amount in stock: {InStock}
+        ";
 }

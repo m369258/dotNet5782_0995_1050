@@ -3,7 +3,7 @@ using System.Security.Principal;
 
 namespace Dal;
 
-sealed public class DalList1 : IDal
+sealed public class DalList : IDal
 {
     public IOrder order => new DalOrder();
 

@@ -87,7 +87,7 @@ internal class DalOrder : IOrder
             i++;
         }
         //If the order is found, its position in the order array will be returned, otherwise -1 will be returned
-        if (DataSource.orders[i].ID == idOrder)
+        if (i< DataSource.orders.Count&&DataSource.orders[i].ID == idOrder)
             return i;
         return -1;
     }

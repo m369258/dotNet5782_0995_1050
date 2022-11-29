@@ -33,4 +33,12 @@ public class ProductItem
     /// Quantity in the buyer's shopping cart
     /// </summary>
     public int Amount { get; set; }
+
+    public override string ToString() => $@"
+        Product ID: {ProductID}
+        Name: {Name}, 
+        category: {Category}
+    	Price: {Price}
+    	in stock: {InStock}
+        Amount:{Amount}";
 }

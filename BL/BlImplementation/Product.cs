@@ -2,8 +2,8 @@
 
 internal class Product : BlApi.IProduct
 {
-    // DalApi.IDal dalProduct = new Dal.DalList1();
-    public DalApi.IDal myDal { get; set; }
+     DalApi.IDal myDal = new Dal.DalList();
+   // public DalApi.IDal myDal { get; set; }
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts()
     {
         IEnumerable<Do.Product> doProducts = myDal.product.GetAll();
@@ -50,15 +50,25 @@ internal class Product : BlApi.IProduct
         {
             try
             {
+                bool isExsist = false;
+                BO.OrderItem boOrderItem = new BO.OrderItem();
                 Do.Product p1 = myDal.product.Get(idProduct);
+                for(int i=0;i<cart.items.Count;i++)
+                {
+                    if (cart.items[i].ProductId == idProduct)
+                    {
+                        boOrderItem = cart.items[i];
+                        isExsist = true;
+                    }
+                }
                 BO.ProductItem product = new BO.ProductItem
                 {
                     ProductID = p1.ID,
-                    Price = p1.Price,
                     Name = p1.Name,
+                    Price = p1.Price,
                     Category = (BO.Category)(p1.Category),
                     InStock = p1.InStock > 0 ? true : false,
-                    Amount = p1.InStock
+                    Amount=boOrderItem.QuantityPerItem
                 };
                 return product;
             }
@@ -113,7 +123,7 @@ internal class Product : BlApi.IProduct
 
             }
 
-            myDal.order.Delete(idProduct);
+            myDal.product.Delete(idProduct);
         }
         catch (Exception ex)
         {
