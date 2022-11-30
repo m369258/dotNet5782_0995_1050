@@ -7,7 +7,9 @@ namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
 {
-    public DalApi.IDal MyDal { get; set; }
+    DalApi.IDal MyDal = new Dal.DalList();
+
+    // public DalApi.IDal MyDal { get; set; }
     public BO.Cart Add(BO.Cart myCart, int idProduct)
     {
         bool isExist = false;

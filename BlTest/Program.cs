@@ -7,7 +7,8 @@ internal class Program
 
     enum MainMenu { Exist = 0, Product, Order, Cart }
     enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDAndCart }
-    enum OptionsOfOrders { GetListOfOrders, OrderShippingUpdate, GetOrderDetails, OrderDeliveryUpdate }
+    enum OptionsOfOrders { GetListOfOrders = 1, OrderShippingUpdate, GetOrderDetails, OrderDeliveryUpdate }
+    enum OptionsOfCarts { Add = 1, Update, MakeAnOrder }
     static void Main(string[] args)
     {
 
@@ -117,7 +118,7 @@ internal class Program
                     Console.WriteLine("enter the id product");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     BO.Cart boCart = InputCart();
-                    Console.WriteLine(myBL.product.GetProduct(idProduct,boCart));
+                    Console.WriteLine(myBL.product.GetProduct(idProduct, boCart));
                     break;
 
             }
@@ -160,8 +161,8 @@ instock of product");
     private static BO.Cart InputCart()
     {
         string CustomerName, CustomerEmail, CustomerAddress;
-        List<BO.OrderItem> items=new List<BO.OrderItem>();
-        BO.OrderItem boOrderItem=new BO.OrderItem();
+        List<BO.OrderItem> items = new List<BO.OrderItem>();
+        BO.OrderItem boOrderItem = new BO.OrderItem();
         double price;
         Console.WriteLine(@"enter CustomerName,
 enter CustomerEmail,
@@ -173,8 +174,8 @@ enter price");
         CustomerAddress = Console.ReadLine();
 
         Console.WriteLine("enter 1 to add OrderItem and 0 to stop adding:");
-        int addOrderItems=int.Parse(Console.ReadLine());
-        while(addOrderItems!=0)
+        int addOrderItems = int.Parse(Console.ReadLine());
+        while (addOrderItems != 0)
         {
             items.Add(InputOrderItem());
             Console.WriteLine("enter 1 to add OrderItem and 0 to stop adding:");
@@ -183,18 +184,18 @@ enter price");
         if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
         BO.Cart p = new BO.Cart
         {
-            CustomerName= CustomerName,
-            CustomerEmail= CustomerEmail,
-            CustomerAddress= CustomerAddress,
-            items=items,
-            TotalPrice=price
+            CustomerName = CustomerName,
+            CustomerEmail = CustomerEmail,
+            CustomerAddress = CustomerAddress,
+            items = items,
+            TotalPrice = price
         };
         return p;
     }
 
     private static BO.OrderItem InputOrderItem()
     {
-        int  idProduct, quantityPerItem;
+        int idProduct, quantityPerItem;
         string nameProduct;
         double productPrice, totalPrice;
         Console.WriteLine(@"enter idProduct,
@@ -211,11 +212,11 @@ enter totalPrice");
 
         BO.OrderItem boOrderItem = new BO.OrderItem
         {
-            ProductId= idProduct,
-            QuantityPerItem= quantityPerItem,
-            NameProduct=nameProduct,
-            productPrice=productPrice,
-            TotalPrice=totalPrice
+            ProductId = idProduct,
+            QuantityPerItem = quantityPerItem,
+            NameProduct = nameProduct,
+            productPrice = productPrice,
+            TotalPrice = totalPrice
         };
         return boOrderItem;
     }
@@ -286,7 +287,67 @@ enter totalPrice");
 
     private static void submenuOfCart()
     {
+        OptionsOfCarts choice;
+        //Print the checklist for the entity
+        Console.WriteLine(@"enter your choice:
+1: add a cart
+2: update a cart
+3: make an order
+");
+        //Accepting the user's choice
+        if (!OptionsOfCarts.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is invalid");
 
+        try
+        {
+            int idProduct;
+            BO.Cart myCart = new BO.Cart();
+            //Checking what action the user wants to run
+            switch (choice)
+            {
+
+                case OptionsOfCarts.Add:
+                    Console.WriteLine("Adding a product to the cart");
+                    Console.Write("enter idProduct with 6 numbers:");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    myCart = InputCart();
+                    BO.Cart updateCart = myBL.cart.Add(myCart, idProduct);
+                    Console.WriteLine(updateCart);
+                    break;
+
+
+                case OptionsOfOrders.OrderShippingUpdate:
+                    Console.WriteLine("enter id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    Console.WriteLine("before: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    boOrder = myBL.order.OrderShippingUpdate(idOrder);
+                    Console.WriteLine("after: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break;
+
+                case OptionsOfOrders.GetOrderDetails:
+                    //Receipt of order ID number
+                    Console.WriteLine("enter the id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break;
+
+                case OptionsOfOrders.OrderDeliveryUpdate:
+                    Console.WriteLine("enter id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    Console.WriteLine("before: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    boOrder = myBL.order.OrderDeliveryUpdate(idOrder);
+                    Console.WriteLine("after: ");
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break;
+            }
+        }
+        //In case of any error an appropriate error will be thrown
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+        }
     }
 
 

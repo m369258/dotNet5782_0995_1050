@@ -1,4 +1,6 @@
-﻿using System.Runtime.ConstrainedExecution;
+﻿using System.Diagnostics;
+using System.Runtime.ConstrainedExecution;
+using System.Xml.Linq;
 
 namespace BO;
 
@@ -35,4 +37,14 @@ public class OrderItem
     /// 
     /// </summary>
     public double TotalPrice { get; set; }
+
+
+    public override string ToString() => $@"
+         ID: {ID}
+        ProductId:{ProductId}
+        NameProduct: {NameProduct}, 
+        productPrice: {productPrice}
+    	QuantityPerItem: {QuantityPerItem}
+    	TotalPrice: {TotalPrice}
+        ";
 }

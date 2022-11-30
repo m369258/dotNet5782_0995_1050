@@ -51,4 +51,17 @@ public class Order
     /// Total price of order
     /// </summary>
     public double totalPrice { get; set; }
+
+    public override string ToString() => $@"
+         CustomerName: {CustomerName}
+        CustomerEmail:{CustomerEmail}
+        CustomerAddress: {CustomerAddress}
+        PaymentDate: {PaymentDate}
+    	status: {status}
+    	DeliveryDate: {DeliveryDate}
+    	ShipDate: {ShipDate}
+        items:{items}
+        totalPrice:{totalPrice}
+        ";
+
 }

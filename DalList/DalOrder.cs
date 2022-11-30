@@ -45,7 +45,7 @@ internal class DalOrder : IOrder
     /// <returns>All orders</returns>
     public IEnumerable<Order> GetAll()
     {
-        List<Order> newOrders = new List<Order>();
+        List<Do.Order> newOrders = new List<Do.Order>();
         //The loop performs the explicit copying of the array of orders
         for (int i = 0; i < DataSource.orders.Count; i++)
         {

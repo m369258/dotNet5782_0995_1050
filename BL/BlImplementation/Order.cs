@@ -7,12 +7,15 @@ namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    public DalApi.IDal myDal { get; set; }
+    DalApi.IDal myDal = new Dal.DalList();
+
+    // public DalApi.IDal myDal { get; set; }
     public IEnumerable<BO.OrderForList> GetListOfOrders() {
         double price = 0;
         IEnumerable<Do.OrderItem> myOrderItems = new List<Do.OrderItem>();
         List<BO.OrderForList> ListOrders = new List<BO.OrderForList>();
-        foreach (var item in myDal.order.GetAll())
+        IEnumerable<Do.Order> doOrders = myDal.order.GetAll();
+        foreach (var item in doOrders)
         {
             myOrderItems = myDal.orderItems.GetByIdOrder(item.ID);
             foreach (var it in myOrderItems)
@@ -23,7 +26,7 @@ internal class Order : BlApi.IOrder
             {
                 OrderID = item.ID,
                 CustomerName = item.CustomerName,
-                status = (BO.OrderStatus)((item.DeliveryDate == null && item.ShipDate == null) ? 1 : (item.ShipDate == null) ? 2 : 3),
+                status = (BO.OrderStatus)((item.DeliveryDate != DateTime.MinValue && item.ShipDate != DateTime.MinValue) ? 3 : (item.ShipDate != DateTime.MinValue) ? 2 : 1),
                 AmountForItems = myOrderItems.Count(),
                 TotalPrice = price
             };
@@ -64,7 +67,7 @@ internal class Order : BlApi.IOrder
                 {
                     ID = doOrder.ID,
                     CustomerName = doOrder.CustomerName,
-                    status = (BO.OrderStatus)((doOrder.DeliveryDate == null && doOrder.ShipDate == null) ? 1 : (doOrder.ShipDate == null) ? 2 : 3),
+                    status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
                     CustomerAddress = doOrder.CustomerAddress,
                     CustomerEmail = doOrder.CustomerEmail,
                     DeliveryDate = doOrder.DeliveryDate,
@@ -93,7 +96,7 @@ internal class Order : BlApi.IOrder
         }
         catch { }
 
-        if (doOrder.ShipDate != null)
+        if (doOrder.ShipDate != DateTime.MinValue)
             throw new Exception("ההזמנה כבר סופקה");
         doOrder.ShipDate = DateTime.Now;
         try
@@ -123,7 +126,7 @@ internal class Order : BlApi.IOrder
             CustomerName = doOrder.CustomerName,
             CustomerAddress=doOrder.CustomerAddress,
             CustomerEmail=doOrder.CustomerEmail,
-            status = (BO.OrderStatus)((doOrder.DeliveryDate == null && doOrder.ShipDate == null) ? 1 : (doOrder.ShipDate == null) ? 2 : 3),
+            status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
             DeliveryDate = doOrder.DeliveryDate,
             ShipDate = doOrder.ShipDate,
             PaymentDate = doOrder.OrderDate,
@@ -147,7 +150,7 @@ internal class Order : BlApi.IOrder
         BO.OrderTracking myOrderTracking = new BO.OrderTracking
         {
             ID = idOrder,
-            Status = (BO.OrderStatus)((doOrder.DeliveryDate == null && doOrder.ShipDate == null) ? 1 : (doOrder.ShipDate == null) ? 2 : 3),
+            Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
             ///////tuple
         };
         return myOrderTracking;
