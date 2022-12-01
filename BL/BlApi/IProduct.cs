@@ -7,6 +7,7 @@ public interface IProduct
     /// <returns>returning ProductForList</returns>
     /// 
    public IEnumerable<BO.ProductForList> GetListOfProducts();
+
     /// <summary>
     /// Product details request by ID
     /// </summary>
@@ -34,8 +35,9 @@ public interface IProduct
     /// <param name="idProduct">ID to delete a product</param>
     public void DeleteProduct(int idProduct);
 
+    /// <summary>
+    /// Update product data
+    /// </summary>
+    /// <param name="product">Product to be updated</param>
     public void UpDateProduct(BO.Product product);
-
-
-
 }

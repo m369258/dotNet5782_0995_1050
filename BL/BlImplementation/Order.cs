@@ -1,8 +1,4 @@
 ﻿using BO;
-using DalApi;
-using System.Diagnostics;
-using System.Net.Sockets;
-
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
@@ -14,7 +10,7 @@ internal class Order : BlApi.IOrder
     {
         double price;
  
-        IEnumerable<Do.OrderItem> myDOOrderItems;// = new List<Do.OrderItem>();
+        IEnumerable<Do.OrderItem> myDOOrderItems;
         List<BO.OrderForList> boListOrders = new List<BO.OrderForList>();
         IEnumerable<Do.Order> doOrders = myDal.order.GetAll();
         foreach (var item in doOrders)
@@ -40,17 +36,21 @@ internal class Order : BlApi.IOrder
 
     public BO.Order GetOrderDetails(int idOrder)
     {
-        double price = 0;
-        IEnumerable<Do.OrderItem> myOrderItems = new List<Do.OrderItem>();
+        double price = 0.0;
+        IEnumerable<Do.OrderItem> doOrderItems = new List<Do.OrderItem>();
         List<BO.OrderItem> ListOrderItems = new List<BO.OrderItem>();
+
+        //A check that identifies the order is not negative
         if (idOrder > 0)
         {
-            try
-            {
+            //A order request based on the data layer identifier, if the information has not arrived, will throw an error
+            Do.Order doOrder;
+            try { doOrder = myDal.order.Get(idOrder); }
+            catch { throw new InternalErrorException("this id doesnt exsist"); }
 
-                Do.Order doOrder = myDal.order.Get(idOrder);
-                myOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
-                foreach (var item in myOrderItems)
+            //
+            doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
+                foreach (var item in doOrderItems)
                 {
                     Do.Product doProduct = myDal.product.Get(item.ProductId);
                     BO.OrderItem boOrderItem = new BO.OrderItem
@@ -79,10 +79,9 @@ internal class Order : BlApi.IOrder
                     totalPrice = price,
                 };
                 return order;
-            }
-            catch { throw; }
+
         }
-        else throw new BO.IncorrectIndex("negetive id");
+        else throw new BO.InvalidArgumentException("Negative ID");
     }
 
     public BO.Order OrderDeliveryUpdate(int idOrder)
