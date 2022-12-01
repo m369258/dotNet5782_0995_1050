@@ -48,12 +48,17 @@ internal class Order : BlApi.IOrder
             try { doOrder = myDal.order.Get(idOrder); }
             catch { throw new InternalErrorException("this id doesnt exsist"); }
 
-            //
+            //Request any order details according to its ID
             doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
                 foreach (var item in doOrderItems)
                 {
-                    Do.Product doProduct = myDal.product.Get(item.ProductId);
-                    BO.OrderItem boOrderItem = new BO.OrderItem
+                //A product request based on the data layer identifier, if the information has not arrived, will throw an error
+                Do.Product doProduct;
+                try { doProduct = myDal.product.Get(item.ProductId); }
+                catch { throw new InternalErrorException("this id doesnt exsist"); }
+
+                //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
+                BO.OrderItem boOrderItem = new BO.OrderItem
                     {
                         ID = item.ID,
                         ProductId = item.ProductId,
@@ -65,7 +70,8 @@ internal class Order : BlApi.IOrder
                     price += boOrderItem.TotalPrice;
                     ListOrderItems.Add(boOrderItem);
                 }
-                BO.Order order = new BO.Order()
+            //Building a logical order based on the data and returning it
+            BO.Order order = new BO.Order()
                 {
                     ID = doOrder.ID,
                     CustomerName = doOrder.CustomerName,
@@ -89,28 +95,35 @@ internal class Order : BlApi.IOrder
         IEnumerable<Do.OrderItem> doOrderItems = new List<Do.OrderItem>();
         List<BO.OrderItem> boOrderItems = new List<BO.OrderItem>();
         double price = 0.0;
-        Do.Order doOrder = new Do.Order();
-        ////חריגות
-        try
-        {
-            doOrder = myDal.order.Get(idOrder);
-        }
-        catch { }
 
+        //A order request based on the data layer identifier, if the information has not arrived, will throw an error
+        Do.Order doOrder;
+        try { doOrder = myDal.order.Get(idOrder); }
+        catch { throw new InternalErrorException("this id doesnt exsist"); }
+
+        //In the event that the order was sent and not delivered - updating its delivery to now, in any other case appropriate exceptions will be thrown
         if (doOrder.ShipDate != DateTime.MinValue)
-            throw new Exception("ההזמנה כבר סופקה");
+            throw new Exception("The order has already been delivered");
         if (doOrder.DeliveryDate == DateTime.MinValue)
-            throw new Exception("");
+            throw new Exception("The order has not been sent yet");
         doOrder.ShipDate = DateTime.Now;
-        try
-        {
-            myDal.order.Update(doOrder);
-        }
-        catch { }
+
+        //Updating the status of the order in case the order does not exist in the data will throw an exception
+        try { myDal.order.Update(doOrder);}
+        catch { throw new InternalErrorException("It is not possible to update the order does not exist"); }
+
+        //Request any order details by ID
         doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
+
+
         foreach (var item in doOrderItems)
         {
-            Do.Product doProduct = myDal.product.Get(item.ProductId);
+            //A product request based on the data layer identifier, if the information has not arrived, will throw an error
+            Do.Product doProduct;
+            try { doProduct = myDal.product.Get(item.ProductId); }
+            catch { throw new InternalErrorException("this id doesnt exsist"); }
+
+            //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
             BO.OrderItem boOrderItem = new BO.OrderItem
             {
                 ID = item.ID,
@@ -123,6 +136,8 @@ internal class Order : BlApi.IOrder
             price += boOrderItem.TotalPrice;
             boOrderItems.Add(boOrderItem);
         }
+
+        //Building a logical order based on the data and returning it
         BO.Order order = new BO.Order
         {
             ID = idOrder,
@@ -136,7 +151,6 @@ internal class Order : BlApi.IOrder
             items = boOrderItems,
             totalPrice = price,
         };
-
         return order;
     }
 
