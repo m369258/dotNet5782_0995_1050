@@ -1,28 +1,33 @@
 ﻿namespace BO;
 
 /// <summary>
-/// Error if the index is not correct
+/// Throw an error in case the field is invalid - Invalid Argument 
 /// </summary>
-public class IncorrectIndex : Exception
+public class InvalidArgumentException : Exception
 {
-    public IncorrectIndex(string? message) : base(message) { }
+    public InvalidArgumentException(string? message) : base(message) { }
 }
 
 /// <summary>
-/// Throw an error in case the field is invalid
+/// Invalid input
 /// </summary>
-public class InvalidField: Exception
+public class InvalidInputException : Exception
 {
-    public InvalidField(string? message) : base(message) { }
+    public InvalidInputException(string? message) : base(message) { }
 }
 
-public class CannotPerformThisOperation : Exception
+/// <summary>
+/// internal error
+/// </summary>
+public class InternalErrorException : Exception
 {
-    public CannotPerformThisOperation(string? message) : base(message) { }
-
+    public InternalErrorException(string? message) : base(message) { }
 }
 
-public class NotEnoughInStock : Exception
+/// <summary>
+/// Not Enough In Stock Exception
+/// </summary>
+public class NotEnoughInStockException : Exception
 {
-    public NotEnoughInStock(string? message) : base(message) { }
+    public NotEnoughInStockException(string? message) : base(message) { }
 }

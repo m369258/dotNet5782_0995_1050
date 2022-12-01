@@ -1,4 +1,6 @@
-﻿namespace Do;
+﻿using DO;
+
+namespace Do;
 
 /// <summary>
 /// structure for product
@@ -34,11 +36,5 @@ public struct Product
     /// The function returns a string representing a product
     /// </summary>
     /// <returns>a string representing a product</returns>
-    public override string ToString() => $@"
-        Product ID: {ID}
-        Name: {Name}, 
-        category: {Category}
-    	Price: {Price}
-    	Amount in stock: {InStock}
-        ";
+    public override string ToString() => this.ToStringProperty();
 }

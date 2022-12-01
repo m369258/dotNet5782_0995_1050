@@ -30,7 +30,7 @@ internal static class DataSource
             get { return ++automaticOrderItem; }
         }
 
-        //static Config() => orders[0].ID = 1001;
+        static Config() => orders.Count();
     }
 
 

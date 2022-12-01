@@ -87,9 +87,9 @@ internal class Product : BlApi.IProduct
         Do.Product p1 = new Do.Product
         {
             ID = product.ID > 0 ? product.ID : throw new BO.IncorrectIndex(""),
-            Name = product.Name != null ? product.Name : throw new BO.InvalidField("Empty name"),
-            Price = product.Price >= 0 ? product.Price : throw new BO.InvalidField("Negative price"),
-            InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidField("Unfavorable inStock"),
+            Name = product.Name != null ? product.Name : throw new BO.InvalidArgumentException("Empty name"),
+            Price = product.Price >= 0 ? product.Price : throw new BO.InvalidArgumentException("Negative price"),
+            InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidArgumentException("Unfavorable inStock"),
             Category = (Do.Category)(product.Category)
         };
         try
@@ -118,7 +118,7 @@ internal class Product : BlApi.IProduct
                 {
 
                     if (item.ProductId == idProduct)
-                        throw new BO.CannotPerformThisOperation("A used product cannot be deleted");
+                        throw new BO.InternalErrorException("A used product cannot be deleted");
                 }
 
             }
@@ -138,9 +138,9 @@ internal class Product : BlApi.IProduct
         {
             Do.Product p = myDal.product.Get(product.ID);
             p.ID = product.ID > 0 ? product.ID : throw new BO.IncorrectIndex("Negative ID");
-            p.Name = product.Name != null ? product.Name : throw new BO.InvalidField("Empty name");
-            p.Price = product.Price >= 0 ? product.Price : throw new BO.InvalidField("Negative price");
-            p.InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidField("Unfavorable inStock");
+            p.Name = product.Name != null ? product.Name : throw new BO.InvalidArgumentException("Empty name");
+            p.Price = product.Price >= 0 ? product.Price : throw new BO.InvalidArgumentException("Negative price");
+            p.InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidArgumentException("Unfavorable inStock");
             p.Category = (Do.Category)(product.Category);
             myDal.product.Update(p);
         }

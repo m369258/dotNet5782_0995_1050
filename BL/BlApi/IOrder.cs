@@ -9,4 +9,6 @@ public interface IOrder
 
     public BO.Order OrderDeliveryUpdate(int idOrder);
 
+    public BO.OrderTracking OrderTracking(int idOrder);
+
 }

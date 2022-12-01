@@ -27,11 +27,5 @@ public class ProductForList
     /// category
     /// </summary>
     public Category category { get; set; }
-    public override string ToString() => $@"
-        Product ID: {ID}
-        Name: {Name}, 
-    	Price: {Price}
-        category: {category}
-
-        ";
+    public override string ToString() => this.ToStringProperty();
 }

@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using DO;
+using System.Xml.Linq;
 
 namespace Do;
 
@@ -36,11 +37,5 @@ public struct OrderItem
     /// The function returns a string representing an item in the order
     /// </summary>
     /// <returns>string representing an item in the order</returns>
-    public override string ToString() => $@"
-        ID: {ID} 
-        ProductID: {ProductId},
-        OrderId: {OrderId}, 
-    	Price: {Price}
-    	Amount in stock: {Amount}
-        ";
+    public override string ToString() => this.ToStringProperty();
 }

@@ -10,31 +10,33 @@ internal class Order : BlApi.IOrder
     DalApi.IDal myDal = new Dal.DalList();
 
     // public DalApi.IDal myDal { get; set; }
-    public IEnumerable<BO.OrderForList> GetListOfOrders() {
-        double price = 0;
-        IEnumerable<Do.OrderItem> myOrderItems = new List<Do.OrderItem>();
-        List<BO.OrderForList> ListOrders = new List<BO.OrderForList>();
+    public IEnumerable<BO.OrderForList> GetListOfOrders()
+    {
+        double price;
+ 
+        IEnumerable<Do.OrderItem> myDOOrderItems;// = new List<Do.OrderItem>();
+        List<BO.OrderForList> boListOrders = new List<BO.OrderForList>();
         IEnumerable<Do.Order> doOrders = myDal.order.GetAll();
         foreach (var item in doOrders)
         {
-            myOrderItems = myDal.orderItems.GetByIdOrder(item.ID);
-            foreach (var it in myOrderItems)
+            price = 0;
+            myDOOrderItems = myDal.orderItems.GetByIdOrder(item.ID);
+            foreach (var it in myDOOrderItems)
             {
-                price += it.Price;
+                price += it.Price * it.Amount;
             }
             BO.OrderForList order = new BO.OrderForList
             {
                 OrderID = item.ID,
                 CustomerName = item.CustomerName,
                 status = (BO.OrderStatus)((item.DeliveryDate != DateTime.MinValue && item.ShipDate != DateTime.MinValue) ? 3 : (item.ShipDate != DateTime.MinValue) ? 2 : 1),
-                AmountForItems = myOrderItems.Count(),
+                AmountForItems = myDOOrderItems.Count(),
                 TotalPrice = price
             };
-            ListOrders.Add(order);
+            boListOrders.Add(order);
         }
-        return ListOrders;
+        return boListOrders;
     }
-
 
     public BO.Order GetOrderDetails(int idOrder)
     {
@@ -98,6 +100,8 @@ internal class Order : BlApi.IOrder
 
         if (doOrder.ShipDate != DateTime.MinValue)
             throw new Exception("ההזמנה כבר סופקה");
+        if (doOrder.DeliveryDate == DateTime.MinValue)
+            throw new Exception("");
         doOrder.ShipDate = DateTime.Now;
         try
         {
@@ -124,8 +128,8 @@ internal class Order : BlApi.IOrder
         {
             ID = idOrder,
             CustomerName = doOrder.CustomerName,
-            CustomerAddress=doOrder.CustomerAddress,
-            CustomerEmail=doOrder.CustomerEmail,
+            CustomerAddress = doOrder.CustomerAddress,
+            CustomerEmail = doOrder.CustomerEmail,
             status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
             DeliveryDate = doOrder.DeliveryDate,
             ShipDate = doOrder.ShipDate,
@@ -139,13 +143,13 @@ internal class Order : BlApi.IOrder
 
     public BO.OrderTracking OrderTracking(int idOrder)
     {
-        Do.Order doOrder=new Do.Order();
+        Do.Order doOrder = new Do.Order();
         ////חריגות
-        try {
-             doOrder = myDal.order.Get(idOrder);
+        try
+        {
+            doOrder = myDal.order.Get(idOrder);
         }
         catch { }
-
 
         BO.OrderTracking myOrderTracking = new BO.OrderTracking
         {
@@ -153,6 +157,7 @@ internal class Order : BlApi.IOrder
             Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
             ///////tuple
         };
+
         return myOrderTracking;
     }
 
@@ -172,6 +177,13 @@ internal class Order : BlApi.IOrder
             //???צריך לעשות את הדבר המצחיק הזה?? הרי כבר עשינו את זה למעלה
             try { doOrder = myDal.order.Get(orderId); }
             catch { }//זריקה - אין פריט כזה עם האידי הזה
+
+
+            if (doOrder.DeliveryDate != DateTime.MinValue)
+                throw new Exception("ההזמנה כבר נשלחה");
+            doOrder.DeliveryDate = DateTime.Now;
+
+            myDal.order.Update(doOrder);
 
             //על מנת להעתיק לרשימת BO
             IEnumerable<Do.OrderItem> doItems = new List<Do.OrderItem>();
@@ -201,21 +213,23 @@ internal class Order : BlApi.IOrder
 
             }
 
-            //foreach (var item in doItems)
-            //{
-            //    Do.Product doProduct = myDal.product.Get(item.ProductId);
-            //    BO.OrderItem boOrderItem = new BO.OrderItem
-            //    {
-            //        ID = item.ID,
-            //        ProductId = item.ProductId,
-            //        NameProduct = doProduct.Name,
-            //        productPrice = doProduct.Price,
-            //        QuantityPerItem = item.Amount,
-            //        TotalPrice = doProduct.Price * item.Amount
-            //    };
-            //    price += boOrderItem.TotalPrice;
-            //    ListOrderItems.Add(boOrderItem);
-            //}
+            double price=0;
+            List<BO.OrderItem> ListOrderItems=new List<BO.OrderItem>();
+            foreach (var item in doItems)
+            {
+                Do.Product doProduct = myDal.product.Get(item.ProductId);
+                BO.OrderItem boOrderItem = new BO.OrderItem
+                {
+                    ID = item.ID,
+                    ProductId = item.ProductId,
+                    NameProduct = doProduct.Name,
+                    productPrice = doProduct.Price,
+                    QuantityPerItem = item.Amount,
+                    TotalPrice = doProduct.Price * item.Amount
+                };
+                price += boOrderItem.TotalPrice;
+                ListOrderItems.Add(boOrderItem);
+            }
 
             BO.Order boOrder = new BO.Order()
             {
@@ -226,11 +240,11 @@ internal class Order : BlApi.IOrder
 
                 DeliveryDate = doOrder.DeliveryDate,
                 ShipDate = doOrder.ShipDate,
-                PaymentDate =new DateTime(),//??
+                PaymentDate = doOrder.OrderDate,//??
                 status = OrderStatus.OrderSend,
                 items = boItems,
-                totalPrice = 100//??
-        };
+                totalPrice = price//??
+            };
             return boOrder;
         }
         return null;

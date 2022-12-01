@@ -20,4 +20,7 @@ public class OrderTracking
     /// (רשימה של צמדים (תאריך, תיאור התקדמות חבילה
     /// </summary>
     public IEnumerable<Tuple<DateTime, string>> Tracking { get; set; }
+
+    public override string ToString() => this.ToStringProperty();
+
 }

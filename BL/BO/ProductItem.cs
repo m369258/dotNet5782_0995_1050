@@ -34,11 +34,5 @@ public class ProductItem
     /// </summary>
     public int Amount { get; set; }
 
-    public override string ToString() => $@"
-        Product ID: {ProductID}
-        Name: {Name}, 
-        category: {Category}
-    	Price: {Price}
-    	in stock: {InStock}
-        Amount:{Amount}";
+    public override string ToString() => this.ToStringProperty();
 }

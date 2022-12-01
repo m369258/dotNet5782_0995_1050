@@ -1,4 +1,6 @@
-﻿namespace Do;
+﻿using DO;
+
+namespace Do;
 
 
 /// <summary>
@@ -45,14 +47,6 @@ public struct Order
     /// The function returns a string representing a order
     /// </summary>
     /// <returns>a string representing a order</returns>
-    public override string ToString() => 
-        $@"
-    Order ID: {ID}
-    CustomerName: {CustomerName}, 
-    CustomerEmail: {CustomerEmail}
-    CustomerAddress: {CustomerAddress}
-    OrderDate: {OrderDate}
-    ShipDate: {ShipDate}
-    DeliveryDate: {DeliveryDate}
-    ";
+    public override string ToString() => this.ToStringProperty();
+
 }

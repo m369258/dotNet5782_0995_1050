@@ -39,12 +39,5 @@ public class OrderItem
     public double TotalPrice { get; set; }
 
 
-    public override string ToString() => $@"
-         ID: {ID}
-        ProductId:{ProductId}
-        NameProduct: {NameProduct}, 
-        productPrice: {productPrice}
-    	QuantityPerItem: {QuantityPerItem}
-    	TotalPrice: {TotalPrice}
-        ";
+    public override string ToString() => this.ToStringProperty();
 }

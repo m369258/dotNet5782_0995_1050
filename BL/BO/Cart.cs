@@ -29,4 +29,6 @@ public class Cart
     /// Total price of an order basket
     /// </summary>
     public double TotalPrice { get; set; }
+
+    public override string ToString() => this.ToStringProperty();
 }
