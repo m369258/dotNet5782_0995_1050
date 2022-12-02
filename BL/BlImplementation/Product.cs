@@ -4,9 +4,8 @@ namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
     DalApi.IDal myDal = new Dal.DalList();
-    // public DalApi.IDal myDal { get; set; }
-
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts()
+
     {
         //Request from the data layer of all products
         IEnumerable<Do.Product> doProducts = myDal.product.GetAll();
@@ -32,7 +31,7 @@ internal class Product : BlApi.IProduct
         //Checking whether the ID is negative
         if (idProduct > 0)
         {
-            //A product request based on the data layer identifier, if the information has not arrived, will throw an error
+            //A product request based on the data layer identifier, if the information has not arrived, will thrthrow an error
             Do.Product p1;
             try { p1 = myDal.product.Get(idProduct); }
             catch { throw new InternalErrorException("this id doesnt exsist"); }

@@ -4,8 +4,6 @@ namespace BlImplementation;
 internal class Order : BlApi.IOrder
 {
     DalApi.IDal myDal = new Dal.DalList();
-
-    // public DalApi.IDal myDal { get; set; }
     public IEnumerable<BO.OrderForList> GetListOfOrders()
     {
         double price;
