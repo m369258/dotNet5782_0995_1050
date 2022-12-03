@@ -69,17 +69,19 @@ internal class Program
         //Accepting the user's choice
         if (!OptionsOfProducts.TryParse(Console.ReadLine(), out choice)) throw new InvalidInputException("choice is in valid");
 
+        //Declaration of a logical layer item variable
         int idProduct;
         BO.Product p = new BO.Product();
 
         try
-        {
+        { 
             switch (choice)
             {
                 case OptionsOfProducts.Add:
                     Console.WriteLine("Adding a product");
                     Console.Write("enter idProduct with 6 numbers:");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    //Calling a function that receives item details from the user
                     p = InputProduct();
                     p.ID = idProduct;
                     myBL.product.AddProduct(p);
@@ -94,6 +96,7 @@ internal class Program
                     break;
 
                 case OptionsOfProducts.GetAll:
+                    //Requests all items logged and printed
                     IEnumerable<BO.ProductForList> products = myBL.product.GetListOfProducts();
                     foreach (var myProduct in products)
                     {
@@ -107,9 +110,9 @@ internal class Program
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
                     Console.WriteLine("The requested product before the change");
                     Console.WriteLine(myBL.product.GetProduct(idProduct));
+                    //Calling a function that receives item details from the user
                     p = InputProduct();
                     p.ID = idProduct;
-                    //will update the product only if all the details have been verified
                     myBL.product.UpDateProduct(p);
                     Console.WriteLine("The requested product after the change");
                     Console.WriteLine(myBL.product.GetProduct(idProduct));
@@ -123,9 +126,9 @@ internal class Program
                     break;
 
                 case OptionsOfProducts.GetByIDAndCart:
+                    Console.WriteLine("Requests an item by item ID and basket");
                     Console.WriteLine("enter the id product");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
-                    BO.Cart boCart = InputCart();
                     Console.WriteLine(myBL.product.GetProduct(idProduct, boCart));
                     break;
 
@@ -136,6 +139,11 @@ internal class Program
             Console.WriteLine(ex);
         }
     }
+    /// <summary>
+    /// Receives the item data from the user
+    /// </summary>
+    /// <returns>Receives the item data from the user</returns>
+    /// <exception cref="Exception">In case of incorrect input</exception>
     private static BO.Product InputProduct()
     {
         int instock;
@@ -162,39 +170,6 @@ instock of product");
         p.InStock = instock;
         return p;
     }
-
-    private static BO.OrderItem InputOrderItem()
-    {
-        int idProduct, quantityPerItem;
-        string nameProduct;
-        double productPrice, totalPrice;
-        Console.WriteLine(@"enter idProduct,
-enter nameProduct,
-enter productPrice,
-enter quantityPerItem,
-enter totalPrice");
-        if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("id is in valid");
-
-        nameProduct = Console.ReadLine();
-        if (!double.TryParse(Console.ReadLine(), out productPrice)) throw new InvalidInputException("productPrice is in valid");
-        if (!int.TryParse(Console.ReadLine(), out quantityPerItem)) throw new InvalidInputException("quantityPerItem is in valid");
-        if (!double.TryParse(Console.ReadLine(), out totalPrice)) throw new InvalidInputException("totalPrice is in valid");
-
-        BO.OrderItem boOrderItem = new BO.OrderItem
-        {
-            ProductId = idProduct,
-            QuantityPerItem = quantityPerItem,
-            NameProduct = nameProduct,
-            productPrice = productPrice,
-            TotalPrice = totalPrice
-        };
-        return boOrderItem;
-    }
-
-    /// <summary>
-    /// A sub-menu of the order - which performs actions according to the user's request
-    /// </summary>
-    /// <exception cref="InvalidInputException">An appropriate error will be thrown if necessary</exception>
     private static void submenuOfOrder()
     {
         OptionsOfOrders choice;
