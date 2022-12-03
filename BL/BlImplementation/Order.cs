@@ -162,19 +162,15 @@ internal class Order : BlApi.IOrder
 
     public BO.OrderTracking OrderTracking(int idOrder)
     {
+        //A order request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Order doOrder = new Do.Order();
-        ////חריגות
-        try
-        {
-            doOrder = myDal.order.Get(idOrder);
-        }
+        try {doOrder = myDal.order.Get(idOrder);}
         catch { throw new InternalErrorException("this is order is not exsist"); }
 
+        //Creating an order tracking object in the logical layer according to the data
         BO.OrderTracking myOrderTracking = new BO.OrderTracking();
-
         myOrderTracking.ID = idOrder;
         myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1);
-
         if (myOrderTracking.Status == OrderStatus.OrderConfirmed)
         {
             myOrderTracking.Tracking.Append(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
@@ -190,7 +186,6 @@ internal class Order : BlApi.IOrder
             myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
             myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was delivered"));
         }
-     
         return myOrderTracking;
     }
 
@@ -206,32 +201,20 @@ internal class Order : BlApi.IOrder
         {
             //Updating the shipping date in the order in both a data entity and a logical entity
             doOrder.DeliveryDate = DateTime.Now;
-            //BO.Order boOrder = new BO.Order();
-            //???צריך לעשות את הדבר המצחיק הזה?? הרי כבר עשינו את זה למעלה
-            try { doOrder = myDal.order.Get(orderId); }
-            catch { }//זריקה - אין פריט כזה עם האידי הזה
-
-
             if (doOrder.DeliveryDate != DateTime.MinValue)
-                throw new Exception("ההזמנה כבר נשלחה");
+                throw new InternalErrorException("The order has already been sent");
             doOrder.DeliveryDate = DateTime.Now;
-
             myDal.order.Update(doOrder);
 
             //על מנת להעתיק לרשימת BO
             IEnumerable<Do.OrderItem> doItems = new List<Do.OrderItem>();
             doItems = myDal.orderItems.GetByIdOrder(doOrder.ID);
 
-            //List<Do.Product> doProducts=new List<Do.Product>();
             //יצירת משכבה הלוגית
             List<BO.OrderItem> boItems = new List<BO.OrderItem>();
             foreach (var item in doItems)
             {
-                //doProducts.Add(myDal.product.Get(item.ProductId));
-
                 Do.Product myDoProduct = myDal.product.Get(item.ProductId);
-
-
                 BO.OrderItem boOrderItem = new BO.OrderItem()
                 {
                     ID = item.ID,

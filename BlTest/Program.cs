@@ -1,10 +1,11 @@
 ﻿using BlApi;
+using BO;
+
 namespace BlTest;
 
 internal class Program
 {
     private static IBl myBL = new Bl();
-
     enum MainMenu { Exist = 0, Product, Order, Cart }
     enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDAndCart }
     enum OptionsOfOrders { GetListOfOrders = 1, OrderShippingUpdate, GetOrderDetails, OrderDeliveryUpdate, OrderTracking }
@@ -89,7 +90,7 @@ internal class Program
                 case OptionsOfProducts.Get:
                     Console.WriteLine("Receiving a number by the ID");
                     Console.WriteLine("enter the id product");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
                     Console.WriteLine(myBL.product.GetProduct(idProduct));
                     break;
 
@@ -104,7 +105,7 @@ internal class Program
                 case OptionsOfProducts.Update:
                     Console.WriteLine("Product update:");
                     Console.WriteLine("enter id product:");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
                     Console.WriteLine("The requested product before the change");
                     Console.WriteLine(myBL.product.GetProduct(idProduct));
                     p = InputProduct();
@@ -118,13 +119,13 @@ internal class Program
                 case OptionsOfProducts.Delete:
                     Console.WriteLine("Product to be deleted");
                     Console.WriteLine("enter the id product");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
                     myBL.product.DeleteProduct(idProduct);
                     break;
 
                 case OptionsOfProducts.GetByIDAndCart:
                     Console.WriteLine("enter the id product");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
                     BO.Cart boCart = InputCart();
                     Console.WriteLine(myBL.product.GetProduct(idProduct, boCart));
                     break;
