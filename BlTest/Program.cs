@@ -22,7 +22,6 @@ internal class Program
 
     static void Main(string[] args)
     {
-
         MainMenu choice;
         //Receiving a voluntary action number to perform
         Console.WriteLine(@"please choose one of the following:
@@ -68,7 +67,7 @@ internal class Program
 5: delete an product 
 6:get a product by ID and Cart");
         //Accepting the user's choice
-        if (!OptionsOfProducts.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
+        if (!OptionsOfProducts.TryParse(Console.ReadLine(), out choice)) throw new InvalidInputException("choice is in valid");
 
         int idProduct;
         BO.Product p = new BO.Product();
@@ -80,7 +79,7 @@ internal class Program
                 case OptionsOfProducts.Add:
                     Console.WriteLine("Adding a product");
                     Console.Write("enter idProduct with 6 numbers:");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
                     p = InputProduct();
                     p.ID = idProduct;
                     myBL.product.AddProduct(p);
@@ -153,9 +152,9 @@ for ballons insert 5,
 price, 
 instock of product");
         name = Console.ReadLine();
-        if (!BO.Category.TryParse(Console.ReadLine(), out category)) throw new Exception("category is in valid");
-        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
-        if (!int.TryParse(Console.ReadLine(), out instock)) throw new Exception("inStock is in valid");
+        if (!BO.Category.TryParse(Console.ReadLine(), out category)) throw new InvalidInputException("category is in valid");
+        if (!double.TryParse(Console.ReadLine(), out price)) throw new InvalidInputException("price is in valid");
+        if (!int.TryParse(Console.ReadLine(), out instock)) throw new InvalidInputException("inStock is in valid");
         BO.Product p = new BO.Product();
         p.Name = name;
         p.Category = category;
@@ -163,40 +162,7 @@ instock of product");
         p.InStock = instock;
         return p;
     }
-    private static BO.Cart InputCart()
-    {
-        string CustomerName, CustomerEmail, CustomerAddress;
-        List<BO.OrderItem> items = new List<BO.OrderItem>();
-        BO.OrderItem boOrderItem = new BO.OrderItem();
-        double price;
-        Console.WriteLine(@"enter CustomerName,
-enter CustomerEmail,
-enter CustomerAddress,
-add order items till enter 0,
-enter price");
-        CustomerName = Console.ReadLine();
-        CustomerEmail = Console.ReadLine();
-        CustomerAddress = Console.ReadLine();
 
-        Console.WriteLine("enter 1 to add OrderItem and 0 to stop adding:");
-        int addOrderItems = int.Parse(Console.ReadLine());
-        while (addOrderItems != 0)
-        {
-            items.Add(InputOrderItem());
-            Console.WriteLine("enter 1 to add OrderItem and 0 to stop adding:");
-            addOrderItems = int.Parse(Console.ReadLine());
-        }
-        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
-        BO.Cart p = new BO.Cart
-        {
-            CustomerName = CustomerName,
-            CustomerEmail = CustomerEmail,
-            CustomerAddress = CustomerAddress,
-            items = items,
-            TotalPrice = price
-        };
-        return p;
-    }
     private static BO.OrderItem InputOrderItem()
     {
         int idProduct, quantityPerItem;
@@ -207,12 +173,12 @@ enter nameProduct,
 enter productPrice,
 enter quantityPerItem,
 enter totalPrice");
-        if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("id is in valid");
+        if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("id is in valid");
 
         nameProduct = Console.ReadLine();
-        if (!double.TryParse(Console.ReadLine(), out productPrice)) throw new Exception("productPrice is in valid");
-        if (!int.TryParse(Console.ReadLine(), out quantityPerItem)) throw new Exception("quantityPerItem is in valid");
-        if (!double.TryParse(Console.ReadLine(), out totalPrice)) throw new Exception("totalPrice is in valid");
+        if (!double.TryParse(Console.ReadLine(), out productPrice)) throw new InvalidInputException("productPrice is in valid");
+        if (!int.TryParse(Console.ReadLine(), out quantityPerItem)) throw new InvalidInputException("quantityPerItem is in valid");
+        if (!double.TryParse(Console.ReadLine(), out totalPrice)) throw new InvalidInputException("totalPrice is in valid");
 
         BO.OrderItem boOrderItem = new BO.OrderItem
         {
@@ -224,6 +190,11 @@ enter totalPrice");
         };
         return boOrderItem;
     }
+
+    /// <summary>
+    /// A sub-menu of the order - which performs actions according to the user's request
+    /// </summary>
+    /// <exception cref="InvalidInputException">An appropriate error will be thrown if necessary</exception>
     private static void submenuOfOrder()
     {
         OptionsOfOrders choice;
@@ -235,7 +206,7 @@ enter totalPrice");
 4: order delivery update
 5: order tracking");
         //Accepting the user's choice
-        if (!OptionsOfOrders.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is invalid");
+        if (!OptionsOfOrders.TryParse(Console.ReadLine(), out choice)) throw new InvalidInputException("choice is invalid");
         int idOrder;
         BO.Order myOrder;
 
@@ -245,18 +216,30 @@ enter totalPrice");
             //Checking what action the user wants to run
             switch (choice)
             {
-
+                //Order list request
                 case OptionsOfOrders.GetListOfOrders:
+                    //A call to action that returns the list of orders
                     IEnumerable<BO.OrderForList> orderForLists = myBL.order.GetListOfOrders();
+                    //Printing the order for list
                     foreach (BO.OrderForList currOrderForList in orderForLists)
                     {
                         Console.WriteLine(currOrderForList);
                     }
                     break;
-                //עדכון שילוח הזמנה
+
+                //Order details request
+                case OptionsOfOrders.GetOrderDetails:
+                    //Receipt of order ID number
+                    Console.WriteLine("enter the id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new InvalidInputException("id product is invalid");
+                    //A call to action that returns the order details
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break;
+
+                //Order shipping update
                 case OptionsOfOrders.OrderShippingUpdate:
                     Console.WriteLine("enter id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new InvalidInputException("id product is invalid");
                     Console.WriteLine("before: ");
                     Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
                     boOrder = myBL.order.OrderShippingUpdate(idOrder);
@@ -264,16 +247,10 @@ enter totalPrice");
                     Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
                     break;
 
-                case OptionsOfOrders.GetOrderDetails:
-                    //Receipt of order ID number
-                    Console.WriteLine("enter the id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
-                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
-                    break;
-                //עדכון אספק, הזמנה
+                //Order delivery update
                 case OptionsOfOrders.OrderDeliveryUpdate:
                     Console.WriteLine("enter id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new InvalidInputException("id product is invalid");
                     Console.WriteLine("before: ");
                     Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
                     boOrder = myBL.order.OrderDeliveryUpdate(idOrder);
@@ -281,11 +258,11 @@ enter totalPrice");
                     Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
                     break;
 
+                //Order Tracking
                 case OptionsOfOrders.OrderTracking:
                     Console.WriteLine("enter id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new InvalidInputException("id product is invalid");
                     Console.WriteLine(myBL.order.OrderTracking(idOrder));
-                    //Console.WriteLine(myBL.order.order(idOrder));
                     break;
             }
         }
@@ -295,6 +272,11 @@ enter totalPrice");
             Console.WriteLine(ex);
         }
     }
+
+    /// <summary>
+    /// A sub-menu of the shopping basket - which performs actions according to the user's request
+    /// </summary>
+    /// <exception cref="InvalidInputException">An appropriate error will be thrown if necessary</exception>
     private static void submenuOfCart()
     {
         OptionsOfCarts choice;
@@ -305,7 +287,7 @@ enter totalPrice");
 3: make an order
 ");
         //Accepting the user's choice
-        if (!OptionsOfCarts.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is invalid");
+        if (!OptionsOfCarts.TryParse(Console.ReadLine(), out choice)) throw new InvalidInputException("choice is invalid");
 
         try
         {
@@ -314,24 +296,31 @@ enter totalPrice");
             //Checking what action the user wants to run
             switch (choice)
             {
+                //in case of adding product to the cart
                 case OptionsOfCarts.Add:
+                    //the user will insert id product
                     Console.WriteLine("Adding a product to the cart");
                     Console.Write("enter idProduct with 6 numbers:");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
+                    //A call to action that adds a product to the shopping cart
                     Console.WriteLine(myBL.cart.Add(boCart, idProduct));
                     break;
 
-
+                //Shopping cart update
                 case OptionsOfCarts.Update:
+                    //Receives a new product and quantity from the user and updates the shopping basket accordingly.
                     Console.WriteLine("enter id product");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("id product is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("id product is invalid");
                     Console.WriteLine("enter new quientity");
-                    if (!int.TryParse(Console.ReadLine(), out newQuantity)) throw new Exception("quantity is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out newQuantity)) throw new InvalidInputException("quantity is invalid");
+                    //A call to the function that updates the shopping cart.
                     Console.WriteLine(myBL.cart.Update(boCart, idProduct, newQuantity));
                     Console.WriteLine("the cart updated");
                     break;
 
+                //make an order
                 case OptionsOfCarts.MakeAnOrder:
+                    //A call to action that executes the order
                     myBL.cart.MakeAnOrder(boCart);
                     Console.WriteLine("the order made");
                     break;
@@ -343,5 +332,4 @@ enter totalPrice");
             Console.WriteLine(ex);
         }
     }
-
 }

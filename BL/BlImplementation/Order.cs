@@ -164,7 +164,7 @@ internal class Order : BlApi.IOrder
     {
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Order doOrder = new Do.Order();
-        try {doOrder = myDal.order.Get(idOrder);}
+        try { doOrder = myDal.order.Get(idOrder); }
         catch { throw new InternalErrorException("this is order is not exsist"); }
 
         //Creating an order tracking object in the logical layer according to the data
@@ -206,15 +206,19 @@ internal class Order : BlApi.IOrder
             doOrder.DeliveryDate = DateTime.Now;
             myDal.order.Update(doOrder);
 
-            //על מנת להעתיק לרשימת BO
+            //in order to copy to the BO list
             IEnumerable<Do.OrderItem> doItems = new List<Do.OrderItem>();
             doItems = myDal.orderItems.GetByIdOrder(doOrder.ID);
 
-            //יצירת משכבה הלוגית
+            double price = 0;
+            //creating the logical layer
             List<BO.OrderItem> boItems = new List<BO.OrderItem>();
+            //Goes over the list of order details from the data layer and created a list of order details from the logical layer
             foreach (var item in doItems)
             {
-                Do.Product myDoProduct = myDal.product.Get(item.ProductId);
+                Do.Product myDoProduct;
+                try { myDoProduct = myDal.product.Get(item.ProductId); }
+                catch { throw new InternalErrorException("this id product is not exsist"); }
                 BO.OrderItem boOrderItem = new BO.OrderItem()
                 {
                     ID = item.ID,
@@ -224,42 +228,22 @@ internal class Order : BlApi.IOrder
                     QuantityPerItem = item.Amount,
                     TotalPrice = myDoProduct.Price * item.Amount
                 };
-                boItems.Add(boOrderItem);
-
-
-            }
-
-            double price = 0;
-            List<BO.OrderItem> ListOrderItems = new List<BO.OrderItem>();
-            foreach (var item in doItems)
-            {
-                Do.Product doProduct = myDal.product.Get(item.ProductId);
-                BO.OrderItem boOrderItem = new BO.OrderItem
-                {
-                    ID = item.ID,
-                    ProductId = item.ProductId,
-                    NameProduct = doProduct.Name,
-                    productPrice = doProduct.Price,
-                    QuantityPerItem = item.Amount,
-                    TotalPrice = doProduct.Price * item.Amount
-                };
                 price += boOrderItem.TotalPrice;
-                ListOrderItems.Add(boOrderItem);
+                boItems.Add(boOrderItem);
             }
 
+            //Creating an order from the logical extent of an order based on the data
             BO.Order boOrder = new BO.Order()
             {
                 CustomerName = doOrder.CustomerName,
                 CustomerEmail = doOrder.CustomerEmail,
                 CustomerAddress = doOrder.CustomerAddress,
-
-
                 DeliveryDate = doOrder.DeliveryDate,
                 ShipDate = doOrder.ShipDate,
-                PaymentDate = doOrder.OrderDate,//??
+                PaymentDate = doOrder.OrderDate,
                 status = OrderStatus.OrderSend,
                 items = boItems,
-                totalPrice = price//??
+                totalPrice = price
             };
             return boOrder;
         }

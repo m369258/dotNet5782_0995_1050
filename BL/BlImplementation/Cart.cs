@@ -92,9 +92,9 @@ internal class Cart : BlApi.ICart
             //Not enough in stock
             if (item.QuantityPerItem > myProduct.InStock)
                 throw new InternalErrorException("No quantity in stock");
-            //מה אומרתתת?????????
-            //if(myProduct.Price!=item.productPrice)
-            //    item.productPrice = myProduct.Price;
+            //In case we have changed the price of the item, we will also update the price in the basket
+            if (myProduct.Price != item.productPrice)
+                item.productPrice = myProduct.Price;
         }
 
         //Create an order object (data entity) based on the data in the basket
@@ -118,7 +118,7 @@ internal class Cart : BlApi.ICart
             {
                 OrderId = orderId,
                 ProductId = item.ProductId,
-                Price = item.productPrice,//???האם צריך מחיר רק למוצר יחיד או לכל המוצרים?????????????????????????
+                Price = item.productPrice,
                 Amount = item.QuantityPerItem
             };
             //and make attempts to request the addition of an order item
@@ -167,6 +167,8 @@ internal class Cart : BlApi.ICart
 
     public BO.Cart Update(BO.Cart myCart, int idProduct, int newQuantity)
     {
+        if (newQuantity > 0)
+            throw new InvalidInputException("Quantity cannot be a negative number");
         bool isExist = false;
         int i;
         //Checking whether the product is in the shopping basket
@@ -189,9 +191,11 @@ internal class Cart : BlApi.ICart
                 //we will check if it is in stock and we will update the details
                 if (newQuantity <= myProduct.InStock)
                 {
+                    myCart.TotalPrice -= (newQuantity - myCart.items[i - 1].QuantityPerItem) * myCart.items[i - 1].productPrice;
                     myCart.items[i - 1].QuantityPerItem = newQuantity;
                     myCart.items[i - 1].TotalPrice = myCart.items[i - 1].productPrice * newQuantity;
                 }
+
                 else throw new NotEnoughInStockException("There is not enough stock of this product.");
             }
             //In case the desired quantity is small, we will check if it is still in stock.
@@ -201,12 +205,11 @@ internal class Cart : BlApi.ICart
                 Do.Product myProduct;
                 try { myProduct = MyDal.product.Get(productId); }
                 catch { throw new InternalErrorException("this id product is not exsist"); }
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????????
-                //יש לדאוג במקרה בו אני משנה את הכמות וכרגע יש פחות מהכמות שאני משנה
-                //יש לדאוג לכל הפרטים הקטנים בו למשל אני משנה משהו בסל וכבר פריט אחד אינו קיים וכו 
+
                 //check if it is still in stock and update the details
                 if (newQuantity <= myProduct.InStock)
                 {
+                    myCart.TotalPrice += (myCart.items[i - 1].QuantityPerItem - newQuantity) * myCart.items[i - 1].productPrice;
                     myCart.items[i - 1].QuantityPerItem = newQuantity;
                     myCart.items[i - 1].productPrice = myCart.items[i - 1].productPrice * newQuantity;
                     myCart.items[i - 1].TotalPrice = myCart.items[i - 1].productPrice * newQuantity;
@@ -218,9 +221,6 @@ internal class Cart : BlApi.ICart
                 myCart.TotalPrice -= myCart.items[i - 1].TotalPrice;
                 myCart.items.Remove(myCart.items[i - 1]);
             }
-
-            //?????????????????????????????????????????????????????????????????????????????????????????
-            //?? האם צריך לבדוק האם הכמות החדשה שקיבלתי היא שלילית או שישר כשמקיש את המספר לזרוק שגיאה
         }
         else//If it does not exist, the item will be added to the cart??אנחנו הוספנו על פי הגיון, זה בסדר??
         {
