@@ -3,22 +3,30 @@ namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
+    //Request access to the data layer
     DalApi.IDal myDal = new Dal.DalList();
     public IEnumerable<BO.OrderForList> GetListOfOrders()
     {
         double price;
- 
-        IEnumerable<Do.OrderItem> myDOOrderItems;
-        List<BO.OrderForList> boListOrders = new List<BO.OrderForList>();
+
+        IEnumerable<Do.OrderItem> myDOOrderItems;//List of order details
+        List<BO.OrderForList> boListOrders = new List<BO.OrderForList>();//Order list
+        //Request a list of orders from the data layer
         IEnumerable<Do.Order> doOrders = myDal.order.GetAll();
+
+        //Build an order list of the OrderForList type (logical entity) based on the database
         foreach (var item in doOrders)
         {
             price = 0;
             myDOOrderItems = myDal.orderItems.GetByIdOrder(item.ID);
+
+            //Calculating the price of items in the product in order to arrive at the total price
             foreach (var it in myDOOrderItems)
             {
                 price += it.Price * it.Amount;
             }
+
+            //Build an order list of the OrderForList type on the database
             BO.OrderForList order = new BO.OrderForList
             {
                 OrderID = item.ID,
@@ -29,6 +37,7 @@ internal class Order : BlApi.IOrder
             };
             boListOrders.Add(order);
         }
+
         return boListOrders;
     }
 
@@ -224,8 +233,8 @@ internal class Order : BlApi.IOrder
 
             }
 
-            double price=0;
-            List<BO.OrderItem> ListOrderItems=new List<BO.OrderItem>();
+            double price = 0;
+            List<BO.OrderItem> ListOrderItems = new List<BO.OrderItem>();
             foreach (var item in doItems)
             {
                 Do.Product doProduct = myDal.product.Get(item.ProductId);
