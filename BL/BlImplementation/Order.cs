@@ -57,8 +57,8 @@ internal class Order : BlApi.IOrder
 
             //Request any order details according to its ID
             doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
-                foreach (var item in doOrderItems)
-                {
+            foreach (var item in doOrderItems)
+            {
                 //A product request based on the data layer identifier, if the information has not arrived, will throw an error
                 Do.Product doProduct;
                 try { doProduct = myDal.product.Get(item.ProductId); }
@@ -66,32 +66,32 @@ internal class Order : BlApi.IOrder
 
                 //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
                 BO.OrderItem boOrderItem = new BO.OrderItem
-                    {
-                        ID = item.ID,
-                        ProductId = item.ProductId,
-                        NameProduct = doProduct.Name,
-                        productPrice = doProduct.Price,
-                        QuantityPerItem = item.Amount,
-                        TotalPrice = doProduct.Price * item.Amount
-                    };
-                    price += boOrderItem.TotalPrice;
-                    ListOrderItems.Add(boOrderItem);
-                }
+                {
+                    ID = item.ID,
+                    ProductId = item.ProductId,
+                    NameProduct = doProduct.Name,
+                    productPrice = doProduct.Price,
+                    QuantityPerItem = item.Amount,
+                    TotalPrice = doProduct.Price * item.Amount
+                };
+                price += boOrderItem.TotalPrice;
+                ListOrderItems.Add(boOrderItem);
+            }
             //Building a logical order based on the data and returning it
             BO.Order order = new BO.Order()
-                {
-                    ID = doOrder.ID,
-                    CustomerName = doOrder.CustomerName,
-                    status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
-                    CustomerAddress = doOrder.CustomerAddress,
-                    CustomerEmail = doOrder.CustomerEmail,
-                    DeliveryDate = doOrder.DeliveryDate,
-                    ShipDate = doOrder.ShipDate,
-                    PaymentDate = doOrder.OrderDate,
-                    items = ListOrderItems,
-                    totalPrice = price,
-                };
-                return order;
+            {
+                ID = doOrder.ID,
+                CustomerName = doOrder.CustomerName,
+                status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
+                CustomerAddress = doOrder.CustomerAddress,
+                CustomerEmail = doOrder.CustomerEmail,
+                DeliveryDate = doOrder.DeliveryDate,
+                ShipDate = doOrder.ShipDate,
+                PaymentDate = doOrder.OrderDate,
+                items = ListOrderItems,
+                totalPrice = price,
+            };
+            return order;
 
         }
         else throw new BO.InvalidArgumentException("Negative ID");
@@ -116,7 +116,7 @@ internal class Order : BlApi.IOrder
         doOrder.ShipDate = DateTime.Now;
 
         //Updating the status of the order in case the order does not exist in the data will throw an exception
-        try { myDal.order.Update(doOrder);}
+        try { myDal.order.Update(doOrder); }
         catch { throw new InternalErrorException("It is not possible to update the order does not exist"); }
 
         //Request any order details by ID
@@ -168,29 +168,43 @@ internal class Order : BlApi.IOrder
         {
             doOrder = myDal.order.Get(idOrder);
         }
-        catch { }
+        catch { throw new InternalErrorException("this is order is not exsist"); }
 
-        BO.OrderTracking myOrderTracking = new BO.OrderTracking
+        BO.OrderTracking myOrderTracking = new BO.OrderTracking();
+
+        myOrderTracking.ID = idOrder;
+        myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1);
+
+        if (myOrderTracking.Status == OrderStatus.OrderConfirmed)
         {
-            ID = idOrder,
-            Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
-            ///////tuple
-        };
-
+            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
+        }
+        else if (myOrderTracking.Status == OrderStatus.OrderSend)
+        {
+            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
+            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
+        }
+        else
+        {
+            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
+            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
+            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was delivered"));
+        }
+     
         return myOrderTracking;
     }
 
     public BO.Order OrderShippingUpdate(int orderId)
     {
         Do.Order doOrder = new Do.Order();
-        //2.1 בדיקה האם ההזמנה קיימת
+        //Check if an order exists (in data layer).
         try { doOrder = myDal.order.Get(orderId); }
-        catch { }//זריקה - אין פריט כזה עם האידי הזה
+        catch { throw new InternalErrorException("There is no product with this id"); }
 
-        //במקרה שההזמנה קיימת עלינו לבדוק אם היא כבר נשלחה2.2..
-        if (doOrder.DeliveryDate == new DateTime())//אם עדיין לא נשלח
+        //Check if an order exists (in the data layer) and has not yet been sent
+        if (doOrder.DeliveryDate == new DateTime())
         {
-            //3.1 עידכון בישות הנתונים
+            //Updating the shipping date in the order in both a data entity and a logical entity
             doOrder.DeliveryDate = DateTime.Now;
             //BO.Order boOrder = new BO.Order();
             //???צריך לעשות את הדבר המצחיק הזה?? הרי כבר עשינו את זה למעלה
