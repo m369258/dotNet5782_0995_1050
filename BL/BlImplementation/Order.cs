@@ -122,7 +122,6 @@ internal class Order : BlApi.IOrder
         //Request any order details by ID
         doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
 
-
         foreach (var item in doOrderItems)
         {
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error

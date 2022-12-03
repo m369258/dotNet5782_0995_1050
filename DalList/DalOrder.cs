@@ -35,7 +35,8 @@ internal class DalOrder : IOrder
         //Checking whether the requested order is found and returning it otherwise throws an error
         if (DataSource.orders[i].ID == idOrder)
             return DataSource.orders[i];
-        throw new Exception("there are no order with this id");
+       
+        throw new DalDoesNotExistException("there are no order with this id");
     }
 
 
@@ -55,7 +56,6 @@ internal class DalOrder : IOrder
         return newOrders;
     }
 
-    //???????????????????????????????????????????????????????
     /// <summary>
     /// This operation gets an order ID number and deletes it if it exists, otherwise an error will be thrown
     /// </summary>
@@ -69,7 +69,7 @@ internal class DalOrder : IOrder
             DataSource.orders.RemoveAt(ind);
         }
         else
-            throw new Exception("there is no this id order");
+            throw new DalDoesNotExistException("there is no this id order");
     }
 
 
@@ -105,6 +105,6 @@ internal class DalOrder : IOrder
         {
             DataSource.orders[ind] = updateOrder;
         }
-        else { throw new Exception("there is no order like this"); }
+        else { throw new DalDoesNotExistException("there is no order like this"); }
     }
 }

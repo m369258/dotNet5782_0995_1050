@@ -1,7 +1,5 @@
-﻿namespace DO;
+﻿namespace Do;
 
-internal class Exceptions
-{
     public class DalDoesNotExistException : Exception
     {
         public DalDoesNotExistException(string? message) : base(message) { }
@@ -12,4 +10,3 @@ internal class Exceptions
         public DalAlreadyExistsException(string? message) : base(message) { }
 
     }
-}

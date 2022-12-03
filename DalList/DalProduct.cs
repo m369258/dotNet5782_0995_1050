@@ -45,7 +45,7 @@ internal class DalProduct : IProduct
         //Checking whether the requested product is found and returning it otherwise throws an error
         if (DataSource.products[i].ID == idProduct)
             return DataSource.products[i];
-        throw new Exception("there are no product with this id");
+        throw new DalDoesNotExistException("there are no product with this id");
     }
 
 
@@ -64,7 +64,6 @@ internal class DalProduct : IProduct
         return newProduct;
     }
 
-    //??????????????????????????????????????
     /// <summary>
     /// This operation gets an product ID number and deletes it if it exists, otherwise an error will be thrown
     /// </summary>
@@ -78,7 +77,7 @@ internal class DalProduct : IProduct
             DataSource.products.RemoveAt(ind);
         }
         else
-            throw new Exception("there is no this id product");
+            throw new DalDoesNotExistException("there is no this id product");
     }
 
     /// <summary>
@@ -113,7 +112,7 @@ internal class DalProduct : IProduct
         {
             DataSource.products[ind] = updateProduct;
         }
-        else { throw new Exception("there is no product like this"); }
+        else { throw new DalDoesNotExistException("there is no product like this"); }
     }
 
 }

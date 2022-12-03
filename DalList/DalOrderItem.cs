@@ -20,14 +20,14 @@ internal class DalOrderItem : IOrderItems
         for (i = 0; i < DataSource.products.Count && DataSource.products[i].ID != orderItem.ProductId; i++) ;
         if (i == DataSource.products.Count)
         {
-            throw new Exception("this product is exsist");
+            throw new DalAlreadyExistsException("this product is exsist");
         }
 
         //Checking if the order ID exists in any other case will throw an error
         for (i = 0; i < DataSource.orders.Count && DataSource.orders[i].ID != orderItem.OrderId; i++) ;
         if (i == DataSource.orders.Count)
         {
-            throw new Exception("this order is exsist");
+            throw new DalAlreadyExistsException("this order is exsist");
         }
 
         //Adding the order item to the database and updating the actual quantity
@@ -54,7 +54,7 @@ internal class DalOrderItem : IOrderItems
         if (DataSource.orderItems[i].ID == idOrderItem)
             return DataSource.orderItems[i];
 
-        throw new Exception("there are no order with this id");
+        throw new DalDoesNotExistException("there are no order with this id");
     }
 
 
@@ -73,7 +73,7 @@ internal class DalOrderItem : IOrderItems
 
         //If not found, an error will be thrown
         if (DataSource.orderItems.Count == i)
-            throw new Exception("there is no orderItem with this idOrder and idProduct");
+            throw new DalDoesNotExistException("there is no orderItem with this idOrder and idProduct");
 
         return DataSource.orderItems[i];
     }
@@ -129,10 +129,9 @@ internal class DalOrderItem : IOrderItems
         {
             DataSource.orderItems[ind] = updateOrderItem;
         }
-        else { throw new Exception("there is no orderItem like this"); }
+        else { throw new DalDoesNotExistException("there is no orderItem like this"); }
     }
 
-    //?????????????????????????????????????????????????????????????
     /// <summary>
     /// This operation gets an order ID number and deletes it if it exists, otherwise an error will be thrown
     /// </summary>
@@ -146,7 +145,7 @@ internal class DalOrderItem : IOrderItems
             DataSource.orderItems.RemoveAt(ind);
         }
         else
-            throw new Exception("there is no this id orderItem");
+            throw new DalDoesNotExistException("there is no this id orderItem");
     }
 
 
