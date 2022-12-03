@@ -173,18 +173,18 @@ internal class Order : BlApi.IOrder
         myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1);
         if (myOrderTracking.Status == OrderStatus.OrderConfirmed)
         {
-            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
+            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
         }
         else if (myOrderTracking.Status == OrderStatus.OrderSend)
         {
-            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
-            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
+            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
+            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
         }
         else
         {
-            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
-            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
-            myOrderTracking.Tracking.Append(Tuple.Create(doOrder.DeliveryDate, "The order was delivered"));
+            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
+            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
+            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.DeliveryDate, "The order was delivered"));
         }
         return myOrderTracking;
     }

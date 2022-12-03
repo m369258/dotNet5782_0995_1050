@@ -167,7 +167,7 @@ internal class Cart : BlApi.ICart
 
     public BO.Cart Update(BO.Cart myCart, int idProduct, int newQuantity)
     {
-        if (newQuantity > 0)
+        if (newQuantity < 0)
             throw new InvalidInputException("Quantity cannot be a negative number");
         bool isExist = false;
         int i;
@@ -191,7 +191,7 @@ internal class Cart : BlApi.ICart
                 //we will check if it is in stock and we will update the details
                 if (newQuantity <= myProduct.InStock)
                 {
-                    myCart.TotalPrice -= (newQuantity - myCart.items[i - 1].QuantityPerItem) * myCart.items[i - 1].productPrice;
+                    myCart.TotalPrice += (newQuantity - myCart.items[i - 1].QuantityPerItem) * myCart.items[i - 1].productPrice;
                     myCart.items[i - 1].QuantityPerItem = newQuantity;
                     myCart.items[i - 1].TotalPrice = myCart.items[i - 1].productPrice * newQuantity;
                 }
@@ -209,9 +209,8 @@ internal class Cart : BlApi.ICart
                 //check if it is still in stock and update the details
                 if (newQuantity <= myProduct.InStock)
                 {
-                    myCart.TotalPrice += (myCart.items[i - 1].QuantityPerItem - newQuantity) * myCart.items[i - 1].productPrice;
+                    myCart.TotalPrice -= (myCart.items[i - 1].QuantityPerItem - newQuantity) * myCart.items[i - 1].productPrice;
                     myCart.items[i - 1].QuantityPerItem = newQuantity;
-                    myCart.items[i - 1].productPrice = myCart.items[i - 1].productPrice * newQuantity;
                     myCart.items[i - 1].TotalPrice = myCart.items[i - 1].productPrice * newQuantity;
                 }
             }
