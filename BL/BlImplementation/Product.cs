@@ -133,7 +133,7 @@ internal class Product : BlApi.IProduct
         }
         //A request to delete a product according to the identifier and the product does not exist in the data will throw an error
         try { myDal.product.Delete(idProduct); }
-        catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("A non-existent product cannot be deleted",ex); }
+        catch(Do.DalDoesNotExistException ex) {throw new InternalErrorException("A non-existent product cannot be deleted",ex); }
 
     }
 

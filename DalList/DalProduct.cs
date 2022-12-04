@@ -94,7 +94,7 @@ internal class DalProduct : IProduct
             i++;
         }
         //If the order is found, its position in the product array will be returned, otherwise -1 will be returned
-        if (DataSource.products[i].ID == idProduct)
+        if (DataSource.products[i-1].ID == idProduct)
             return i;
         return -1;
     }
