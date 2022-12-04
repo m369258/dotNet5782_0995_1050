@@ -20,14 +20,14 @@ internal class DalOrderItem : IOrderItems
         for (i = 0; i < DataSource.products.Count && DataSource.products[i].ID != orderItem.ProductId; i++) ;
         if (i == DataSource.products.Count)
         {
-            throw new DalAlreadyExistsException("this product is exsist");
+            throw new Do.DalAlreadyExistsException(orderItem.ID,"orderItem","this product is exsist");
         }
 
         //Checking if the order ID exists in any other case will throw an error
         for (i = 0; i < DataSource.orders.Count && DataSource.orders[i].ID != orderItem.OrderId; i++) ;
         if (i == DataSource.orders.Count)
         {
-            throw new DalAlreadyExistsException("this order is exsist");
+            throw new Do.DalAlreadyExistsException(orderItem.ID,"orderItem","this order is exsist");
         }
 
         //Adding the order item to the database and updating the actual quantity
@@ -54,7 +54,7 @@ internal class DalOrderItem : IOrderItems
         if (DataSource.orderItems[i].ID == idOrderItem)
             return DataSource.orderItems[i];
 
-        throw new DalDoesNotExistException("there are no order with this id");
+        throw new Do.DalDoesNotExistException(idOrderItem,"orderItem","there are no order with this id");
     }
 
 
@@ -64,7 +64,7 @@ internal class DalOrderItem : IOrderItems
     /// <param name="idOrder">Order ID number</param>
     /// <param name="idProduct">Product ID number.</param>
     /// <returns> a requested order item</returns>
-    /// <exception cref="Exception">In case the requested order item does not exist, an error will be thrown</exception>
+    /// <exception cref="DalDoesNotExistException">In case the requested order item does not exist, an error will be thrown</exception>
     public OrderItem Get(int idOrder, int idProduct)
     {
         int i;
@@ -73,7 +73,7 @@ internal class DalOrderItem : IOrderItems
 
         //If not found, an error will be thrown
         if (DataSource.orderItems.Count == i)
-            throw new DalDoesNotExistException("there is no orderItem with this idOrder and idProduct");
+            throw new Do.DalDoesNotExistException("there is no orderItem with this idOrder and idProduct");
 
         return DataSource.orderItems[i];
     }
@@ -121,7 +121,7 @@ internal class DalOrderItem : IOrderItems
     /// This operation accepts an order and updates its details if it exists, otherwise it will throw an error
     /// </summary>
     /// <param name="updateOrder">orderItem to update</param>
-    /// <exception cref="Exception">Throw an error if the requested orderItem does not exist</exception>
+    /// <exception cref="DalDoesNotExistException">Throw an error if the requested orderItem does not exist</exception>
     public void Update(OrderItem updateOrderItem)
     {
         int ind = GetIndex(updateOrderItem.ID);
@@ -129,14 +129,14 @@ internal class DalOrderItem : IOrderItems
         {
             DataSource.orderItems[ind] = updateOrderItem;
         }
-        else { throw new DalDoesNotExistException("there is no orderItem like this"); }
+        else { throw new Do.DalDoesNotExistException(updateOrderItem.ID,"orderItem","there is no orderItem like this"); }
     }
 
     /// <summary>
     /// This operation gets an order ID number and deletes it if it exists, otherwise an error will be thrown
     /// </summary>
     /// <param name="idOrder">OrderItem ID number</param>
-    /// <exception cref="Exception">In case the order does not exist in the database, an error will be thrown</exception>
+    /// <exception cref="DalDoesNotExistException">In case the order does not exist in the database, an error will be thrown</exception>
     public void Delete(int idOrderItem)
     {
         int ind = GetIndex(idOrderItem);
@@ -145,7 +145,7 @@ internal class DalOrderItem : IOrderItems
             DataSource.orderItems.RemoveAt(ind);
         }
         else
-            throw new DalDoesNotExistException("there is no this id orderItem");
+            throw new Do.DalDoesNotExistException(idOrderItem,"orderItem","there is no this id orderItem");
     }
 
 
