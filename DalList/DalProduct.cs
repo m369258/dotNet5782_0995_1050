@@ -21,7 +21,7 @@ internal class DalProduct : IProduct
         i++) ;
         if (i != DataSource.products.Count)
         {
-            throw new Exception("this product is exsist");
+            throw new Do.DalAlreadyExistsException(product.ID,"product","this product is exsist");
         }
         DataSource.products.Add(product);
         return product.ID;
@@ -45,7 +45,7 @@ internal class DalProduct : IProduct
         //Checking whether the requested product is found and returning it otherwise throws an error
         if (DataSource.products[i].ID == idProduct)
             return DataSource.products[i];
-        throw new Do.DalDoesNotExistException("there are no product with this id");
+        throw new Do.DalDoesNotExistException(idProduct,"product","there are no product with this id");
     }
 
 
@@ -77,7 +77,7 @@ internal class DalProduct : IProduct
             DataSource.products.RemoveAt(ind);
         }
         else
-            throw new Do.DalDoesNotExistException("there is no this id product");
+            throw new Do.DalDoesNotExistException(idProduct,"product","there is no this id product");
     }
 
     /// <summary>
@@ -112,7 +112,7 @@ internal class DalProduct : IProduct
         {
             DataSource.products[ind] = updateProduct;
         }
-        else { throw new DalDoesNotExistException("there is no product like this"); }
+        else { throw new Do.DalDoesNotExistException(updateProduct.ID,"product","there is no product like this"); }
     }
 
 }

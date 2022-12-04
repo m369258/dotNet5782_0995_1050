@@ -13,6 +13,8 @@ public class DalDoesNotExistException : Exception
         : base(massage) { EntityID = id; EntityName = name; }
     public DalDoesNotExistException(int id, string name, string massage, Exception innerException)
         : base(massage, innerException) { EntityID = id; EntityName = name; }
+    public DalDoesNotExistException( string massage)
+       : base(massage) {  }
     public override string ToString()
     {
         if (EntityID != -1)
