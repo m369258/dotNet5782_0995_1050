@@ -34,12 +34,13 @@ public class InvalidInputException : Exception
 /// </summary>
 public class InternalErrorException : Exception
 {
+    private string message;
     public InternalErrorException(string message)
-        : base(message) { }
+        : base(message) { this.message = message; }
     public InternalErrorException(string message, Exception innerException)
-        : base(message, innerException) { }
+        : base(message, innerException) { this.message = message; }
     public override string ToString() =>
-       $"Missing Entity";
+      $"Missing Entity " + message;
 }
 
 /// <summary>
