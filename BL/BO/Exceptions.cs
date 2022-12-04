@@ -8,6 +8,8 @@ public class InvalidArgumentException : Exception
     public InvalidArgumentException() : base() { }
     public InvalidArgumentException(string? message) : base(message) { }
     public InvalidArgumentException(string? message, Exception innerException) : base(message, innerException) { }
+    public override string ToString() =>
+      $"invalid argument";
 }
 
 /// <summary>
@@ -37,7 +39,7 @@ public class InternalErrorException : Exception
     public InternalErrorException(string message, Exception innerException)
         : base(message, innerException) { }
     public override string ToString() =>
-       base.ToString() + $"Missing Entity";
+       $"Missing Entity";
 }
 
 /// <summary>

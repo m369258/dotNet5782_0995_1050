@@ -34,7 +34,9 @@ internal class Product : BlApi.IProduct
             //A product request based on the data layer identifier, if the information has not arrived, will thrthrow an error
             Do.Product p1;
             try { p1 = myDal.product.Get(idProduct); }
-            catch(Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id doesnt exsist",ex); }
+            catch(Do.DalDoesNotExistException ex)
+            {
+                throw new BO.InternalErrorException("this id doesnt exsist",ex); }
 
             //Build a layer product based on the data
             BO.Product product = new BO.Product()

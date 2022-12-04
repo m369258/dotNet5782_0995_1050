@@ -43,7 +43,7 @@ internal class DalProduct : IProduct
             i++;
         }
         //Checking whether the requested product is found and returning it otherwise throws an error
-        if (DataSource.products[i].ID == idProduct)
+        if (i!= DataSource.products.Count && DataSource.products[i].ID == idProduct)
             return DataSource.products[i];
         throw new Do.DalDoesNotExistException(idProduct,"product","there are no product with this id");
     }
