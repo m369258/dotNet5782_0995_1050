@@ -169,27 +169,22 @@ internal class Order : BlApi.IOrder
 
         //Creating an order tracking object in the logical layer according to the data
         BO.OrderTracking myOrderTracking = new BO.OrderTracking();
+        myOrderTracking.Tracking = new List<Tuple<DateTime, string>?>();
+        myOrderTracking.Tracking?.Add(new Tuple<DateTime, string>(doOrder.OrderDate, "The order has been confirmed"));
         myOrderTracking.ID = idOrder;
         myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1);
-        if (myOrderTracking.Status == OrderStatus.OrderConfirmed)
+        if (myOrderTracking.Status == OrderStatus.OrderSend)
         {
-            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
+            myOrderTracking.Tracking.Add(new Tuple<DateTime, string>(doOrder.DeliveryDate, "The order was sent"));
         }
-        else if (myOrderTracking.Status == OrderStatus.OrderSend)
+        else if (myOrderTracking.Status == OrderStatus.OrderProvided)
         {
-            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
-            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
-        }
-        else
-        {
-            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.OrderDate, "The order has been confirmed"));
-            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.DeliveryDate, "The order was sent"));
-            myOrderTracking.Tracking.Add(Tuple.Create(doOrder.DeliveryDate, "The order was delivered"));
+            myOrderTracking.Tracking.Add(new Tuple<DateTime, string>(doOrder.DeliveryDate, "The order was delivered"));
         }
         return myOrderTracking;
     }
 
-//public BO.Order UpdateOrder()
+    //public BO.Order UpdateOrder()
 
 
     public BO.Order OrderShippingUpdate(int orderId)
@@ -197,7 +192,7 @@ internal class Order : BlApi.IOrder
         Do.Order doOrder = new Do.Order();
         //Check if an order exists (in data layer).
         try { doOrder = myDal.order.Get(orderId); }
-        catch { throw new InternalErrorException("There is no product with this id"); }
+        catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no product with this id", ex); }
 
         //Check if an order exists (in the data layer) and has not yet been sent
         if (doOrder.DeliveryDate == new DateTime())
