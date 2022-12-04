@@ -189,6 +189,9 @@ internal class Order : BlApi.IOrder
         return myOrderTracking;
     }
 
+//public BO.Order UpdateOrder()
+
+
     public BO.Order OrderShippingUpdate(int orderId)
     {
         Do.Order doOrder = new Do.Order();

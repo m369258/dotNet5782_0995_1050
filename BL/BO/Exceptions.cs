@@ -5,7 +5,9 @@
 /// </summary>
 public class InvalidArgumentException : Exception
 {
+    public InvalidArgumentException() : base() { }
     public InvalidArgumentException(string? message) : base(message) { }
+    public InvalidArgumentException(string? message, Exception innerException) : base(message, innerException) { }
 }
 
 /// <summary>
@@ -13,6 +15,8 @@ public class InvalidArgumentException : Exception
 /// </summary>
 public class InvalidInputException : Exception
 {
+    public InvalidInputException() : base() { }
+
     public InvalidInputException(string? message) : base(message) { }
 }
 
@@ -21,6 +25,7 @@ public class InvalidInputException : Exception
 /// </summary>
 public class InternalErrorException : Exception
 {
+    public InternalErrorException() : base() { }
     public InternalErrorException(string? message) : base(message) { }
 }
 
@@ -29,5 +34,6 @@ public class InternalErrorException : Exception
 /// </summary>
 public class NotEnoughInStockException : Exception
 {
+    public NotEnoughInStockException() : base() { }
     public NotEnoughInStockException(string? message) : base(message) { }
 }

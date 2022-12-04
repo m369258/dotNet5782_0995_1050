@@ -11,6 +11,9 @@ internal class Program
     enum OptionsOfOrders { GetListOfOrders = 1, OrderShippingUpdate, GetOrderDetails, OrderDeliveryUpdate, OrderTracking }
     enum OptionsOfCarts { Add = 1, Update, MakeAnOrder }
 
+    /// <summary>
+    /// A private variable that stores the current shopping cart
+    /// </summary>
     private static BO.Cart boCart = new BO.Cart()
     {
         CustomerName = "shira nussbacher",
@@ -20,6 +23,9 @@ internal class Program
         TotalPrice = 0,
     };
 
+    /// <summary>
+    /// A main program that manages user requests
+    /// </summary>
     static void Main(string[] args)
     {
         MainMenu choice;
@@ -74,13 +80,13 @@ internal class Program
         BO.Product p = new BO.Product();
 
         try
-        { 
+        {
             switch (choice)
             {
                 case OptionsOfProducts.Add:
                     Console.WriteLine("Adding a product");
                     Console.Write("enter idProduct with 6 numbers:");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new InvalidInputException("idProduct is in valid");
                     //Calling a function that receives item details from the user
                     p = InputProduct();
                     p.ID = idProduct;
@@ -134,11 +140,12 @@ internal class Program
 
             }
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
+        catch (InvalidInputException invalidEx){Console.WriteLine(invalidEx);}
+        catch (InvalidArgumentException invalidArg) { Console.WriteLine(invalidArg); }
+        catch(InternalErrorException internalEx) { Console.WriteLine(internalEx); }
+        catch (Exception ex){Console.WriteLine(ex.Message);}
     }
+
     /// <summary>
     /// Receives the item data from the user
     /// </summary>
@@ -170,6 +177,11 @@ instock of product");
         p.InStock = instock;
         return p;
     }
+
+    /// <summary>
+    /// A sub-menu of the order - which performs actions according to the user's request
+    /// </summary>
+    /// <exception cref="InvalidInputException">An appropriate error will be thrown if necessary</exception>
     private static void submenuOfOrder()
     {
         OptionsOfOrders choice;
@@ -242,10 +254,10 @@ instock of product");
             }
         }
         //In case of any error an appropriate error will be thrown
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
+        catch (InvalidInputException invalidEx) { Console.WriteLine(invalidEx); }
+        catch (InvalidArgumentException invalidArg) { Console.WriteLine(invalidArg); }
+        catch (InternalErrorException internalEx) { Console.WriteLine(internalEx); }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
 
     /// <summary>
@@ -302,9 +314,10 @@ instock of product");
             }
         }
         //In case of any error an appropriate error will be thrown
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex);
-        }
+        catch (InvalidInputException invalidEx) { Console.WriteLine(invalidEx); }
+        catch (InvalidArgumentException invalidArg) { Console.WriteLine(invalidArg); }
+        catch (InternalErrorException internalEx) { Console.WriteLine(internalEx); }
+        catch (NotEnoughInStockException notEnoughInStock) { Console.WriteLine(notEnoughInStock); }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
 }
