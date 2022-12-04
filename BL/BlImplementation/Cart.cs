@@ -12,6 +12,7 @@ internal class Cart : BlApi.ICart
     DalApi.IDal MyDal = new Dal.DalList();
     public BO.Cart Add(BO.Cart myCart, int idProduct)
     {
+        BO.OrderItem myOrderItem = new BO.OrderItem();
         bool isExist = false;
         int i;
         //Checking whether the product is in the shopping basket
@@ -26,13 +27,11 @@ internal class Cart : BlApi.ICart
         {
             Do.Product myProduct;
             try { myProduct = MyDal.product.Get(idProduct); }
-            catch { throw new InternalErrorException("This item does not exist"); }//- may have been removed
-
+            catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("This item does not exist",ex); }//- may have been removed
             //Checking if this item is in stock
             if (myProduct.InStock >= 1)
             {
                 //Creating an orderItem and adding it to the list of details in the basket
-                BO.OrderItem myOrderItem = new BO.OrderItem();
                 myOrderItem.ProductId = idProduct;
                 myOrderItem.NameProduct = myProduct.Name;
                 myOrderItem.productPrice = myProduct.Price;
@@ -43,14 +42,14 @@ internal class Cart : BlApi.ICart
                 myCart.items.Add(myOrderItem);
                 myCart.TotalPrice += myProduct.Price;
             }
-            else throw new NotEnoughInStockException("There is not enough stock of this product.");
+            else throw new NotEnoughInStockException(myProduct.ID, myProduct.Name, "There is not enough stock of this product.");
         }
         else//if the product is in the shopping basket:
         {
             int productId = myCart.items[i - 1].ProductId;
             Do.Product myProduct;
             try { myProduct = MyDal.product.Get(productId); }
-            catch { throw new InternalErrorException("This item does not exist"); }
+            catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("This item does not exist",ex); }
 
             //Checking whether the desired quantity is in stock
             if (myCart.items[i - 1].QuantityPerItem <= myProduct.InStock)
@@ -60,7 +59,7 @@ internal class Cart : BlApi.ICart
                 myCart.items[i - 1].TotalPrice += myProduct.Price;
                 myCart.TotalPrice += myProduct.Price;
             }
-            else throw new NotEnoughInStockException("There is not enough stock of this product.");
+            else throw new BO.NotEnoughInStockException(productId, myProduct.Name, "There is not enough stock of this product.");
         }
 
         return myCart;
@@ -71,12 +70,12 @@ internal class Cart : BlApi.ICart
         int productId;
         //In case the customer's name or address is empty, an error will be thrown
         if (myCart.CustomerName == "")
-            throw new InvalidArgumentException("empty customer name");
+            throw new BO.InvalidArgumentException("empty customer name");
         if (myCart.CustomerAddress == "")
-            throw new InvalidArgumentException("empty customer address");
+            throw new BO.InvalidArgumentException("empty customer address");
         //In case the email address is not correct
         if (!myCart.CustomerEmail.Contains("@") || !myCart.CustomerEmail.Contains("."))
-            throw new InvalidArgumentException("Invalid email");
+            throw new BO.InvalidArgumentException("Invalid email");
 
         //checking that all products exist
         foreach (var item in myCart.items)
@@ -85,13 +84,13 @@ internal class Cart : BlApi.ICart
             Do.Product myProduct;
             // check if it is in stock
             try { myProduct = MyDal.product.Get(productId); }
-            catch (Exception ex) { throw new InternalErrorException("this product id is not exists"); }
+            catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this product id is not exists",ex); }
             //Checking whether the quantities are positive
             if (item.QuantityPerItem < 0)
-                throw new InvalidArgumentException("negative quantity");
+                throw new BO.InvalidArgumentException("negative quantity");
             //Not enough in stock
             if (item.QuantityPerItem > myProduct.InStock)
-                throw new InternalErrorException("No quantity in stock");
+                throw new BO.InternalErrorException("No quantity in stock");
             //In case we have changed the price of the item, we will also update the price in the basket
             if (myProduct.Price != item.productPrice)
                 item.productPrice = myProduct.Price;
@@ -123,11 +122,11 @@ internal class Cart : BlApi.ICart
             };
             //and make attempts to request the addition of an order item
             try { MyDal.orderItems.Add(myOrderItem); }
-            catch { throw new InternalErrorException("Unable to add"); }
+            catch(DalAlreadyExistsException ex) { throw new InternalErrorException("Unable to add",ex); }
 
             Do.Product product;
             try { product = MyDal.product.Get(myOrderItem.ProductId); }
-            catch { throw new InternalErrorException("The item already exists"); }
+            catch (DalAlreadyExistsException ex) { throw new InternalErrorException("The item already exists",ex); }
 
             //Requests to update these products after the inventory is updated
             product.InStock -= myOrderItem.Amount;
@@ -146,12 +145,13 @@ internal class Cart : BlApi.ICart
     {
         Do.Product myProduct;
         try { myProduct = MyDal.product.Get(idProduct); }
-        catch { throw new InternalErrorException("this id product is not exsist"); }
+        catch(Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id product is not exsist",ex); }
         //Checking whether the desired quantity of this item is in stock
+        BO.OrderItem myOrderItem = new BO.OrderItem();
+
         if (myProduct.InStock >= newQuantity)
         {
             //Outputting an item and initializing its values
-            BO.OrderItem myOrderItem = new BO.OrderItem();
             myOrderItem.ProductId = idProduct;
             myOrderItem.NameProduct = myProduct.Name;
             myOrderItem.productPrice = myProduct.Price;
@@ -162,13 +162,13 @@ internal class Cart : BlApi.ICart
             myCart.items.Add(myOrderItem);
             myCart.TotalPrice += myProduct.Price * newQuantity;
         }
-        else throw new NotEnoughInStockException("There is not enough stock of this product.");
+        else throw new BO.NotEnoughInStockException(myProduct.ID , myProduct.Name,"There is not enough stock of this product.");
     }
 
     public BO.Cart Update(BO.Cart myCart, int idProduct, int newQuantity)
     {
         if (newQuantity < 0)
-            throw new InvalidInputException("Quantity cannot be a negative number");
+            throw new BO.InvalidInputException("Quantity cannot be a negative number");
         bool isExist = false;
         int i;
         //Checking whether the product is in the shopping basket
@@ -187,7 +187,7 @@ internal class Cart : BlApi.ICart
                 int productId = myCart.items[i - 1].ProductId;
                 Do.Product myProduct;
                 try { myProduct = MyDal.product.Get(productId); }
-                catch { throw new InternalErrorException("this id product is not exsist"); }
+                catch(Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id product is not exsist",ex); }
                 //we will check if it is in stock and we will update the details
                 if (newQuantity <= myProduct.InStock)
                 {
@@ -196,7 +196,7 @@ internal class Cart : BlApi.ICart
                     myCart.items[i - 1].TotalPrice = myCart.items[i - 1].productPrice * newQuantity;
                 }
 
-                else throw new NotEnoughInStockException("There is not enough stock of this product.");
+                else throw new BO.NotEnoughInStockException(myProduct.ID, myProduct.Name,"There is not enough stock of this product.");
             }
             //In case the desired quantity is small, we will check if it is still in stock.
             else if (newQuantity < myCart.items[i - 1].QuantityPerItem && newQuantity != 0)
@@ -204,7 +204,7 @@ internal class Cart : BlApi.ICart
                 int productId = myCart.items[i - 1].ProductId;
                 Do.Product myProduct;
                 try { myProduct = MyDal.product.Get(productId); }
-                catch { throw new InternalErrorException("this id product is not exsist"); }
+                catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id product is not exsist",ex); }
 
                 //check if it is still in stock and update the details
                 if (newQuantity <= myProduct.InStock)

@@ -1,11 +1,11 @@
 ﻿using BO;
+using Do;
 
 namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
     DalApi.IDal myDal = new Dal.DalList();
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts()
-
     {
         //Request from the data layer of all products
         IEnumerable<Do.Product> doProducts = myDal.product.GetAll();
@@ -34,7 +34,7 @@ internal class Product : BlApi.IProduct
             //A product request based on the data layer identifier, if the information has not arrived, will thrthrow an error
             Do.Product p1;
             try { p1 = myDal.product.Get(idProduct); }
-            catch { throw new InternalErrorException("this id doesnt exsist"); }
+            catch(Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id doesnt exsist",ex); }
 
             //Build a layer product based on the data
             BO.Product product = new BO.Product()
@@ -64,7 +64,7 @@ internal class Product : BlApi.IProduct
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error
             Do.Product p1;
             try { p1 = myDal.product.Get(idProduct); }
-            catch { throw new InternalErrorException("this id doesnt exsist"); }
+            catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist",ex); }
 
             //Going through all the items in the basket and saving the desired item
             for (int i = 0; i < cart.items.Count && !isExsist; i++)
@@ -78,7 +78,7 @@ internal class Product : BlApi.IProduct
 
             //If the item does not exist, a temporary error will be thrown
             if (!isExsist)
-                throw new InternalErrorException("The requested product does not exist in the shopping cart");
+                throw new BO.InternalErrorException("The requested product does not exist in the shopping cart");
 
             //Building a logical product based on the data and returning it
             BO.ProductItem product = new BO.ProductItem
@@ -131,7 +131,7 @@ internal class Product : BlApi.IProduct
         }
         //A request to delete a product according to the identifier and the product does not exist in the data will throw an error
         try { myDal.product.Delete(idProduct); }
-        catch { throw new InternalErrorException("A non-existent product cannot be deleted"); }
+        catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("A non-existent product cannot be deleted",ex); }
 
     }
 
@@ -140,7 +140,7 @@ internal class Product : BlApi.IProduct
         //A product request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Product p;
         try { p = myDal.product.Get(product.ID); }
-        catch { throw new InternalErrorException("this id doesnt exsist"); }
+        catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist",ex); }
 
         //Updating the data layer product according to the received data in case of incorrect data will throw an error
         p.ID = product.ID > 0 ? product.ID : throw new BO.InvalidArgumentException("Negative ID");
@@ -151,6 +151,4 @@ internal class Product : BlApi.IProduct
         myDal.product.Update(p);
 
     }
-
-
 }
