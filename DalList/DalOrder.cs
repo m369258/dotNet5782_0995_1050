@@ -33,10 +33,10 @@ internal class DalOrder : IOrder
             i++;
         }
         //Checking whether the requested order is found and returning it otherwise throws an error
-        if (DataSource.orders[i].ID == idOrder)
+        if (i != DataSource.orders.Count && DataSource.orders[i].ID == idOrder)
             return DataSource.orders[i];
-       
-        throw new DalDoesNotExistException("there are no order with this id");
+
+        throw new Do.DalDoesNotExistException(idOrder, "Order", "there are no order with this id");
     }
 
 
@@ -69,7 +69,7 @@ internal class DalOrder : IOrder
             DataSource.orders.RemoveAt(ind);
         }
         else
-            throw new DalDoesNotExistException("there is no this id order");
+            throw new Do.DalDoesNotExistException(idOrder, "Order", "there is no this id order");
     }
 
 
@@ -87,7 +87,7 @@ internal class DalOrder : IOrder
             i++;
         }
         //If the order is found, its position in the order array will be returned, otherwise -1 will be returned
-        if (i< DataSource.orders.Count&&DataSource.orders[i].ID == idOrder)
+        if (i < DataSource.orders.Count && DataSource.orders[i].ID == idOrder)
             return i;
         return -1;
     }
@@ -105,6 +105,6 @@ internal class DalOrder : IOrder
         {
             DataSource.orders[ind] = updateOrder;
         }
-        else { throw new DalDoesNotExistException("there is no order like this"); }
+        else { throw new Do.DalDoesNotExistException(updateOrder.ID, "Order", "there is no order like this"); }
     }
 }
