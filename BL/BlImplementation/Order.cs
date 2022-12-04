@@ -53,7 +53,7 @@ internal class Order : BlApi.IOrder
             //A order request based on the data layer identifier, if the information has not arrived, will throw an error
             Do.Order doOrder;
             try { doOrder = myDal.order.Get(idOrder); }
-            catch { throw new InternalErrorException("this id doesnt exsist"); }
+            catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist",ex); }
 
             //Request any order details according to its ID
             doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
@@ -62,7 +62,7 @@ internal class Order : BlApi.IOrder
                 //A product request based on the data layer identifier, if the information has not arrived, will throw an error
                 Do.Product doProduct;
                 try { doProduct = myDal.product.Get(item.ProductId); }
-                catch { throw new InternalErrorException("this id doesnt exsist"); }
+                catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
                 //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
                 BO.OrderItem boOrderItem = new BO.OrderItem
@@ -106,7 +106,7 @@ internal class Order : BlApi.IOrder
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Order doOrder;
         try { doOrder = myDal.order.Get(idOrder); }
-        catch { throw new InternalErrorException("this id doesnt exsist"); }
+        catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist",ex); }
 
         //In the event that the order was sent and not delivered - updating its delivery to now, in any other case appropriate exceptions will be thrown
         if (doOrder.ShipDate != DateTime.MinValue)
@@ -117,7 +117,7 @@ internal class Order : BlApi.IOrder
 
         //Updating the status of the order in case the order does not exist in the data will throw an exception
         try { myDal.order.Update(doOrder); }
-        catch { throw new InternalErrorException("It is not possible to update the order does not exist"); }
+        catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("It is not possible to update the order does not exist",ex); }
 
         //Request any order details by ID
         doOrderItems = myDal.orderItems.GetByIdOrder(idOrder);
@@ -127,7 +127,7 @@ internal class Order : BlApi.IOrder
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error
             Do.Product doProduct;
             try { doProduct = myDal.product.Get(item.ProductId); }
-            catch { throw new InternalErrorException("this id doesnt exsist"); }
+            catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
             //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
             BO.OrderItem boOrderItem = new BO.OrderItem
@@ -165,7 +165,7 @@ internal class Order : BlApi.IOrder
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Order doOrder = new Do.Order();
         try { doOrder = myDal.order.Get(idOrder); }
-        catch { throw new InternalErrorException("this is order is not exsist"); }
+        catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this is order is not exsist",ex); }
 
         //Creating an order tracking object in the logical layer according to the data
         BO.OrderTracking myOrderTracking = new BO.OrderTracking();
@@ -216,7 +216,7 @@ internal class Order : BlApi.IOrder
             {
                 Do.Product myDoProduct;
                 try { myDoProduct = myDal.product.Get(item.ProductId); }
-                catch { throw new InternalErrorException("this id product is not exsist"); }
+                catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id product is not exsist",ex); }
                 BO.OrderItem boOrderItem = new BO.OrderItem()
                 {
                     ID = item.ID,
