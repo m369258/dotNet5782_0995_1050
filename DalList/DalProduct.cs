@@ -17,11 +17,11 @@ internal class DalProduct : IProduct
         //The loop checks if there is a product with the requested ID number, if so it will throw an error
         for (i = 0; i < DataSource.products.Count
         &&
-        DataSource.products[i].ID != product.ID;
+        DataSource.products[i]?.ID != product.ID;
         i++) ;
         if (i != DataSource.products.Count)
         {
-            throw new Do.DalAlreadyExistsException(product.ID,"product","this product is exsist");
+            throw new Do.DalAlreadyExistsException(product.ID, "product", "this product is exsist");
         }
         DataSource.products.Add(product);
         return product.ID;
@@ -38,14 +38,14 @@ internal class DalProduct : IProduct
     {
         int i = 0;
         //The loop searches for the location of the product
-        while (i < DataSource.products.Count && DataSource.products[i].ID != idProduct)
+        while (i < DataSource.products.Count && DataSource.products[i]?.ID != idProduct)
         {
             i++;
         }
         //Checking whether the requested product is found and returning it otherwise throws an error
-        if (i!= DataSource.products.Count && DataSource.products[i].ID == idProduct)
-            return DataSource.products[i];
-        throw new Do.DalDoesNotExistException(idProduct,"product","there are no product with this id");
+        if (i != DataSource.products.Count && DataSource.products[i]?.ID == idProduct)
+            return DataSource.products[i]??new();
+        throw new Do.DalDoesNotExistException(idProduct, "product", "there are no product with this id");
     }
 
 
@@ -53,15 +53,11 @@ internal class DalProduct : IProduct
     /// This returns all products
     /// </summary>
     /// <returns>All products</returns>
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? condition)
     {
-        List<Product> newProduct = new List<Product>();
-        //The loop performs the explicit copying of the array of products
-        for (int i = 0; i < DataSource.products.Count; i++)
-        {
-            newProduct.Add(DataSource.products[i]);
-        }
-        return newProduct;
+        return condition != null ?
+               DataSource.products.Where(currProduct => condition(currProduct)) :
+               DataSource.products.Select(currProduct => currProduct);
     }
 
     /// <summary>
@@ -77,7 +73,7 @@ internal class DalProduct : IProduct
             DataSource.products.RemoveAt(ind);
         }
         else
-            throw new Do.DalDoesNotExistException(idProduct,"product","there is no this id product");
+            throw new Do.DalDoesNotExistException(idProduct, "product", "there is no this id product");
     }
 
     /// <summary>
@@ -89,12 +85,12 @@ internal class DalProduct : IProduct
     {
         int i = 0;
         //The loop searches for the location of the requested product
-        while (i < DataSource.products.Count && DataSource.products[i].ID != idProduct)
+        while (i < DataSource.products.Count && DataSource.products[i]?.ID != idProduct)
         {
             i++;
         }
         //If the order is found, its position in the product array will be returned, otherwise -1 will be returned
-        if (DataSource.products[i-1].ID == idProduct)
+        if (i != DataSource.products.Count && DataSource.products[i]?.ID == idProduct)
             return i;
         return -1;
     }
@@ -112,7 +108,7 @@ internal class DalProduct : IProduct
         {
             DataSource.products[ind] = updateProduct;
         }
-        else { throw new Do.DalDoesNotExistException(updateProduct.ID,"product","there is no product like this"); }
+        else { throw new Do.DalDoesNotExistException(updateProduct.ID, "product", "there is no product like this"); }
     }
 
 }

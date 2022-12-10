@@ -8,7 +8,7 @@ public interface IOrderItems:ICrud<OrderItem>
     /// </summary>
     /// <param name="idOrder">Order ID number</param>
     /// <returns>All order details</returns>
-    public IEnumerable<OrderItem> GetByIdOrder(int idOrder);
+    public IEnumerable<OrderItem?> GetByIdOrder(Func<OrderItem?, bool>? condition, int idOrder);
 
     /// <summary>
     /// This operation receives an order and product ID number and returns a requested order item
@@ -16,7 +16,7 @@ public interface IOrderItems:ICrud<OrderItem>
     /// <param name="idOrder">Order ID number</param>
     /// <param name="idProduct">Product ID number.</param>
     /// <returns> a requested order item</returns>
-    public OrderItem Get(int idOrder, int idProduct);
+    public OrderItem Get(/*Func<OrderItem?, bool>? condition, */int idOrder, int idProduct);
 
 
 }

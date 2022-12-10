@@ -19,7 +19,7 @@ public class OrderItem
     /// <summary>
     /// Product name
     /// </summary>
-    public string NameProduct { get; set; }
+    public string? NameProduct { get; set; }
 
 
     /// <summary>

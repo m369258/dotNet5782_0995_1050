@@ -14,12 +14,12 @@ public class OrderTracking
     /// <summary>
     /// Order status
     /// </summary>
-    public OrderStatus Status { get; set; }
+    public OrderStatus? Status { get; set; }
 
     /// <summary>
     /// (רשימה של צמדים (תאריך, תיאור התקדמות חבילה
     /// </summary>
-    public List<Tuple<DateTime, string>> Tracking { get; set; }
+    public List<Tuple<DateTime?, string?>?>? Tracking { get; set; }
 
     public override string ToString() => this.ToStringProperty();
 

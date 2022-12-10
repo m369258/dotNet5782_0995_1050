@@ -14,13 +14,13 @@ namespace DalApi
         /// </summary>
         /// <param name="id">Entity ID number to return the entity</param>
         /// <returns>Requested data entity</returns>
-        public T Get(int id);
+        public T Get(/*Func<T?, bool>? condition,*/ int id); 
 
         /// <summary>
         /// An operation that returns all existing entity objects
         /// </summary>
         /// <returns>Every existing entity object</returns>
-        public IEnumerable<T> GetAll();
+        public IEnumerable<T?> GetAll(Func<T?, bool>? condition);
 
         /// <summary>
         /// The operation receives an entity ID number and deletes the requested entity
@@ -33,14 +33,5 @@ namespace DalApi
         /// </summary>
         /// <param name="updateEntity"></param>
         public void Update(T updateEntity);
-
-
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="id"></param>
-        ///// <returns></returns>
-        //protected int GetIndex(int id);
-
     }
 }
