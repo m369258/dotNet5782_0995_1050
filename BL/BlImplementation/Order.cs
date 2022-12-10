@@ -31,7 +31,7 @@ internal class Order : BlApi.IOrder
             {
                 OrderID = item.ID,
                 CustomerName = item.CustomerName,
-                status = (BO.OrderStatus)((item.DeliveryDate != DateTime.MinValue && item.ShipDate != DateTime.MinValue) ? 3 : (item.ShipDate != DateTime.MinValue) ? 2 : 1),
+                status = (BO.OrderStatus)((item.DeliveryDate != null && item.ShipDate != null) ? 3 : (item.ShipDate !=null) ? 2 : 1),
                 AmountForItems = myDOOrderItems.Count(),
                 TotalPrice = price
             };
@@ -82,7 +82,7 @@ internal class Order : BlApi.IOrder
             {
                 ID = doOrder.ID,
                 CustomerName = doOrder.CustomerName,
-                status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
+                status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1),
                 CustomerAddress = doOrder.CustomerAddress,
                 CustomerEmail = doOrder.CustomerEmail,
                 DeliveryDate = doOrder.DeliveryDate,
@@ -109,9 +109,9 @@ internal class Order : BlApi.IOrder
         catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist",ex); }
 
         //In the event that the order was sent and not delivered - updating its delivery to now, in any other case appropriate exceptions will be thrown
-        if (doOrder.ShipDate != DateTime.MinValue)
+        if (doOrder.ShipDate != null)
             throw new Exception("The order has already been delivered");
-        if (doOrder.DeliveryDate == DateTime.MinValue)
+        if (doOrder.DeliveryDate == null)
             throw new Exception("The order has not been sent yet");
         doOrder.ShipDate = DateTime.Now;
 
@@ -150,7 +150,7 @@ internal class Order : BlApi.IOrder
             CustomerName = doOrder.CustomerName,
             CustomerAddress = doOrder.CustomerAddress,
             CustomerEmail = doOrder.CustomerEmail,
-            status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1),
+            status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1),
             DeliveryDate = doOrder.DeliveryDate,
             ShipDate = doOrder.ShipDate,
             PaymentDate = doOrder.OrderDate,
@@ -169,17 +169,17 @@ internal class Order : BlApi.IOrder
 
         //Creating an order tracking object in the logical layer according to the data
         BO.OrderTracking myOrderTracking = new BO.OrderTracking();
-        myOrderTracking.Tracking = new List<Tuple<DateTime, string>?>();
-        myOrderTracking.Tracking?.Add(new Tuple<DateTime, string>(doOrder.OrderDate, "The order has been confirmed"));
+        myOrderTracking.Tracking = new List<Tuple<DateTime?, string?>?>();
+        myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.OrderDate, "The order has been confirmed"));
         myOrderTracking.ID = idOrder;
-        myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != DateTime.MinValue && doOrder.ShipDate != DateTime.MinValue) ? 3 : (doOrder.ShipDate != DateTime.MinValue) ? 2 : 1);
+        myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate !=null) ? 2 : 1);
         if (myOrderTracking.Status == OrderStatus.OrderSend)
         {
-            myOrderTracking.Tracking.Add(new Tuple<DateTime, string>(doOrder.DeliveryDate, "The order was sent"));
+            myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
         }
         else if (myOrderTracking.Status == OrderStatus.OrderProvided)
         {
-            myOrderTracking.Tracking.Add(new Tuple<DateTime, string>(doOrder.DeliveryDate, "The order was delivered"));
+            myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
         }
         return myOrderTracking;
     }
@@ -195,11 +195,11 @@ internal class Order : BlApi.IOrder
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no product with this id", ex); }
 
         //Check if an order exists (in the data layer) and has not yet been sent
-        if (doOrder.DeliveryDate == new DateTime())
+        if (doOrder.DeliveryDate == null)
         {
             //Updating the shipping date in the order in both a data entity and a logical entity
             doOrder.DeliveryDate = DateTime.Now;
-            if (doOrder.DeliveryDate != DateTime.MinValue)
+            if (doOrder.DeliveryDate != null)
                 throw new InternalErrorException("The order has already been sent");
             doOrder.DeliveryDate = DateTime.Now;
             myDal.order.Update(doOrder);

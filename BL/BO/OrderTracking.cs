@@ -19,7 +19,7 @@ public class OrderTracking
     /// <summary>
     /// (רשימה של צמדים (תאריך, תיאור התקדמות חבילה
     /// </summary>
-    public List<Tuple<DateTime?, string?>?>? Tracking { get; set; }
+    public List<Tuple<DateTime?, string?>?> Tracking { get; set; }
 
     public override string ToString() => this.ToStringProperty();
 

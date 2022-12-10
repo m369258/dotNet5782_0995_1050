@@ -20,7 +20,7 @@ namespace DalApi
         /// An operation that returns all existing entity objects
         /// </summary>
         /// <returns>Every existing entity object</returns>
-        public IEnumerable<T?> GetAll(Func<T?, bool>? condition);
+        public IEnumerable<T?> GetAll(Func<T?, bool>? condition=null);
 
         /// <summary>
         /// The operation receives an entity ID number and deletes the requested entity
@@ -33,5 +33,6 @@ namespace DalApi
         /// </summary>
         /// <param name="updateEntity"></param>
         public void Update(T updateEntity);
+
     }
 }

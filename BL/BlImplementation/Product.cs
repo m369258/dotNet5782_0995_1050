@@ -5,8 +5,10 @@ namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
     DalApi.IDal myDal = new Dal.DalList();
+    public delegate bool conditionFunction(Product entity);
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts()
     {
+        
         //Request from the data layer of all products
         IEnumerable<Do.Product> doProducts = myDal.product.GetAll();
 

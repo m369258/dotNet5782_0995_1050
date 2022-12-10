@@ -69,9 +69,9 @@ internal class Cart : BlApi.ICart
     {
         int productId;
         //In case the customer's name or address is empty, an error will be thrown
-        if (myCart.CustomerName == "")
+        if (myCart.CustomerName == null)
             throw new BO.InvalidArgumentException("empty customer name");
-        if (myCart.CustomerAddress == "")
+        if (myCart.CustomerAddress == null)
             throw new BO.InvalidArgumentException("empty customer address");
         //In case the email address is not correct
         if (!myCart.CustomerEmail.Contains("@") || !myCart.CustomerEmail.Contains("."))
@@ -103,8 +103,8 @@ internal class Cart : BlApi.ICart
             CustomerAddress = myCart.CustomerAddress,
             CustomerEmail = myCart.CustomerEmail,
             OrderDate = DateTime.Now,
-            ShipDate = DateTime.MinValue,
-            DeliveryDate = DateTime.MinValue,
+            ShipDate = null,
+            DeliveryDate = null,
         };
 
         //Attempt a request to add a created order (data entity) to the data layer and you will get back an order number
