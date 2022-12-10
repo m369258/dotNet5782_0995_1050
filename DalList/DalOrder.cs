@@ -24,17 +24,25 @@ internal class DalOrder : IOrder
     /// <param name="idOrder">ID number of desired order</param>
     /// <returns>Returns the desired order</returns>
     /// <exception cref="Exception">If the required order does not exist, an error will be thrown</exception>
-    public Order Get(int idOrder)
+    public Order Get(/*Func<Order?, bool>? condition,*/ int idOrder)
     {
+        //IEnumerable<Order?> newOrdersOfterCon;
+        //newOrdersOfterCon = condition != null ?
+        //      DataSource.orders.Where(myOrder => condition(myOrder)) :
+        //      DataSource.orders;
+
         int i = 0;
         //The loop searches for the location of the order
-        while (i < DataSource.orders.Count && DataSource.orders[i].ID != idOrder)
+        while (i < DataSource.orders.Count && DataSource.orders[i]?.ID != idOrder)
         {
             i++;
         }
+
         //Checking whether the requested order is found and returning it otherwise throws an error
-        if (i != DataSource.orders.Count && DataSource.orders[i].ID == idOrder)
-            return DataSource.orders[i];
+        if (i != DataSource.orders.Count && DataSource.orders[i]?.ID == idOrder)
+        {
+            return DataSource.orders[i] ?? new();
+        }
 
         throw new Do.DalDoesNotExistException(idOrder, "Order", "there are no order with this id");
     }
@@ -44,16 +52,11 @@ internal class DalOrder : IOrder
     /// This returns all orders
     /// </summary>
     /// <returns>All orders</returns>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? condition)
     {
-        List<Do.Order> newOrders = new List<Do.Order>();
-        //The loop performs the explicit copying of the array of orders
-        for (int i = 0; i < DataSource.orders.Count; i++)
-        {
-
-            newOrders.Add(DataSource.orders[i]);
-        }
-        return newOrders;
+        return condition != null ?
+               DataSource.orders.Where(currOrder => condition(currOrder)) :
+               DataSource.orders.Select(currOrder => currOrder);
     }
 
     /// <summary>
@@ -82,12 +85,12 @@ internal class DalOrder : IOrder
     {
         int i = 0;
         //The loop searches for the location of the requested order
-        while (i < DataSource.orders.Count && DataSource.orders[i].ID != idOrder)
+        while (i < DataSource.orders.Count && DataSource.orders[i]?.ID != idOrder)
         {
             i++;
         }
         //If the order is found, its position in the order array will be returned, otherwise -1 will be returned
-        if (i < DataSource.orders.Count && DataSource.orders[i].ID == idOrder)
+        if (i < DataSource.orders.Count && DataSource.orders[i]?.ID == idOrder)
             return i;
         return -1;
     }

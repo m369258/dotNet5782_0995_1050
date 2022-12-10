@@ -8,9 +8,9 @@ internal static class DataSource
     static int num = rand.Next();
 
     //Declaration + assignment of arrays of entities that are consumed
-    internal static List<Product> products = new List<Product>();
-    internal static List<Order> orders = new List<Order>();
-    internal static List<OrderItem> orderItems = new List<OrderItem>();
+    internal static List<Product?> products = new List<Product?>();
+    internal static List<Order?> orders = new List<Order?>();
+    internal static List<OrderItem?> orderItems = new List<OrderItem?>();
 
     /// <summary>
     /// An internal class for handling the automatic identifiers and saving the number of existing objects from each actual entity

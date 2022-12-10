@@ -6,7 +6,7 @@ public interface IProduct
     /// </summary>
     /// <returns>returning ProductForList</returns>
     /// 
-   public IEnumerable<BO.ProductForList> GetListOfProducts();
+   public IEnumerable<BO.ProductForList?> GetListOfProducts();
 
     /// <summary>
     /// Product details request by ID

@@ -16,7 +16,7 @@ public class ProductForList
     /// <summary>
     /// product name
     /// </summary>
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     /// <summary>
     /// product price
@@ -26,6 +26,6 @@ public class ProductForList
     /// <summary>
     /// category
     /// </summary>
-    public Category category { get; set; }
+    public Category? category { get; set; }
     public override string ToString() => this.ToStringProperty();
 }
