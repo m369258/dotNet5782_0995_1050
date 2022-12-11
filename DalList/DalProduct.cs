@@ -53,7 +53,7 @@ internal class DalProduct : IProduct
     /// This returns all products
     /// </summary>
     /// <returns>All products</returns>
-    public IEnumerable<Product?> GetAll(Func<Product?, bool>? condition)
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? condition = null)
     {
         return condition != null ?
                DataSource.products.Where(currProduct => condition(currProduct)) :
@@ -110,6 +110,5 @@ internal class DalProduct : IProduct
         }
         else { throw new Do.DalDoesNotExistException(updateProduct.ID, "product", "there is no product like this"); }
     }
-
 }
 

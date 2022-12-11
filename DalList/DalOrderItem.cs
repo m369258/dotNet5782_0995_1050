@@ -17,14 +17,14 @@ internal class DalOrderItem : IOrderItems
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
         int i;
         //Checking whether the product ID exists in any other case will throw an error
-        for (i = 0; i < DataSource.products.Count && DataSource.products[i].ID != orderItem.ProductId; i++) ;
+        for (i = 0; i < DataSource.products.Count && DataSource.products[i]?.ID != orderItem.ProductId; i++) ;
         if (i == DataSource.products.Count)
         {
             throw new Do.DalAlreadyExistsException(orderItem.ID, "orderItem", "this product is exsist");
         }
 
         //Checking if the order ID exists in any other case will throw an error
-        for (i = 0; i < DataSource.orders.Count && DataSource.orders[i].ID != orderItem.OrderId; i++) ;
+        for (i = 0; i < DataSource.orders.Count && DataSource.orders[i]?.ID != orderItem.OrderId; i++) ;
         if (i == DataSource.orders.Count)
         {
             throw new Do.DalAlreadyExistsException(orderItem.ID, "orderItem", "this order is exsist");
@@ -48,7 +48,7 @@ internal class DalOrderItem : IOrderItems
         int i;
 
         //The loop searches for the location of the OrderItem
-        for (i = 0; i < DataSource.orderItems.Count && DataSource.orderItems[i].ID != idOrderItem; i++) ;
+        for (i = 0; i < DataSource.orderItems.Count && DataSource.orderItems[i]?.ID != idOrderItem; i++) ;
 
         //Checking whether the requested OrderItem is found and returning it otherwise throws an error
         if (DataSource.orderItems[i]?.ID == idOrderItem)
@@ -69,7 +69,7 @@ internal class DalOrderItem : IOrderItems
     {
         int i;
         //Search for the desired order item
-        for (i = 0; i < DataSource.orderItems.Count && (DataSource.orderItems[i]?.ProductId != idProduct || DataSource.orderItems[i].OrderId != idOrder); i++) ;
+        for (i = 0; i < DataSource.orderItems.Count && (DataSource.orderItems[i]?.ProductId != idProduct || DataSource.orderItems[i]?.OrderId != idOrder); i++) ;
 
         //If not found, an error will be thrown
         if (DataSource.orderItems.Count == i)
@@ -84,7 +84,7 @@ internal class DalOrderItem : IOrderItems
     /// </summary>
     /// <param name="idOrder">Order ID number</param>
     /// <returns>All order details</returns>
-    public IEnumerable<OrderItem?> GetByIdOrder(Func<OrderItem?, bool>? condition, int idOrder)
+    public IEnumerable<OrderItem?> GetByIdOrder( int idOrder, Func<OrderItem?, bool>? condition)
     {
         return condition != null ?
              DataSource.orderItems.Where(currOrderItem => condition(currOrderItem) && currOrderItem?.OrderId == idOrder) :
