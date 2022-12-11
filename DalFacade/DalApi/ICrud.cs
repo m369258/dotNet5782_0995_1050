@@ -1,7 +1,7 @@
 ﻿
 namespace DalApi
 {
-    public interface ICrud <T>
+    public interface ICrud<T>
     {
         /// <summary>
         /// An operation receives a data entity and adds to the entity pool
@@ -14,7 +14,7 @@ namespace DalApi
         /// </summary>
         /// <param name="id">Entity ID number to return the entity</param>
         /// <returns>Requested data entity</returns>
-        public T Get(/*Func<T?, bool>? condition,*/ int id); 
+        public T Get(/*Func<T?, bool>? condition,*/ int id);
 
         /// <summary>
         /// An operation that returns all existing entity objects

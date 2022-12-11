@@ -10,22 +10,16 @@ internal class Product : BlApi.IProduct
     {
         
         //Request from the data layer of all products
-        IEnumerable<Do.Product> doProducts = myDal.product.GetAll();
+        IEnumerable<Do.Product?> doProducts = myDal.product.GetAll();
 
-        //Building a list of a logical layer for all products and returning it
-        List<BO.ProductForList> ListProducts = new List<BO.ProductForList>();
-        foreach (var item in doProducts)
+        //
+        return doProducts.Select(item => new BO.ProductForList()
         {
-            BO.ProductForList product = new BO.ProductForList
-            {
-                ID = item.ID,
-                Name = item.Name,
-                Price = item.Price,
-                category = (BO.Category)(item.Category)
-            };
-            ListProducts.Add(product);
-        }
-        return ListProducts;
+            ID = item?.ID ?? throw new Exception(),
+            Name = item?.Name ?? throw new Exception(),
+            Price = item?.Price ?? throw new Exception(),
+            category = (BO.Category)(item?.Category)
+        });
     }
 
     public BO.Product GetProduct(int idProduct)
@@ -34,14 +28,15 @@ internal class Product : BlApi.IProduct
         if (idProduct > 0)
         {
             //A product request based on the data layer identifier, if the information has not arrived, will thrthrow an error
-            Do.Product p1;
+            Do.Product? p1;
             try { p1 = myDal.product.Get(idProduct); }
-            catch(Do.DalDoesNotExistException ex)
+            catch (Do.DalDoesNotExistException ex)
             {
-                throw new BO.InternalErrorException("this id doesnt exsist",ex); }
+                throw new BO.InternalErrorException("this id doesnt exsist", ex);
+            }
 
             //Build a layer product based on the data
-            BO.Product product = new BO.Product()
+            BO.Product? product = new BO.Product()
             {
                 ID = p1.ID,
                 Name = p1.Name,
@@ -66,9 +61,9 @@ internal class Product : BlApi.IProduct
             BO.OrderItem boOrderItem = new BO.OrderItem();
 
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error
-            Do.Product p1;
+            Do.Product? p1;
             try { p1 = myDal.product.Get(idProduct); }
-            catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist",ex); }
+            catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
             //Going through all the items in the basket and saving the desired item
             for (int i = 0; i < cart.items.Count && !isExsist; i++)
@@ -144,7 +139,7 @@ internal class Product : BlApi.IProduct
         //A product request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Product p;
         try { p = myDal.product.Get(product.ID); }
-        catch(Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist",ex); }
+        catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
         //Updating the data layer product according to the received data in case of incorrect data will throw an error
         p.ID = product.ID > 0 ? product.ID : throw new BO.InvalidArgumentException("Negative ID");

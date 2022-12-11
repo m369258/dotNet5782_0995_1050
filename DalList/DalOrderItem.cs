@@ -84,7 +84,7 @@ internal class DalOrderItem : IOrderItems
     /// </summary>
     /// <param name="idOrder">Order ID number</param>
     /// <returns>All order details</returns>
-    public IEnumerable<OrderItem?> GetByIdOrder(Func<OrderItem?, bool>? condition, int idOrder)
+    public IEnumerable<OrderItem?> GetByIdOrder( int idOrder, Func<OrderItem?, bool>? condition)
     {
         return condition != null ?
              DataSource.orderItems.Where(currOrderItem => condition(currOrderItem) && currOrderItem?.OrderId == idOrder) :

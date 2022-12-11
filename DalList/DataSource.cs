@@ -145,7 +145,7 @@ internal static class DataSource
         for (int i = 0; i < products.Count; i++)
         {
             if (productId == products[i]?.ID)
-                return (double)(products[i]?.Price);
+                return products[i]?.Price ?? throw new Exception();
         }
         return -1;
     }
