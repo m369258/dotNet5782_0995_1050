@@ -15,23 +15,30 @@ internal class Order : BlApi.IOrder
         IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
 
         //Build an order list of the OrderForList type (logical entity) based on the database
+
+
+        doOrders.Select(currOrder => myDal.orderItems.GetByIdOrder(currOrder.ID).Select(it => price = +it?.Price * it?.Amount ?? throw new Exception()));
+
+
         foreach (var item in doOrders)
         {
             price = 0;
             myDOOrderItems = myDal.orderItems.GetByIdOrder(item.ID);
 
             //Calculating the price of items in the product in order to arrive at the total price
-            foreach (var it in myDOOrderItems)
-            {
-                price += it?.Price * it?.Amount ?? throw new Exception();
-            }
+
+            myDOOrderItems.Select(it => price = +it?.Price * it?.Amount ?? throw new Exception());
+            //foreach (var it in myDOOrderItems)
+            //{
+            //    price += it?.Price * it?.Amount ?? throw new Exception();
+            //}
 
             //Build an order list of the OrderForList type on the database
             BO.OrderForList order = new BO.OrderForList
             {
-                OrderID = item.ID,
-                CustomerName = item.CustomerName,
-                status = (BO.OrderStatus)((item.DeliveryDate != null && item.ShipDate != null) ? 3 : (item.ShipDate !=null) ? 2 : 1),
+                OrderID = item?.ID??throw new Exception(),
+                CustomerName = item?.CustomerName,
+                status = (BO.OrderStatus)((item?.DeliveryDate != null && item?.ShipDate != null) ? 3 : (item?.ShipDate !=null) ? 2 : 1),
                 AmountForItems = myDOOrderItems.Count(),
                 TotalPrice = price
             };
@@ -83,11 +90,11 @@ internal class Order : BlApi.IOrder
                 ID = doOrder?.ID ?? throw new Exception(),
                 CustomerName = doOrder?.CustomerName,
                 status = (BO.OrderStatus)((doOrder?.DeliveryDate != null && doOrder?.ShipDate != null) ? 3 : (doOrder?.ShipDate != null) ? 2 : 1),
-                CustomerAddress = doOrder.CustomerAddress,
-                CustomerEmail = doOrder.CustomerEmail,
-                DeliveryDate = doOrder.DeliveryDate,
-                ShipDate = doOrder.ShipDate,
-                PaymentDate = doOrder.OrderDate,
+                CustomerAddress = doOrder?.CustomerAddress,
+                CustomerEmail = doOrder?.CustomerEmail,
+                DeliveryDate = doOrder?.DeliveryDate,
+                ShipDate = doOrder?.ShipDate,
+                PaymentDate = doOrder?.OrderDate,
                 items = ListOrderItems,
                 totalPrice = price,
             };
@@ -99,21 +106,21 @@ internal class Order : BlApi.IOrder
 
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
-        IEnumerable<Do.OrderItem> doOrderItems = new List<Do.OrderItem>();
+        IEnumerable<Do.OrderItem?> doOrderItems = new List<Do.OrderItem?>();
         List<BO.OrderItem> boOrderItems = new List<BO.OrderItem>();
         double price = 0.0;
 
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
-        Do.Order doOrder;
+        Do.Order? doOrder;
         try { doOrder = myDal.order.Get(idOrder); }
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
         //In the event that the order was sent and not delivered - updating its delivery to now, in any other case appropriate exceptions will be thrown
-        if (doOrder.ShipDate != null)
+        if (doOrder?.ShipDate != null)
             throw new Exception("The order has already been delivered");
-        if (doOrder.DeliveryDate == null)
+        if (doOrder?.DeliveryDate == null)
             throw new Exception("The order has not been sent yet");
-        doOrder.ShipDate = DateTime.Now;
+        doOrder?.ShipDate = DateTime.Now;
 
         //Updating the status of the order in case the order does not exist in the data will throw an exception
         try { myDal.order.Update(doOrder); }

@@ -1,9 +1,5 @@
-﻿
-using BlApi;
-using BO;
-using DalApi;
+﻿using BO;
 using Do;
-
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart

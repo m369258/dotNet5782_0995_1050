@@ -17,6 +17,7 @@ internal class DalOrderItem : IOrderItems
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
         int i;
         //Checking whether the product ID exists in any other case will throw an error
+        Do.Product? p = DataSource.products.Find(currenProduct => { Product p = (Product)currenProduct; return p.ID == orderItem.ProductId; });
         for (i = 0; i < DataSource.products.Count && DataSource.products[i]?.ID != orderItem.ProductId; i++) ;
         if (i == DataSource.products.Count)
         {
@@ -146,7 +147,7 @@ internal class DalOrderItem : IOrderItems
     /// This returns all orderIAtems
     /// </summary>
     /// <returns>All orderItems</returns>
-    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? condition)
+    public IEnumerable<Do.OrderItem?> GetAll(Func<Do.OrderItem?, bool>? condition)
     {
         return condition != null ?
                DataSource.orderItems.Where(currOrderItem => condition(currOrderItem)) :

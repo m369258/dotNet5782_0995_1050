@@ -1,7 +1,7 @@
 ﻿using Do;
 namespace DalApi;
 
-public interface IOrderItems : ICrud<OrderItem?>
+public interface IOrderItems : ICrud<OrderItem>
 {
     /// <summary>
     /// This action gets an order ID number and returns all the order details
@@ -17,5 +17,5 @@ public interface IOrderItems : ICrud<OrderItem?>
     /// <param name="idProduct">Product ID number.</param>
     /// <returns> a requested order item</returns>
     public OrderItem Get(/*Func<OrderItem?, bool>? condition, */int idOrder, int idProduct);
-    IEnumerable<OrderItem?> GetByIdOrder(object iD);
+//    IEnumerable<OrderItem?> GetByIdOrder(object iD);
 }

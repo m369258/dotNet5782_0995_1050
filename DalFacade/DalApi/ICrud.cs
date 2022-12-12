@@ -1,7 +1,7 @@
 ﻿
 namespace DalApi
 {
-    public interface ICrud<T>
+    public interface ICrud<T> where T : struct
     {
         /// <summary>
         /// An operation receives a data entity and adds to the entity pool

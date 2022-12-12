@@ -122,7 +122,7 @@ internal static class DataSource
                 OrderItem orderItem = new OrderItem();
                 orderItem.ID = Config.AutomaticOrderItem;
                 orderItem.OrderId = i + 1001;
-                orderItem.ProductId = products[rand.Next(1, products.Count)].ID;
+                orderItem.ProductId = products[rand.Next(1, products.Count)]?.ID??throw new Exception();
                 orderItem.Price = findPrice(orderItem.ProductId);
                 orderItem.Amount = i + rand.Next(20, 100);
                 cOrderItems++;
