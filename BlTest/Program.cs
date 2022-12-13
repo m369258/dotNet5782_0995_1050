@@ -231,7 +231,8 @@ instock of product");
                     Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
                     boOrder = myBL.order.OrderShippingUpdate(idOrder);
                     Console.WriteLine("after: ");
-                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    Console.WriteLine(boOrder);
+                    //Console.WriteLine(myBL.order.GetOrderDetails(idOrder));?????????????????????????????????????
                     break;
 
                 //Order delivery update

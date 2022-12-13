@@ -29,4 +29,16 @@ internal static class Tools
     }
 
 
+    public static void CopyBetweenEnriries<U, T>(this T fromEntity, U toEntity)
+    {
+        Type uType = toEntity.GetType();
+        foreach (PropertyInfo prop in fromEntity.GetType().GetProperties())
+        {
+            PropertyInfo? uProp = uType.GetProperty(prop.Name);
+            if(uProp?.PropertyType==prop.PropertyType)
+            {
+                uProp.SetValue(toEntity, prop.GetValue(fromEntity, null), null);
+            }
+        }
+    }
 }

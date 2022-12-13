@@ -1,4 +1,7 @@
-﻿namespace BlApi;
+﻿using BO;
+using System.Collections;
+
+namespace BlApi;
 public interface IProduct
 {
     /// <summary>
@@ -6,7 +9,7 @@ public interface IProduct
     /// </summary>
     /// <returns>returning ProductForList</returns>
     /// 
-   public IEnumerable<BO.ProductForList?> GetListOfProducts();
+   public IEnumerable<BO.ProductForList?> GetListOfProducts(int x=0);
 
     /// <summary>
     /// Product details request by ID

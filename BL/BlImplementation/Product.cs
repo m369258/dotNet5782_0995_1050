@@ -5,11 +5,14 @@ internal class Product : BlApi.IProduct
 {
     DalApi.IDal myDal = new Dal.DalList();
     public delegate bool conditionFunction(Product entity);
-    IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts()
+    IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts(int x)
     {
-
+        IEnumerable<Do.Product?> doProducts;
         //Request from the data layer of all products
-        IEnumerable<Do.Product?> doProducts = myDal.product.GetAll();
+        if(x!=0)
+             doProducts = myDal.product.GetAll(item=>((item)?.Category)==((Do.Category)x));
+        else
+            doProducts = myDal.product.GetAll();
 
         //
         return doProducts.Select(item => new BO.ProductForList()
@@ -33,18 +36,10 @@ internal class Product : BlApi.IProduct
             {
                 throw new BO.InternalErrorException("this id doesnt exsist", ex);
             }
-
-            //Build a layer product based on the data
-           return new BO.Product()
-            {
-                ID = p1?.ID ?? throw new Exception(),
-                Name = p1?.Name,
-                Price = (double)(p1?.Price),
-                InStock = p1?.InStock ?? throw new Exception(),
-                Category = (BO.Category)(p1?.Category),
-            };
-
-           
+            BO.Product newP=new BO.Product();
+            p1?.CopyBetweenEnriries(newP);
+            newP.Category= (BO.Category)(p1?.Category);
+            return newP;
         }
         else throw new BO.InvalidArgumentException("Negative ID");
     }
@@ -132,4 +127,5 @@ internal class Product : BlApi.IProduct
         myDal.product.Update(p);
 
     }
+
 }

@@ -19,23 +19,6 @@ internal class Order : BlApi.IOrder
         //Build an order list of the OrderForList type (logical entity) based on the database
 
 
-       // doOrders.Select(currOrder =>
-       // myDal.orderItems.GetByIdOrder(currOrder?.ID ?? throw new Exception())
-       //.Select(it => price = +it?.Price * it?.Amount ?? throw new Exception()));
-
-       // doOrders.Select(item =>
-       //   boListOrders.Add(
-       //       new BO.OrderForList
-       //       {
-       //           OrderID = item?.ID ?? throw new Exception(),
-       //           CustomerName = item?.CustomerName,
-       //           status = (BO.OrderStatus)((item?.DeliveryDate != null && item?.ShipDate != null) ? 3 : (item?.ShipDate != null) ? 2 : 1),
-       //           AmountForItems = myDOOrderItems.Count(),
-       //           TotalPrice = price
-       //       }
-       //     );
-
-
         foreach (var item in doOrders)
         {
             price = 0;
@@ -195,11 +178,11 @@ internal class Order : BlApi.IOrder
         myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.OrderDate, "The order has been confirmed"));
         myOrderTracking.ID = idOrder;
         myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
-        if (myOrderTracking.Status == OrderStatus.OrderSend)
+        if (myOrderTracking.Status == OrderStatus.OrderSend|| myOrderTracking.Status == OrderStatus.OrderProvided)
         {
             myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
         }
-        else if (myOrderTracking.Status == OrderStatus.OrderProvided)
+         if (myOrderTracking.Status == OrderStatus.OrderProvided)
         {
             myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
         }
@@ -213,16 +196,15 @@ internal class Order : BlApi.IOrder
     {
         Do.Order doOrder = new Do.Order();
         //Check if an order exists (in data layer).
-        try { doOrder = (Do.Order)myDal.order.Get(orderId); }
+        try { doOrder = myDal.order.Get(orderId); }
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no product with this id", ex); }
 
+        if (doOrder.DeliveryDate != null)
+            throw new InternalErrorException("The order has already been sent");
         //Check if an order exists (in the data layer) and has not yet been sent
-        if (doOrder.DeliveryDate == null)
+       else 
         {
             //Updating the shipping date in the order in both a data entity and a logical entity
-            doOrder.DeliveryDate = DateTime.Now;
-            if (doOrder.DeliveryDate != null)
-                throw new InternalErrorException("The order has already been sent");
             doOrder.DeliveryDate = DateTime.Now;
             myDal.order.Update(doOrder);
 
