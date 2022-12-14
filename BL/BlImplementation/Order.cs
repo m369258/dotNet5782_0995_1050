@@ -59,7 +59,7 @@ internal class Order : BlApi.IOrder
             {
                 //A product request based on the data layer identifier, if the information has not arrived, will throw an error
                 Do.Product doProduct;
-                try { doProduct = myDal.product.Get(item?.ProductId??throw new Exception()); }
+                try { doProduct = myDal.product.Get(item?.ProductId ?? throw new Exception()); }
                 catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
                 //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
@@ -83,6 +83,15 @@ internal class Order : BlApi.IOrder
             order.totalPrice = price;
             return order;
 
+            //Building a logical order based on the data and returning it
+            BO.Order boOrder = new BO.Order();
+            doOrder.CopyBetweenEnriries(doOrder);
+            boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
+            boOrder.PaymentDate = doOrder.OrderDate;
+            boOrder.PaymentDate = doOrder.OrderDate;
+            boOrder.items = ListOrderItems;
+            boOrder.totalPrice = price;
+            return boOrder;
         }
         else throw new BO.InvalidArgumentException("Negative ID");
     }
@@ -116,7 +125,7 @@ internal class Order : BlApi.IOrder
         {
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error
             Do.Product doProduct;
-            try { doProduct = myDal.product.Get(item?.ProductId??-1); }
+            try { doProduct = myDal.product.Get(item?.ProductId ?? -1); }
             catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
             //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
@@ -155,11 +164,11 @@ internal class Order : BlApi.IOrder
         myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.OrderDate, "The order has been confirmed"));
         myOrderTracking.ID = idOrder;
         myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
-        if (myOrderTracking.Status == OrderStatus.OrderSend|| myOrderTracking.Status == OrderStatus.OrderProvided)
+        if (myOrderTracking.Status == OrderStatus.OrderSend || myOrderTracking.Status == OrderStatus.OrderProvided)
         {
             myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
         }
-         if (myOrderTracking.Status == OrderStatus.OrderProvided)
+        if (myOrderTracking.Status == OrderStatus.OrderProvided)
         {
             myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
         }
@@ -179,7 +188,7 @@ internal class Order : BlApi.IOrder
         if (doOrder.DeliveryDate != null)
             throw new InternalErrorException("The order has already been sent");
         //Check if an order exists (in the data layer) and has not yet been sent
-       else 
+        else
         {
             //Updating the shipping date in the order in both a data entity and a logical entity
             doOrder.DeliveryDate = DateTime.Now;
@@ -196,34 +205,30 @@ internal class Order : BlApi.IOrder
             foreach (var item in doItems)
             {
                 Do.Product myDoProduct;
-                try { myDoProduct = myDal.product.Get(item?.ProductId??-1); }
+                try { myDoProduct = myDal.product.Get(item?.ProductId ?? -1); }
                 catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id product is not exsist", ex); }
                 BO.OrderItem boOrderItem = new BO.OrderItem()
                 {
-                    ID = item?.ID??throw new Exception(),
-                    ProductId = item?.ProductId??throw new Exception(),
+                    ID = item?.ID ?? throw new Exception(),
+                    ProductId = item?.ProductId ?? throw new Exception(),
                     NameProduct = myDoProduct.Name,
                     productPrice = myDoProduct.Price,
-                    QuantityPerItem = item?.Amount??throw new Exception(),
-                    TotalPrice = myDoProduct.Price * item?.Amount??throw new Exception()
+                    QuantityPerItem = item?.Amount ?? throw new Exception(),
+                    TotalPrice = myDoProduct.Price * item?.Amount ?? throw new Exception()
                 };
                 price += boOrderItem.TotalPrice;
-                boItems.Add(boOrderItem);
+                try { boItems.Add(boOrderItem); }
+                catch { throw new BO.InternalErrorException("hhhh"); }
+                
             }
 
             //Creating an order from the logical extent of an order based on the data
-            BO.Order boOrder = new BO.Order()
-            {
-                CustomerName = doOrder.CustomerName,
-                CustomerEmail = doOrder.CustomerEmail,
-                CustomerAddress = doOrder.CustomerAddress,
-                DeliveryDate = doOrder.DeliveryDate,
-                ShipDate = doOrder.ShipDate,
-                PaymentDate = doOrder.OrderDate,
-                status = OrderStatus.OrderSend,
-                items = boItems,
-                totalPrice = price
-            };
+            BO.Order boOrder = new BO.Order();
+            doOrder.CopyBetweenEnriries(boOrder);
+            boOrder.PaymentDate = doOrder.OrderDate;
+            boOrder.status = OrderStatus.OrderSend;
+            boOrder.items = boItems!;
+            boOrder.totalPrice = price;
             return boOrder;
         }
         return null;
