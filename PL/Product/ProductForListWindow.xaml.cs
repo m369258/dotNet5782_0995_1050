@@ -24,7 +24,6 @@ namespace PL.Product
         {
             InitializeComponent();
             ProductListview.ItemsSource = bl.product.GetListOfProducts();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             //btnClear.IsEnabled = false;
 
         }
