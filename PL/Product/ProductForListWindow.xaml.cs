@@ -25,6 +25,8 @@ namespace PL.Product
             InitializeComponent();
             ProductListview.ItemsSource = bl.product.GetListOfProducts();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //btnClear.IsEnabled = false;
+
         }
 
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -32,6 +34,7 @@ namespace PL.Product
            BO.Category  currCategorySelect = (BO.Category)CategorySelector.SelectedItem;
             
             ProductListview.ItemsSource=bl.product.GetListOfProducts((int)currCategorySelect);
+           // btnClear.IsEnabled=true;
         }
     }
 }
