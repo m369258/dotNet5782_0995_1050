@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Product
 {
@@ -24,52 +12,70 @@ namespace PL.Product
         public ProductWindow()
         {
             InitializeComponent();
-            cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));  
-                btnAddOrUpdateProduct.Content = "Add";
+            cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            btnAddOrUpdateProduct.Content = "Add";
+            txtID.IsEnabled = true;
         }
 
 
         public ProductWindow(int id)
         {
             InitializeComponent();
+
+            BO.Product boProduct = new BO.Product();
             cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            BO.Product boProduct = bl.product.GetProduct(id);
+            try { boProduct = bl.product.GetProduct(id); }
+            catch (BO.InternalErrorException) { MessageBox.Show("מוצר לא קיים"); }
             txtID.Text = boProduct.ID.ToString();
             txtName.Text = boProduct.Name;
-            txtPrice.Text=boProduct.Price.ToString();
+            txtPrice.Text = boProduct.Price.ToString();
             cbxCategory.SelectedItem = boProduct.Category;
-            txtInStock.Text=boProduct.InStock.ToString();
+            txtInStock.Text = boProduct.InStock.ToString();
 
             btnAddOrUpdateProduct.Content = "Update";
+            txtID.IsEnabled = false;
         }
 
         private void btnAddOrUpdateProduct_Click(object sender, RoutedEventArgs e)
         {
-
-            //בדיקה האם הקלטים חוקיים
-            //במידה ולא ישלח צסז בוקס
-            if (btnAddOrUpdateProduct.Content == "Add")
+            int id, inStock;
+            double price;
+            if (txtID.Text == "" || txtName.Text == "" || txtPrice.Text == "" || txtInStock.Text == "" || cbxCategory.SelectedIndex == -1)
             {
-                bl.product.AddProduct(new BO.Product()
+                MessageBox.Show("אנא מלא את כל השדות");
+                return;
+            }
+            if (!int.TryParse(txtID.Text, out id)) { MessageBox.Show("מזהה לא חוקי"); return; } ;
+            if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("מחיר לא חוקי"); return; } ;
+            if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("כמות במלאי לא חוקית"); return; } ;
+
+            if (btnAddOrUpdateProduct.Content.ToString() == "Add")
+            {
+                try
                 {
-                    ID = int.Parse(txtID.Text),
-                    Name = txtName.Text,
-                    Category = (BO.Category)(cbxCategory.SelectedItem),
-                    Price = double.Parse(txtPrice.Text),
-                    InStock = int.Parse(txtInStock.Text)
-                });
+                    bl.product.AddProduct(new BO.Product()
+                    {
+                        ID = id,
+                        Name = txtName.Text,
+                        Category = (BO.Category)(cbxCategory.SelectedItem),
+                        Price = price,
+                        InStock = inStock
+                    });
+                }
+                catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
             }
             else
             {
                 BO.Product bop = new BO.Product();
-                bop.ID = int.Parse(txtID.Text);
+                bop.ID = id;
                 bop.Name = txtName.Text;
                 bop.Category = (BO.Category)(cbxCategory.SelectedItem);
-                bop.Price = double.Parse(txtPrice.Text);
-                bop.InStock = int.Parse(txtInStock.Text);
-                bl.product.UpDateProduct(bop);
+                bop.Price = price;
+                bop.InStock = inStock;
+                try { bl.product.UpDateProduct(bop); }
+                catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
             }
             this.Close();
-                  }
+        }
     }
 }

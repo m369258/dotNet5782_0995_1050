@@ -1,8 +1,4 @@
 ﻿using BO;
-using DalApi;
-using Do;
-using System.Data;
-using System.Diagnostics;
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
@@ -73,15 +69,7 @@ internal class Order : BlApi.IOrder
                 ListOrderItems.Add(boOrderItem);
             }
 
-            if (ListOrderItems == null) throw new BO.InternalErrorException("Problem with items in the product");
-            //Building a logical order based on the data and returning it
-            BO.Order order = new BO.Order();
-            doOrder.CopyBetweenEnriries(order);
-            order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1),
-            order.PaymentDate = doOrder.OrderDate;
-            order.items = ListOrderItems!;
-            order.totalPrice = price;
-            return order;
+            if (ListOrderItems == null) throw new BO.InternalErrorException("The order without items");
 
             //Building a logical order based on the data and returning it
             BO.Order boOrder = new BO.Order();
@@ -89,7 +77,7 @@ internal class Order : BlApi.IOrder
             boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
             boOrder.PaymentDate = doOrder.OrderDate;
             boOrder.PaymentDate = doOrder.OrderDate;
-            boOrder.items = ListOrderItems;
+            boOrder.items = ListOrderItems!;
             boOrder.totalPrice = price;
             return boOrder;
         }
@@ -109,9 +97,9 @@ internal class Order : BlApi.IOrder
 
         //In the event that the order was sent and not delivered - updating its delivery to now, in any other case appropriate exceptions will be thrown
         if (doOrder.ShipDate != null)
-            throw new Exception("The order has already been delivered");
+            throw new BO.InternalErrorException("The order has already been delivered");
         if (doOrder.DeliveryDate == null)
-            throw new Exception("The order has not been sent yet");
+            throw new BO.InternalErrorException("The order has not been sent yet");
         doOrder.ShipDate = DateTime.Now;
 
         //Updating the status of the order in case the order does not exist in the data will throw an exception
@@ -140,7 +128,7 @@ internal class Order : BlApi.IOrder
         }
 
         //Building a logical order based on the data and returning it
-        if (ListOrderItems == null) throw new BO.InternalErrorException("Problem with items in the product");
+        if (boOrderItems == null) throw new BO.InternalErrorException("Problem with items in the product");
         BO.Order order = new BO.Order();
         doOrder.CopyBetweenEnriries(order);
             order.ID = idOrder;
@@ -164,18 +152,18 @@ internal class Order : BlApi.IOrder
         myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.OrderDate, "The order has been confirmed"));
         myOrderTracking.ID = idOrder;
         myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
+
+        if (myOrderTracking.Tracking == null) throw new BO.InternalErrorException("problemmm");
         if (myOrderTracking.Status == OrderStatus.OrderSend || myOrderTracking.Status == OrderStatus.OrderProvided)
         {
-            myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
+            myOrderTracking.Tracking!.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
         }
         if (myOrderTracking.Status == OrderStatus.OrderProvided)
         {
-            myOrderTracking.Tracking.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
+            myOrderTracking.Tracking!.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
         }
         return myOrderTracking;
     }
-
-    //public BO.Order UpdateOrder()
 
 
     public BO.Order OrderShippingUpdate(int orderId)

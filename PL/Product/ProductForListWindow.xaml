@@ -27,8 +27,8 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="btnClear" Content="clear" HorizontalAlignment="Left" Margin="322,29,0,0" Grid.Row="2" VerticalAlignment="Top" Click="btnClear_Click"/>
-        <Button x:Name="btnAddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="579,5,0,5" Padding="5" Click="Button_Click"/>
+        <Button x:Name="btnClear" Content="clear" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" Click="btnClear_Click" Height="47" Width="106" Background="Black" FontSize="20" FontFamily="Algerian" Foreground="White"/>
+        <Button x:Name="btnAddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Left" Margin="585,5,0,5" Padding="5" Click="Button_Click" Background="Black" Foreground="White" FontFamily="Algerian" FontSize="20"/>
 
     </Grid>
 </Window>
