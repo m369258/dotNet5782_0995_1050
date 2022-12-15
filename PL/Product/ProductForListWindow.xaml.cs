@@ -16,6 +16,9 @@ namespace PL.Product
             ProductListview.ItemsSource = bl.product.GetListOfProducts();
             cmxCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             btnClear.Visibility = Visibility.Hidden;
+            this.Activated += (s, a) => this.ApplyState();
+            this.LocationChanged += (s, a) => this.SetState();
+
         }
 
 
