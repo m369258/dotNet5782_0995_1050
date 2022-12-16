@@ -15,16 +15,13 @@ namespace PL.Product
             cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
             btnAddOrUpdateProduct.Content = "Add";
             txtID.IsEnabled = true;
-            this.Activated += (s, a) => this.ApplyState();
-            this.LocationChanged += (s, a) => this.SetState();
+           
         }
 
 
         public ProductWindow(int id)
         {
             InitializeComponent();
-            this.Activated += (s, a) => this.ApplyState();
-            this.LocationChanged += (s, a) => this.SetState();
 
             BO.Product boProduct = new BO.Product();
             cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
