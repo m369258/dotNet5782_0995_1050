@@ -35,7 +35,7 @@
             <TextBox x:Name="txtPrice" Grid.Column="1" HorizontalAlignment="Center" Margin="0,27,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
             <Label x:Name="lblInStock" Content="כמות במלאי" HorizontalAlignment="Left" Margin="156,0,0,0" Grid.Row="5" VerticalAlignment="Center"/>
             <TextBox x:Name="txtInStock" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Center" Width="120"/>
-            <Button x:Name="btnAddOrUpdateProduct" Content="Button" HorizontalAlignment="Left" Margin="340,31,0,0" Grid.Row="6" VerticalAlignment="Top" Click="btnAddOrUpdateProduct_Click" FontSize="20"/>
+            <Button x:Name="btnAddOrUpdateProduct" Content="Button" HorizontalAlignment="Left" Margin="340,31,0,0" Grid.Row="6" VerticalAlignment="Top" Click="btnAddOrUpdateProduct_Click" FontSize="20" RenderTransformOrigin="0.695,0.448"/>
             <ComboBox x:Name="cbxCategory" Grid.Column="1" HorizontalAlignment="Left" Margin="161,31,0,0" Grid.Row="3" VerticalAlignment="Top" Width="120"/>
         </Grid>
         <TextBox HorizontalAlignment="Left" Margin="-19,-23,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
