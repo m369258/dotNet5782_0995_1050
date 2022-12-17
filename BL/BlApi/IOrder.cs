@@ -6,7 +6,7 @@ public interface IOrder
     /// Order list request
     /// </summary>
     /// <returns>Order list</returns>
-    public IEnumerable<BO.OrderForList?> GetListOfOrders();
+    public IEnumerable<BO.OrderForList> GetListOfOrders();
 
     /// <summary>
     /// Order shipping update

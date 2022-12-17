@@ -128,5 +128,4 @@ internal class Product : BlApi.IProduct
         myDal.product.Update(p);
 
     }
-
 }

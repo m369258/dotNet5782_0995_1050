@@ -9,7 +9,7 @@ public interface IProduct
     /// </summary>
     /// <returns>returning ProductForList</returns>
     /// 
-   public IEnumerable<BO.ProductForList?> GetListOfProducts(int x=0);
+   public IEnumerable<BO.ProductForList> GetListOfProducts(int x=0);
 
     /// <summary>
     /// Product details request by ID

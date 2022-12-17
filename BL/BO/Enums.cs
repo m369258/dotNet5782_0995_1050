@@ -10,6 +10,7 @@ public enum Category
     macarons,
     sweets,
     ballons,
+    NONE
 }
 
 public enum OrderStatus

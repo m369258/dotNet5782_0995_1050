@@ -13,7 +13,7 @@ namespace PL.Product
         {
             InitializeComponent();
             cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            btnAddOrUpdateProduct.Content = "Add";
+            btnAddOrUpdateProduct.Content = "הוספה";
             txtID.IsEnabled = true;
            
         }
@@ -33,7 +33,7 @@ namespace PL.Product
             cbxCategory.SelectedItem = boProduct.Category;
             txtInStock.Text = boProduct.InStock.ToString();
 
-            btnAddOrUpdateProduct.Content = "Update";
+            btnAddOrUpdateProduct.Content = "עידכון";
             txtID.IsEnabled = false;
         }
 
@@ -50,7 +50,7 @@ namespace PL.Product
             if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("מחיר לא חוקי"); return; } ;
             if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("כמות במלאי לא חוקית"); return; } ;
 
-            if (btnAddOrUpdateProduct.Content.ToString() == "Add")
+            if (btnAddOrUpdateProduct.Content.ToString() == "הוספה")
             {
                 try
                 {
@@ -63,7 +63,7 @@ namespace PL.Product
                         InStock = inStock
                     });
                 }
-                catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
+                catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי");}
             }
             else
             {
@@ -76,6 +76,7 @@ namespace PL.Product
                 try { bl.product.UpDateProduct(bop); }
                 catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
             }
+
             this.Close();
         }
     }

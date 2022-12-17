@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="bntManager" Content="Manager" HorizontalAlignment="Left" Margin="248,217,0,0" VerticalAlignment="Top" Click="ShowProductsButton_Click"/>
+        <Button x:Name="bntManager" Content="מנהל" HorizontalAlignment="Left" Margin="594,35,0,0" VerticalAlignment="Top" Click="ShowProductsButton_Click" Height="43" Width="148" Foreground="White" FontSize="16" Background="Black" FontFamily="Bauhaus 93" BorderBrush="#FFF658C6"/>
 
     </Grid>
 </Window>

@@ -1,4 +1,6 @@
 ﻿using BO;
+using System.Diagnostics;
+
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
@@ -8,31 +10,30 @@ internal class Order : BlApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetListOfOrders()
     {
-        double price;
-        IEnumerable<Do.OrderItem?> myDoOrderItems;//List of order details
         List<BO.OrderForList> boListOrders = new List<BO.OrderForList>();//Order list
+
         //Request a list of orders from the data layer
         IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
 
         //Build an order list of the OrderForList type (logical entity) based on the database
-        foreach (var item in doOrders)
-        {
-            price = 0;
-            myDoOrderItems = myDal.orderItems.GetByIdOrder(item?.ID??throw new Exception());
-
-            //Calculating the price of items in the product in order to arrive at the total price
-            price = myDoOrderItems.Sum(it => it?.Price * it?.Amount ?? throw new Exception());
-
-            //Build an order list of the OrderForList type on the database
-            BO.OrderForList boOrder = new BO.OrderForList();
-            item.CopyBetweenEnriries(boOrder);
-            boOrder.OrderID = item?.ID ?? throw new Exception();
-            boOrder.status = (BO.OrderStatus)((item?.DeliveryDate != null && item?.ShipDate != null) ? 3 : (item?.ShipDate != null) ? 2 : 1);
-            boOrder.AmountForItems = myDoOrderItems.Count();
-            boOrder.TotalPrice = price;
-            boListOrders.Add(boOrder);
-        }
+        boListOrders = doOrders.Select(item => CreateBoOrderFromDoOrder(item)).ToList();
         return boListOrders;
+    }
+    private BO.OrderForList CreateBoOrderFromDoOrder(Do.Order? item)
+    {
+        var myDoOrderItems = myDal.orderItems.GetByIdOrder(item?.ID ?? throw new Exception());
+
+        //Calculating the price of items in the product in order to arrive at the total price
+        double price = myDoOrderItems.Sum(it => it?.Price * it?.Amount ?? throw new Exception());
+
+        //Build an order list of the OrderForList type on the database
+        BO.OrderForList boOrder = new BO.OrderForList();
+        item.CopyBetweenEnriries(boOrder);
+        boOrder.OrderID = item?.ID ?? throw new Exception();
+        boOrder.status = (BO.OrderStatus)((item?.DeliveryDate != null && item?.ShipDate != null) ? 3 : (item?.ShipDate != null) ? 2 : 1);
+        boOrder.AmountForItems = myDoOrderItems.Count();
+        boOrder.TotalPrice = price;
+        return boOrder;
     }
 
     public BO.Order GetOrderDetails(int idOrder)
@@ -122,7 +123,7 @@ internal class Order : BlApi.IOrder
             boOrderItem.NameProduct = doProduct.Name;
             boOrderItem.productPrice = doProduct.Price;
             boOrderItem.QuantityPerItem = item?.Amount ?? throw new Exception();
-            boOrderItem.TotalPrice = doProduct.Price * item?.Amount ?? throw new Exception(); 
+            boOrderItem.TotalPrice = doProduct.Price * item?.Amount ?? throw new Exception();
             price += boOrderItem.TotalPrice;
             boOrderItems.Add(boOrderItem);
         }
@@ -131,11 +132,11 @@ internal class Order : BlApi.IOrder
         if (boOrderItems == null) throw new BO.InternalErrorException("Problem with items in the product");
         BO.Order order = new BO.Order();
         doOrder.CopyBetweenEnriries(order);
-            order.ID = idOrder;
-            order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
-            order.PaymentDate = doOrder.OrderDate;
-            order.items = boOrderItems!;
-            order.totalPrice = price;
+        order.ID = idOrder;
+        order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
+        order.PaymentDate = doOrder.OrderDate;
+        order.items = boOrderItems!;
+        order.totalPrice = price;
         return order;
     }
 
@@ -207,7 +208,6 @@ internal class Order : BlApi.IOrder
                 price += boOrderItem.TotalPrice;
                 try { boItems.Add(boOrderItem); }
                 catch { throw new BO.InternalErrorException("hhhh"); }
-                
             }
 
             //Creating an order from the logical extent of an order based on the data
@@ -221,7 +221,6 @@ internal class Order : BlApi.IOrder
         }
         return null;
     }
-
 }
 
 
