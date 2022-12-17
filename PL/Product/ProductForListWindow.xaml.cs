@@ -29,12 +29,12 @@ namespace PL.Product
             }  
         }
 
-        private void btnClear_Click(object sender, RoutedEventArgs e)
-        {
-            ProductListview.ItemsSource = bl.product.GetListOfProducts();
-            cmxCategorySelector.SelectedIndex = -1;
-            btnClear.Visibility = Visibility.Hidden;
-        }
+        //private void btnClear_Click(object sender, RoutedEventArgs e)
+        //{
+        //    ProductListview.ItemsSource = bl.product.GetListOfProducts();
+        //    cmxCategorySelector.SelectedIndex = -1;
+        //    btnClear.Visibility = Visibility.Hidden;
+        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -50,7 +50,6 @@ namespace PL.Product
                 ProductListview.SelectedIndex = -1;
                 ProductListview.ItemsSource = bl.product.GetListOfProducts();
             }
-
         }
     }
 }
