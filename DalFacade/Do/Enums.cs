@@ -10,4 +10,5 @@ public enum Category
     macarons,
     sweets,
     ballons,
+    NONE
 }
