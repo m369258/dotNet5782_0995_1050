@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Reflection;
-
 namespace BO;
 
 internal static class Tools

@@ -79,6 +79,9 @@ internal class Cart : BlApi.ICart
         //Create an order object (data entity) based on the data in the basket
         Do.Order myOrder = new Do.Order();
         myCart.CopyBetweenEnriries(myOrder);
+        myOrder.CustomerName = myCart.CustomerName;
+        myOrder.CustomerAddress = myCart.CustomerAddress;
+        myOrder.CustomerEmail = myCart.CustomerEmail;
         myOrder.OrderDate = DateTime.Now;
         myOrder.ShipDate = null;
         myOrder.DeliveryDate = null;
@@ -90,7 +93,6 @@ internal class Cart : BlApi.ICart
         myCart.items.All(item => makeOrder(item,orderId)); 
     }
 
-    
     public BO.Cart Update(BO.Cart myCart, int idProduct, int newQuantity)
     {
         int productId;
@@ -152,7 +154,6 @@ internal class Cart : BlApi.ICart
     }
 
     //Local helper functions:
-
     /// <summary>
     /// A private function of the department that adds a product to the shopping cart according to the desired quantity for this item
     /// </summary>
@@ -192,7 +193,6 @@ internal class Cart : BlApi.ICart
     /// <exception cref="BO.InternalErrorException">in case idProduct isnt exsust</exception>
     /// <exception cref="BO.InvalidArgumentException">negative quantity</exception>
     /// <exception cref="BO.NotEnoughInStockException">No quantity in stock</exception>
-
     private bool normalityByProductInTheBasket(BO.OrderItem? boOrderItem)
     {
        int productId = boOrderItem!.ProductId;
@@ -243,5 +243,4 @@ internal class Cart : BlApi.ICart
 
         return true;
     }
-
 }

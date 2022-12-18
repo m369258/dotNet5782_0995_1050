@@ -22,10 +22,9 @@ internal class Order : BlApi.IOrder
 
     public BO.Order GetOrderDetails(int idOrder)
     {
-        double price=0.0;
+        double price = 0.0;
         IEnumerable<Do.OrderItem?> doOrderItems;
-        List<BO.OrderItem> ListOrderItems = new List<BO.OrderItem>();
-
+        List<BO.OrderItem> ListOrderItems=new List<OrderItem>(); 
         //A check that identifies the order is not negative
         if (idOrder > 0)
         {
@@ -35,42 +34,23 @@ internal class Order : BlApi.IOrder
             catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
             //Request any order details according to its ID
-             doOrderItems = myDal.orderItems.GetAll(item=>item?.OrderId==idOrder);
+            doOrderItems = myDal.orderItems.GetAll(item => item?.OrderId == idOrder);
 
-            foreach (var item in doOrderItems)
-            {
-                //A product request based on the data layer identifier, if the information has not arrived, will throw an error
-                Do.Product doProduct;
-                try { doProduct = myDal.product.Get(x=>x?.ID==(item?.ProductId ?? throw new Exception())); }
-                catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
+            //Constructs a list of items in the order of a logical layer
+            ListOrderItems =  doOrderItems.Select(item => this.buildingOrderItem((Do.OrderItem)(item!), ref price)).ToList();
 
-                //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
-                BO.OrderItem boOrderItem = new BO.OrderItem();
-                doProduct.CopyBetweenEnriries(boOrderItem);
-                boOrderItem.ID=item?.ID??throw new Exception();
-                boOrderItem.ProductId=doProduct.ID;
-                boOrderItem.NameProduct = doProduct.Name;
-                boOrderItem.productPrice = doProduct.Price;
-                boOrderItem.QuantityPerItem = item?.Amount ?? throw new Exception();
-                boOrderItem.TotalPrice = doProduct.Price * item?.Amount ?? throw new Exception();
-                price += boOrderItem.TotalPrice;
-                ListOrderItems.Add(boOrderItem);
-            }
-
-           
             //Building a logical order based on the data and returning it
             BO.Order boOrder = new BO.Order();
             doOrder.CopyBetweenEnriries(boOrder);
             boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
             boOrder.PaymentDate = doOrder.OrderDate;
             boOrder.PaymentDate = doOrder.OrderDate;
-            boOrder.items = ListOrderItems!;
+            boOrder.items = ListOrderItems;
             boOrder.totalPrice = price;
             return boOrder;
         }
         else throw new BO.InvalidArgumentException("Negative ID");
     }
-
 
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
@@ -80,7 +60,6 @@ internal class Order : BlApi.IOrder
 
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Order doOrder;
-
         try { doOrder = myDal.order.Get(item => item?.ID == idOrder); }
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
@@ -96,37 +75,20 @@ internal class Order : BlApi.IOrder
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("It is not possible to update the order does not exist", ex); }
 
         //Request any order details by ID
-        doOrderItems = myDal.orderItems.GetAll(item=>item?.OrderId==idOrder);
+        doOrderItems = myDal.orderItems.GetAll(item => item?.OrderId == idOrder);
 
-foreach (var item in doOrderItems)
-{
-    //A product request based on the data layer identifier, if the information has not arrived, will throw an error
-    Do.Product doProduct;
-    try { doProduct = myDal.product.Get(x => x?.ID == (item?.ProductId ?? -1)); }
-    catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
+        //Constructs a list of items in the order of a logical layer
+        boOrderItems = doOrderItems.Select(item => this.buildingOrderItem((Do.OrderItem)(item!), ref price)).ToList();
 
-    //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
-    BO.OrderItem boOrderItem = new BO.OrderItem();
-    doProduct.CopyBetweenEnriries(boOrderItem);
-    boOrderItem.NameProduct = doProduct.Name;
-    boOrderItem.productPrice = doProduct.Price;
-    boOrderItem.QuantityPerItem = item?.Amount ?? throw new Exception();
-    boOrderItem.TotalPrice = doProduct.Price * item?.Amount ?? throw new Exception();
-    price += boOrderItem.TotalPrice;
-    boOrderItems.Add(boOrderItem);
-}
-
-//Building a logical order based on the data and returning it
-if (boOrderItems == null) throw new BO.InternalErrorException("Problem with items in the product");
-
-BO.Order order = new BO.Order();
-doOrder.CopyBetweenEnriries(order);
-order.ID = idOrder;
-order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
-order.PaymentDate = doOrder.OrderDate;
-order.items = boOrderItems!;
-order.totalPrice = price;
-return order;
+        //Building a logical order based on the data and returning it
+        BO.Order order = new BO.Order();
+        doOrder.CopyBetweenEnriries(order);
+        order.ID = idOrder;
+        order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
+        order.PaymentDate = doOrder.OrderDate;
+        order.items = boOrderItems;
+        order.totalPrice = price;
+        return order;
     }
 
     public BO.OrderTracking OrderTracking(int idOrder)
@@ -143,26 +105,27 @@ return order;
         myOrderTracking.ID = idOrder;
         myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
 
-        if (myOrderTracking.Tracking == null) throw new BO.InternalErrorException("problemmm");
+        //Order status check
         if (myOrderTracking.Status == OrderStatus.OrderSend || myOrderTracking.Status == OrderStatus.OrderProvided)
         {
-            myOrderTracking.Tracking!.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
+            myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
         }
         if (myOrderTracking.Status == OrderStatus.OrderProvided)
         {
-            myOrderTracking.Tracking!.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
+            myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
         }
         return myOrderTracking;
     }
 
-
     public BO.Order OrderShippingUpdate(int orderId)
     {
-        Do.Order doOrder = new Do.Order();
+        double price = 0.0;
         //Check if an order exists (in data layer).
+        Do.Order doOrder = new Do.Order();
         try { doOrder = myDal.order.Get(item => item?.ID == orderId); }
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no product with this id", ex); }
 
+        //If the order has been sent, an exception will be thrown
         if (doOrder.DeliveryDate != null)
             throw new InternalErrorException("The order has already been sent");
         //Check if an order exists (in the data layer) and has not yet been sent
@@ -174,42 +137,21 @@ return order;
 
             //in order to copy to the BO list
             IEnumerable<Do.OrderItem?> doItems = new List<Do.OrderItem?>();
-            doItems = myDal.orderItems.GetAll(item=>item?.OrderId==doOrder.ID);
+            doItems = myDal.orderItems.GetAll(item => item?.OrderId == doOrder.ID);
 
-            double price = 0;
-            //creating the logical layer
-            List<BO.OrderItem> boItems = new List<BO.OrderItem>();
-            //Goes over the list of order details from the data layer and created a list of order details from the logical layer
-            foreach (var item in doItems)
-            {
-                Do.Product myDoProduct;
-                try { myDoProduct = myDal.product.Get(x => x?.ID == (item?.ProductId ?? -1)); }
-                catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id product is not exsist", ex); }
-                BO.OrderItem boOrderItem = new BO.OrderItem()
-                {
-                    ID = item?.ID ?? throw new Exception(),
-                    ProductId = item?.ProductId ?? throw new Exception(),
-                    NameProduct = myDoProduct.Name,
-                    productPrice = myDoProduct.Price,
-                    QuantityPerItem = item?.Amount ?? throw new Exception(),
-                    TotalPrice = myDoProduct.Price * item?.Amount ?? throw new Exception()
-                };
-                price += boOrderItem.TotalPrice;
-                try { boItems.Add(boOrderItem); }
-                catch { throw new BO.InternalErrorException("hhhh"); }
-            }
+            //Constructs a list of items in the order of a logical layer
+            List<BO.OrderItem> boItems = doItems.Select(item => this.buildingOrderItem((Do.OrderItem)(item!), ref price)).ToList();
 
             //Creating an order from the logical extent of an order based on the data
             BO.Order boOrder = new BO.Order();
             doOrder.CopyBetweenEnriries(boOrder);
             boOrder.PaymentDate = doOrder.OrderDate;
             boOrder.status = OrderStatus.OrderSend;
-            boOrder.items = boItems!;
+            boOrder.items = boItems;
             boOrder.totalPrice = price;
             return boOrder;
         }
     }
-
 
     //Local helper functions:
     /// <summary>
@@ -220,8 +162,7 @@ return order;
     /// <exception cref="Exception"></exception>
     private BO.OrderForList CreateBoOrderFromDoOrder(Do.Order? item)
     {
-
-        var myDoOrderItems = myDal.orderItems.GetAll(x=>x?.OrderId==(item?.ID ?? throw new Exception()));
+        var myDoOrderItems = myDal.orderItems.GetAll(x => x?.OrderId == (item?.ID ?? throw new Exception()));
 
         //Calculating the price of items in the product in order to arrive at the total price
         double price = myDoOrderItems.Sum(it => it?.Price * it?.Amount ?? throw new Exception());
@@ -235,5 +176,33 @@ return order;
         boOrder.TotalPrice = price;
         return boOrder;
     }
+
+    /// <summary>
+    /// Builds an item in the order of a logical layer according to an item in the order of a data layer and additional data
+    /// </summary>
+    /// <param name="doOrderItem">Item on order - data layer</param>
+    /// <param name="price">The price for the entire order varies</param>
+    /// <returns></returns>
+    /// <exception cref="InternalErrorException">If there is no product of an item in the order in the data layer</exception>
+    private BO.OrderItem buildingOrderItem(Do.OrderItem doOrderItem, ref double price)
+    {
+        //A product request based on the data layer identifier, if the information has not arrived, will throw an error
+        Do.Product doProduct;
+        try { doProduct = myDal.product.Get(x => x?.ID == (doOrderItem.ProductId)); }
+        catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
+
+        //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order
+        BO.OrderItem boOrderItem = new BO.OrderItem();
+        doProduct.CopyBetweenEnriries(boOrderItem);
+        boOrderItem.ID = doOrderItem.ID;
+        boOrderItem.ProductId = doProduct.ID;
+        boOrderItem.NameProduct = doProduct.Name;
+        boOrderItem.productPrice = doProduct.Price;
+        boOrderItem.QuantityPerItem = doOrderItem.Amount;
+        boOrderItem.TotalPrice = doProduct.Price * doOrderItem.Amount;
+        price += boOrderItem.TotalPrice;
+        return boOrderItem;
+    }
+
 }
 

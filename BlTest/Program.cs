@@ -35,7 +35,7 @@ internal class Program
 1: prodeuct
 2: order
 3: cart");
-        choice = (MainMenu)int.Parse(Console.ReadLine());
+        choice = (MainMenu)int.Parse(Console.ReadLine()!);
         //As long as 0 was not pressed to exit
         while (choice != 0)
         {
