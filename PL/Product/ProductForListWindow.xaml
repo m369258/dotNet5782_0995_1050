@@ -27,8 +27,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="btnClear" Content="איפוס" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Click="btnClear_Click" Height="47" Width="106" Background="Black" FontSize="16" FontFamily="Algerian" Foreground="White" Margin="497,0,0,0" FontWeight="Bold" BorderBrush="#FFF949CA"/>
-        <Button x:Name="btnAddProduct" Content="הוספת פריט חדש" Grid.Row="2" Margin="608,5,0,5" Padding="5" Click="Button_Click" Background="Black" Foreground="White" FontFamily="Algerian" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" BorderBrush="#FFF652E2" Width="184"/>
+        <Button x:Name="btnAddProduct" Content="הוספת פריט חדש" Grid.Row="2" Margin="314,5,0,5" Padding="5" Click="Button_Click" Background="Black" Foreground="White" FontFamily="Algerian" FontSize="16" FontWeight="Bold" HorizontalAlignment="Left" BorderBrush="#FFF652E2" Width="184"/>
 
     </Grid>
 </Window>

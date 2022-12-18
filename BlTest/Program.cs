@@ -214,14 +214,7 @@ instock of product");
                     }
                     break;
 
-                //Order details request
-                case OptionsOfOrders.GetOrderDetails:
-                    //Receipt of order ID number
-                    Console.WriteLine("enter the id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new InvalidInputException("id product is invalid");
-                    //A call to action that returns the order details
-                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
-                    break;
+              
 
                 //Order shipping update
                 case OptionsOfOrders.OrderShippingUpdate:
@@ -234,6 +227,15 @@ instock of product");
                     Console.WriteLine(boOrder);
                     //Console.WriteLine(myBL.order.GetOrderDetails(idOrder));?????????????????????????????????????
                     break;
+
+                //Order details request
+                case OptionsOfOrders.GetOrderDetails:
+                    //Receipt of order ID number
+                    Console.WriteLine("enter the id order");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new InvalidInputException("id product is invalid");
+                    //A call to action that returns the order details
+                    Console.WriteLine(myBL.order.GetOrderDetails(idOrder));
+                    break; 
 
                 //Order delivery update
                 case OptionsOfOrders.OrderDeliveryUpdate:

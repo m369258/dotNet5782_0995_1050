@@ -24,27 +24,10 @@ internal class DalOrder : IOrder
     /// <param name="idOrder">ID number of desired order</param>
     /// <returns>Returns the desired order</returns>
     /// <exception cref="Exception">If the required order does not exist, an error will be thrown</exception>
-    public Order Get(/*Func<Order?, bool>? condition,*/ int idOrder)
+    public Order Get(Func<Order?, bool> condition)
     {
-        //IEnumerable<Order?> newOrdersOfterCon;
-        //newOrdersOfterCon = condition != null ?
-        //      DataSource.orders.Where(myOrder => condition(myOrder)) :
-        //      DataSource.orders;
-
-        int i = 0;
-        //The loop searches for the location of the order
-        while (i < DataSource.orders.Count && DataSource.orders[i]?.ID != idOrder)
-        {
-            i++;
-        }
-
-        //Checking whether the requested order is found and returning it otherwise throws an error
-        if (i != DataSource.orders.Count && DataSource.orders[i]?.ID == idOrder)
-        {
-            return DataSource.orders[i] ?? new();
-        }
-
-        throw new Do.DalDoesNotExistException(idOrder, "Order", "there are no order with this id");
+        return DataSource.orders.FirstOrDefault(myOrder => condition(myOrder)) ??
+            throw new Do.DalDoesNotExistException("there are no order with this id");
     }
 
 

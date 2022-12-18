@@ -1,7 +1,4 @@
 ﻿using BO;
-using System.Collections.Generic;
-using System.Reflection.Emit;
-
 namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
@@ -34,7 +31,7 @@ internal class Product : BlApi.IProduct
         {
             //A product request based on the data layer identifier, if the information has not arrived, will thrthrow an error
             Do.Product? p1;
-            try { p1 = myDal.product.Get(idProduct); }
+            try { p1 = myDal.product.Get(item => item?.ID ==idProduct); }
             catch (Do.DalDoesNotExistException ex){throw new BO.InternalErrorException("this id doesnt exsist", ex);}
 
             //Building a new object from the display product type
@@ -61,7 +58,7 @@ internal class Product : BlApi.IProduct
 
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error
             Do.Product p1;
-            try { p1 = myDal.product.Get(idProduct); }
+            try { p1 = myDal.product.Get(item => item?.ID == idProduct); }
             catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
             //Going through all the items in the basket and saving the desired item
@@ -101,7 +98,7 @@ internal class Product : BlApi.IProduct
         IEnumerable<Do.Order?> orders = myDal.order.GetAll();
 
         //The variable will receive a true value if in one of the orders (the details in the order) the product used otherwise will receive a false.
-        bool isExsistProduct = orders.Any(currenOrder => myDal.orderItems.GetByIdOrder(currenOrder?.ID ?? throw new BO.InternalErrorException("idProduct isnt exsist")).Any(item => item?.ProductId == idProduct));
+        bool isExsistProduct = orders.Any(currenOrder => myDal.orderItems.GetAll(x=>x?.OrderId==(currenOrder?.ID ?? throw new BO.InternalErrorException("idProduct isnt exsist"))).Any(item => item?.ProductId == idProduct));
 
         //If the product is used, an error will be thrown
         if (isExsistProduct)
@@ -116,7 +113,7 @@ internal class Product : BlApi.IProduct
     {
         //A product request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Product p;
-        try { p = myDal.product.Get(product.ID); }
+        try { p = myDal.product.Get(item => item?.ID ==product.ID); }
         catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id doesnt exsist", ex); }
 
         //Updating the data layer product according to the received data in case of incorrect data will throw an error

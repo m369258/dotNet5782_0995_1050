@@ -34,20 +34,11 @@ internal class DalProduct : IProduct
     /// <param name="idProduct">ID number of desired product</param>
     /// <returns>Returns the desired product</returns>
     /// <exception cref="Exception">If the required product does not exist, an error will be thrown</exception>
-    public Product Get(int idProduct)
+    public Product Get(Func<Product?, bool> condition)
     {
-        int i = 0;
-        //The loop searches for the location of the product
-        while (i < DataSource.products.Count && DataSource.products[i]?.ID != idProduct)
-        {
-            i++;
-        }
-        //Checking whether the requested product is found and returning it otherwise throws an error
-        if (i != DataSource.products.Count && DataSource.products[i]?.ID == idProduct)
-            return DataSource.products[i]??new();
-        throw new Do.DalDoesNotExistException(idProduct, "product", "there are no product with this id");
+        return DataSource.products.FirstOrDefault(myProduct => condition(myProduct)) ??
+        throw new Do.DalDoesNotExistException("there are no product with this id");
     }
-
 
     /// <summary>
     /// This returns all products

@@ -12,14 +12,15 @@ namespace DalApi
         /// <summary>
         /// An operation accepts an entity ID number and will return the entity
         /// </summary>
-        /// <param name="id">Entity ID number to return the entity</param>
-        /// <returns>Requested data entity</returns>
-        public T Get(/*Func<T?, bool> condition,*/ int id);
+        /// <param name="condition">Gets a function to filter</param>
+        /// <returns>conditional bone</returns>
+        public T Get(Func<T?, bool> condition);
 
         /// <summary>
-        /// An operation that returns all existing entity objects
+        /// The function returns a collection of all objects that meet a condition if received
         /// </summary>
-        /// <returns>Every existing entity object</returns>
+        /// <param name="condition">Condition for filtering if necessary</param>
+        /// <returns>A collection of all members</returns>
         public IEnumerable<T?> GetAll(Func<T?, bool>? condition=null);
 
         /// <summary>

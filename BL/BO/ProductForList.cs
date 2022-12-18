@@ -1,7 +1,4 @@
-﻿
-using Do;
-
-namespace BO;
+﻿namespace BO;
 
 /// <summary>
 /// The product list screen and a catalog screen, which will contain the following.
