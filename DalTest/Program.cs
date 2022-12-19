@@ -58,7 +58,7 @@ class OurProgram
 4: update an product
 5: delete an product ");
         //Accepting the user's choice
-        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
+        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Do.InvalidInputExseption("choice is in valid");
 
         int idProduct;
         Product p=new Product();
@@ -70,7 +70,7 @@ class OurProgram
                 case Options.Add:
                     Console.WriteLine("Adding a product");
                     Console.Write("enter idProduct with 6 numbers:");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     p = InputProduct();
                     p.ID = idProduct;
                     Console.WriteLine(myDalList.product.Add(p));
@@ -80,7 +80,7 @@ class OurProgram
                 case Options.Get:
                     Console.WriteLine("Receiving a number by the ID");
                     Console.WriteLine("enter the id product");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     Console.WriteLine(myDalList.product.Get(item=>item?.ID==idProduct));
                     break;
 
@@ -95,7 +95,7 @@ class OurProgram
                 case Options.Update:
                     Console.WriteLine("Product update:");
                     Console.WriteLine("enter id product:");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     Console.WriteLine("The requested product before the change");
                     Console.WriteLine(myDalList.product.Get(item => item?.ID == idProduct));
                     p = InputProduct();
@@ -109,7 +109,7 @@ class OurProgram
                 case Options.Delete:
                     Console.WriteLine("Product to be deleted");
                     Console.WriteLine("enter the id product");
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     myDalList.product.Delete(idProduct);
                     break;
             }
@@ -141,9 +141,9 @@ for ballons insert 5,
 price, 
 instock of product");
         name = Console.ReadLine();
-        if (!Category.TryParse(Console.ReadLine(), out category)) throw new Exception("category is in valid");
-        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
-        if (!int.TryParse(Console.ReadLine(), out instock)) throw new Exception("inStock is in valid");
+        if (!Category.TryParse(Console.ReadLine(), out category)) throw new Do.InvalidInputExseption("category is in valid");
+        if (!double.TryParse(Console.ReadLine(), out price)) throw new Do.InvalidInputExseption("price is in valid");
+        if (!int.TryParse(Console.ReadLine(), out instock)) throw new Do.InvalidInputExseption("inStock is in valid");
         Product p = new Product();
         p.Name = name;
         p.Category = category;
@@ -168,7 +168,7 @@ instock of product");
 4: update an order
 5: delete an order");
         //Accepting the user's choice
-        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is invalid");
+        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Do.InvalidInputExseption("choice is invalid");
         int idOrder;
         Order myOrder;
 
@@ -248,9 +248,9 @@ instock of product");
         customerName = Console.ReadLine();
         customerEmail = Console.ReadLine();
         customerAddress = Console.ReadLine();
-        if (!DateTime.TryParse(Console.ReadLine(), out orderDate)) throw new Exception("order date is invalid");
-        if (!DateTime.TryParse(Console.ReadLine(), out deliveryDate)) throw new Exception("delivery date is invalid");
-        if (!DateTime.TryParse(Console.ReadLine(), out shipDate)) throw new Exception("shipDate is invalid");
+        if (!DateTime.TryParse(Console.ReadLine(), out orderDate)) throw new Do.InvalidInputExseption("order date is invalid");
+        if (!DateTime.TryParse(Console.ReadLine(), out deliveryDate)) throw new Do.InvalidInputExseption("delivery date is invalid");
+        if (!DateTime.TryParse(Console.ReadLine(), out shipDate)) throw new Do.InvalidInputExseption("shipDate is invalid");
 
         //Put the values received from the user into an order object
         order.CustomerName = customerName;
