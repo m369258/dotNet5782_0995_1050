@@ -13,8 +13,8 @@ public class DalDoesNotExistException : Exception
         : base(massage) { EntityID = id; EntityName = name; }
     public DalDoesNotExistException(int id, string name, string massage, Exception innerException)
         : base(massage, innerException) { EntityID = id; EntityName = name; }
-    public DalDoesNotExistException( string massage)
-       : base(massage) {  }
+    public DalDoesNotExistException(string massage)
+       : base(massage) { }
     public override string ToString()
     {
         if (EntityID != -1)
@@ -39,4 +39,16 @@ public class DalAlreadyExistsException : Exception
         : base(massage, innerException) { EntityID = id; EntityName = name; }
     public override string ToString() =>
         $"{EntityName} number {EntityID} already exists.";
+}
+public class InvalidInputExseption:Exception
+{
+    public string DetailName;
+    public InvalidInputExseption(string name)
+        : base() { DetailName = name; }
+    public InvalidInputExseption(string name, string massage)
+        : base(massage) { DetailName = name; }
+    public InvalidInputExseption(string name, string massage, Exception innerException)
+        : base(massage, innerException) { DetailName = name; }
+    public override string ToString() =>
+        $"The field {DetailName} is invalid!";
 }

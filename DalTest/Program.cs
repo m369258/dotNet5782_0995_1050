@@ -7,15 +7,11 @@ enum MainMenu { Exist = 0, Product, Order, OrderItem }
 enum Options { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
 class OurProgram
 {
-    //static DalList1 myDalList=new DalList1();
     private static IDal myDalList = new Dal.DalList();
     ///// <summary>
     ///// A class variable for each entity and entity
     ///// </summary>
-    //private static DalOrder dalOrder = new DalOrder();
-    //private static DalProduct dalProduct = new DalProduct();
-    //private static DalOrderItem dalOrderItem = new DalOrderItem();
-    static void Main()
+      static void Main()
     {
         MainMenu choice;
         //Receiving a voluntary action number to perform
@@ -24,7 +20,7 @@ class OurProgram
 1: prodeuct
 2: order
 3: order-item");
-        choice = (MainMenu)int.Parse(Console.ReadLine());
+         if(!MainMenu.TryParse(Console.ReadLine(),out choice))throw new Do.InvalidInputExseption("invalid choice");
         //As long as 0 was not pressed to exit
         while (choice != 0)
         {
@@ -47,7 +43,7 @@ class OurProgram
 1: prodeuct
 2: order
 3: order-item");
-            choice = (MainMenu)int.Parse(Console.ReadLine());
+            if (!MainMenu.TryParse(Console.ReadLine(), out choice)) throw new Do.InvalidInputExseption("invalid choice");
         }
     }
 
@@ -85,12 +81,12 @@ class OurProgram
                     Console.WriteLine("Receiving a number by the ID");
                     Console.WriteLine("enter the id product");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
-                    Console.WriteLine(myDalList.product.Get(idProduct));
+                    Console.WriteLine(myDalList.product.Get(item=>item?.ID==idProduct));
                     break;
 
                 case Options.GetAll:
-                    IEnumerable<Product> products = myDalList.product.GetAll();
-                    foreach (Product myProduct in products)
+                    IEnumerable<Product?> products = myDalList.product.GetAll();
+                    foreach (Product? myProduct in products)
                     {
                         Console.WriteLine(myProduct);
                     }
@@ -101,13 +97,13 @@ class OurProgram
                     Console.WriteLine("enter id product:");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
                     Console.WriteLine("The requested product before the change");
-                    Console.WriteLine(myDalList.product.Get(idProduct));
+                    Console.WriteLine(myDalList.product.Get(item => item?.ID == idProduct));
                     p = InputProduct();
                     p.ID = idProduct;
                     //will update the product only if all the details have been verified
                         myDalList.product.Update(p);
                         Console.WriteLine("The requested product after the change");
-                        Console.WriteLine(myDalList.product.Get(idProduct));
+                        Console.WriteLine(myDalList.product.Get(item => item?.ID == idProduct));
                     break;
 
                 case Options.Delete:
@@ -133,7 +129,7 @@ class OurProgram
     {
         int instock;
         double price;
-        string name;
+        string? name;
         Category category;
         Console.WriteLine(@"enter name,
 category- 
@@ -191,38 +187,39 @@ instock of product");
                 case Options.Get:
                     //Receipt of order ID number
                     Console.WriteLine("enter the id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
-                    Console.WriteLine(myDalList.order.Get(idOrder));
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order","id order is invalid");
+                    Console.WriteLine(myDalList.order.Get(item=>item?.ID==idOrder));
                     break;
 
                 case Options.GetAll:
-                    IEnumerable<Order> orders = myDalList.order.GetAll();
-                    foreach (Order currOrder in orders)
+                    IEnumerable<Order?> orders = myDalList.order.GetAll();
+                    foreach (Order? currOrder in orders)
                     {
                         Console.WriteLine(currOrder);
                     }
+             
                     break;
 
                 case Options.Update:
                     Console.WriteLine("enter id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order","id order is invalid");
                     Console.WriteLine("before: ");
-                    Console.WriteLine(myDalList.order.Get(idOrder));
+                    Console.WriteLine(myDalList.order.Get(item => item?.ID == idOrder));
                     myOrder = InputOrder();
                     myOrder.ID = idOrder;
                     //In the event that all order details have not been provided, this order will not be updated.
-                    if (myOrder.ID != null && myOrder.CustomerName != null && myOrder.CustomerEmail != null && myOrder.CustomerAddress != null &&
+                    if (myOrder.ID != 0 && myOrder.CustomerName != "" && myOrder.CustomerEmail != "" && myOrder.CustomerAddress != "" &&
                         myOrder.OrderDate != null && myOrder.DeliveryDate != null && myOrder.ShipDate != null)
                     {
                         myDalList.order.Update(myOrder);
                         Console.WriteLine("after: ");
-                        Console.WriteLine(myDalList.order.Get(idOrder));
+                        Console.WriteLine(myDalList.order.Get(item => item?.ID == idOrder));
                     }
                     break;
 
                 case Options.Delete:
                     Console.WriteLine("enter the id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("id product is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order","id order is invalid");
                     myDalList.order.Delete(idOrder);
                     break;
             }
@@ -243,7 +240,7 @@ instock of product");
     private static Order InputOrder()
     {
         Order order = new Order();
-        string customerName, customerEmail, customerAddress;
+        string? customerName, customerEmail, customerAddress;
         DateTime orderDate, deliveryDate, shipDate;
 
         //Receiving details from the user
@@ -282,7 +279,7 @@ instock of product");
 6: get all the products of a specific order
 7. get a specific orderItem of a specific order and a specific product");
         //Accepting the user's choice
-        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Exception("choice is in valid");
+        if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Do.InvalidInputExseption("choice is in valid");
 
         int idOrderItem, idOrder;
         OrderItem orderItem;
@@ -304,15 +301,15 @@ instock of product");
                 case Options.Get:
                     Console.WriteLine("Item display on order according to the user's request");
                     Console.WriteLine("enter the id orderItem");
-                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Exception("idOrderItem is in valid");
-                    Console.WriteLine(myDalList.orderItems.Get(idOrderItem));
+                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Do.InvalidInputExseption("idOrderItem is in valid");
+                    Console.WriteLine(myDalList.orderItems.Get(item => item?.ID == idOrderItem));
                     break;
 
                 case Options.GetAll:
                     Console.WriteLine("Displaying all existing order details");
-                    IEnumerable<OrderItem> orderItems = myDalList.orderItems.GetAll();
+                    IEnumerable<OrderItem?> orderItems = myDalList.orderItems.GetAll();
                     //Printing all existing order details
-                    foreach (OrderItem currOrderItems in orderItems)
+                    foreach (OrderItem? currOrderItems in orderItems)
                     {
                         Console.WriteLine(currOrderItems);
                     }
@@ -321,24 +318,24 @@ instock of product");
                 case Options.Update:
                     Console.WriteLine("Order item update requested");
                     Console.WriteLine("enter id orderItem");
-                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Exception("idOrderItem is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Do.InvalidInputExseption("idOrderItem is in valid");
                     Console.WriteLine("Item on order before change");
-                    Console.WriteLine(myDalList.orderItems.Get(idOrderItem));
+                    Console.WriteLine(myDalList.orderItems.Get(item => item?.ID ==idOrderItem));
                     orderItem = InputOrderItem();
                     orderItem.ID = idOrderItem;
                     //Update an item in the order only if all the details have been entered by the user
-                    if (orderItem.ID != null && orderItem.OrderId != null && orderItem.ProductId != null && orderItem.Price != null && orderItem.Amount != null)
+                    if (orderItem.ID != 0 && orderItem.OrderId != 0 && orderItem.ProductId != 0 && orderItem.Price != 0 && orderItem.Amount != 0)
                     {
                         myDalList.orderItems.Update(orderItem);
                         Console.WriteLine("Item on order after the change");
-                        Console.WriteLine(myDalList.orderItems.Get(idOrderItem));
+                        Console.WriteLine(myDalList.orderItems.Get(item => item?.ID ==idOrderItem));
                     }
                     break;
 
                 case Options.Delete:
                     Console.WriteLine("Deletion of an item in a requested order");
                     Console.WriteLine("enter the id idOrderItem");
-                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Exception("idOrderItem is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Do.InvalidInputExseption("idOrderItem is in valid");
                     myDalList.orderItems.Delete(idOrderItem);
                     Console.WriteLine("An item in the order whose number {0} has been successfully deleted", idOrderItem);
                     break;
@@ -346,10 +343,10 @@ instock of product");
                 case Options.GetByIDOrder:
                     Console.WriteLine("Display all products of a specific order");
                     Console.WriteLine("enter the id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("idOrder is in valid");
-                    IEnumerable<OrderItem> myOrderItems = myDalList.orderItems.GetByIdOrder(idOrder);
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("idOrder is in valid");
+                    IEnumerable<OrderItem?> myOrderItems = myDalList.orderItems.GetAll(item => item?.OrderId == idOrder);
                     Console.WriteLine("Printing all products of a specific order");
-                    foreach (OrderItem currOrderItems in myOrderItems)
+                    foreach (OrderItem? currOrderItems in myOrderItems)
                     {
                         Console.WriteLine(currOrderItems);
                     }
@@ -358,10 +355,10 @@ instock of product");
                 case Options.GetByIDOrderAndIDProduct:
                     Console.WriteLine("Displaying a specific item in a specific order");
                     Console.WriteLine("enter the id order and id product");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Exception("idOrder is in valid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("idOrder is in valid");
                     int idProduct;
-                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Exception("idProduct is in valid");
-                    Console.WriteLine(myDalList.orderItems.Get(idOrder, idProduct));
+                    if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
+                    Console.WriteLine(myDalList.orderItems.Get(item=>item?.OrderId==idOrder&&item?.ProductId== idProduct));
                     break;
 
             }
@@ -382,10 +379,10 @@ instock of product");
         int orderId, productId, amount;
         double price;
         Console.WriteLine("enter ProductId,orderId, price, Amount of orderItem");
-        if (!int.TryParse(Console.ReadLine(), out productId)) throw new Exception("productId is in valid");
-        if (!int.TryParse(Console.ReadLine(), out orderId)) throw new Exception("orderId is in valid");
-        if (!double.TryParse(Console.ReadLine(), out price)) throw new Exception("price is in valid");
-        if (!int.TryParse(Console.ReadLine(), out amount)) throw new Exception("amount is in valid");
+        if (!int.TryParse(Console.ReadLine(), out productId)) throw new Do.InvalidInputExseption("productId is in valid");
+        if (!int.TryParse(Console.ReadLine(), out orderId)) throw new Do.InvalidInputExseption("orderId is in valid");
+        if (!double.TryParse(Console.ReadLine(), out price)) throw new Do.InvalidInputExseption("price is in valid");
+        if (!int.TryParse(Console.ReadLine(), out amount)) throw new Do.InvalidInputExseption("amount is in valid");
         OrderItem ordIm = new OrderItem();
         ordIm.ProductId = productId;
         ordIm.Price = price;

@@ -17,7 +17,8 @@ internal class DalOrderItem : IOrderItems
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
         int i;
         //Checking whether the product ID exists in any other case will throw an error
-        Do.Product? p = DataSource.products.Find(currenProduct => { Product p = (Product)currenProduct; return p.ID == orderItem.ProductId; });
+        Do.Product? p = DataSource.products.Find(currenProduct => {return (currenProduct?.ID == orderItem.ProductId); });
+
         for (i = 0; i < DataSource.products.Count && DataSource.products[i]?.ID != orderItem.ProductId; i++) ;
         if (i == DataSource.products.Count)
         {
