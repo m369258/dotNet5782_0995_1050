@@ -2,14 +2,14 @@
 namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
-    DalApi.IDal myDal = new Dal.DalList();
+    DalApi.IDal myDal = DalApi.Factory.Get();
     public delegate bool conditionFunction(Product entity);
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts(int numCategory)
     {
         IEnumerable<Do.Product?> doProducts;
         //A request to the data layer to fetch all the products, if a category exists, only the products of that category will be requested, otherwise all the products will be requested
         if (numCategory != 0)
-            doProducts = myDal.product.GetAll(item => ((item)?.Category) == ((Do.Category)numCategory));
+            doProducts = myDal.product.GetAll(item => ((item)?.Category) == ((Do.Category)numCategory)) ;
         else
             doProducts = myDal.product.GetAll();
 
@@ -31,8 +31,8 @@ internal class Product : BlApi.IProduct
         {
             //A product request based on the data layer identifier, if the information has not arrived, will thrthrow an error
             Do.Product? p1;
-            try { p1 = myDal.product.Get(item => item?.ID ==idProduct); }
-            catch (Do.DalDoesNotExistException ex){throw new BO.InternalErrorException("this id doesnt exsist", ex);}
+            try { p1 = myDal.product.Get(item => item?.ID == idProduct); }
+            catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id doesnt exsist", ex); }
 
             //Building a new object from the display product type
             BO.Product newP = new BO.Product();
@@ -58,7 +58,7 @@ internal class Product : BlApi.IProduct
 
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error
             Do.Product p1;
-            try { p1 = myDal.product.Get(item => item?.ID == idProduct); }
+            try { p1 = myDal.product.Get(item => item?.ID == idProduct) ; }
             catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
             //Going through all the items in the basket and saving the desired item
@@ -87,8 +87,8 @@ internal class Product : BlApi.IProduct
             Name = product.Name != null ? product.Name : throw new BO.InvalidArgumentException("Empty name"),
             Price = product.Price >= 0 ? product.Price : throw new BO.InvalidArgumentException("Negative price"),
             InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidArgumentException("Unfavorable inStock"),
-            Category = (Do.Category)(product.Category??throw new BO.InvalidArgumentException("No category received"))
-            });
+            Category = (Do.Category)(product.Category ?? throw new BO.InvalidArgumentException("No category received"))
+        });
     }
 
 
@@ -98,7 +98,7 @@ internal class Product : BlApi.IProduct
         IEnumerable<Do.Order?> orders = myDal.order.GetAll();
 
         //The variable will receive a true value if in one of the orders (the details in the order) the product used otherwise will receive a false.
-        bool isExsistProduct = orders.Any(currenOrder => myDal.orderItems.GetAll(x=>x?.OrderId==(currenOrder?.ID ?? throw new BO.InternalErrorException("idProduct isnt exsist"))).Any(item => item?.ProductId == idProduct));
+        bool isExsistProduct = orders.Any(currenOrder => myDal.orderItems.GetAll(x => x?.OrderId == (currenOrder?.ID ?? throw new BO.InternalErrorException("idProduct isnt exsist"))).Any(item => item?.ProductId == idProduct));
 
         //If the product is used, an error will be thrown
         if (isExsistProduct)
@@ -113,7 +113,7 @@ internal class Product : BlApi.IProduct
     {
         //A product request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Product p;
-        try { p = myDal.product.Get(item => item?.ID ==product.ID); }
+        try { p = myDal.product.Get(item => item?.ID == product.ID); }
         catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id doesnt exsist", ex); }
 
         //Updating the data layer product according to the received data in case of incorrect data will throw an error
@@ -121,7 +121,7 @@ internal class Product : BlApi.IProduct
         p.Name = product.Name != null ? product.Name : throw new BO.InvalidArgumentException("Empty name");
         p.Price = product.Price >= 0 ? product.Price : throw new BO.InvalidArgumentException("Negative price");
         p.InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidArgumentException("Unfavorable inStock");
-        p.Category = (Do.Category)(product.Category??throw new BO.InvalidArgumentException("No category received"));
+        p.Category = (Do.Category)(product.Category ?? throw new BO.InvalidArgumentException("No category received"));
         myDal.product.Update(p);
 
     }

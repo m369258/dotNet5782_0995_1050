@@ -59,5 +59,3 @@ public class NotEnoughInStockException : Exception
     public override string ToString() =>
         $"Product {ProductName} number {ProductID}, not enough in stock.";
 }
-
-

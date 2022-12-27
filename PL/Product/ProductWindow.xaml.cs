@@ -9,7 +9,7 @@ namespace PL.Product
     public partial class ProductWindow : Window
     {
         //A private variable to access the logic layer
-        private BlApi.IBl bl = new BlApi.Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
 
         /// <summary>
         /// A constructive action for the state of adding a product
