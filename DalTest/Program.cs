@@ -7,8 +7,7 @@ enum MainMenu { Exist = 0, Product, Order, OrderItem }
 enum Options { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
 class OurProgram
 {
-    //private static IDal myDalList = new Dal.DalList();
-    private static DalApi.IDal? myDalList = DalApi.Factory.Get();
+    private static DalApi.IDal myDalList = DalApi.Factory.Get();
 
     ///// <summary>
     ///// A class variable for each entity and entity
@@ -75,7 +74,7 @@ class OurProgram
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     p = InputProduct();
                     p.ID = idProduct;
-                    Console.WriteLine(myDalList?.product.Add(p));
+                    Console.WriteLine(myDalList.product.Add(p));
                     Console.WriteLine("Product whose number:{0} has been successfully added", idProduct);
                     break;
 
@@ -87,7 +86,7 @@ class OurProgram
                     break;
 
                 case Options.GetAll:
-                    IEnumerable<Product?> products = myDalList?.product.GetAll() ?? throw new Do.CannotConnectToDatabase();
+                    IEnumerable<Product?> products = myDalList.product.GetAll() ?? throw new Do.CannotConnectToDatabase();
                     foreach (Product? myProduct in products)
                     {
                         Console.WriteLine(myProduct);
@@ -99,7 +98,7 @@ class OurProgram
                     Console.WriteLine("enter id product:");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     Console.WriteLine("The requested product before the change");
-                    Console.WriteLine(myDalList?.product.Get(item => item?.ID == idProduct) ?? throw new Do.CannotConnectToDatabase());
+                    Console.WriteLine(myDalList.product.Get(item => item?.ID == idProduct) );
                     p = InputProduct();
                     p.ID = idProduct;
                     //will update the product only if all the details have been verified
@@ -183,7 +182,7 @@ instock of product");
                     //A call to an action that receives data for an order object
                     myOrder = InputOrder();
                     //A call to action that adds an order to the system
-                    Console.WriteLine(myDalList?.order.Add(myOrder) ?? throw new Do.CannotConnectToDatabase());
+                    Console.WriteLine(myDalList.order.Add(myOrder));
                     break;
 
                 case Options.Get:
