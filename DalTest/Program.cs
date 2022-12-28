@@ -7,11 +7,13 @@ enum MainMenu { Exist = 0, Product, Order, OrderItem }
 enum Options { Add = 1, Get, GetAll, Update, Delete, GetByIDOrder, GetByIDOrderAndIDProduct }
 class OurProgram
 {
-    private static IDal myDalList = new Dal.DalList();
+    //private static IDal myDalList = new Dal.DalList();
+    private static DalApi.IDal? myDalList = DalApi.Factory.Get();
+
     ///// <summary>
     ///// A class variable for each entity and entity
     ///// </summary>
-      static void Main()
+    static void Main()
     {
         MainMenu choice;
         //Receiving a voluntary action number to perform
@@ -20,7 +22,7 @@ class OurProgram
 1: prodeuct
 2: order
 3: order-item");
-         if(!MainMenu.TryParse(Console.ReadLine(),out choice))throw new Do.InvalidInputExseption("invalid choice");
+        if (!MainMenu.TryParse(Console.ReadLine(), out choice)) throw new Do.InvalidInputExseption("invalid choice");
         //As long as 0 was not pressed to exit
         while (choice != 0)
         {
@@ -61,7 +63,7 @@ class OurProgram
         if (!Options.TryParse(Console.ReadLine(), out choice)) throw new Do.InvalidInputExseption("choice is in valid");
 
         int idProduct;
-        Product p=new Product();
+        Product p = new Product();
 
         try
         {
@@ -73,7 +75,7 @@ class OurProgram
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     p = InputProduct();
                     p.ID = idProduct;
-                    Console.WriteLine(myDalList.product.Add(p));
+                    Console.WriteLine(myDalList?.product.Add(p));
                     Console.WriteLine("Product whose number:{0} has been successfully added", idProduct);
                     break;
 
@@ -85,7 +87,7 @@ class OurProgram
                     break;
 
                 case Options.GetAll:
-                    IEnumerable<Product?> products = myDalList.product.GetAll();
+                    IEnumerable<Product?> products = myDalList?.product.GetAll() ?? throw new Do.CannotConnectToDatabase();
                     foreach (Product? myProduct in products)
                     {
                         Console.WriteLine(myProduct);
@@ -97,13 +99,13 @@ class OurProgram
                     Console.WriteLine("enter id product:");
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
                     Console.WriteLine("The requested product before the change");
-                    Console.WriteLine(myDalList.product.Get(item => item?.ID == idProduct));
+                    Console.WriteLine(myDalList?.product.Get(item => item?.ID == idProduct) ?? throw new Do.CannotConnectToDatabase());
                     p = InputProduct();
                     p.ID = idProduct;
                     //will update the product only if all the details have been verified
-                        myDalList.product.Update(p);
-                        Console.WriteLine("The requested product after the change");
-                        Console.WriteLine(myDalList.product.Get(item => item?.ID == idProduct));
+                    myDalList.product.Update(p);
+                    Console.WriteLine("The requested product after the change");
+                    Console.WriteLine(myDalList.product.Get(item => item?.ID == idProduct));
                     break;
 
                 case Options.Delete:
@@ -181,14 +183,14 @@ instock of product");
                     //A call to an action that receives data for an order object
                     myOrder = InputOrder();
                     //A call to action that adds an order to the system
-                    Console.WriteLine(myDalList.order.Add(myOrder));
+                    Console.WriteLine(myDalList?.order.Add(myOrder) ?? throw new Do.CannotConnectToDatabase());
                     break;
 
                 case Options.Get:
                     //Receipt of order ID number
                     Console.WriteLine("enter the id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order","id order is invalid");
-                    Console.WriteLine(myDalList.order.Get(item=>item?.ID==idOrder));
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order", "id order is invalid");
+                    Console.WriteLine(myDalList.order.Get(item => item?.ID == idOrder));
                     break;
 
                 case Options.GetAll:
@@ -197,12 +199,12 @@ instock of product");
                     {
                         Console.WriteLine(currOrder);
                     }
-             
+
                     break;
 
                 case Options.Update:
                     Console.WriteLine("enter id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order","id order is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order", "id order is invalid");
                     Console.WriteLine("before: ");
                     Console.WriteLine(myDalList.order.Get(item => item?.ID == idOrder));
                     myOrder = InputOrder();
@@ -219,7 +221,7 @@ instock of product");
 
                 case Options.Delete:
                     Console.WriteLine("enter the id order");
-                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order","id order is invalid");
+                    if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("Order", "id order is invalid");
                     myDalList.order.Delete(idOrder);
                     break;
             }
@@ -320,7 +322,7 @@ instock of product");
                     Console.WriteLine("enter id orderItem");
                     if (!int.TryParse(Console.ReadLine(), out idOrderItem)) throw new Do.InvalidInputExseption("idOrderItem is in valid");
                     Console.WriteLine("Item on order before change");
-                    Console.WriteLine(myDalList.orderItems.Get(item => item?.ID ==idOrderItem));
+                    Console.WriteLine(myDalList.orderItems.Get(item => item?.ID == idOrderItem));
                     orderItem = InputOrderItem();
                     orderItem.ID = idOrderItem;
                     //Update an item in the order only if all the details have been entered by the user
@@ -328,7 +330,7 @@ instock of product");
                     {
                         myDalList.orderItems.Update(orderItem);
                         Console.WriteLine("Item on order after the change");
-                        Console.WriteLine(myDalList.orderItems.Get(item => item?.ID ==idOrderItem));
+                        Console.WriteLine(myDalList.orderItems.Get(item => item?.ID == idOrderItem));
                     }
                     break;
 
@@ -358,7 +360,7 @@ instock of product");
                     if (!int.TryParse(Console.ReadLine(), out idOrder)) throw new Do.InvalidInputExseption("idOrder is in valid");
                     int idProduct;
                     if (!int.TryParse(Console.ReadLine(), out idProduct)) throw new Do.InvalidInputExseption("idProduct is in valid");
-                    Console.WriteLine(myDalList.orderItems.Get(item=>item?.OrderId==idOrder&&item?.ProductId== idProduct));
+                    Console.WriteLine(myDalList.orderItems.Get(item => item?.OrderId == idOrder && item?.ProductId == idProduct));
                     break;
 
             }

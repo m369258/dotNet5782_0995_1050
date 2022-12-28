@@ -10,7 +10,7 @@ namespace PL.Product
     public partial class ProductForListWindow : Window
     {
         //A private variable to access the logic layer
-        private BlApi.IBl bl = new BlApi.Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
 
         /// <summary>
         /// A constructor action that initializes the controls

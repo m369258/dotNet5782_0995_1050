@@ -5,7 +5,8 @@ namespace BlTest;
 
 internal class Program
 {
-    private static IBl myBL = new Bl();
+    private static BlApi.IBl? myBL = BlApi.Factory.Get();
+   
     enum MainMenu { Exist = 0, Product, Order, Cart }
     enum OptionsOfProducts { Add = 1, Get, GetAll, Update, Delete, GetByIDAndCart }
     enum OptionsOfOrders { GetListOfOrders = 1, OrderShippingUpdate, GetOrderDetails, OrderDeliveryUpdate, OrderTracking }
@@ -28,6 +29,9 @@ internal class Program
     /// </summary>
     static void Main(string[] args)
     {
+        //if(myBL == null)
+        //    throw new BO.CannotConnectToDatabase();
+
         MainMenu choice;
         //Receiving a voluntary action number to perform
         Console.WriteLine(@"please choose one of the following:

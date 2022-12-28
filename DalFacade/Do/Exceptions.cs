@@ -40,7 +40,8 @@ public class DalAlreadyExistsException : Exception
     public override string ToString() =>
         $"{EntityName} number {EntityID} already exists.";
 }
-public class InvalidInputExseption:Exception
+
+public class InvalidInputExseption : Exception
 {
     public string DetailName;
     public InvalidInputExseption(string name)
@@ -51,4 +52,19 @@ public class InvalidInputExseption:Exception
         : base(massage, innerException) { DetailName = name; }
     public override string ToString() =>
         $"The field {DetailName} is invalid!";
+}
+
+public class CannotConnectToDatabase : Exception
+{
+    public CannotConnectToDatabase()
+        : base() { }
+    public override string ToString() =>
+     $"Cannot Connect To Database!";
+}
+
+[Serializable]
+public class DalConfigException : Exception
+{
+    public DalConfigException(string msg) : base(msg) { }
+    public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
 }

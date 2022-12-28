@@ -3,8 +3,12 @@ using System.Security.Principal;
 
 namespace Dal;
 
-sealed public class DalList : IDal
+sealed internal class DalList : IDal
 {
+    public static IDal Instance { get; } = new DalList();
+
+    private DalList() { }
+
     public IOrder order => new DalOrder();
 
     public IProduct product => new DalProduct();
