@@ -52,41 +52,6 @@ internal class DalOrderItem : IOrderItems
           throw new Do.DalDoesNotExistException("there are no orderItem with this id");
     }
 
-
-    ///// <summary>
-    ///// This operation receives an order and product ID number and returns a requested order item
-    ///// </summary>
-    ///// <param name="idOrder">Order ID number</param>
-    ///// <param name="idProduct">Product ID number.</param>
-    ///// <returns> a requested order item</returns>
-    ///// <exception cref="DalDoesNotExistException">In case the requested order item does not exist, an error will be thrown</exception>
-    //public OrderItem Get(int idOrder, int idProduct)
-    //{
-    //    int i;
-    //    //Search for the desired order item
-    //    for (i = 0; i < DataSource.orderItems.Count && (DataSource.orderItems[i]?.ProductId != idProduct || DataSource.orderItems[i]?.OrderId != idOrder); i++) ;
-
-    //    //If not found, an error will be thrown
-    //    if (DataSource.orderItems.Count == i)
-    //        throw new Do.DalDoesNotExistException("there is no orderItem with this idOrder and idProduct");
-
-    //    return DataSource.orderItems[i] ?? new();
-    //}
-
-
-    ///// <summary>
-    ///// This action gets an order ID number and returns all the order details
-    ///// </summary>
-    ///// <param name="idOrder">Order ID number</param>
-    ///// <returns>All order details</returns>
-    //public IEnumerable<OrderItem?> GetByIdOrder(int idOrder)
-    //{
-    //    return condition != null ?
-    //         DataSource.orderItems.Where(currOrderItem => condition(currOrderItem) && currOrderItem?.OrderId == idOrder) :
-    //         DataSource.orderItems.Where(currOrderItem => currOrderItem?.OrderId == idOrder);
-    //}
-
-
     /// <summary>
     /// This function receives an ID number of an order and returns its position in the array
     /// </summary>

@@ -125,4 +125,21 @@ internal class Product : BlApi.IProduct
         myDal.product.Update(p);
 
     }
+
+    public IEnumerable<BO.ProductItem> GetCatalog()
+    {
+        IEnumerable<Do.Product?> doProducts;
+            doProducts = myDal.product.GetAll();
+        return doProducts.Select(item => (item == null) ? throw new BO.InternalErrorException("Data layer item does not exist") : new BO.ProductItem()
+        {
+            ProductID = ((Do.Product)item!).ID,
+            Name = ((Do.Product)item!).Name,
+            Price = ((Do.Product)item!).Price,
+            Category = (BO.Category)(((Do.Product)item!).Category)!,
+            InStock= ((Do.Product)item!).InStock >0?true:false,
+            Amount= ((Do.Product)item!). InStock
+        });
+    }
+
+
 }

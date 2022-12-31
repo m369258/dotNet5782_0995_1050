@@ -12,6 +12,12 @@ public interface IProduct
    public IEnumerable<BO.ProductForList> GetListOfProducts(int x=0);
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerable<BO.ProductItem> GetCatalog();
+
+    /// <summary>
     /// Product details request by ID
     /// </summary>
     /// <param name="idProduct"></param>

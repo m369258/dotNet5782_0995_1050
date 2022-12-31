@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
+        DataContext="{Binding productCurrent, RelativeSource={RelativeSource Mode=Self}}"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
         <!--<Grid.ColumnDefinitions>
@@ -26,17 +27,17 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Label x:Name="lblID" Content="קוד פריט" HorizontalAlignment="Center" Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="14" Grid.Column="1" RenderTransformOrigin="-1.374,0.544"/>
+            <Label x:Name="lblID" Content="קוד פריט" HorizontalAlignment="Center"  Margin="0,15,0,0" Grid.Row="1" VerticalAlignment="Top" FontSize="14" Grid.Column="1" RenderTransformOrigin="-1.374,0.544"/>
             <Label x:Name="lblName" Content="שם פריט" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Center" FontSize="14" Grid.Column="1" RenderTransformOrigin="-1.478,0.471"/>
-            <TextBox x:Name="txtName" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" FontSize="14" Margin="137,0,0,0"/>
-            <TextBox x:Name="txtID" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.255,0.582" FontSize="14" Margin="137,15,0,0"/>
+            <TextBox x:Name="txtName" HorizontalAlignment="Left" Text="{Binding Name}" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" FontSize="14" Margin="137,0,0,0"/>
+            <TextBox x:Name="txtID" HorizontalAlignment="Left" Text="{Binding ID}" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.255,0.582" FontSize="14" Margin="137,15,0,0"/>
             <Label x:Name="lblCategory" Content="קטגוריה" HorizontalAlignment="Center" Grid.Row="3" VerticalAlignment="Center" FontSize="14" Grid.Column="1"/>
             <Label x:Name="lblPrice" Content="מחיר" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" RenderTransformOrigin="-1.969,0.565" Margin="0,11,0,0" FontSize="14" Grid.Column="1"/>
-            <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="14" Margin="137,17,0,0"/>
+            <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Text="{Binding Price}" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontSize="14" Margin="137,17,0,0"/>
             <Label x:Name="lblInStock" Content="כמות במלאי" HorizontalAlignment="Center" Margin="0,18,0,0" Grid.Row="5" VerticalAlignment="Top" FontSize="14" Grid.Column="1"/>
-            <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="137,20,0,0" FontSize="14" RenderTransformOrigin="-2.813,0.555"/>
+            <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Text="{Binding InStock}" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="137,20,0,0" FontSize="14" RenderTransformOrigin="-2.813,0.555"/>
             <Button x:Name="btnAddOrUpdateProduct" Content="Button" HorizontalAlignment="Left" Margin="351,21,0,10" Grid.Row="6" Click="btnAddOrUpdateProduct_Click" FontSize="18" Width="98" Foreground="#FFFBFBFB" BorderBrush="#FFFF43DB" Background="Black" Grid.ColumnSpan="2"/>
-            <ComboBox x:Name="cbxCategory" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Width="120" FontSize="14" Margin="137,0,0,0"/>
+            <ComboBox x:Name="cbxCategory" HorizontalAlignment="Left" Text="{Binding Category}" Grid.Row="3" VerticalAlignment="Center" Width="120" FontSize="14" Margin="137,0,0,0"/>
         </Grid>
         <TextBox HorizontalAlignment="Left" Margin="-19,-23,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>

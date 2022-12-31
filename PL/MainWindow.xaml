@@ -8,7 +8,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="bntManager" Content="מנהל" HorizontalAlignment="Left" Margin="594,35,0,0" VerticalAlignment="Top" Click="ShowProductsButton_Click" Height="43" Width="148" Foreground="White" FontSize="16" Background="Black" FontFamily="Bauhaus 93" BorderBrush="#FFF658C6"/>
+        <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="528,70,0,321" RenderTransformOrigin="-1.054,1.652"/>
+        <Button x:Name="bntAddOrder" Content="Orders" Click="bntAddOrder_Click" Margin="527,171,153,220" />
+        <Button x:Name="btnTrackingOrders" Content="TrackingOrders" HorizontalAlignment="Left" Margin="511,259,0,132" Click="btnTrackingOrders_Click"/>
 
     </Grid>
 </Window>
