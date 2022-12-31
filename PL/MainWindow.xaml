@@ -11,6 +11,7 @@
         <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="528,70,0,321" RenderTransformOrigin="-1.054,1.652"/>
         <Button x:Name="bntAddOrder" Content="Orders" Click="bntAddOrder_Click" Margin="527,171,153,220" />
         <Button x:Name="btnTrackingOrders" Content="TrackingOrders" HorizontalAlignment="Left" Margin="511,259,0,132" Click="btnTrackingOrders_Click"/>
+        <Button x:Name="category" Content="Button" HorizontalAlignment="Left" Margin="220,171,0,0" VerticalAlignment="Top" Click="category_Click"/>
 
     </Grid>
 </Window>

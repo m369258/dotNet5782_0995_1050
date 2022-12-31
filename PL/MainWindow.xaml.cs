@@ -20,5 +20,10 @@ public partial class MainWindow : Window
 
     private void bntAddOrder_Click(object sender, RoutedEventArgs e)=>new OrderForListWindow().Show();
 
-    private void btnTrackingOrders_Click(object sender, RoutedEventArgs e)=>new TrackingOrdersWindow().Show();  
+    private void btnTrackingOrders_Click(object sender, RoutedEventArgs e)=>new TrackingOrdersWindow().Show();
+
+    private void category_Click(object sender, RoutedEventArgs e)
+    {
+        new Order.CatalogWindow().Show();   
+    }
 }

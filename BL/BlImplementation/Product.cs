@@ -9,7 +9,7 @@ internal class Product : BlApi.IProduct
         IEnumerable<Do.Product?> doProducts;
         //A request to the data layer to fetch all the products, if a category exists, only the products of that category will be requested, otherwise all the products will be requested
         if (numCategory != 0)
-            doProducts = myDal.product.GetAll(item => ((item)?.Category) == ((Do.Category)numCategory)) ;
+            doProducts = myDal.product.GetAll(item => ((item)?.Category) == ((Do.Category)numCategory));
         else
             doProducts = myDal.product.GetAll();
 
@@ -58,7 +58,7 @@ internal class Product : BlApi.IProduct
 
             //A product request based on the data layer identifier, if the information has not arrived, will throw an error
             Do.Product p1;
-            try { p1 = myDal.product.Get(item => item?.ID == idProduct) ; }
+            try { p1 = myDal.product.Get(item => item?.ID == idProduct); }
             catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
             //Going through all the items in the basket and saving the desired item
@@ -126,9 +126,12 @@ internal class Product : BlApi.IProduct
 
     }
 
-    public IEnumerable<BO.ProductItem> GetCatalog()
+    public IEnumerable<BO.ProductItem> GetCatalog(int numCategory)
     {
         IEnumerable<Do.Product?> doProducts;
+        if (numCategory != 0)
+            doProducts = myDal.product.GetAll(item => ((item)?.Category) == ((Do.Category)numCategory));
+        else
             doProducts = myDal.product.GetAll();
         return doProducts.Select(item => (item == null) ? throw new BO.InternalErrorException("Data layer item does not exist") : new BO.ProductItem()
         {
@@ -136,10 +139,8 @@ internal class Product : BlApi.IProduct
             Name = ((Do.Product)item!).Name,
             Price = ((Do.Product)item!).Price,
             Category = (BO.Category)(((Do.Product)item!).Category)!,
-            InStock= ((Do.Product)item!).InStock >0?true:false,
-            Amount= ((Do.Product)item!). InStock
+            InStock = ((Do.Product)item!).InStock > 0 ? true : false,
+            Amount = ((Do.Product)item!).InStock
         });
     }
-
-
 }

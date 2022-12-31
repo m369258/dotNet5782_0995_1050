@@ -15,7 +15,7 @@ public interface IProduct
     /// 
     /// </summary>
     /// <returns></returns>
-    public IEnumerable<BO.ProductItem> GetCatalog();
+    public IEnumerable<BO.ProductItem> GetCatalog(int numOfCategory=0);
 
     /// <summary>
     /// Product details request by ID

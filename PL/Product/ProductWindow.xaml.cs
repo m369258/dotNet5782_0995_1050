@@ -51,6 +51,25 @@ public partial class ProductWindow : Window
         txtID.IsEnabled = false;
     }
 
+    public ProductWindow(int id,string fromWhichWindow)
+    {
+        InitializeComponent();
+        //Product request by ID from the logical layer
+        try { productCurrent = bl.product.GetProduct(id); }
+        catch (BO.InternalErrorException) { MessageBox.Show("מוצר לא קיים"); }
+
+        //The name of the selected category
+        cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+
+        //Locks the option to change ID
+        txtID.IsEnabled = false;
+        txtName.IsEnabled = false;
+        cbxCategory.IsEnabled = false;
+        txtPrice.IsEnabled = false;
+        txtInStock.IsEnabled = false;
+        btnAddOrUpdateProduct.Visibility = Visibility.Collapsed;
+    }
+
     /// <summary>
     /// A function that updates or adds a product
     /// </summary>
