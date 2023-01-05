@@ -96,14 +96,7 @@ public partial class ProductWindow : Window
         {
             try
             {
-                bl.product.AddProduct(new BO.Product()
-                {
-                    ID = id,
-                    Name = txtName.Text,
-                    Category = (BO.Category)(cbxCategory.SelectedItem),
-                    Price = price,
-                    InStock = inStock
-                });
+                bl.product.AddProduct(productCurrent);
             }
             catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי");}
         }

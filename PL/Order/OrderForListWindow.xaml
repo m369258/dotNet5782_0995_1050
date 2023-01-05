@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         DataContext="{Binding orders, RelativeSource={RelativeSource Mode=Self}}"
         Title="OrderForListWindow" Height="450" Width="800">
-    <Grid>
+    <StackPanel>
         <ListView x:Name="ListviewOrders" ItemsSource="{Binding}" Margin="0,41,0,0" Grid.RowSpan="2" SelectionChanged="ListviewOrders_SelectionChanged" ></ListView>
-    </Grid>
+    </StackPanel>
 </Window>

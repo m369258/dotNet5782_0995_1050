@@ -33,8 +33,6 @@ public partial class ProductForListWindow : Window
         cmxCategorySelector.SelectedIndex = 5;
 
         //Request the logical layer to bring all the products
-       // ProductListview.ItemsSource = bl.product.GetListOfProducts();
-
         var temp=bl.product.GetListOfProducts();
         Products = temp == null ? new() : new(temp);
         //Put all the categories
@@ -52,20 +50,13 @@ public partial class ProductForListWindow : Window
          if (cmxCategorySelector.SelectedIndex != 5)
          {
           BO.Category currCategorySelect = (BO.Category)cmxCategorySelector.SelectedItem;
-        // ProductListview.ItemsSource = bl.product.GetListOfProducts((int)currCategorySelect);
-
           var temp = bl.product.GetListOfProducts((int)currCategorySelect);
-        //var temp = bl.product.GetListOfProducts();
-
-        Products = temp == null ? new() : new(temp);
-
+          Products = temp == null ? new() : new(temp);
         }
         else
         {
-            // ProductListview.ItemsSource = bl.product.GetListOfProducts();
            var temp = bl.product.GetListOfProducts();
             Products = temp == null ? new() : new(temp);
-
         }
     }
 
@@ -77,11 +68,10 @@ public partial class ProductForListWindow : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         new ProductWindow().ShowDialog();
+
         //Refreshing the list of existing products
-        //ProductListview.ItemsSource = bl.product.GetListOfProducts();
         var temp = bl.product.GetListOfProducts();
         Products = temp == null ? new() : new(temp);
-
     }
 
     /// <summary>
