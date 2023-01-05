@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-
 namespace PL.Product;
 
 /// <summary>
@@ -50,19 +49,21 @@ public partial class ProductForListWindow : Window
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         //Filter products by category if selected
-        if (cmxCategorySelector.SelectedIndex != 5)
-        {
-            BO.Category currCategorySelect = (BO.Category)cmxCategorySelector.SelectedItem;
-           // ProductListview.ItemsSource = bl.product.GetListOfProducts((int)currCategorySelect);
+         if (cmxCategorySelector.SelectedIndex != 5)
+         {
+          BO.Category currCategorySelect = (BO.Category)cmxCategorySelector.SelectedItem;
+        // ProductListview.ItemsSource = bl.product.GetListOfProducts((int)currCategorySelect);
 
-            var temp = bl.product.GetListOfProducts((int)currCategorySelect);
-            Products = temp == null ? new() : new(temp);
+          var temp = bl.product.GetListOfProducts((int)currCategorySelect);
+        //var temp = bl.product.GetListOfProducts();
+
+        Products = temp == null ? new() : new(temp);
 
         }
         else
         {
             // ProductListview.ItemsSource = bl.product.GetListOfProducts();
-            var temp = bl.product.GetListOfProducts();
+           var temp = bl.product.GetListOfProducts();
             Products = temp == null ? new() : new(temp);
 
         }
@@ -88,7 +89,8 @@ public partial class ProductForListWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e">more information on </param>
-    private void ProductListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+    private void ProductListview_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
     {
         if (ProductListview.SelectedIndex != -1)
         {
