@@ -12,6 +12,8 @@
         <Button x:Name="bntAddOrder" Content="Orders" Click="bntAddOrder_Click" Margin="527,171,153,220" />
         <Button x:Name="btnTrackingOrders" Content="TrackingOrders" HorizontalAlignment="Left" Margin="511,259,0,132" Click="btnTrackingOrders_Click"/>
         <Button x:Name="category" Content="Button" HorizontalAlignment="Left" Margin="220,171,0,0" VerticalAlignment="Top" Click="category_Click"/>
+        <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="135,308,0,0" TextWrapping="Wrap" Text="order id" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273"/>
+        <Button x:Name="btnTrack" Content="Track" HorizontalAlignment="Left" Margin="135,353,0,0" VerticalAlignment="Top" Click="btnTrack_Click"/>
 
     </Grid>
 </Window>
