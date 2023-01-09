@@ -44,9 +44,6 @@ namespace PL.Product
             MyProductItem = currProductItem;
         }
 
-        private void slbAmount_ValueChanged(object sender, RoutedPropertyChangedEventArgs<T> e)
-        {
-           
-        }
+       
     }
 }
