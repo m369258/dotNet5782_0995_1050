@@ -80,12 +80,12 @@ public partial class ProductForListWindow : Window
     /// <param name="sender"></param>
     /// <param name="e">more information on </param>
 
-    private void ProductListview_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+    private void DGProducts_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (ProductListview.SelectedIndex != -1)
+        if (DGProducts.SelectedIndex != -1)
         {
-            new ProductWindow(((BO.ProductForList)ProductListview.SelectedItem).ID).ShowDialog();
-            ProductListview.SelectedIndex = -1;
+            new ProductWindow(((BO.ProductForList)DGProducts.SelectedItem).ID).ShowDialog();
+            DGProducts.SelectedIndex = -1;
             cmxCategorySelector.SelectedIndex = 5;
             // ProductListview.ItemsSource = bl.product.GetListOfProducts();
             var temp = bl.product.GetListOfProducts();
@@ -93,4 +93,5 @@ public partial class ProductForListWindow : Window
 
         }
     }
+    
 }
