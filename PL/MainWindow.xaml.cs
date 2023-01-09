@@ -16,25 +16,14 @@ public partial class MainWindow : Window
         InitializeComponent();
     }
 
-    private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().Show();
+    private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new MainPages.MainManagerWindow().ShowDialog();
 
-    private void bntAddOrder_Click(object sender, RoutedEventArgs e)=>new OrderForListWindow().Show();
-
-    private void btnTrackingOrders_Click(object sender, RoutedEventArgs e)=>new TrackingOrdersWindow().Show();
+   // private void bntAddOrder_Click(object sender, RoutedEventArgs e)=>new OrderForListWindow().Show();
 
     private void category_Click(object sender, RoutedEventArgs e)
     {
         new Order.CatalogWindow().Show();   
     }
-
-
-
-
-
-
-
-
-    //--------------------------------------------------------------///
 
     private void btnTrack_Click(object sender, RoutedEventArgs e)
     {

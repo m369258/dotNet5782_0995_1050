@@ -1,4 +1,6 @@
-﻿using System;
+﻿using PL.Order;
+using PL.Product;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,16 +14,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.Order
+namespace PL.MainPages
 {
     /// <summary>
-    /// Interaction logic for TrackingOrdersWindow.xaml
+    /// Interaction logic for MainManagerWindow.xaml
     /// </summary>
-    public partial class TrackingOrdersWindow : Window
+    public partial class MainManagerWindow : Window
     {
-        public TrackingOrdersWindow()
+        public MainManagerWindow()
         {
             InitializeComponent();
         }
+
+        private void btnProducts_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().ShowDialog();
+
+        private void btnOrders_Click(object sender, RoutedEventArgs e)=>new OrderForListWindow().ShowDialog();
     }
 }
