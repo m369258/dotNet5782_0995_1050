@@ -34,4 +34,9 @@ public partial class MainWindow : Window
             new OrderTrackinkWindow(id).Show(); ;
 
     }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+        new MainCustomerWindow().Show();
+    }
 }
