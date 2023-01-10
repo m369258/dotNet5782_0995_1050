@@ -140,7 +140,7 @@ internal class Product : BlApi.IProduct
             Price = ((Do.Product)item!).Price,
             Category = (BO.Category)(((Do.Product)item!).Category)!,
             InStock = ((Do.Product)item!).InStock > 0 ? true : false,
-            Amount = ((Do.Product)item!).InStock
+            Amount = 0
         });
     }
 }
