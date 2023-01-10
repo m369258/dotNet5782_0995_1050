@@ -93,13 +93,11 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Text="Popular"  Margin="0,0,0,0" Style="{StaticResource categoryStyle}"/>
-            <TextBlock Grid.Column="2" Text="Charms" Style="{StaticResource categoryStyle}"/>
-            <TextBlock Grid.Column="3" Text="Sets" Style="{StaticResource categoryStyle}"/>
-            <TextBlock Grid.Column="4" Text="Necklaces" Style="{StaticResource categoryStyle}"/>
-            <TextBlock Grid.Column="5" Text="Earrings" RenderTransformOrigin="6.514,0.29" Style="{StaticResource categoryStyle}"/>
-            <TextBlock Grid.Column="6" Text="Rings" RenderTransformOrigin="8.346,-0.172" Style="{StaticResource categoryStyle}"/>
-            <TextBlock Grid.Column="7" Text="Bracelets" Style="{StaticResource categoryStyle}"/>
+            <TextBlock Grid.Column="2" Text="cupcakes" Style="{StaticResource categoryStyle}"/>
+            <TextBlock Grid.Column="3" Text="cakes" Style="{StaticResource categoryStyle}"/>
+            <TextBlock Grid.Column="4" Text="macarons" Style="{StaticResource categoryStyle}"/>
+            <TextBlock Grid.Column="5" Text="sweets" RenderTransformOrigin="6.514,0.29" Style="{StaticResource categoryStyle}"/>
+            <TextBlock Grid.Column="6" Text="ballons" RenderTransformOrigin="8.346,-0.172" Style="{StaticResource categoryStyle}"/>
             <Image Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"  MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
             <Grid Name="leftButtonsGrid" Grid.Column="8">
                 <Grid.ColumnDefinitions>

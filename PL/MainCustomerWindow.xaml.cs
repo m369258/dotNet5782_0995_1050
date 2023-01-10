@@ -131,14 +131,15 @@ public partial class MainCustomerWindow : Window
         {
             if (strCat != "Popular")
             {
-                Enum.TryParse(strCat, out c);
+               BO.Category.TryParse(strCat, out c);
 
                 var temp = bl.product.GetCatalog((int)c);
                 MyProductItems = temp == null ? new() : new(temp);
 
-              //  catalog.ItemsSource = bl.product.GetListOfProducts((int)c);
+                //  catalog.ItemsSource = bl.product.GetListOfProducts((int)c);
             }
-            else {
+            else
+            {
                 var temp = bl.product.GetCatalog();
                 MyProductItems = temp == null ? new() : new(temp);
                 //catalog.ItemsSource = bl.product.GetListOfProducts();
@@ -236,5 +237,7 @@ public partial class MainCustomerWindow : Window
             curOrderItem.QuantityPerItem--;
         }
     }
+
+
 }
 
