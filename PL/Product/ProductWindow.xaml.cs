@@ -108,4 +108,9 @@ public partial class ProductWindow : Window
         }
         this.Close();
     }
+
+    private void btnAddOrUpdateProduct_PreviewDrop(object sender, DragEventArgs e)
+    {
+
+    }
 }

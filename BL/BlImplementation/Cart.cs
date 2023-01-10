@@ -31,7 +31,10 @@ internal class Cart : BlApi.ICart
                 myOrderItem.productPrice = doProduct.Price;
                 myOrderItem.TotalPrice = doProduct.Price;
                 //adding it to the list of details in the basket
+                myCart.items = new List<OrderItem?>();
+                
                 myCart.items?.Add(myOrderItem);
+                
                 myCart.TotalPrice += doProduct.Price;
             }
             else throw new NotEnoughInStockException(doProduct.ID, doProduct.Name ?? "", "There is not enough stock of this product.");
@@ -197,6 +200,7 @@ internal class Cart : BlApi.ICart
             myOrderItem.productPrice = myProduct.Price;
             myOrderItem.TotalPrice = (myProduct.Price) * newQuantity;
             //Adding an item to the list of items
+            
             myCart.items!.Add(myOrderItem);
             myCart.TotalPrice += (myProduct.Price) * newQuantity;
         }
