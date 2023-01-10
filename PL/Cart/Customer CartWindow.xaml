@@ -5,8 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
+        DataContext="{Binding MyCart, RelativeSource={RelativeSource Mode=Self}}"
         Title="Customer_CartWindow" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="First Name: " />
+                <TextBlock Grid.Column="1" Text="{Binding Path=FirstName}" />
+                <TextBlock Grid.Column="2" Text="Last Name: " />
+                <TextBlock Grid.Column="3" Text="{Binding Path=LastName}" />
+                <CheckBox Grid.Column="4" Content="Is Lecturer?"
+IsEnabled="False"
+IsChecked="{Binding Path=IsLecturer}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="10*"/>
+
+        </Grid.RowDefinitions>
+        <Label Content="CustomerName" Grid.Row="0" Grid.Column="0"/>
+        <TextBlock Text="{Binding Path=CustomerName}" Grid.Row="0" Grid.Column="1"/>
+        <Label Content="CustomerEmail" Grid.Row="1" Grid.Column="0"/>
+        <TextBlock Text="{Binding Path=CustomerEmail}" Grid.Row="1" Grid.Column="1"/>
+        <Label Content="CustomerAddress" Grid.Row="2" Grid.Column="0"/>
+        <TextBlock Text="{Binding Path=CustomerAddress}" Grid.Row="2" Grid.Column="1"/>
+        <Label Content="TotalPrice" Grid.Row="3" Grid.Column="0"/>
+        <TextBlock Text="{Binding Path=TotalPrice}" Grid.Row="3" Grid.Column="1"/>
+        <ListBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" ItemsSource="{Binding items}"
+ItemTemplate="{StaticResource MyDataTemplate}"
+HorizontalContentAlignment="Stretch" />
     </Grid>
 </Window>

@@ -8,10 +8,6 @@
         DataContext="{Binding productCurrent, RelativeSource={RelativeSource Mode=Self}}"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        <!--<Grid.ColumnDefinitions>
-            <ColumnDefinition Width="319*"/>
-            <ColumnDefinition Width="481*"/>
-        </Grid.ColumnDefinitions>-->
         <Grid Grid.ColumnSpan="2" Margin="-1,0,1,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

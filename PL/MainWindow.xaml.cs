@@ -1,4 +1,5 @@
-﻿using PL.Order;
+﻿using PL.Cart;
+using PL.Order;
 using PL.Product;
 using System;
 using System.Windows;
@@ -38,5 +39,10 @@ public partial class MainWindow : Window
     private void Button_Click_1(object sender, RoutedEventArgs e)
     {
         new MainCustomerWindow().Show();
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        new Customer_CartWindow().Show();
     }
 }

@@ -1,8 +1,4 @@
-﻿using System.Diagnostics;
-using System.Runtime.ConstrainedExecution;
-using System.Xml.Linq;
-
-namespace BO;
+﻿namespace BO;
 
 public class OrderItem
 {
@@ -21,7 +17,6 @@ public class OrderItem
     /// </summary>
     public string? NameProduct { get; set; }
 
-
     /// <summary>
     /// Price per unit
     /// </summary>
@@ -37,7 +32,6 @@ public class OrderItem
     /// 
     /// </summary>
     public double TotalPrice { get; set; }
-
 
     public override string ToString() => this.ToStringProperty();
 }
