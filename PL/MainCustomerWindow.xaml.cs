@@ -29,31 +29,31 @@ public partial class MainCustomerWindow : Window
     public static readonly DependencyProperty MyProductItemsProperty =
         DependencyProperty.Register("MyProductItems", typeof(ObservableCollection<BO.ProductItem>), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
-    //public BO.Cart MyCart
-    //{
-    //    get { return (BO.Cart)GetValue(MyCartProperty); }
-    //    set { SetValue(MyCartProperty, value); }
-    //}
-
-    //// Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
-    //public static readonly DependencyProperty MyCartProperty =
-    //DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
-
-
-
-
-
-    public BO.OrderItem curOrderItem
+    public BO.Cart MyCart
     {
-        get { return (BO.OrderItem)GetValue(curOrderItemProperty); }
-        set { SetValue(curOrderItemProperty, value); }
+        get { return (BO.Cart)GetValue(MyCartProperty); }
+        set { SetValue(MyCartProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for curOrderItem.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty curOrderItemProperty =
-        DependencyProperty.Register("curOrderItem", typeof(BO.OrderItem), typeof(MainCustomerWindow), new PropertyMetadata(null));
+    // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty MyCartProperty =
+    DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
-    BO.Cart MyCart = new BO.Cart();
+
+
+
+
+    //public BO.OrderItem curOrderItem
+    //{
+    //    get { return (BO.OrderItem)GetValue(curOrderItemProperty); }
+    //    set { SetValue(curOrderItemProperty, value); }
+    //}
+
+    //// Using a DependencyProperty as the backing store for curOrderItem.  This enables animation, styling, binding, etc...
+    //public static readonly DependencyProperty curOrderItemProperty =
+    //    DependencyProperty.Register("curOrderItem", typeof(BO.OrderItem), typeof(MainCustomerWindow), new PropertyMetadata(null));
+
+    // BO.Cart MyCart = new BO.Cart();
 
 
     /// <summary>
@@ -63,7 +63,7 @@ public partial class MainCustomerWindow : Window
     public MainCustomerWindow()
     {
         this.MyCart =new BO.Cart();
-        curOrderItem=new BO.OrderItem();
+        //curOrderItem=new BO.OrderItem();
         InitializeComponent();
         try
         {
@@ -199,9 +199,11 @@ public partial class MainCustomerWindow : Window
 
     private void btnPlus_Click(object sender, RoutedEventArgs e)
     {
+       // var g =((BO.ProductItem) ((Button)sender).DataContext);
+       // var bbb = ((BO.ProductItem)sender).ProductID;
         //BO.Product curProduct=new BO.Product();
         ////////????????????????האם זה נכון להשתמש בסלקטד איטם
-          BO.ProductItem selectionProductItem = (BO.ProductItem)(catalog.SelectedItem);
+          BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
         //try
         //{
         //     curProduct = bl.product.GetProduct(selectionProductItem.ProductID);
@@ -209,20 +211,23 @@ public partial class MainCustomerWindow : Window
         //catch  { MessageBox.Show("product isnt found!!!"); }
         ///?????האם בטוח הוא קיים?????? צריך לבדוק פעם ראשונה
         //curOrderItem = MyCart.items?.FirstOrDefault(item => item?.ProductId == selectionProductItem.ProductID);
-      //  if(curProduct.InStock> curProductItem.)
-      if(selectionProductItem.InStock)
+        //  if(curProduct.InStock> curProductItem.)
+        if (selectionProductItem.InStock)
         {
            // curOrderItem.QuantityPerItem++;
-            selectionProductItem.Amount++;
-
-            if (selectionProductItem.Amount==1)
+           
+            if (selectionProductItem.Amount==0)
             {
-                bl.cart.Add(MyCart, selectionProductItem.ProductID);
+                MyCart= bl.cart.Add(MyCart, selectionProductItem.ProductID);
             }
             else
             {
-                bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount);
+                MyCart= bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount+1);
             }
+            
+           // var ttt=MyProductItems.Where(t => t.ProductID == selectionProductItem.ProductID).Select(t => selectionProductItem).ToList();
+            var temp = bl.product.GetCatalog(0,MyCart.items);
+            MyProductItems = temp == null ? new() : new(temp);
             //האם מעדכן את המצוגה
         }
     }

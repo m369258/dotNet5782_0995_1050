@@ -1,4 +1,6 @@
 ﻿using BO;
+using Do;
+
 namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
@@ -126,13 +128,15 @@ internal class Product : BlApi.IProduct
 
     }
 
-    public IEnumerable<BO.ProductItem> GetCatalog(int numCategory)
+    public IEnumerable<BO.ProductItem> GetCatalog(int numCategory,IEnumerable<BO.OrderItem?>? items)
     {
         IEnumerable<Do.Product?> doProducts;
         if (numCategory != 0)
             doProducts = myDal.product.GetAll(item => ((item)?.Category) == ((Do.Category)numCategory));
         else
             doProducts = myDal.product.GetAll();
+
+        
         return doProducts.Select(item => (item == null) ? throw new BO.InternalErrorException("Data layer item does not exist") : new BO.ProductItem()
         {
             ProductID = ((Do.Product)item!).ID,
@@ -140,7 +144,7 @@ internal class Product : BlApi.IProduct
             Price = ((Do.Product)item!).Price,
             Category = (BO.Category)(((Do.Product)item!).Category)!,
             InStock = ((Do.Product)item!).InStock > 0 ? true : false,
-            Amount = 0
+            Amount = items?.FirstOrDefault(it=>it?.ProductId== ((Do.Product)item!).ID)?.QuantityPerItem??0
         });
     }
 }

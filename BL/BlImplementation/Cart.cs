@@ -31,7 +31,8 @@ internal class Cart : BlApi.ICart
                 myOrderItem.productPrice = doProduct.Price;
                 myOrderItem.TotalPrice = doProduct.Price;
                 //adding it to the list of details in the basket
-                myCart.items = new List<OrderItem?>();
+                if(myCart.items==null)
+                    myCart.items = new List<OrderItem?>();
                 
                 myCart.items?.Add(myOrderItem);
                 
