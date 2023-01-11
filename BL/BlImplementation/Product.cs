@@ -24,6 +24,7 @@ internal class Product : BlApi.IProduct
             Name = ((Do.Product)item!).Name,
             Price = ((Do.Product)item!).Price,
             category = (BO.Category)(((Do.Product)item!).Category)!
+            //Img = 
         });
     }
 
@@ -149,16 +150,5 @@ internal class Product : BlApi.IProduct
                              Amount = amount ?? 0  
                      };
         return result;
-
-
-        //return doProducts.Select(item => (item == null) ? throw new BO.InternalErrorException("Data layer item does not exist") : new BO.ProductItem()
-        //{
-        //    ProductID = ((Do.Product)item!).ID,
-        //    Name = ((Do.Product)item!).Name,
-        //    Price = ((Do.Product)item!).Price,
-        //    Category = (BO.Category)(((Do.Product)item!).Category)!,
-        //    InStock = ((Do.Product)item!).InStock > 0 ? true : false,
-        //    Amount = items?.FirstOrDefault(it => it?.ProductId == ((Do.Product)item!).ID)?.QuantityPerItem ?? 0
-        //});
     }
 }

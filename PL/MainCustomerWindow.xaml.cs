@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.Cart;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -26,31 +27,18 @@ public partial class MainCustomerWindow : Window
     public static readonly DependencyProperty MyProductItemsProperty =
         DependencyProperty.Register("MyProductItems", typeof(ObservableCollection<BO.ProductItem>), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
-    public BO.Cart MyCart
-    {
-        get { return (BO.Cart)GetValue(MyCartProperty); }
-        set { SetValue(MyCartProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty MyCartProperty =
-    DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
-
-
-
-
-
-    //public BO.OrderItem curOrderItem
+    //public BO.Cart MyCart
     //{
-    //    get { return (BO.OrderItem)GetValue(curOrderItemProperty); }
-    //    set { SetValue(curOrderItemProperty, value); }
+    //    get { return (BO.Cart)GetValue(MyCartProperty); }
+    //    set { SetValue(MyCartProperty, value); }
     //}
 
-    //// Using a DependencyProperty as the backing store for curOrderItem.  This enables animation, styling, binding, etc...
-    //public static readonly DependencyProperty curOrderItemProperty =
-    //    DependencyProperty.Register("curOrderItem", typeof(BO.OrderItem), typeof(MainCustomerWindow), new PropertyMetadata(null));
+    //// Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+    //public static readonly DependencyProperty MyCartProperty =
+    //DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
-    // BO.Cart MyCart = new BO.Cart();
+
+     BO.Cart MyCart = new BO.Cart();
 
 
     /// <summary>
@@ -232,6 +220,13 @@ public partial class MainCustomerWindow : Window
             var temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
  
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        new Customer_CartWindow(ref MyCart).ShowDialog();
+        var temp = bl.product.GetCatalog(0, MyCart.items);
+        MyProductItems = temp == null ? new() : new(temp);
     }
 }
 

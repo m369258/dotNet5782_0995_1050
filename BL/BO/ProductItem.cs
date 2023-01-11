@@ -34,5 +34,7 @@ public class ProductItem
     /// </summary>
     public int Amount { get; set; }
 
+    public string? Img { get; set; }
+
     public override string ToString() => this.ToStringProperty();
 }

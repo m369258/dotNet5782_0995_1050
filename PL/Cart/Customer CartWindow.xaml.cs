@@ -1,4 +1,9 @@
-﻿using System.Windows;
+﻿using BO;
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
+
 namespace PL.Cart;
 
 /// <summary>
@@ -6,9 +11,11 @@ namespace PL.Cart;
 /// </summary>
 public partial class Customer_CartWindow : Window
 {
+    List<Tuple<int, int>> items=new List<Tuple<int, int>>();
+
+    private BlApi.IBl bl = BlApi.Factory.Get();
+
     public BO.Cart MyCart
-
-
     {
         get { return (BO.Cart)GetValue(MyCartProperty); }
         set { SetValue(MyCartProperty, value); }
@@ -20,17 +27,24 @@ public partial class Customer_CartWindow : Window
 
     public Customer_CartWindow(ref BO.Cart getCart)
     {
-        InitializeComponent();  
+        InitializeComponent();     
        MyCart = getCart;
+        
     }
-    public Customer_CartWindow()
+
+    private void btnUpdateCart_Click(object sender, RoutedEventArgs e)
     {
-        InitializeComponent();
-        MyCart = new BO.Cart
-        {
-            CustomerAddress = "hhhhhh",
-            CustomerEmail = "rrr@",
-            CustomerName = "shiraaa"
-        };
+        //foreach (var item in items)
+        //{
+        //    MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2);
+
+        //}
+        MyCart = bl.cart.Update(MyCart, items[0].Item1, items[0].Item2);
+    }
+
+    private void mytxt_LostFocus(object sender, RoutedEventArgs e)
+    {
+        BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
+        items?.Add(new Tuple<int, int>(selection.ProductId, selection.QuantityPerItem));
     }
 }

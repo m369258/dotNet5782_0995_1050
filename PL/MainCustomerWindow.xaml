@@ -87,7 +87,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -119,10 +119,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image HorizontalAlignment="Left" Height="30" Margin="14,0,0,0" VerticalAlignment="Center" Width="26"  Grid.Column="1"/>
-                <!--<Button Grid.Column="2" Background="White" BorderBrush="{x:Null}">
-                    --><!--<--><!--Image HorizontalAlignment="Center" Source="/free-shopping-cart-icon-3045-thumb.png" Height="30" VerticalAlignment="Center" Width="36" RenderTransformOrigin="0.317,0.528"/>
-                </Button>-->
-                <Button  Grid.Column="2" Background="White" BorderBrush="{x:Null}">
+                <Button Grid.Column="2" Background="White" BorderBrush="{x:Null}" Margin="0,27,0,28" Width="150" HorizontalAlignment="Left" Click="Button_Click">
                     <Image HorizontalAlignment="Center" Height="30" VerticalAlignment="Center" Width="36" RenderTransformOrigin="0.317,0.528"/>
                     <!--<ImageBrush ImageSource="/shopping_cart.png"/>-->
                 </Button>
