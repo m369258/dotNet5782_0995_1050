@@ -233,7 +233,5 @@ public partial class MainCustomerWindow : Window
             MyProductItems = temp == null ? new() : new(temp);
  
     }
-
-
 }
 
