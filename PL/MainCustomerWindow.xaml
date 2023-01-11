@@ -32,7 +32,7 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnPlus" Grid.Column="1" Content="+" Height="20" Width="25" Click="btnPlus_Click"/>
+                    <Button x:Name="btnPlus" Grid.Column="1"  Content="+" Height="20" Width="25" Click="btnPlus_Click"/>
                     <TextBox x:Name="txtAmount" Text="{Binding Amount}" Grid.Column="2" Height="20" Width="25"/>
                     <Button x:Name="btnMinus" Grid.Column="3" Content="-" Height="20" Width="25" Click="btnMinus_Click"/>
                 </Grid>
@@ -76,6 +76,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

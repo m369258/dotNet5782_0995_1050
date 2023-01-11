@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using Do;
 
 namespace BlImplementation;
@@ -136,15 +137,28 @@ internal class Product : BlApi.IProduct
         else
             doProducts = myDal.product.GetAll();
 
-        
-        return doProducts.Select(item => (item == null) ? throw new BO.InternalErrorException("Data layer item does not exist") : new BO.ProductItem()
-        {
-            ProductID = ((Do.Product)item!).ID,
-            Name = ((Do.Product)item!).Name,
-            Price = ((Do.Product)item!).Price,
-            Category = (BO.Category)(((Do.Product)item!).Category)!,
-            InStock = ((Do.Product)item!).InStock > 0 ? true : false,
-            Amount = items?.FirstOrDefault(it=>it?.ProductId== ((Do.Product)item!).ID)?.QuantityPerItem??0
-        });
+        var result = from item in doProducts
+                     let amount = items?.FirstOrDefault(it => it?.ProductId == ((Do.Product)item!).ID)?.QuantityPerItem
+                     select new BO.ProductItem
+                     {
+                             ProductID = ((Do.Product)item!).ID,
+                             Name = ((Do.Product)item!).Name,
+                             Price = ((Do.Product)item!).Price,
+                             Category = (BO.Category)(((Do.Product)item!).Category)!,
+                             InStock = ((Do.Product)item!).InStock > 0 ? true : false,
+                             Amount = amount ?? 0  
+                     };
+        return result;
+
+
+        //return doProducts.Select(item => (item == null) ? throw new BO.InternalErrorException("Data layer item does not exist") : new BO.ProductItem()
+        //{
+        //    ProductID = ((Do.Product)item!).ID,
+        //    Name = ((Do.Product)item!).Name,
+        //    Price = ((Do.Product)item!).Price,
+        //    Category = (BO.Category)(((Do.Product)item!).Category)!,
+        //    InStock = ((Do.Product)item!).InStock > 0 ? true : false,
+        //    Amount = items?.FirstOrDefault(it => it?.ProductId == ((Do.Product)item!).ID)?.QuantityPerItem ?? 0
+        //});
     }
 }

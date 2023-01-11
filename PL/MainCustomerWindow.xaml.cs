@@ -1,7 +1,4 @@
-﻿using PL.Cart;
-using PL.Order;
-using PL.Product;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -133,14 +130,15 @@ public partial class MainCustomerWindow : Window
             {
                BO.Category.TryParse(strCat, out c);
 
-                var temp = bl.product.GetCatalog((int)c);
+                var temp = bl.product.GetCatalog((int)c, MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
+              
 
                 //  catalog.ItemsSource = bl.product.GetListOfProducts((int)c);
             }
             else
             {
-                var temp = bl.product.GetCatalog();
+                var temp = bl.product.GetCatalog(0, MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
                 //catalog.ItemsSource = bl.product.GetListOfProducts();
 
@@ -200,47 +198,40 @@ public partial class MainCustomerWindow : Window
 
     private void btnPlus_Click(object sender, RoutedEventArgs e)
     {
-       // var g =((BO.ProductItem) ((Button)sender).DataContext);
-       // var bbb = ((BO.ProductItem)sender).ProductID;
-        //BO.Product curProduct=new BO.Product();
-        ////////????????????????האם זה נכון להשתמש בסלקטד איטם
           BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
-        //try
-        //{
-        //     curProduct = bl.product.GetProduct(selectionProductItem.ProductID);
-        //}
-        //catch  { MessageBox.Show("product isnt found!!!"); }
-        ///?????האם בטוח הוא קיים?????? צריך לבדוק פעם ראשונה
-        //curOrderItem = MyCart.items?.FirstOrDefault(item => item?.ProductId == selectionProductItem.ProductID);
-        //  if(curProduct.InStock> curProductItem.)
+
         if (selectionProductItem.InStock)
         {
-           // curOrderItem.QuantityPerItem++;
-           
-            if (selectionProductItem.Amount==0)
+            if (selectionProductItem.Amount == 0)
             {
-                MyCart= bl.cart.Add(MyCart, selectionProductItem.ProductID);
+                MyCart = bl.cart.Add(MyCart, selectionProductItem.ProductID);
             }
             else
             {
-                MyCart= bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount+1);
+                MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount + 1);
             }
-            
-           // var ttt=MyProductItems.Where(t => t.ProductID == selectionProductItem.ProductID).Select(t => selectionProductItem).ToList();
-            var temp = bl.product.GetCatalog(0,MyCart.items);
+
+            var temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
-            //האם מעדכן את המצוגה
         }
+        else
+            MessageBox.Show("Product out of stock");
     }
 
     private void btnMinus_Click(object sender, RoutedEventArgs e)
     {
-        BO.ProductItem selectionProductItem = (BO.ProductItem)(catalog.SelectedItem);
-        BO.OrderItem? curOrderItem = MyCart.items?.FirstOrDefault(item => item?.ProductId == selectionProductItem.ProductID);
-        if (selectionProductItem.Amount>=1)
-        {
-            curOrderItem.QuantityPerItem--;
-        }
+        BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
+
+
+            if (selectionProductItem.Amount != 0)
+            {
+          
+                MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount - 1);
+            }
+
+            var temp = bl.product.GetCatalog(0, MyCart.items);
+            MyProductItems = temp == null ? new() : new(temp);
+ 
     }
 
 
