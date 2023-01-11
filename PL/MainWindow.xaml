@@ -8,11 +8,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="483,72,0,319" RenderTransformOrigin="-1.054,1.652"/>
-        <Button x:Name="btnCategory" Content="Catalog" HorizontalAlignment="Center" VerticalAlignment="Center" Click="category_Click"/>
-        <TextBox x:Name="txtOrderId" HorizontalAlignment="Center" Margin="0,288,0,0" TextWrapping="Wrap" Text="order id" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273"/>
-        <Button x:Name="btnTrack" Content="Track" HorizontalAlignment="Center" Margin="0,315,0,0" VerticalAlignment="Top" Click="btnTrack_Click"/>
-        <Button x:Name="btnCustomer" Content="Customer" HorizontalAlignment="Left" Margin="195,72,0,0" VerticalAlignment="Top" Click="btnCustomer_Click"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="77*"/>
+            <ColumnDefinition Width="723*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="406,72,0,319" RenderTransformOrigin="-1.054,1.652" Grid.Column="1"/>
+        <Button x:Name="btnCategory" Content="Catalog" HorizontalAlignment="Left" VerticalAlignment="Center" Click="category_Click" Grid.Column="1" Margin="248,0,0,0"/>
+        <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="263,288,0,0" TextWrapping="Wrap" Text="order id" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273" Grid.Column="1"/>
+        <Button x:Name="btnTrack" Content="Track" HorizontalAlignment="Left" Margin="248,315,0,0" VerticalAlignment="Top" Click="btnTrack_Click" Grid.Column="1"/>
+        <Button x:Name="btnCustomer" Content="Customer" HorizontalAlignment="Left" Margin="118,72,0,0" VerticalAlignment="Top" Click="btnCustomer_Click" Grid.Column="1"/>
 
     </Grid>
 </Window>

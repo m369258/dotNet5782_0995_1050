@@ -24,5 +24,8 @@ public class ProductForList
     /// category
     /// </summary>
     public Category? category { get; set; }
+
+    public string? Img { get; set; }
+
     public override string ToString() => this.ToStringProperty();
 }

@@ -5,54 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
-        DataContext="{Binding MyCart, RelativeSource={RelativeSource Mode=Self}}"
+        DataContext="{Binding MyCart, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}"
         Title="Customer_CartWindow" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="First Name: " />
-                <TextBlock Grid.Column="1" Text="{Binding Path=FirstName}" />
-                <TextBlock Grid.Column="2" Text="Last Name: " />
-                <TextBlock Grid.Column="3" Text="{Binding Path=LastName}" />
-                <CheckBox Grid.Column="4" Content="Is Lecturer?"
-IsEnabled="False"
-IsChecked="{Binding Path=IsLecturer}" />
-            </Grid>
+            <Border BorderBrush="Black" BorderThickness="2">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=NameProduct}" />
+                    <TextBox x:Name="mytxt" Grid.Row="0" Grid.Column="1"  Text="{Binding QuantityPerItem}" LostFocus="mytxt_LostFocus"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding productPrice}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="3" Text="Subtotal:"/>
+                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding TotalPrice}"/>
+                    
+                </Grid>
+            </Border>
         </DataTemplate>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="2*"/>
             <RowDefinition Height="10*"/>
-
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <Label Content="CustomerName" Grid.Row="0" Grid.Column="0"/>
-        <TextBlock Text="{Binding Path=CustomerName}" Grid.Row="0" Grid.Column="1"/>
-        <Label Content="CustomerEmail" Grid.Row="1" Grid.Column="0"/>
-        <TextBlock Text="{Binding Path=CustomerEmail}" Grid.Row="1" Grid.Column="1"/>
-        <Label Content="CustomerAddress" Grid.Row="2" Grid.Column="0"/>
-        <TextBlock Text="{Binding Path=CustomerAddress}" Grid.Row="2" Grid.Column="1"/>
-        <Label Content="TotalPrice" Grid.Row="3" Grid.Column="0"/>
-        <TextBlock Text="{Binding Path=TotalPrice}" Grid.Row="3" Grid.Column="1"/>
-        <ListBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" ItemsSource="{Binding items}"
+        <Label Content="Cart"  FontWeight="Bold" Grid.Row="0"/>
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" ItemsSource="{Binding items, Mode=OneWay}"
 ItemTemplate="{StaticResource MyDataTemplate}"
-HorizontalContentAlignment="Stretch" />
+HorizontalContentAlignment="Stretch" />        <Label Content="TotalPrice" Grid.Row="2"/>
+        <TextBlock Text="{Binding Path=TotalPrice}" Grid.Row="2" />
+        <Button x:Name="btnUpdateCart" Grid.Row="3" Content="UpdateCart" Margin="533,2,117,3" Click="btnUpdateCart_Click"/>
+        <Button x:Name="btnPayment" Content="Move to payment" Grid.Row="4" Margin="533,2,117,3" />
     </Grid>
 </Window>
