@@ -15,31 +15,42 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
+        <Style x:Key="plusOrminus" TargetType="Button">
+            <Setter Property="Height" Value="43" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="Bauhaus 93" />
+        </Style>
         <DataTemplate x:Key="oneProduct" DataType="local: Product">
-            <Grid Name="gridCatalog" Width="260" Height="300" >
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="0.5*" />
-                    <RowDefinition Height="0.5*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid Name="AddOrSubtractFromTheAmount" Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="btnPlus" Grid.Column="1"  Content="+" Height="20" Width="25" Click="btnPlus_Click"/>
-                    <TextBox x:Name="txtAmount" Text="{Binding Amount}" Grid.Column="2" Height="20" Width="25"/>
-                    <Button x:Name="btnMinus" Grid.Column="3" Content="-" Height="20" Width="25" Click="btnMinus_Click"/>
+            <Border BorderBrush="#FFD62899"  BorderThickness="2">
+                <Grid Name="gridCatalog" Width="260" Height="300" >
+                    <!--<Grid.Background>
+                    <ImageBrush ImageSource="/333.jpg"/>
+                </Grid.Background>-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="0.5*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid Name="AddOrSubtractFromTheAmount" Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnMinus" Style="{StaticResource plusOrminus}" Grid.Column="1" Content="--" Height="20" Width="25" Click="btnMinus_Click"/>
+                        <TextBox x:Name="txtAmount" Text="{Binding Amount}" Grid.Column="2" Height="20" Width="25"/>
+                        <Button x:Name="btnPlus" Style="{StaticResource plusOrminus}" Grid.Column="3"  Content="+" Height="20" Width="25" Click="btnPlus_Click"/>
+                    </Grid>
+                    <Image Grid.Row="0" HorizontalAlignment="Center" Height="60" VerticalAlignment="Bottom" Width="60" Source="/image3.png" Stretch="UniformToFill"/>
+                    <Label Name="lblName" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Grid.Row="1" Content="{Binding Name}" Width="250" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
+                    <Label Name="lblPrice" Grid.Row="2" Content="{Binding Price}" VerticalContentAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" VerticalAlignment="Top" Foreground="{Binding ElementName=lblName, Path=Foreground, Mode=TwoWay}"/>
                 </Grid>
-                <Image Grid.Row="0" HorizontalAlignment="Center" Height="60" VerticalAlignment="Bottom" Width="60" Source="/image3.png" Stretch="UniformToFill"/>
-                <Label Name="lblName" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Grid.Row="1" Content="{Binding Name}" Width="250" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
-                <Label Name="lblPrice" Grid.Row="2" Content="{Binding Price}" VerticalContentAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" VerticalAlignment="Top" Foreground="{Binding ElementName=lblName, Path=Foreground, Mode=TwoWay}"/>
-            </Grid>
+            </Border>
         </DataTemplate>
 
         <Style x:Key="categoryStyle" TargetType="TextBlock">
@@ -94,6 +105,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Text="↺" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="2" Text="cupcakes" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="3" Text="cakes" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="4" Text="macarons" Style="{StaticResource categoryStyle}"/>
@@ -109,6 +121,7 @@
                 <Image HorizontalAlignment="Left" Height="30" Margin="14,0,0,0" VerticalAlignment="Center" Width="26"  Grid.Column="1"/>
                 <Button Grid.Column="2" Background="White" BorderBrush="{x:Null}" Margin="0,27,0,28" Width="150" HorizontalAlignment="Left" Click="Button_Click">
                     <Image HorizontalAlignment="Center" Height="30" VerticalAlignment="Center" Width="36" RenderTransformOrigin="0.317,0.528"/>
+                    <!--<ImageBrush ImageSource="/shopping_cart.png"/>-->
                 </Button>
                 <Image Grid.Column="0" HorizontalAlignment="Center" Height="28" Margin="11,0,0,0" VerticalAlignment="Center" Width="30" />
                 <Menu Grid.ColumnSpan="3" VerticalAlignment="Top" Background="Transparent" Margin="55,-2,55,0" Height="101">
@@ -122,10 +135,11 @@
                     </MenuItem>
                 </Menu>
             </Grid>
+            <!--<TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="↺" VerticalAlignment="Center"/>-->
         </Grid>
         <ScrollViewer Grid.Row="1">
-
-            <ListView x:Name="catalog" BorderBrush="HotPink" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding Mode=TwoWay, Path=MyProductItems}" ItemTemplate="{StaticResource oneProduct}">
+            
+            <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding Mode=TwoWay, Path=MyProductItems}" ItemTemplate="{StaticResource oneProduct}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
