@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
-        DataContext="{Binding MyCart, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}"
+        DataContext="{Binding MyCart, RelativeSource={RelativeSource Mode=Self}}"
         Title="Customer_CartWindow" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
@@ -41,7 +41,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Label Content="Cart"  FontWeight="Bold" Grid.Row="0"/>
-        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" ItemsSource="{Binding items, Mode=OneWay}"
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" ItemsSource="{Binding items}"
 ItemTemplate="{StaticResource MyDataTemplate}"
 HorizontalContentAlignment="Stretch" />        <Label Content="TotalPrice" Grid.Row="2"/>
         <TextBlock Text="{Binding Path=TotalPrice}" Grid.Row="2" />
