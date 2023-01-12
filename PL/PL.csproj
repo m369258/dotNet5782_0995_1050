@@ -16,7 +16,6 @@
 		  <None Remove="3 %289%29.jpg" />
 		  <None Remove="333.jpg" />
 		  <None Remove="4 %288%29.jpg" />
-		  <None Remove="cart.png" />
 		</ItemGroup>
 
 		<ItemGroup>
@@ -31,7 +30,6 @@
 		  <Resource Include="3 (9).jpg" />
 		  <Resource Include="333.jpg" />
 		  <Resource Include="4 (8).jpg" />
-		  <Resource Include="cart.png" />
 		</ItemGroup>
 
 	</Project>
