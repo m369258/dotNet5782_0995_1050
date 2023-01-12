@@ -7,8 +7,9 @@
         mc:Ignorable="d"
         Title="MainManagerWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="btnOrders" Content="Orders" Click="btnOrders_Click"/>
-        <Button x:Name="btnProducts" Content="Products" Margin="488,196,192,195" Click="btnProducts_Click"/>
-
+        <Label Content="hello manager!!!!"></Label>
+        <Button x:Name="btnOrders" Content="Orders" Click="btnOrders_Click" Margin="533,196,117,195"/>
+        <Button x:Name="btnProducts" Content="Products" Margin="532,76,118,315" Click="btnProducts_Click" RenderTransformOrigin="0.456,-0.781"/>
+        <Image Source="managerr.png" Margin="-1,87,454,78" />
     </Grid>
 </Window>
