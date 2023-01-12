@@ -12,9 +12,7 @@
 			<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 		</PropertyGroup>
 
-		<ItemGroup>
-		  <None Remove="cart.png" />
-		</ItemGroup>
+		
 
 		<ItemGroup>
 		  <PackageReference Include="FontAwesome.WPF" Version="4.7.0.9" />
@@ -22,10 +20,6 @@
 
 		<ItemGroup>
 		  <ProjectReference Include="..\BL\BL.csproj" />
-		</ItemGroup>
-
-		<ItemGroup>
-		  <Resource Include="cart.png" />
 		</ItemGroup>
 
 	</Project>
