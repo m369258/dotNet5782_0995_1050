@@ -8,12 +8,28 @@
         DataContext="{Binding MyCart, RelativeSource={RelativeSource Mode=Self}}"
         Title="Customer_CartWindow" Height="450" Width="800">
     <Window.Resources>
+        <Style x:Key="plusOrminus" TargetType="Button">
+            <Setter Property="Height" Value="43" />
+            <Setter Property="Width" Value="150" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="Bauhaus 93" />
+        </Style>
+        <Style TargetType="TextBlock">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFD62899" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
-            <Border BorderBrush="Black" BorderThickness="2">
+            <Border Cursor="ArrowCD" BorderThickness="0,0,0,2" BorderBrush="Black" Margin="50,0,50,0" >
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="10px" />
                         <RowDefinition Height="2*" />
                         <RowDefinition Height="2*" />
+                        <RowDefinition Height="10px" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -21,13 +37,14 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=NameProduct}" />
-                    <TextBox x:Name="mytxt" Grid.Row="0" Grid.Column="1"  Text="{Binding QuantityPerItem, Mode=OneWay}" LostFocus="mytxt_LostFocus"/>
-                    <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding productPrice}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="3" Text="Subtotal:"/>
-                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding TotalPrice}"/>
-                    
+                    <Image Grid.Column="1" Source="/44.png"></Image>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=NameProduct}" HorizontalAlignment="Center" FontSize="16"/>
+                    <TextBox x:Name="mytxt" Grid.Row="1" Grid.Column="3" Height="23" Width="25" Text="{Binding QuantityPerItem}" LostFocus="mytxt_LostFocus" FontSize="16"/>
+                    <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding productPrice}" FontSize="16"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Text="Subtotal:" FontSize="16"/>
+                    <TextBlock Grid.Row="2" Grid.Column="4" Text="{Binding TotalPrice}" FontSize="16"/>
                 </Grid>
             </Border>
         </DataTemplate>
@@ -40,12 +57,17 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.2*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <Label Content="Cart"  FontWeight="Bold" Grid.Row="0"/>
-        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="1" ItemsSource="{Binding items}"
+        <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding items}"
 ItemTemplate="{StaticResource MyDataTemplate}"
-HorizontalContentAlignment="Stretch" />        <Label Content="TotalPrice" Grid.Row="2"/>
-        <TextBlock Text="{Binding Path=TotalPrice}" Grid.Row="2" />
-        <Button x:Name="btnUpdateCart" Grid.Row="3" Content="UpdateCart" Margin="533,2,117,3" Click="btnUpdateCart_Click"/>
-        <Button x:Name="btnPayment" Content="Move to payment" Grid.Row="4" Margin="533,2,117,3" />
+HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" />        <Label Content="TotalPrice" Grid.Row="2" Grid.Column="0"/>
+        <TextBlock Text="{Binding Path=TotalPrice}" Grid.Row="2" Grid.Column="1" />
+        <Button x:Name="btnUpdateCart" Grid.Row="3" Grid.Column="2" Content="UpdateCart" Click="btnUpdateCart_Click"/>
+        <Button x:Name="btnPayment" Grid.Column="2" Content="Move to payment" Grid.Row="4" />
     </Grid>
 </Window>
