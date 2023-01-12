@@ -236,7 +236,6 @@ public partial class MainCustomerWindow : Window
             var temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
         }
-        else { MessageBox.Show("no items"); }
     }
 }
 
