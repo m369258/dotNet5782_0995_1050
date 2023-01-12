@@ -23,7 +23,7 @@
             </Style.Triggers>
         </Style>-->
         <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
-            <Border Cursor="ArrowCD" BorderThickness="0,0,0,2" BorderBrush="Black" Margin="50,0,50,0" >
+            <Border Cursor="ArrowCD" BorderThickness="0,0,0,2" BorderBrush="Black" Margin="100,0,100,0" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="10px" />
@@ -60,7 +60,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.2*" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="0.4*" />
         </Grid.ColumnDefinitions>
         <Label Content="Cart"  FontWeight="Bold" Grid.Row="0"/>
         <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding MyCart.items}"
