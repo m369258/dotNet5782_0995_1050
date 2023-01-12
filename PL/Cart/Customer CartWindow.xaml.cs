@@ -1,6 +1,7 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -34,17 +35,17 @@ public partial class Customer_CartWindow : Window
 
     private void btnUpdateCart_Click(object sender, RoutedEventArgs e)
     {
-        //foreach (var item in items)
-        //{
-        //    MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2);
+        foreach (var item in items)
+        {
+            MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2);
 
-        //}
-        MyCart = bl.cart.Update(MyCart, items[0].Item1, items[0].Item2);
+        }
     }
 
     private void mytxt_LostFocus(object sender, RoutedEventArgs e)
     {
+        int amount = int .Parse(((TextBox)sender).Text);
         BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
-        items?.Add(new Tuple<int, int>(selection.ProductId, selection.QuantityPerItem));
+        items?.Add(new Tuple<int, int>(selection.ProductId, amount));
     }
 }

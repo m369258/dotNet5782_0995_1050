@@ -23,7 +23,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=NameProduct}" />
-                    <TextBox x:Name="mytxt" Grid.Row="0" Grid.Column="1"  Text="{Binding QuantityPerItem}" LostFocus="mytxt_LostFocus"/>
+                    <TextBox x:Name="mytxt" Grid.Row="0" Grid.Column="1"  Text="{Binding QuantityPerItem, Mode=OneWay}" LostFocus="mytxt_LostFocus"/>
                     <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding productPrice}"/>
                     <TextBlock Grid.Row="1" Grid.Column="3" Text="Subtotal:"/>
                     <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding TotalPrice}"/>
