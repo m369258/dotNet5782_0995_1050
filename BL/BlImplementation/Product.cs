@@ -150,5 +150,22 @@ internal class Product : BlApi.IProduct
                              Amount = amount ?? 0  
                      };
         return result;
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     }
 }

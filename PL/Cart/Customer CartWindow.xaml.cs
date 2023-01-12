@@ -16,6 +16,20 @@ public partial class Customer_CartWindow : Window
 
     private BlApi.IBl bl = BlApi.Factory.Get();
 
+
+
+    public bool state
+    {
+        get { return (bool)GetValue(stateProperty); }
+        set { SetValue(stateProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for state.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty stateProperty =
+        DependencyProperty.Register("state", typeof(bool), typeof(Customer_CartWindow), new PropertyMetadata(false));
+
+
+
     public BO.Cart MyCart
     {
         get { return (BO.Cart)GetValue(MyCartProperty); }
@@ -26,7 +40,7 @@ public partial class Customer_CartWindow : Window
     public static readonly DependencyProperty MyCartProperty =
         DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Customer_CartWindow), new PropertyMetadata(null));
 
-    public Customer_CartWindow(ref BO.Cart getCart)
+    public Customer_CartWindow( BO.Cart getCart)
     {
         InitializeComponent();     
        MyCart = getCart;
@@ -38,14 +52,20 @@ public partial class Customer_CartWindow : Window
         foreach (var item in items)
         {
             MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2);
-
         }
     }
 
     private void mytxt_LostFocus(object sender, RoutedEventArgs e)
     {
-        int amount = int .Parse(((TextBox)sender).Text);
-        BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
-        items?.Add(new Tuple<int, int>(selection.ProductId, amount));
+        int amount = int.Parse(((TextBox)sender).Text);
+        var oldAmount = ((BO.OrderItem)((TextBox)sender).DataContext).QuantityPerItem;
+        //only if was change
+        if (amount != oldAmount)
+        {
+            state = true;
+            BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
+            items?.Add(new Tuple<int, int>(selection.ProductId, amount));
+        }
+       
     }
 }

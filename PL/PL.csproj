@@ -12,6 +12,10 @@
 			<UseCommonOutputDirectory>true</UseCommonOutputDirectory>
 		</PropertyGroup>
 
+		<ItemGroup>
+		  <None Remove="44.png" />
+		</ItemGroup>
+
 		
 
 		<ItemGroup>
@@ -20,6 +24,10 @@
 
 		<ItemGroup>
 		  <ProjectReference Include="..\BL\BL.csproj" />
+		</ItemGroup>
+
+		<ItemGroup>
+		  <Resource Include="44.png" />
 		</ItemGroup>
 
 	</Project>

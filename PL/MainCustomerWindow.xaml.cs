@@ -1,9 +1,12 @@
 ﻿using PL.Cart;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 namespace PL;
 
@@ -27,18 +30,18 @@ public partial class MainCustomerWindow : Window
     public static readonly DependencyProperty MyProductItemsProperty =
         DependencyProperty.Register("MyProductItems", typeof(ObservableCollection<BO.ProductItem>), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
-    //public BO.Cart MyCart
-    //{
-    //    get { return (BO.Cart)GetValue(MyCartProperty); }
-    //    set { SetValue(MyCartProperty, value); }
-    //}
+    public BO.Cart MyCart
+    {
+        get { return (BO.Cart)GetValue(MyCartProperty); }
+        set { SetValue(MyCartProperty, value); }
+    }
 
-    //// Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
-    //public static readonly DependencyProperty MyCartProperty =
-    //DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
+    // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty MyCartProperty =
+    DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
 
-     BO.Cart MyCart = new BO.Cart();
+    //BO.Cart MyCart = new BO.Cart();
 
 
     /// <summary>
@@ -47,7 +50,7 @@ public partial class MainCustomerWindow : Window
     /// <param name="cart">the cart of the user</param>
     public MainCustomerWindow()
     {
-        this.MyCart =new BO.Cart();
+        MyCart =new BO.Cart();
         //curOrderItem=new BO.OrderItem();
         InitializeComponent();
         try
@@ -77,26 +80,26 @@ public partial class MainCustomerWindow : Window
     /// <param name="sender"></param>
     /// <param name="e"></param>
     /// click על + ועל - ויעשה updatecart
-    private void ListView_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
-    {
-        BO.ProductItem? selectionProductItem = (BO.ProductItem?)(catalog.SelectedItem);
-        try
-        {
+    //private void ListView_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+    //{
+    //    BO.ProductItem? selectionProductItem = (BO.ProductItem?)(catalog.SelectedItem);
+    //    try
+    //    {
 
-            //open the window to update the product which was selected
-            //ProductWindow prodWin = new ProductWindow(prod?.ID ?? throw new NullReferenceException("You have to choose a product to update!"), cart);
-            //prodWin.ShowDialog();
-        }
-        //catches for the exception which mighgt be thrown from the ProductDetailsForManager function
-        catch (NullReferenceException ex)
-        {
-            MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
+    //        //open the window to update the product which was selected
+    //        //ProductWindow prodWin = new ProductWindow(prod?.ID ?? throw new NullReferenceException("You have to choose a product to update!"), cart);
+    //        //prodWin.ShowDialog();
+    //    }
+    //    //catches for the exception which mighgt be thrown from the ProductDetailsForManager function
+    //    catch (NullReferenceException ex)
+    //    {
+    //        MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    }
+    //}
     /// <summary>
     /// button for opening cart window
     /// </summary>
@@ -222,11 +225,42 @@ public partial class MainCustomerWindow : Window
  
     }
 
+    //update
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        new Customer_CartWindow(ref MyCart).ShowDialog();
-        var temp = bl.product.GetCatalog(0, MyCart.items);
-        MyProductItems = temp == null ? new() : new(temp);
+        if (MyCart.items != null)
+        {
+            //BO.Cart sendBOcART = MyCart;
+            new Customer_CartWindow(MyCart).ShowDialog();
+            //MyCart = sendBOcART;
+            var temp = bl.product.GetCatalog(0, MyCart.items);
+            MyProductItems = temp == null ? new() : new(temp);
+        }
+        else { MessageBox.Show("no items"); }
     }
 }
+
+
+public class NotBooleanToVisibilityConverter : IValueConverter
+{
+    //convert from source property type to target property type
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.Cart cart = (BO.Cart)value;
+        if (cart.items != null&&cart.items.Count!=0)
+        {
+            return Visibility.Hidden; //Visibility.Collapsed;
+        }
+        else
+        {
+            return Visibility.Visible;
+        }
+    }
+    //convert from target property type to source property type
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 

@@ -5,8 +5,11 @@ internal class Cart : BlApi.ICart
 {
     //Request access to the data layer
     DalApi.IDal myDal = DalApi.Factory.Get();
-    public BO.Cart Add(BO.Cart myCart, int idProduct)
+    public BO.Cart Add(BO.Cart cart, int idProduct)
     {
+       BO.Cart myCart = new BO.Cart();
+        //cart.CopyBetweenEnriries(myCart);
+        cart.CopyBetweenEnriries(myCart);
         BO.OrderItem myOrderItem = new BO.OrderItem();
 
         //Checking whether the product is in the shopping basket
