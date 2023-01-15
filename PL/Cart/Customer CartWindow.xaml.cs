@@ -1,9 +1,11 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace PL.Cart;
 
@@ -12,7 +14,7 @@ namespace PL.Cart;
 /// </summary>
 public partial class Customer_CartWindow : Window
 {
-    List<Tuple<int, int>> items=new List<Tuple<int, int>>();
+    List<Tuple<int, int>> items = new List<Tuple<int, int>>();
 
     private BlApi.IBl bl = BlApi.Factory.Get();
 
@@ -40,11 +42,11 @@ public partial class Customer_CartWindow : Window
     public static readonly DependencyProperty MyCartProperty =
         DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(Customer_CartWindow), new PropertyMetadata(null));
 
-    public Customer_CartWindow( BO.Cart getCart)
+    public Customer_CartWindow(BO.Cart getCart)
     {
-        InitializeComponent();     
-       MyCart = getCart;
-        
+        InitializeComponent();
+        MyCart = getCart;
+
     }
 
     private void btnUpdateCart_Click(object sender, RoutedEventArgs e)
@@ -66,6 +68,69 @@ public partial class Customer_CartWindow : Window
             BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
             items?.Add(new Tuple<int, int>(selection.ProductId, amount));
         }
-       
+
+    }
+
+    private void btnDeleteItemFromCart_Click(object sender, RoutedEventArgs e)
+    {
+
+        BO.OrderItem selection = ((BO.OrderItem)((Button)sender).DataContext);
+        MyCart = bl.cart.Delete(MyCart, selection.ProductId);
+
+
+    }
+
+    //private void Button_Click(object sender, RoutedEventArgs e)
+    //{
+    //   BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
+    //    MyCart = bl.cart
+
+    //}
+}
+
+
+public class NotBooleanToVisibilityConverter : IValueConverter
+{
+    //convert from source property type to target property type
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.Cart cart = (BO.Cart)value;
+        if (cart!=null&&cart.items != null && cart.items.Count != 0)
+        {
+            return Visibility.Hidden; //Visibility.Collapsed;
+        }
+        else
+        {
+            return Visibility.Visible;
+        }
+    }
+
+    //convert from target property type to source property type
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class NotBooleanToVisibilityConverter2 : IValueConverter
+{
+    //convert from source property type to target property type
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.Cart cart = (BO.Cart)value;
+        if (cart != null && cart.items != null && cart.items.Count != 0)
+        {
+            return Visibility.Visible; //Visibility.Collapsed;
+        }
+        else
+        {
+            return Visibility.Hidden;
+        }
+    }
+
+    //convert from target property type to source property type
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
     }
 }

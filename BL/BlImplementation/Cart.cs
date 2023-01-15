@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
@@ -7,7 +8,7 @@ internal class Cart : BlApi.ICart
     DalApi.IDal myDal = DalApi.Factory.Get();
     public BO.Cart Add(BO.Cart cart, int idProduct)
     {
-       BO.Cart myCart = new BO.Cart();
+        BO.Cart myCart = new BO.Cart();
         //cart.CopyBetweenEnriries(myCart);
         cart.CopyBetweenEnriries(myCart);
         BO.OrderItem myOrderItem = new BO.OrderItem();
@@ -34,11 +35,11 @@ internal class Cart : BlApi.ICart
                 myOrderItem.productPrice = doProduct.Price;
                 myOrderItem.TotalPrice = doProduct.Price;
                 //adding it to the list of details in the basket
-                if(myCart.items==null)
+                if (myCart.items == null)
                     myCart.items = new List<OrderItem?>();
-                
+
                 myCart.items?.Add(myOrderItem);
-                
+
                 myCart.TotalPrice += doProduct.Price;
             }
             else throw new NotEnoughInStockException(doProduct.ID, doProduct.Name ?? "", "There is not enough stock of this product.");
@@ -103,7 +104,7 @@ internal class Cart : BlApi.ICart
                              OrderId = idOrder,
                              ProductId = item?.ProductId ?? 0,
                              Amount = item?.QuantityPerItem > 0 ? item?.QuantityPerItem ?? 0 : throw new BO.InvalidArgumentException("negative quantity"),
-                             Price = item?.TotalPrice ?? 0,  
+                             Price = item?.TotalPrice ?? 0,
                          }),
                          product = new Do.Product
                          {
@@ -178,6 +179,24 @@ internal class Cart : BlApi.ICart
         return myCart;
     }
 
+    public BO.Cart Delete(BO.Cart myCart, int idProduct)
+    {
+        Do.Product myProduct;
+        try { myProduct = myDal.product.Get(item => item?.ID == idProduct); }
+        catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id product is not exsist", ex); }
+
+        BO.Cart myNewCart = new BO.Cart();
+        //cart.CopyBetweenEnriries(myCart);
+        myCart.CopyBetweenEnriries(myNewCart);
+
+        myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
+        BO.OrderItem myOrderItem = new BO.OrderItem();
+        myOrderItem = myCart.items.FirstOrDefault(item => item?.ProductId == idProduct);
+        myNewCart.TotalPrice -= myProduct.Price * myOrderItem.QuantityPerItem;
+
+        return myNewCart;
+    }
+
     //Local helper functions:
     /// <summary>
     /// A private function of the department that adds a product to the shopping cart according to the desired quantity for this item
@@ -204,7 +223,7 @@ internal class Cart : BlApi.ICart
             myOrderItem.productPrice = myProduct.Price;
             myOrderItem.TotalPrice = (myProduct.Price) * newQuantity;
             //Adding an item to the list of items
-            
+
             myCart.items!.Add(myOrderItem);
             myCart.TotalPrice += (myProduct.Price) * newQuantity;
         }

@@ -8,6 +8,10 @@
         DataContext="{Binding ., RelativeSource={RelativeSource Mode=Self}}"
         Title="Customer_CartWindow" Height="450" Width="800">
     <Window.Resources>
+        <local:NotBooleanToVisibilityConverter
+x:Key="notBooleanToVisibilityConverter" />
+        <local:NotBooleanToVisibilityConverter2
+x:Key="notBooleanToVisibilityConverter2" />
         <!--<Style x:Key="plusOrminus" TargetType="Button">
             <Setter Property="Height" Value="43" />
             <Setter Property="Width" Value="150" />
@@ -22,11 +26,14 @@
                 </Trigger>
             </Style.Triggers>
         </Style>-->
+        <Style x:Key="noneStyle" TargetType="Button">
+            <Setter Property="Width" Value="40px" />
+        </Style>
         <DataTemplate x:Key="MyDataTemplate" DataType="local:MyData">
             <Border Cursor="ArrowCD" BorderThickness="0,0,0,2" BorderBrush="Black" Margin="100,0,100,0" >
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="10px" />
+                        <RowDefinition Height="*" />
                         <RowDefinition Height="2*" />
                         <RowDefinition Height="2*" />
                         <RowDefinition Height="10px" />
@@ -39,7 +46,7 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Button>⨉</Button>
+                    <Button x:Name="btnDeleteItemFromCart" Grid.Row="0" Grid.Column="4" Content="⨉" Style="{StaticResource noneStyle}" BorderBrush="{x:Null}" Click="btnDeleteItemFromCart_Click"/>
                     <Image Grid.Row="1" Grid.Column="1" Source="/44.png" Width="26"></Image>
                     <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=NameProduct}" HorizontalAlignment="Center" FontSize="16"/>
                     <TextBox x:Name="mytxt" Grid.Row="1" Grid.Column="3" Height="23" Width="25" Text="{Binding QuantityPerItem, Mode=OneWay}" LostFocus="mytxt_LostFocus" FontSize="16"/>
@@ -68,7 +75,8 @@
 ItemTemplate="{StaticResource MyDataTemplate}"
 HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" />        <Label Content="TotalPrice" Grid.Row="2" Grid.Column="0" FontSize="18px"/>
         <Label Content="{Binding Path=MyCart.TotalPrice}" Grid.Row="2" Grid.Column="1" FontSize="18px" />
-        <Button x:Name="btnUpdateCart" Grid.Row="3" Grid.Column="2" Content="UpdateCart" Click="btnUpdateCart_Click" IsEnabled="{Binding state}"/>
-        <Button x:Name="btnPayment" Grid.Column="2" Content="Move to payment" Grid.Row="4" />
+        <Button x:Name="btnUpdateCart" Grid.Row="3" Grid.Column="2" Content="UpdateCart" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter2}, Mode=TwoWay}" Click="btnUpdateCart_Click" IsEnabled="{Binding state}"/>
+        <Button x:Name="btnPayment" Grid.Column="2" Content="Move to payment" Grid.Row="4" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter2}, Mode=TwoWay}" />
+        <Button Grid.Column="1" Content="Return to shop" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter}, Mode=TwoWay}" HorizontalAlignment="Left" Margin="144,44,0,0" Grid.RowSpan="2" Grid.Row="3" VerticalAlignment="Top"/>
     </Grid>
 </Window>
