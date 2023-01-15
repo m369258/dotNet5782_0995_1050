@@ -1,27 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
+namespace PL.Cart;
 
-namespace PL.Cart
+/// <summary>
+/// Interaction logic for paymentWindow.xaml
+/// </summary>
+public partial class paymentWindow : Window
 {
-    /// <summary>
-    /// Interaction logic for paymentWindow.xaml
-    /// </summary>
-    public partial class paymentWindow : Window
+
+    public BO.Cart MyCart
     {
-        public paymentWindow()
-        {
-            InitializeComponent();
-        }
+        get { return (BO.Cart)GetValue(MyCartProperty); }
+        set { SetValue(MyCartProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for MyCart.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty MyCartProperty =
+        DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(paymentWindow), new PropertyMetadata(null));
+
+    public paymentWindow(BO.Cart getCart)
+    {
+        InitializeComponent();
+        MyCart=getCart;
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        this.Close();
     }
 }

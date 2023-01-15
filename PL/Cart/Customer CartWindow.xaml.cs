@@ -68,4 +68,6 @@ public partial class Customer_CartWindow : Window
         }
        
     }
+
+    private void btnPayment_Click(object sender, RoutedEventArgs e) => new paymentWindow(MyCart).ShowDialog();
 }

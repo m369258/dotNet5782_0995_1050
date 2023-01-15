@@ -13,6 +13,8 @@
             <Setter Property="FontFamily" Value="Bauhaus 93" />
             <Setter Property="BorderBrush" Value="#FFF658C6" />
         </Style>
+        
+       
       
     </Application.Resources>
 </Application>

@@ -56,7 +56,8 @@ public partial class MainCustomerWindow : Window
         try
         {
             //catalog.ItemsSource = bl.product.GetListOfProducts();
-            var temp = bl.product.GetCatalog();
+            IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
+            //var temp = bl.product.GetCatalog();
             MyProductItems = temp == null ? new() : new(temp);
         }
         //catch (BO.BlNullPropertyException ex)

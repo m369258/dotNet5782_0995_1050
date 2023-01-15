@@ -42,7 +42,7 @@
                     <Button>⨉</Button>
                     <Image Grid.Row="1" Grid.Column="1" Source="/44.png" Width="26"></Image>
                     <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Path=NameProduct}" HorizontalAlignment="Center" FontSize="16"/>
-                    <TextBox x:Name="mytxt" Grid.Row="1" Grid.Column="3" Height="23" Width="25" Text="{Binding QuantityPerItem, Mode=OneWay}" LostFocus="mytxt_LostFocus" FontSize="16"/>
+                    <TextBox Grid.Row="1" Grid.Column="3" Height="23" Width="25" Text="{Binding QuantityPerItem, Mode=OneWay}" LostFocus="mytxt_LostFocus" FontSize="16"/>
                     <TextBlock Grid.Row="1" Grid.Column="4" Text="{Binding productPrice}" FontSize="16"/>
                     <TextBlock Grid.Row="2" Grid.Column="2" Text="Subtotal:" FontSize="16"/>
                     <TextBlock Grid.Row="2" Grid.Column="4" Text="{Binding TotalPrice}" FontSize="16"/>
@@ -69,6 +69,6 @@ ItemTemplate="{StaticResource MyDataTemplate}"
 HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" />        <Label Content="TotalPrice" Grid.Row="2" Grid.Column="0" FontSize="18px"/>
         <Label Content="{Binding Path=MyCart.TotalPrice}" Grid.Row="2" Grid.Column="1" FontSize="18px" />
         <Button x:Name="btnUpdateCart" Grid.Row="3" Grid.Column="2" Content="UpdateCart" Click="btnUpdateCart_Click" IsEnabled="{Binding state}"/>
-        <Button x:Name="btnPayment" Grid.Column="2" Content="Move to payment" Grid.Row="4" />
+        <Button x:Name="btnPayment" Grid.Column="2" Content="Move to payment" Grid.Row="4" Click="btnPayment_Click" />
     </Grid>
 </Window>
