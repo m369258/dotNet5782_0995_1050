@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -44,6 +45,7 @@ public partial class Customer_CartWindow : Window
 
     public Customer_CartWindow(BO.Cart getCart)
     {
+        MyCart = new BO.Cart();
         InitializeComponent();
         MyCart = getCart;
 
@@ -111,7 +113,7 @@ public class NotBooleanToVisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 
-    private void btnPayment_Click(object sender, RoutedEventArgs e) => new paymentWindow(MyCart).ShowDialog();
+   // private void btnPayment_Click(object sender, RoutedEventArgs e) => new paymentWindow(MyCart).ShowDialog();
 }
 
 public class NotBooleanToVisibilityConverter2 : IValueConverter
