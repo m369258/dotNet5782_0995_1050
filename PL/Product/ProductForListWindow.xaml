@@ -8,13 +8,6 @@
         DataContext="{Binding Products, RelativeSource={RelativeSource Mode=Self}}"
         Title="ProductForListWindow" Height="640" Width="800">
     <Window.Resources>
-        <Style TargetType="Label">
-            <Setter Property="Height" Value="43" />
-            <Setter Property="Width" Value="150" />
-            <Setter Property="Foreground" Value="#ffbdbd" />
-            <Setter Property="FontSize" Value="25" />
-            <Setter Property="FontFamily" Value="Bauhaus 93" />
-        </Style>
         
         <Style TargetType="DataGridRow">
             <Setter Property="Height" Value="30"/>
@@ -27,6 +20,7 @@
         </Style>
         
     </Window.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

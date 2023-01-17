@@ -226,7 +226,6 @@ public partial class MainCustomerWindow : Window
  
     }
 
-    //update
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         if (MyCart.items != null)
@@ -239,7 +238,6 @@ public partial class MainCustomerWindow : Window
         }
     }
 }
-
 
 public class NotBooleanToVisibilityConverter : IValueConverter
 {

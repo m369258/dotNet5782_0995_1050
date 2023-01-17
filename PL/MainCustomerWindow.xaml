@@ -165,7 +165,7 @@ x:Key="notBooleanToVisibilityConverter" />
             <!--<TextBlock Grid.Column="1" HorizontalAlignment="Center" TextWrapping="Wrap" Text="↺" VerticalAlignment="Center"/>-->
         </Grid>
         <ScrollViewer Grid.Row="1">
-            <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding Mode=TwoWay, Path=MyProductItems}" ItemTemplate="{StaticResource oneProduct}">
+            <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding MyProductItems,Mode=TwoWay }" ItemTemplate="{StaticResource oneProduct}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>

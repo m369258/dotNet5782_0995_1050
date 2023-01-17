@@ -33,7 +33,7 @@ public partial class MainWindow : Window
         if (!int.TryParse(txtOrderId.Text, out id))
             MessageBox.Show("אנא הקש מספר הזמנה");
         else
-            new OrderTrackinkWindow(id).Show(); ;
+            new OrderTrackinkWindow(id.ToString()).Show(); ;
 
 
     }

@@ -7,7 +7,40 @@
         mc:Ignorable="d"
         DataContext="{Binding orders, RelativeSource={RelativeSource Mode=Self}}"
         Title="OrderForListWindow" Height="450" Width="800">
-    <StackPanel>
-        <ListView x:Name="ListviewOrders" ItemsSource="{Binding}" Margin="0,41,0,0" Grid.RowSpan="2" SelectionChanged="ListviewOrders_SelectionChanged" ></ListView>
-    </StackPanel>
+
+    <Window.Resources>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#ffbdbd" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#EDC766"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </Window.Resources>
+
+    <Grid>
+      
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Label x:Name="lblCategory" Grid.Row="0" Content="Orders" />
+        <DataGrid  CanUserAddRows="False" Background="White"  Name="DGProducts" Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="OrderID"  Width="3*" Binding="{Binding Path=OrderID}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="CustomerName" Width="*" Binding="{Binding Path=CustomerName}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="status" Width="2*" Binding="{Binding Path=status}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="AmountForItems" Width="2*" Binding="{Binding Path=AmountForItems}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="TotalPrice" Width="2*" Binding="{Binding Path=TotalPrice}" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        
+    </Grid>
 </Window>

@@ -6,6 +6,7 @@ namespace PL.Cart;
 /// </summary>
 public partial class paymentWindow : Window
 {
+    private BlApi.IBl bl = BlApi.Factory.Get();
 
     public BO.Cart MyCart
     {
@@ -26,5 +27,16 @@ public partial class paymentWindow : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         this.Close();
+    }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            bl.cart.MakeAnOrder(MyCart);
+        }
+        catch (BO.InvalidArgumentException ex) { MessageBox.Show("Please change the" + ex.Message); }
+        catch(BO.InternalErrorException ex) { MessageBox.Show(ex.Message); }
+        MessageBox.Show("theOrder made");
     }
 }

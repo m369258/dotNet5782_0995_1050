@@ -7,7 +7,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-
 namespace PL.Cart;
 
 /// <summary>
@@ -19,8 +18,6 @@ public partial class Customer_CartWindow : Window
 
     private BlApi.IBl bl = BlApi.Factory.Get();
 
-
-
     public bool state
     {
         get { return (bool)GetValue(stateProperty); }
@@ -30,8 +27,6 @@ public partial class Customer_CartWindow : Window
     // Using a DependencyProperty as the backing store for state.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty stateProperty =
         DependencyProperty.Register("state", typeof(bool), typeof(Customer_CartWindow), new PropertyMetadata(false));
-
-
 
     public BO.Cart MyCart
     {
@@ -75,12 +70,21 @@ public partial class Customer_CartWindow : Window
 
     private void btnDeleteItemFromCart_Click(object sender, RoutedEventArgs e)
     {
-
         BO.OrderItem selection = ((BO.OrderItem)((Button)sender).DataContext);
         MyCart = bl.cart.Delete(MyCart, selection.ProductId);
-
-
     }
+
+    private void btnPayment_Click(object sender, RoutedEventArgs e)
+    {
+        new paymentWindow(MyCart).ShowDialog();
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+    }
+
+
 
     //private void Button_Click(object sender, RoutedEventArgs e)
     //{

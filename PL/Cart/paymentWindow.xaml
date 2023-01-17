@@ -36,11 +36,6 @@
             </Border>
         </DataTemplate>
 
-        <Style TargetType="Label">
-            <Setter Property="FontSize" Value="15"/>
-            <Setter Property="BorderBrush" Value="Black"/>
-        </Style>
-        
         <Style x:Key="withOutStyle" TargetType="Button">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -55,6 +50,10 @@
             <Setter Property="Background" Value="#FAF7F2"/>
         </Style>
 
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush" Value="White"/>
+        </Style>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -93,7 +92,13 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <TextBlock Text="CustomerName" Margin="15" Grid.Column="0" Grid.Row="0"/>
+            <TextBox Text="{Binding CustomerName}" Grid.Row="0" Grid.Column="1"/>
+            <TextBlock Text="CustomerAddress" Margin="15"  Grid.Column="0" Grid.Row="1"/>
+            <TextBox Text="{Binding CustomerAddress}" Grid.Row="1" Grid.Column="1"/>
+            <TextBlock Text="CustomerEmail" Margin="15" Grid.Column="0" Grid.Row="2"/>
+            <TextBox Text="{Binding CustomerEmail}" Grid.Row="2" Grid.Column="1"/>
         </Grid>
-        <TextBlock Text="CustomerName"  Grid.Column="1" Grid.Row="1"/>
+        <Button Content="confirmation" Grid.Column="2" Grid.Row="2" Click="Button_Click_1"/>
     </Grid>
 </Window>

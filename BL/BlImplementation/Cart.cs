@@ -122,6 +122,7 @@ internal class Cart : BlApi.ICart
     public BO.Cart Update(BO.Cart myCart, int idProduct, int newQuantity)
     {
         int productId;
+
         //In case of a negative amount an exception will be thrown
         if (newQuantity < 0)
             throw new BO.InvalidInputException("Quantity cannot be a negative number");
@@ -181,6 +182,7 @@ internal class Cart : BlApi.ICart
 
     public BO.Cart Delete(BO.Cart myCart, int idProduct)
     {
+        
         Do.Product myProduct;
         try { myProduct = myDal.product.Get(item => item?.ID == idProduct); }
         catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id product is not exsist", ex); }

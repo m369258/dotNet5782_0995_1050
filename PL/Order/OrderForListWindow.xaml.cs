@@ -30,17 +30,17 @@ public partial class OrderForListWindow : Window
         orders = temp == null ? new() : new(temp);
     }
 
-    private void ListviewOrders_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-    {
-        if (ListviewOrders.SelectedIndex != -1)
-        {
-            new OrderWindow(((BO.OrderForList)ListviewOrders.SelectedItem).OrderID).ShowDialog();
-            ListviewOrders.SelectedIndex = -1;
+    //private void ListviewOrders_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+    //{
+    //    if (ListviewOrders.SelectedIndex != -1)
+    //    {
+    //        new OrderWindow(((BO.OrderForList)ListviewOrders.SelectedItem).OrderID).ShowDialog();
+    //        ListviewOrders.SelectedIndex = -1;
            
-            // ProductListview.ItemsSource = bl.product.GetListOfProducts();
-            var temp = bl.order.GetListOfOrders();
-            orders = temp == null ? new() : new(temp);
+    //        // ProductListview.ItemsSource = bl.product.GetListOfProducts();
+    //        var temp = bl.order.GetListOfOrders();
+    //        orders = temp == null ? new() : new(temp);
 
-        }
-    }
+    //    }
+    //}
 }

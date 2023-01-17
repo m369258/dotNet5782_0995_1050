@@ -6,19 +6,58 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         Title="OrderTrackinkWindow" Height="450" Width="800">
-    <Grid x:Name="btnShoworderDetails">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="8*"/>
-            <RowDefinition Height="2*"/>
-        </Grid.RowDefinitions>
-        <ListView Grid.Row="0" x:Name="lsvTracking">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Button Content="show order details" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Width="173" Click="Button_Click"/>
 
+    <Window.Resources>
+        <Style x:Key="backTxt" TargetType="TextBlock">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFF66161" />
+                    <Setter Property="TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Background="White">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="2.7*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Name="btnOrderDetails" Grid.Row="2" Content="Show Order Details" Height="38" VerticalAlignment="Top" Width="175" Click="btnOrderDetails_Click" Background="#FFF6E3DD" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,21,0,0" Grid.RowSpan="2" FontSize="14"/>
+            <TextBlock Name="txtBack" Grid.Row="2" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18" Margin="12,31,0,0"/>
+
+            <ListView Name="lstTracking" DataContext="{Binding}" HorizontalAlignment="Center" Height="158" Margin="0,64,0,0" VerticalAlignment="Top" Width="445" Background="#FFF6E3DD" BorderBrush="#FF626367" FontWeight="ExtraBold" FontSize="18" FontFamily="Consolas" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Date" Width="230" DisplayMemberBinding="{Binding Item1}"/>
+                        <GridViewColumn Header="Status" Width="170" DisplayMemberBinding="{Binding Item2}"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <ComboBox x:Name="cmbOrders" SelectionChanged="cmbOrders_SelectionChanged" IsTextSearchEnabled="True" TextSearch.TextPath="ID"  IsEditable="True" RenderTransformOrigin="0.494,-0.141" FontWeight="Bold" FontSize="15" FontFamily="Consolas" BorderBrush="#FFF6E3DD" BorderThickness="3,3,3,3" HorizontalAlignment="Center" Width="374" VerticalAlignment="Center" Height="41">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <WrapPanel Margin="0,5,0,5" Height="45" Background="#FFF6E3DD">
+                            <Label x:Name="IDorder"  Content="{Binding ID}" ContentStringFormat="Order ID:  {0} "
+                               TextBlock.TextAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                            <Separator/>
+                            <Label x:Name="name"  Content="{Binding Status}" ContentStringFormat="      Status:  {0} "
+                               TextBlock.TextAlignment="Center" 
+                                VerticalAlignment="Center"/>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+
+
+        <!--<Image Source="/Orders/tracking.jpg" Grid.ColumnSpan="2" Margin="474,0,6,0"/>-->
     </Grid>
 </Window>
