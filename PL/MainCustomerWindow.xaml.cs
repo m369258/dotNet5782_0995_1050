@@ -230,9 +230,11 @@ public partial class MainCustomerWindow : Window
     {
         if (MyCart.items != null)
         {
-            //BO.Cart sendBOcART = MyCart;
-            new Customer_CartWindow(MyCart).ShowDialog();
-            //MyCart = sendBOcART;
+            Customer_CartWindow customer_CartWindow =new Customer_CartWindow(MyCart);
+            customer_CartWindow.ShowDialog();
+
+            MyCart = customer_CartWindow.MyCart;
+      
             var temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
         }

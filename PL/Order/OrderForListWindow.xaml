@@ -32,7 +32,7 @@
         </Grid.RowDefinitions>
         
         <Label x:Name="lblCategory" Grid.Row="0" Content="Orders" />
-        <DataGrid  CanUserAddRows="False" Background="White"  Name="DGProducts" Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False">
+        <DataGrid  CanUserAddRows="False" Background="White"  Name="DGProducts" Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="DGProducts_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="OrderID"  Width="3*" Binding="{Binding Path=OrderID}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="CustomerName" Width="*" Binding="{Binding Path=CustomerName}" IsReadOnly="True"/>

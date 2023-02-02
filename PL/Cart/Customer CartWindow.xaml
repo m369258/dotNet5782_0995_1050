@@ -73,7 +73,7 @@ x:Key="notBooleanToVisibilityConverter2" />
         <Label Content="Cart"  FontWeight="Bold" Grid.Row="0"/>
         <ListBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" ItemsSource="{Binding MyCart.items}"
 ItemTemplate="{StaticResource MyDataTemplate}"
-HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" />        <Label Content="TotalPrice" Grid.Row="2" Grid.Column="0" FontSize="18px"/>
+HorizontalContentAlignment="Stretch" BorderThickness="0,0,0,0" ScrollViewer.CanContentScroll="False"/>        <Label Content="TotalPrice" Grid.Row="2" Grid.Column="0" FontSize="18px"/>
         <Label Content="{Binding Path=MyCart.TotalPrice}" Grid.Row="2" Grid.Column="1" FontSize="18px" />
         <Button x:Name="btnUpdateCart" Grid.Row="3" Grid.Column="2" Content="UpdateCart" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter2}, Mode=TwoWay}" Click="btnUpdateCart_Click" IsEnabled="{Binding state}"/>
         <Button x:Name="btnPayment" Grid.Column="2" Content="Move to payment" Grid.Row="4" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter2}, Mode=TwoWay}" Click="btnPayment_Click" />

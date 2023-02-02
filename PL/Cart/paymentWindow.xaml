@@ -79,7 +79,7 @@
             </Grid.ColumnDefinitions>
             <Label Content="Your Order:" Grid.Row="0" Grid.Column="0"/>
             <Button Content="Edit" Grid.Row="0"  Style="{StaticResource withOutStyle}"  Grid.Column="1" Click="Button_Click" />
-            <ListBox ItemsSource="{Binding items}" Margin="0" BorderThickness="0" ItemTemplate="{StaticResource OneProductItem}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#FAF7F2" />
+            <ListBox ItemsSource="{Binding items}" Margin="0" BorderThickness="0" ItemTemplate="{StaticResource OneProductItem}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#FAF7F2" ScrollViewer.CanContentScroll="False"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1">

@@ -69,9 +69,9 @@ internal class Cart : BlApi.ICart
     public void MakeAnOrder(BO.Cart myCart)
     {
         //In case the customer's name or address is empty, an error will be thrown
-        if (myCart.CustomerName == "")
+        if (myCart.CustomerName == null)
             throw new BO.InvalidArgumentException("empty customer name");
-        if (myCart.CustomerAddress == "")
+        if (myCart.CustomerAddress == null)
             throw new BO.InvalidArgumentException("empty customer address");
         //In case the email address is not correct
         if (!myCart.CustomerEmail!.Contains("@") || !myCart.CustomerEmail.Contains("."))

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        DataContext="{Binding tracking,RelativeSource={RelativeSource Mode=Self}}"
         Title="OrderTrackinkWindow" Height="450" Width="800">
 
     <Window.Resources>
@@ -17,34 +18,28 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid Background="White">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1.5*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="2.7*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Button Name="btnOrderDetails" Grid.Row="2" Content="Show Order Details" Height="38" VerticalAlignment="Top" Width="175" Click="btnOrderDetails_Click" Background="#FFF6E3DD" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,21,0,0" Grid.RowSpan="2" FontSize="14"/>
-            <TextBlock Name="txtBack" Grid.Row="2" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18" Margin="12,31,0,0"/>
+    <StackPanel Background="White">
 
-            <ListView Name="lstTracking" DataContext="{Binding}" HorizontalAlignment="Center" Height="158" Margin="0,64,0,0" VerticalAlignment="Top" Width="445" Background="#FFF6E3DD" BorderBrush="#FF626367" FontWeight="ExtraBold" FontSize="18" FontFamily="Consolas" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Date" Width="230" DisplayMemberBinding="{Binding Item1}"/>
-                        <GridViewColumn Header="Status" Width="170" DisplayMemberBinding="{Binding Item2}"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <ComboBox x:Name="cmbOrders" SelectionChanged="cmbOrders_SelectionChanged" IsTextSearchEnabled="True" TextSearch.TextPath="ID"  IsEditable="True" RenderTransformOrigin="0.494,-0.141" FontWeight="Bold" FontSize="15" FontFamily="Consolas" BorderBrush="#FFF6E3DD" BorderThickness="3,3,3,3" HorizontalAlignment="Center" Width="374" VerticalAlignment="Center" Height="41">
+
+
+        <ListView Name="lstTracking" ItemsSource="{Binding Tracking}" HorizontalAlignment="Center" Height="158" Margin="0,64,0,0" VerticalAlignment="Top" Width="533" Background="#FFF6E3DD" BorderBrush="#FF626367" FontWeight="ExtraBold" FontSize="18" FontFamily="Consolas" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Date" Width="270" DisplayMemberBinding="{Binding Item1}"/>
+                    <GridViewColumn Header="Status" Width="270" DisplayMemberBinding="{Binding Item2}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button Name="btnOrderDetails" Grid.Row="2" Content="Show Order Details" Height="38" Width="176" Click="btnOrderDetails_Click" Background="#FFF6E3DD" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,21,0,0" Grid.RowSpan="2" FontSize="14"/>
+        <TextBlock Name="txtBack" Grid.Row="2" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18" Margin="12,31,0,0"/>
+
+        <!--<ComboBox x:Name="cmbOrders" SelectionChanged="cmbOrders_SelectionChanged" IsTextSearchEnabled="True" TextSearch.TextPath="ID"  IsEditable="True" RenderTransformOrigin="0.494,-0.141" FontWeight="Bold" FontSize="15" FontFamily="Consolas" BorderBrush="#FFF6E3DD" BorderThickness="3,3,3,3" HorizontalAlignment="Center" Width="374" VerticalAlignment="Center" Height="41">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <WrapPanel Margin="0,5,0,5" Height="45" Background="#FFF6E3DD">
-                            <Label x:Name="IDorder"  Content="{Binding ID}" ContentStringFormat="Order ID:  {0} "
+                            <Label x:Name="IDorder"  Content="{Binding }" ContentStringFormat="Order ID:  {0} "
                                TextBlock.TextAlignment="Center" 
                                 VerticalAlignment="Center"/>
                             <Separator/>
@@ -54,10 +49,11 @@
                         </WrapPanel>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
-            </ComboBox>
-        </Grid>
+            </ComboBox>-->
+
+    </StackPanel>
 
 
-        <!--<Image Source="/Orders/tracking.jpg" Grid.ColumnSpan="2" Margin="474,0,6,0"/>-->
-    </Grid>
+    <!--<Image Source="/Orders/tracking.jpg" Grid.ColumnSpan="2" Margin="474,0,6,0"/>-->
+
 </Window>

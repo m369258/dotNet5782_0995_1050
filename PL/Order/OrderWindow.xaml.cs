@@ -18,6 +18,18 @@ public partial class OrderWindow : Window
     public static readonly DependencyProperty myOrderProperty =
         DependencyProperty.Register("myOrder", typeof(BO.Order), typeof(OrderWindow), new PropertyMetadata(null));
 
+    public int ID
+    {
+        get { return (int)GetValue(IDProperty); }
+        set { SetValue(IDProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for ID.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IDProperty =
+        DependencyProperty.Register("ID", typeof(int), typeof(OrderWindow), new PropertyMetadata(0));
+
+
+
     public OrderWindow()
     {
         InitializeComponent();
@@ -25,12 +37,15 @@ public partial class OrderWindow : Window
     public OrderWindow(int id)
     {
         InitializeComponent();
+        ID = id;
         try { myOrder = bl.order.GetOrderDetails(id); }
         catch  { MessageBox.Show("בעיה בהזמנה"); }
     }
 
     private void btnUpdate_Click(object sender, RoutedEventArgs e)
     {
+        ///לעשות כאן הודעוצת מתאימות אם כבר נשלח שיעדכן סופק שיעדכן וכו וכו......
+        
         if (myOrder.status == (BO.OrderStatus)2) {
             try { bl.order.OrderDeliveryUpdate(myOrder.ID); }
             catch (BO.InternalErrorException ex) { MessageBox.Show(ex.Message); }

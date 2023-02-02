@@ -22,10 +22,9 @@ public partial class OrderTrackinkWindow : Window
 {
     BlApi.IBl bl = BlApi.Factory.Get();
 
+    //private int id;
 
-    string mail;
-
-    BO.OrderForList? order;
+    BO.Order? order;
     //dp
     public BO.OrderTracking? tracking
     {
@@ -35,17 +34,19 @@ public partial class OrderTrackinkWindow : Window
 
     // Using a DependencyProperty as the backing store for tracking.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty trackingProperty =
-        DependencyProperty.Register("tracking", typeof(BO.OrderTracking), typeof(Window), new PropertyMetadata(null));
+        DependencyProperty.Register("tracking", typeof(BO.OrderTracking), typeof(OrderTrackinkWindow), new PropertyMetadata(null));
 
 
 
     /// <summary>
     /// ctor for order tracking window
     /// </summary>
-    public OrderTrackinkWindow(string mail = null)
+    public OrderTrackinkWindow(int id)
     {
+        //this.id = id;
         InitializeComponent();
-        this.mail = mail;
+        order = bl.order.GetOrderDetails(id);
+        tracking = bl.order.OrderTracking(order.ID);
         //cmbOrders.Loaded += TargetComboBox_Loaded;
         //try
         //{
@@ -68,26 +69,26 @@ public partial class OrderTrackinkWindow : Window
     /// <param name="e"></param>
     private void btnOrderDetails_Click(object sender, RoutedEventArgs e)
     {
-        if (cmbOrders.SelectedItem as BO.OrderForList != null)
-        {
-            new OrderWindow(order.OrderID).ShowDialog();
+        //if (cmbOrders.SelectedItem as BO.OrderForList != null)
+        //{
+        new OrderWindow(order.ID).ShowDialog();
             //try
             //{
-                if (mail != null)   //show user's orders
-                {
-                    //cmbOrders.ItemsSource = bl.order.GetListOfOrders(mail);
-                    cmbOrders.ItemsSource = bl.order.GetListOfOrders();
+              //  if (mail != null)   //show user's orders
+                //{
+                //    //cmbOrders.ItemsSource = bl.order.GetListOfOrders(mail);
+                //    cmbOrders.ItemsSource = bl.order.GetListOfOrders();
 
-                }
-                else    //show all orders (for manager)
-                    cmbOrders.ItemsSource = bl.order.GetListOfOrders();
+                //}
+                //else    //show all orders (for manager)
+                    //cmbOrders.ItemsSource = bl.order.GetListOfOrders();
             //}
             //catch (BO.BlNullPropertyException ex)
             //{
             //    MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             //}
-            lstTracking.ItemsSource = null;
-        }
+           // lstTracking.ItemsSource = null;
+        //}
     }
     /// <summary>
     /// show tracking of the selected order in the combobox
@@ -98,12 +99,12 @@ public partial class OrderTrackinkWindow : Window
     {
         try
         {
-            if (cmbOrders.SelectedItem as BO.OrderForList != null)
-            {
-                order = (BO.OrderForList)(cmbOrders.SelectedItem);
-                tracking = bl.order.OrderTracking(order.OrderID);
+            //if (cmbOrders.SelectedItem as BO.OrderForList != null)
+            //{
+            //    order = (BO.Order)(cmbOrders.SelectedItem);
+                tracking = bl.order.OrderTracking(order.ID);
                 lstTracking.ItemsSource = tracking.Tracking;
-            }
+            //}
         }
         //catch (BO.BlMissingEntityException ex)
         //{
