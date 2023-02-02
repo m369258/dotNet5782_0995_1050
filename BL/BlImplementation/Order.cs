@@ -1,5 +1,4 @@
 ﻿using BO;
-using DalApi;
 
 namespace BlImplementation;
 
@@ -19,6 +18,15 @@ internal class Order : BlApi.IOrder
         boListOrders = doOrders.Select(item => CreateBoOrderFromDoOrder(item)).ToList();
         return boListOrders;
     }
+
+    //public IEnumerable<BO.Order> OrdersOfUsers(string email)
+    //{
+    //    IEnumerable<Do.Order?> doUserOrders = myDal.order.GetAll(item => item?.CustomerEmail == email);
+    //    IEnumerable<BO.Order> boUserOrders;
+
+
+
+    //}
 
     public BO.Order GetOrderDetails(int idOrder)
     {
@@ -60,7 +68,7 @@ internal class Order : BlApi.IOrder
 
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Order doOrder;
-        try { doOrder = myDal.order.Get(item => item?.ID == idOrder) ; }
+        try { doOrder = myDal.order.Get(item => item?.ID == idOrder); }
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
         //In the event that the order was sent and not delivered - updating its delivery to now, in any other case appropriate exceptions will be thrown
@@ -122,7 +130,7 @@ internal class Order : BlApi.IOrder
         double price = 0.0;
         //Check if an order exists (in data layer).
         Do.Order doOrder = new Do.Order();
-        try { doOrder = myDal.order.Get(item => item?.ID == orderId) ; }
+        try { doOrder = myDal.order.Get(item => item?.ID == orderId); }
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no product with this id", ex); }
 
         //If the order has been sent, an exception will be thrown
@@ -162,7 +170,7 @@ internal class Order : BlApi.IOrder
     /// <exception cref="Exception"></exception>
     private BO.OrderForList CreateBoOrderFromDoOrder(Do.Order? item)
     {
-        var myDoOrderItems = myDal.orderItems.GetAll(x => x?.OrderId == (item?.ID ?? throw new Exception())) ;
+        var myDoOrderItems = myDal.orderItems.GetAll(x => x?.OrderId == (item?.ID ?? throw new Exception()));
 
         //Calculating the price of items in the product in order to arrive at the total price
         double price = myDoOrderItems.Sum(it => it?.Price * it?.Amount ?? throw new Exception());
@@ -188,7 +196,7 @@ internal class Order : BlApi.IOrder
     {
         //A product request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Product doProduct;
-        try { doProduct = myDal.product.Get(x => x?.ID == (doOrderItem.ProductId)) ; }
+        try { doProduct = myDal.product.Get(x => x?.ID == (doOrderItem.ProductId)); }
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
 
         //Building an item in a logical order, accumulating the price of all the items together and adding it to a list of items in a logical order

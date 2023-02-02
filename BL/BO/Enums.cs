@@ -20,3 +20,8 @@ public enum OrderStatus
     OrderProvided
 }
 
+public enum TypeOfUser
+{
+    manager,
+    customer
+}

@@ -42,11 +42,26 @@ public partial class OrderWindow : Window
         catch  { MessageBox.Show("בעיה בהזמנה"); }
     }
 
-    private void btnUpdate_Click(object sender, RoutedEventArgs e)
-    {
-        ///לעשות כאן הודעוצת מתאימות אם כבר נשלח שיעדכן סופק שיעדכן וכו וכו......
+    //private void btnUpdate_Click(object sender, RoutedEventArgs e)
+    ////{
+    ////    ///לעשות כאן הודעוצת מתאימות אם כבר נשלח שיעדכן סופק שיעדכן וכו וכו......
         
-        if (myOrder.status == (BO.OrderStatus)2) {
+    ////    if (myOrder.status == (BO.OrderStatus)2) {
+    ////        try { bl.order.OrderDeliveryUpdate(myOrder.ID); }
+    ////        catch (BO.InternalErrorException ex) { MessageBox.Show(ex.Message); }
+    ////    }
+    ////    else
+    ////    {
+    ////        try { bl.order.OrderShippingUpdate(myOrder.ID); }
+    ////        catch { MessageBox.Show("יש בעיה בהזמנה"); }
+    ////    }
+         
+    //}
+
+    private void btnUpdateShip_Click(object sender, RoutedEventArgs e)
+    {
+        if (myOrder.status == (BO.OrderStatus)2)
+        {
             try { bl.order.OrderDeliveryUpdate(myOrder.ID); }
             catch (BO.InternalErrorException ex) { MessageBox.Show(ex.Message); }
         }
@@ -55,6 +70,10 @@ public partial class OrderWindow : Window
             try { bl.order.OrderShippingUpdate(myOrder.ID); }
             catch { MessageBox.Show("יש בעיה בהזמנה"); }
         }
-         
+    }
+
+    private void btnUpdateDelivery_Click(object sender, RoutedEventArgs e)
+    {
+        this.btnUpdateDelivery.IsEnabled = true;
     }
 }

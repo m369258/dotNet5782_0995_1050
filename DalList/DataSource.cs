@@ -11,6 +11,8 @@ internal static class DataSource
     internal static List<Product?> products = new List<Product?>();
     internal static List<Order?> orders = new List<Order?>();
     internal static List<OrderItem?> orderItems = new List<OrderItem?>();
+    internal static List<Users?> users = new List<Users?>();
+
 
     /// <summary>
     /// An internal class for handling the automatic identifiers and saving the number of existing objects from each actual entity
@@ -20,6 +22,7 @@ internal static class DataSource
         //Saving the entities' automatic identifiers
         static int automaticOrder = 1000;
         static int automaticOrderItem = 1000;
+        static int automaticUsers = 1000;
 
         public static int AutomaticOrder
         {
@@ -28,6 +31,10 @@ internal static class DataSource
         public static int AutomaticOrderItem
         {
             get { return ++automaticOrderItem; }
+        }
+        public static int AutomaticUsers
+        {
+            get { return ++automaticUsers; }
         }
 
         static Config() => orders.Count();
@@ -51,6 +58,7 @@ internal static class DataSource
         createProducts();
         createOrders();
         createOrderItems();
+        creatUsers();
     }
 
 
@@ -76,6 +84,19 @@ internal static class DataSource
                 product.InStock = i * 100;
             product.Img = images[i];
             products.Add(product);
+        }
+    }
+
+    private static void creatUsers()
+    {
+        string[] usersName = { "שירה נוסבכר", "מיכל גרינבוים", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
+        for (int i = 0; i < 15; i++)
+        {
+            Users user = new Users();
+            user.ID = Config.AutomaticUsers;
+            user.Email = usersName[i] + "@gmail.com";
+            user.Password =( i * 12356).ToString();
+            users.Add(user);
         }
     }
 

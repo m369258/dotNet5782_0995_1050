@@ -12,3 +12,9 @@ public enum Category
     ballons,
     NONE
 }
+
+public enum TypeOfUser
+{
+    manager,
+    customer
+}
