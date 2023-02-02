@@ -59,3 +59,17 @@ public class NotEnoughInStockException : Exception
     public override string ToString() =>
         $"Product {ProductName} number {ProductID}, not enough in stock.";
 }
+
+/// <summary>
+/// entity is exsist
+/// </summary>
+public class AlreadyExsist : Exception
+{
+    private string message;
+    public AlreadyExsist(string message)
+        : base(message) { this.message = message; }
+    public AlreadyExsist(string message, Exception innerException)
+        : base(message, innerException) { this.message = message; }
+    public override string ToString() =>
+      $"Missing Entity " + message;
+}

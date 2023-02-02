@@ -37,4 +37,12 @@ public interface IOrder
     /// , will contain a list of date pairs and a verbal description of the state</returns>
     public BO.OrderTracking OrderTracking(int idOrder);
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="email"></param>
+    /// <returns></returns>
+    //public IEnumerable<BO.Order> OrdersOfUsers(string email);
+
+
 }

@@ -1,117 +1,126 @@
-﻿<Window x:Class="PL.Order.OrderWindow"
+﻿ <Window x:Class="PL.Order.OrderWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         DataContext="{Binding myOrder, RelativeSource={RelativeSource Mode=Self}}"
         Title="OrderWindow" Height="450" Width="800">
 
-    <Window.Resources>
-
-        <Style TargetType="TextBlock">
-            <Setter Property="Height" Value="20" />
-            <Setter Property="Width" Value="150" />
-            <Setter Property="Foreground" Value="#ffbdbd" />
-            <Setter Property="FontSize" Value="15" />
-            <Setter Property="FontFamily" Value="Bauhaus 93" />
-            <Setter Property="FontWeight" Value="Black"/>
+     <Window.Resources>
+        <Style x:Key="btnUpdate" TargetType="Button">
+            <Setter Property="Background" Value="pink"/>
+            <Setter Property="BorderBrush" Value="Pink"/>
         </Style>
+        <Style x:Key="lbl" TargetType="Label">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFF66161" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="oneItemInOrder" DataType="local: OrderItem">
+            <Grid Name="gridItem" Height="100">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="80*"/>
+                    <ColumnDefinition Width="250*"/>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="80*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <!--<Image Source="{Binding PictureName, Converter={StaticResource ImagePathToBitmap}}"  Height="80" Width="80"/>-->
+                </Grid>
 
-        <DataTemplate x:Key="OneProductItem" DataType="local:MyData">
-            <Border BorderThickness="0,0,0,2" BorderBrush="Black" Margin="100,0,100,0" >
-                <Grid>
-
+                <Label Grid.Column="1" Grid.Row="1" Content="{Binding Path=ID}" VerticalContentAlignment="Center" HorizontalAlignment="Left" HorizontalContentAlignment="Left" FontSize="15" VerticalAlignment="Center"/>
+                <Grid Grid.Column="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="IDOrderItem"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding ID}" HorizontalAlignment="Center" FontSize="16"/>
-
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="ProductItem"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Height="23" Width="25" FontWeight="Black" Text="{Binding ProductId}" FontSize="16"/>
-
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="NameProduct"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding NameProduct}" FontSize="16"/>
-
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="productPrice"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding productPrice}" FontSize="16"/>
-
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="QuantityPerItem"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding QuantityPerItem}" FontSize="16"/>
-
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="TotalPrice"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding TotalPrice}" FontSize="16"/>
-
+                    <Label Style="{StaticResource lbl}" Grid.Row="0" Content="{Binding Path=Name}" VerticalContentAlignment="Bottom" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" VerticalAlignment="Bottom"/>
+                    <Label Grid.Row="1" Content="{Binding Path=ProductID}" VerticalContentAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="16" VerticalAlignment="Top"/>
                 </Grid>
-            </Border>
+                <Label Grid.Column="3" Content="{Binding Path=Amount}" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Right" HorizontalContentAlignment="Right" FontSize="20"/>
+                <Label Grid.Column="4" Content="{Binding Path=Price}" ContentStringFormat=" {0}₪" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="20"/>
+            </Grid>
         </DataTemplate>
     </Window.Resources>
 
     <Grid>
+        <Rectangle Fill="White" Opacity="0.7"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.1*"/>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="1.2*"/>
-        </Grid.RowDefinitions>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10*"/>
+                <RowDefinition Height="*"/>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1" Grid.Column="0" x:Name="gridOrder" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Column="0" Content="ID:" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <Label x:Name="iDLabel" Grid.Column="1" Content="{Binding ID}" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+                <Label Grid.Column="0" Content="Customer Name:" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <Label x:Name="customerNameLabel" Grid.Column="1" Content="{Binding CustomerName}" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
 
-        <TextBlock Text="ID" Grid.Row="0" Grid.Column="0"/>
-        <TextBlock Text="{Binding ID}" Grid.Row="0" Grid.Column="1"/>
+                <Label Grid.Column="0" Content="Customer Adress:" HorizontalAlignment="Left" Margin="2" Grid.Row="2" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <Label x:Name="customerAdressLabel" Grid.Column="1" Content="{Binding CustomerAdress}" HorizontalAlignment="Left" Margin="2" Grid.Row="2" VerticalAlignment="Center"/>
+                <Label Grid.Column="0" Content="Customer Email:" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <Label x:Name="customerEmailLabel" Grid.Column="1" Content="{Binding CustomerEmail}" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+                <Label Grid.Column="0" Content="Order Date:" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <DatePicker Width="176.956666666667" IsEnabled="False" x:Name="orderDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="4" SelectedDate="{Binding OrderDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                <Label Grid.Column="0" Content="Ship Date:" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <DatePicker Width="176.956666666667" IsEnabled="False" x:Name="shipDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="5" SelectedDate="{Binding ShipDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+                <Label Grid.Column="0" Content="Delivery Date:" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <DatePicker Width="176.956666666667" IsEnabled="False" x:Name="deliveryDateDatePicker" Grid.Column="1" HorizontalAlignment="Left" Margin="3" Grid.Row="6" SelectedDate="{Binding DeliveryDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
 
-        <TextBlock Text="CustomerName" Grid.Row="1" Grid.Column="0"/>
-        <TextBlock Text="{Binding CustomerName}" Grid.Row="1" Grid.Column="1"/>
+                <Label Grid.Column="0" Content="Status:" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <Label x:Name="statusLabel" Grid.Column="1" Content="{Binding Status}" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+                <Label Grid.Column="0" Content="Total Price:" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center" FontWeight="ExtraBold"/>
+                <Label x:Name="totalPriceLabel" Grid.Column="1" Content="{Binding TotalPrice}" ContentStringFormat=" {0}₪" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
+                <Button Style="{StaticResource btnUpdate}" Grid.Column="1" Name="btnUpdateShip" Content="Update" HorizontalAlignment="Left" Width="185" Grid.Row="5" VerticalAlignment="Stretch" Click="btnUpdateShip_Click">
+                    <!--<Button.Visibility>
+                        <MultiBinding Converter="{StaticResource selectedDateToVisibilityConverter }">
+                            <Binding Path="ShipDate"/>
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type Window},AncestorLevel=1}" Path="email"/>
+                        </MultiBinding>
+                    </Button.Visibility>-->
+                </Button>
+                <Button Style="{StaticResource btnUpdate}" Grid.Column="1" Name="btnUpdateDelivery" Content="Update" HorizontalAlignment="Left" Width="185" Grid.Row="6" VerticalAlignment="Stretch" Click="btnUpdateDelivery_Click">
+                    <!--<Button.Visibility>-->
+                        <!--<MultiBinding Converter="{StaticResource selected2DatesToVisibilityConverter }">-->
+                            <!--<Binding Path="ShipDate"/>
+                            <Binding Path="DeliveryDate"/>
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Window},AncestorLevel=1}" Path="email"/>-->
+                        <!--</MultiBinding>-->
+                    <!--</Button.Visibility>-->
+                </Button>
+            </Grid>
+             
 
-        <TextBlock Text="CustomerEmail" Grid.Row="2" Grid.Column="0"/>
-        <TextBlock Text="{Binding CustomerEmail}"  Grid.Row="2" Grid.Column="1"/>
-
-        <TextBlock Text="CustomerAddress" Grid.Row="3" Grid.Column="0"/>
-        <TextBlock Text="{Binding CustomerAddress}"  Grid.Row="3" Grid.Column="1"/>
-
-        <TextBlock Text="PaymentDate" Grid.Row="4" Grid.Column="0"/>
-        <TextBlock Text="{Binding PaymentDate}" Grid.Row="4" Grid.Column="1"/>
-
-        <TextBlock Text="status" Grid.Row="5" Grid.Column="0" />
-        <TextBlock Text="{Binding status}" Grid.Row="5" Grid.Column="1"/>
-
-        <TextBlock Text="DeliveryDate" Grid.Row="6" Grid.Column="0"/>
-        <TextBlock Text="{Binding DeliveryDate}" Grid.Row="6" Grid.Column="1"/>
-
-        <TextBlock Text="ShipDate" Grid.Row="7" Grid.Column="0" />
-        <TextBlock Text="{Binding ShipDate}" Grid.Row="7" Grid.Column="1"/>
-
-        <TextBlock Text="Items" Grid.Column="2" Grid.Row="0"/>
-        <ListView  Grid.Column="2" Grid.Row="1" ScrollViewer.CanContentScroll="False" Grid.RowSpan="9" BorderThickness="0"  ItemTemplate="{StaticResource OneProductItem}" ItemsSource="{Binding items}"/>
-
-        <TextBlock Text="totalPrice" Grid.Row="8" Grid.Column="0"/>
-        <TextBlock Text="{Binding totalPrice}" Grid.Row="8" Grid.Column="1"/>
-        
-        <Button x:Name="btnUpdate" Content="UpdateStatus" Grid.ColumnSpan="2" Grid.Row="10" Click="btnUpdate_Click"/>
+        </Grid>
 
     </Grid>
 </Window>
