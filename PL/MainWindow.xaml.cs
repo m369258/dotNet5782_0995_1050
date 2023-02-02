@@ -1,4 +1,5 @@
-﻿using PL.Order;
+﻿using PL.MainPages;
+using PL.Order;
 using System.Windows;
 namespace PL;
 
@@ -32,4 +33,9 @@ public partial class MainWindow : Window
    }
 
     private void btnCustomer_Click(object sender, RoutedEventArgs e) =>new MainCustomerWindow().Show();
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        new Homepage().Show();
+    }
 }

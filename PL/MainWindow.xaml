@@ -12,14 +12,12 @@
             <ColumnDefinition Width="77*"/>
             <ColumnDefinition Width="723*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="406,72,0,319" RenderTransformOrigin="-1.054,1.652" Grid.Column="1"/>
-        <Button x:Name="btnCategory" Content="Catalog" HorizontalAlignment="Left" VerticalAlignment="Center" Click="category_Click" Grid.Column="1" Margin="248,0,0,0"/>
-        <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="263,288,0,0" TextWrapping="Wrap" Text="order id" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273" Grid.Column="1"/>
-        <Button x:Name="btnTrack" Content="Track" HorizontalAlignment="Left" Margin="248,315,0,0" VerticalAlignment="Top" Click="btnTrack_Click" Grid.Column="1"/>
-        <Button x:Name="btnCustomer"  Content="Customer" HorizontalAlignment="Left" Margin="118,72,0,0" VerticalAlignment="Top" Click="btnCustomer_Click" Grid.Column="1"/>
-        <Button>
-            <Image Grid.Column="1" HorizontalAlignment="Left" Height="100" Margin="459,199,0,0" VerticalAlignment="Top" Width="100" Source="/44.png"/>
-        </Button>
+        <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="38,217,0,174" RenderTransformOrigin="-1.054,1.652" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnCategory" Content="Catalog" HorizontalAlignment="Left" VerticalAlignment="Top" Click="category_Click" Grid.Column="1" Margin="529,110,0,0"/>
+        <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="544,190,0,0" TextWrapping="Wrap" Text="order id" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273" Grid.Column="1"/>
+        <Button x:Name="btnTrack" Content="Track" HorizontalAlignment="Left" Margin="529,218,0,0" VerticalAlignment="Top" Click="btnTrack_Click" Grid.Column="1"/>
+        <Button x:Name="btnCustomer"  Content="Customer" HorizontalAlignment="Left" Margin="38,115,0,0" VerticalAlignment="Top" Click="btnCustomer_Click" Grid.ColumnSpan="2"/>
+        <Button Grid.Column="1" Content="Homepage" HorizontalAlignment="Left" Margin="248,218,0,0" VerticalAlignment="Top" Click="Button_Click"/>
 
     </Grid>
 </Window>

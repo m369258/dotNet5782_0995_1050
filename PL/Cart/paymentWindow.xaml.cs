@@ -39,4 +39,5 @@ public partial class paymentWindow : Window
         catch(BO.InternalErrorException ex) { MessageBox.Show(ex.Message); }
         MessageBox.Show("theOrder made");
     }
+
 }
