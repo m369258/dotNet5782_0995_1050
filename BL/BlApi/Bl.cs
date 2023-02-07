@@ -8,4 +8,6 @@ sealed internal class Bl : IBl
     public IProduct product => new BlImplementation.Product();
 
     public ICart cart => new BlImplementation.Cart();
+
+    public IUser user => new BlImplementation.User();
 }

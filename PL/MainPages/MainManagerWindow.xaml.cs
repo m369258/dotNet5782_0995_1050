@@ -21,13 +21,64 @@ namespace PL.MainPages
     /// </summary>
     public partial class MainManagerWindow : Window
     {
+
+        //    public string name { get; set; }
+        //    /// <summary>
+        //    /// ctor of manager window
+        //    /// </summary>
+        //    public MainManagerWindow(string name)
+        //    {
+        //        this.name = name;
+        //        InitializeComponent();
+        //    }
+        //    /// <summary>
+        //    /// open product list window
+        //    /// </summary>
+        //    /// <param name="sender"></param>
+        //    /// <param name="e"></param>
+        //    private void btnProduct_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().ShowDialog();
+        //    /// <summary>
+        //    /// open orders list window
+        //    /// </summary>
+        //    /// <param name="sender"></param>
+        //    /// <param name="e"></param>
+        //    private void btnProducts_Click(object sender, RoutedEventArgs e) => new OrderForListWindow().ShowDialog();
+        /////// <summary>
+        /////// open order tracking window
+        /////// </summary>
+        /////// <param name="sender"></param>
+        /////// <param name="e"></param>
+        ////private void btnOrderTracking_Click(object sender, RoutedEventArgs e) => new OrderTrackingWindow().ShowDialog();
+        ////    /// <summary>
+        ////    /// open signing up window
+        ////    /// </summary>
+        ////    /// <param name="sender"></param>
+        ////    /// <param name="e"></param>
+        ////    private void btnAddManager_Click(object sender, RoutedEventArgs e) => new SignUpWindow(BO.Position.Manager).ShowDialog();
+        //    /// <summary>
+        //    /// close the window
+        //    /// </summary>
+        //    /// <param name="sender"></param>
+        //    /// <param name="e"></param>
+        //    private void Button_Click(object sender, RoutedEventArgs e)
+        //    {
+        //        this.Close();
+        //        new LogInWindow().ShowDialog();
+        //    }
+
+        public string name { get; set; }
+
         public MainManagerWindow()
         {
             InitializeComponent();
         }
-
+        public MainManagerWindow(string userName)
+        {
+            InitializeComponent();
+           this.name = userName;
+        }
         private void btnProducts_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().ShowDialog();
 
-        private void btnOrders_Click(object sender, RoutedEventArgs e)=>new OrderForListWindow().ShowDialog();
+        private void btnOrders_Click(object sender, RoutedEventArgs e) => new OrderForListWindow().ShowDialog();
     }
 }

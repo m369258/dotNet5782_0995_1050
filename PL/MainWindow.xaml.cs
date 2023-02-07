@@ -1,4 +1,5 @@
-﻿using PL.MainPages;
+﻿using Microsoft.VisualBasic;
+using PL.MainPages;
 using PL.Order;
 using System.Windows;
 namespace PL;
@@ -18,12 +19,13 @@ public partial class MainWindow : Window
     private void category_Click(object sender, RoutedEventArgs e)
     {
         new Order.CatalogWindow().Show();
+
     }
 
     private void btnTrack_Click(object sender, RoutedEventArgs e)
     {
 
-
+        string input = Interaction.InputBox("הקש מספר הזמנה למעקב", "", "", 10, 10);
         int id = 0;
         if (!int.TryParse(txtOrderId.Text, out id))
             MessageBox.Show("אנא הקש מספר הזמנה");
@@ -37,5 +39,10 @@ public partial class MainWindow : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         new Homepage().Show();
+    }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+        new WindowTםDELETE(BO.TypeOfUser.customer).Show();
     }
 }

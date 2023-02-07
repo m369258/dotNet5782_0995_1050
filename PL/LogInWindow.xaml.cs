@@ -12,101 +12,69 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL;
-
-/// <summary>
-/// Interaction logic for LogInWindow.xaml
-/// </summary>
-public partial class LogInWindow : Window
+namespace PL
 {
     /// <summary>
-    /// Bl object to have an access to the Bl functions
+    /// Interaction logic for LogInWindow.xaml
     /// </summary>
-    private BlApi.IBl bl = BlApi.Factory.Get();
-    /// <summary>
-    /// ctor for log in window
-    /// </summary>
-    public LogInWindow()
+    public partial class LogInWindow : Window
     {
-        InitializeComponent();
-    }
-    /// <summary>
-    /// show the right window by the email and password
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        BO.Users user = new BO.Users();
-        
-        try
+        private BlApi.IBl bl = BlApi.Factory.Get();
+        public LogInWindow()
         {
-            user = bl.Users.GetByEmailAndPassword(txtEmail.Text, txtPassword.Password);
+            InitializeComponent();
         }
-        catch (BO.BlMissingEntityException ex)
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            lblIncorrect.Visibility = Visibility.Visible;
-            return;
-        }
-        catch (BO.BlDetailInvalidException ex)
-        {
-            lblIncorrect.Visibility = Visibility.Visible;
-            return;
-        }
-        catch (Exception ex)
-        {
-            lblIncorrect.Visibility = Visibility.Visible;
-            return;
-        }
-        //open the right window du to position:
-        if (user.Position == BO.Position.Manager)
-        {
-            this.Close();
-            new ManagerWindow(user.Name).ShowDialog();
-        }
-        else
-        {
-            BO.Cart cart = new BO.Cart
+            BO.Users currUser = new BO.Users();
+            try { currUser = bl.user.GetUser(txtEmail.Text, txtPassword.Text); }
+            catch {
+                string message = "You are not in out system, Do you want to sign in?";
+                string title = "Close Window";
+
+                if (MessageBox.Show(message, title, MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                {
+                    this.Close();
+                    new SignInWindow(BO.TypeOfUser.customer).Show();
+                    return;
+                }
+                else
+                {
+                    this.Close(); 
+                    return;
+                }
+            }
+
+            if (currUser.TypeOfUser == BO.TypeOfUser.manager)
             {
-                CustomerName = user.Name,
-                CustomerAddress = user.Address,
-                CustomerEmail = user.Email,
-                Items = new List<BO.OrderItem?>(),
-                TotalPrice = 0
-            };
+                this.Close();
+                new MainPages.MainManagerWindow(currUser.Name).Show();
+            }
+            else
+            {
+                this.Close();
+                BO.Cart cart = new BO.Cart
+                {
+                    CustomerName = currUser.Name,
+                    CustomerAddress = currUser.Address,
+                    CustomerEmail = currUser.Email,
+                    items = new List<BO.OrderItem?>(),
+                    TotalPrice = 0
+                };
+                new MainCustomerWindow(cart).Show();
+            }
+        }
+
+        private void btnSignIn_Click(object sender, RoutedEventArgs e)
+        {
+            new SignInWindow(BO.TypeOfUser.customer).Show();
+        }
+
+        private void btnSignInn_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
-            new CustomerWindow(cart).ShowDialog();
+            new SignInWindow(BO.TypeOfUser.customer).Show();
         }
     }
-    /// <summary>
-    /// close the window
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void btnClose_Click(object sender, RoutedEventArgs e) => this.Close();
-    /// <summary>
-    /// if the user changes it, don't show the error label
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        lblIncorrect.Visibility = Visibility.Collapsed;
-    }
-    /// <summary>
-    /// if the user changes it, don't show the error label
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void txtPassword_KeyDown(object sender, KeyEventArgs e) => lblIncorrect.Visibility = Visibility.Collapsed;
-
-
-    /// <summary>
-    /// open sign-up window
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void TextBlock_MouseDown(object sender, MouseButtonEventArgs e) => new SignUpWindow(BO.Position.Customer).ShowDialog();
-
-
 }

@@ -75,6 +75,35 @@ public partial class MainCustomerWindow : Window
         // prod = new ObservableCollection<BO.ProductForList>(bl.Product.ListOfProducts().OrderBy(x => x?.ID));
         // this.DataContext = prod;
     }
+
+    public MainCustomerWindow(BO.Cart cart)
+    {
+        MyCart = new BO.Cart();
+        MyCart = cart;
+        //curOrderItem=new BO.OrderItem();
+        InitializeComponent();
+        try
+        {
+            //catalog.ItemsSource = bl.product.GetListOfProducts();
+            IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
+            //var temp = bl.product.GetCatalog();
+            MyProductItems = temp == null ? new() : new(temp);
+        }
+        //catch (BO.BlNullPropertyException ex)
+        //{
+        //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        //}
+        //catch (BO.BlWrongCategoryException ex)
+        //{
+        //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        //}
+        catch (Exception ex)
+        {
+            MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+        // prod = new ObservableCollection<BO.ProductForList>(bl.Product.ListOfProducts().OrderBy(x => x?.ID));
+        // this.DataContext = prod;
+    }
     /// <summary>
     /// select an item and show its details
     /// </summary>
@@ -246,15 +275,8 @@ public class NotBooleanToVisibilityConverter : IValueConverter
     //convert from source property type to target property type
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        BO.Cart cart = (BO.Cart)value;
-        if (cart.items != null&&cart.items.Count!=0)
-        {
-            return Visibility.Hidden; //Visibility.Collapsed;
-        }
-        else
-        {
-            return Visibility.Visible;
-        }
+        ObservableCollection < BO.ProductItem > my = (ObservableCollection<BO.ProductItem>)value;
+        return my != null && my.Any(product=>product.Amount > 0) ;
     }
     //convert from target property type to source property type
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
