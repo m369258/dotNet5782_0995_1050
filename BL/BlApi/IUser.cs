@@ -14,7 +14,7 @@ public interface IUser
     /// </summary>
     /// <param name="idUser">id of user to return</param>
     /// <returns>user </returns>
-    public BO.Users GetUser(int idUser);
+    public BO.Users GetUser(string email,string password=null);
 
     /// <summary>
     /// list of users

@@ -15,6 +15,8 @@
         <local:SelectedDateToVisibilityConverter x:Key="selectedDateToVisibilityConverter"/>-->
         <!--<local:NullCartToBackConverter x:Key="nullCartToBackConverter"/>-->
         <Style TargetType="Button">
+        
+        <!--<Style TargetType="Button">
             <Setter Property="Height" Value="43" />
             <Setter Property="Width" Value="150" />
             <Setter Property="Foreground" Value="White" />
@@ -22,7 +24,7 @@
             <Setter Property="Background" Value="#EDC766" />
             <Setter Property="FontFamily" Value="Bauhaus 93" />
             <Setter Property="BorderBrush" Value="#ffbdbd " />
-        </Style>
+        </Style>-->
 
         <Style TargetType="Label">
             <Setter Property="Height" Value="40"/>
@@ -30,6 +32,44 @@
             <Setter Property="Foreground" Value="#ffbdbd"/>
             <Setter Property="FontSize" Value="25" />
             <Setter Property="FontFamily" Value="Bauhaus 93"/>
+        </Style>
+
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Foreground" Value="#FF0E0D0E"/>
+            <Setter Property="Background" Value="#FFFFEFF2"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="BorderBrush" Value="#FFB5ADAD"/>
+            <Setter Property="Width" Value="140"/>
+            <Setter Property="Height" Value="40"/>
+            <!--<Setter Property="Margin" Value="166,166,166,166"/>-->
+
+            <!--<Style.Triggers>
+                --><!--<Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFD62899" />
+                </Trigger>--><!--
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="FontSize" To="30" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="FontSize" To="25" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>-->
         </Style>
 
         <Style x:Key="managerWindow" TargetType="Window">
@@ -45,3 +85,6 @@
 
     </Application.Resources>
 </Application>
+    
+    
+    

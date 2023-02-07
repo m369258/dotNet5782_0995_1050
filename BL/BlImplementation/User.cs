@@ -41,6 +41,8 @@ internal class User : BlApi.IUser
         return doUsers.Select(item => (item == null) ? throw new BO.InternalErrorException("Data layer item does not exist") : new BO.Users()
         {
             ID = ((Do.Users)item!).ID,
+            Name = ((Do.Users)item!).Name,
+            Address = ((Do.Users)item!).Address,
             Password = ((Do.Users)item!).Password,
             Email = ((Do.Users)item!).Email,
             TypeOfUser = (BO.TypeOfUser)(((Do.Users)item!).TypeOfUser)!
@@ -48,10 +50,11 @@ internal class User : BlApi.IUser
 
     }
 
-    public BO.Users GetUser(int idUser)
+    public BO.Users GetUser(string email,string password)
     {
         Do.Users? user;
-        try { user = myDal.users.Get(item => item?.ID == idUser); }
+
+        try { user = myDal.users.Get(item => item?.Email == email&& item?.Password==password); }
         catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id doesnt exsist", ex); }
 
         //Building a new object from the display product type

@@ -70,7 +70,7 @@ internal static class DataSource
         string[] productNames = { "מארז 12 קאפקייקס בינוני ליום הולדת", "בייבי בלו קייק", "קנדי קייק קטנה", "מיניקייק קרמל", "מארז גדול של מקרונים COOL BLUE", "מארז קטן של מקרונים PRIDE", "מארז גדול של מקרונים LOVE", "מארז קטן של מקרונים UNICORN", "מארז גדול של מקרונים CHOCOHOLIC", "בלונדיז", "נשיקות מרנג", "בלון לידת בת", "בלון לידת בן", "עוגת יום הולדת", "עוגת אוראו" };
         int[] categories = { 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 2, 2 };
         float[] prices = { 158, 285, 285, 125, 220, 85, 220, 85, 220, 42, 22, 28, 28, 200, 285 };
-        string[] images = { "", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+        string[] images = { "/img/.png", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
         for (int i = 0; i < 15; i++)
         {
             Product product = new Product();
@@ -89,12 +89,12 @@ internal static class DataSource
 
     private static void creatUsers()
     {
-        string[] usersName = { "shira6557@gmail.com", "michall@gmail.com", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
+        string[] usersName = { "shira6557@gmail.com", "michal.grinboim@gamil.com", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
         for (int i = 0; i < 15; i++)
         {
             Users user = new Users();
             user.ID = Config.AutomaticUsers;
-            user.Email = usersName[i];
+            user.Email = usersName[i] ;
             user.Password =( i * 12356).ToString();
             users.Add(user);
         }

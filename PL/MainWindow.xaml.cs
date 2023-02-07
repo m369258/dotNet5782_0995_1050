@@ -1,4 +1,6 @@
-﻿using PL.Order;
+﻿using Microsoft.VisualBasic;
+using PL.MainPages;
+using PL.Order;
 using System.Windows;
 namespace PL;
 
@@ -17,6 +19,7 @@ public partial class MainWindow : Window
     private void category_Click(object sender, RoutedEventArgs e)
     {
         new Order.CatalogWindow().Show();
+
     }
 
     private void btnTrack_Click(object sender, RoutedEventArgs e)
@@ -30,4 +33,14 @@ public partial class MainWindow : Window
    }
 
     private void btnCustomer_Click(object sender, RoutedEventArgs e) =>new MainCustomerWindow().Show();
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        new Homepage().Show();
+    }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+        new WindowTםDELETE(BO.TypeOfUser.customer).Show();
+    }
 }

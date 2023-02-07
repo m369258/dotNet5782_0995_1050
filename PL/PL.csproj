@@ -14,6 +14,11 @@
 
 		<ItemGroup>
 		  <None Remove="44.png" />
+		  <None Remove="img\inst.png" />
+		  <None Remove="img\logo.png" />
+		  <None Remove="img\pint.png" />
+		  <None Remove="img\Twitter-logo.svg.png" />
+		  <None Remove="img\youtube.png" />
 		</ItemGroup>
 
 		
@@ -28,6 +33,11 @@
 
 		<ItemGroup>
 		  <Resource Include="44.png" />
+		  <Resource Include="img\inst.png" />
+		  <Resource Include="img\logo.png" />
+		  <Resource Include="img\pint.png" />
+		  <Resource Include="img\Twitter-logo.svg.png" />
+		  <Resource Include="img\youtube.png" />
 		</ItemGroup>
 
 	</Project>

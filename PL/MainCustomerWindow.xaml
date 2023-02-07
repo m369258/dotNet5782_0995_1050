@@ -124,13 +124,13 @@ x:Key="notBooleanToVisibilityConverter" />
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Image HorizontalAlignment="Left" Height="30" Margin="14,0,0,0" VerticalAlignment="Center" Width="26"  Grid.Column="1"/>
-                <Button Grid.Column="2" Click="Button_Click"  Style="{StaticResource noneStyle}">
-                    <Image Source="/44.png" HorizontalAlignment="Center" Height="30" VerticalAlignment="Center" Width="36" RenderTransformOrigin="0.317,0.528"/>
+                <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="2" Click="Button_Click"  Style="{StaticResource noneStyle}">
+                    <Image  Source="/44.png" HorizontalAlignment="Center" Height="30" VerticalAlignment="Center" Width="36" RenderTransformOrigin="0.317,0.528"/>
                 </Button>
 
                 <!--<Label Content="kkkkkkkkkk" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter}, Mode=TwoWay}" />-->
 
-                <Menu Grid.ColumnSpan="3" VerticalAlignment="Top" Background="Transparent" Margin="55,-2,55,0" Height="101" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter}, Mode=TwoWay}">
+                <Menu Grid.ColumnSpan="3" VerticalAlignment="Top" Background="Transparent" Margin="55,-2,55,0" Height="101" >
                     <MenuItem Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
                         <MenuItem x:Name="menuOrders" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="💌" Header="My Orders" FontWeight="Bold" />
                         <MenuItem x:Name="menuTracking" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="🚛" Header="Track Orders" FontWeight="Bold"/>

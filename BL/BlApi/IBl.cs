@@ -9,4 +9,6 @@ public interface IBl
     public ICart cart { get; }
     public IUser user { get; }
 
+    public IUser user { get; }
+
 }
