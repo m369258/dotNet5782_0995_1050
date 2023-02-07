@@ -12,6 +12,7 @@
 x:Key="notBooleanToVisibilityConverter" />
         <local:NotBooleanToVisibilityConverter2
 x:Key="notBooleanToVisibilityConverter2" />
+        
         <!--<Style x:Key="plusOrminus" TargetType="Button">
             <Setter Property="Height" Value="43" />
             <Setter Property="Width" Value="150" />

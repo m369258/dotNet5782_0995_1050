@@ -1,4 +1,6 @@
 ﻿using BO;
+using DalApi;
+using System.Diagnostics;
 
 namespace BlImplementation;
 
@@ -19,14 +21,43 @@ internal class Order : BlApi.IOrder
         return boListOrders;
     }
 
-    //public IEnumerable<BO.Order> OrdersOfUsers(string email)
-    //{
-    //    IEnumerable<Do.Order?> doUserOrders = myDal.order.GetAll(item => item?.CustomerEmail == email);
-    //    IEnumerable<BO.Order> boUserOrders;
+    public IEnumerable<BO.OrderTracking?> OrdersOfUsers(string? email)
+    {
+        //IEnumerable<Do.Order?> doUserOrders;
+        //if (email == null)
+        //    doUserOrders = myDal.order.GetAll();
+        //else
+        //    doUserOrders = myDal.order.GetAll(item => item?.CustomerEmail == email);
+        //IEnumerable<int?> ordersIds = doUserOrders.Select(item => item?.ID);
+        //return ordersIds;
 
+      
 
+        IEnumerable<Do.Order?> doUserOrders;
+        if (email == null)
+            doUserOrders = myDal.order.GetAll();
+        else
+            doUserOrders = myDal.order.GetAll(item => item?.CustomerEmail == email);
 
-    //}
+        IEnumerable<BO.OrderTracking> orderTrackings;
+        IEnumerable<int?> ordersIds = doUserOrders.Select(item => item?.ID);
+        orderTrackings = ordersIds.Select(item => OrderTracking(item ?? throw new Exception()));
+        return orderTrackings;
+
+        //IEnumerable<BO.Order> boUserOrders;
+
+        //IEnumerable<Do.OrderItem?> doOrderItems;
+        //List<BO.OrderItem> ListOrderItems = new List<OrderItem>();
+
+        //for (int i = 0; i < doUserOrders.Count(); i++)
+        //{
+        //    //Request any order details according to its ID
+        //    doOrderItems = myDal.orderItems.GetAll(item => item?.OrderId == doUserOrders[i]?.email);
+
+        //    //Constructs a list of items in the order of a logical layer
+        //    ListOrderItems = doOrderItems.Select(item => this.buildingOrderItem((Do.OrderItem)(item!), ref price)).ToList();
+        //}
+    }
 
     public BO.Order GetOrderDetails(int idOrder)
     {

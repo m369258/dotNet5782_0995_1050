@@ -21,13 +21,11 @@ public partial class MainWindow : Window
 
     private void btnTrack_Click(object sender, RoutedEventArgs e)
     {
-
-
-        int id = 0;
-        if (!int.TryParse(txtOrderId.Text, out id))
-            MessageBox.Show("אנא הקש מספר הזמנה");
+        string email =txtOrderId.Text;
+        if (email==null)
+            MessageBox.Show(" pleas insert your email:");
         else
-            new OrderTrackinkWindow(id).Show(); ;
+            new OrderTrackinkWindow(email).Show(); ;
 
    }
 

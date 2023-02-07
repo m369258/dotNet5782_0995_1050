@@ -1,6 +1,7 @@
 ﻿using PL.Order;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,23 @@ namespace PL.Order;
 public partial class OrderTrackinkWindow : Window
 {
     BlApi.IBl bl = BlApi.Factory.Get();
+    string email;
 
-    //private int id;
+   
+
+
+    public ObservableCollection<BO.OrderTracking?> OrdersID
+    {
+        get { return (ObservableCollection<BO.OrderTracking?>)GetValue(OrdersIDProperty); }
+        set { SetValue(OrdersIDProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for OrdersID.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty OrdersIDProperty =
+        DependencyProperty.Register("OrdersID", typeof(ObservableCollection<BO.OrderTracking?>), typeof(OrderTrackinkWindow), new PropertyMetadata(null));
+
+
+
 
     BO.Order? order;
     //dp
@@ -41,22 +57,25 @@ public partial class OrderTrackinkWindow : Window
     /// <summary>
     /// ctor for order tracking window
     /// </summary>
-    public OrderTrackinkWindow(int id)
+    public OrderTrackinkWindow(string email=null)
     {
-        //this.id = id;
         InitializeComponent();
-        order = bl.order.GetOrderDetails(id);
-        tracking = bl.order.OrderTracking(order.ID);
-        //cmbOrders.Loaded += TargetComboBox_Loaded;
-        //try
-        //{
-        //    if (mail != null)   //show user's orders
-        //    {
-        //        cmbOrders.ItemsSource = bl.Order.ListOfOrdersOfCustomer(mail);
-        //    }
-        //    else    //show all orders (for manager)
-        //        cmbOrders.ItemsSource = bl.Order.ListOfOrders();
-        //}
+        this.email = email;
+        try
+        {
+            if (email != "")   //show user's orders
+            {
+                var temp = bl.order.OrdersOfUsers(email);
+                OrdersID = temp == null ? new() : new(temp);
+
+            }
+            else    //show all orders (for manager)
+            {
+                var temp = bl.order.OrdersOfUsers();
+                OrdersID = temp == null ? new() : new(temp);
+            }
+        }
+        catch { }
         //catch (BO.BlNullPropertyException ex)
         //{
         //    MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -71,7 +90,7 @@ public partial class OrderTrackinkWindow : Window
     {
         //if (cmbOrders.SelectedItem as BO.OrderForList != null)
         //{
-        new OrderWindow(order.ID).ShowDialog();
+       //  new OrderWindow(order.ID).ShowDialog();
             //try
             //{
               //  if (mail != null)   //show user's orders
@@ -90,31 +109,9 @@ public partial class OrderTrackinkWindow : Window
            // lstTracking.ItemsSource = null;
         //}
     }
-    /// <summary>
-    /// show tracking of the selected order in the combobox
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void cmbOrders_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        try
-        {
-            //if (cmbOrders.SelectedItem as BO.OrderForList != null)
-            //{
-            //    order = (BO.Order)(cmbOrders.SelectedItem);
-                tracking = bl.order.OrderTracking(order.ID);
-                lstTracking.ItemsSource = tracking.Tracking;
-            //}
-        }
-        //catch (BO.BlMissingEntityException ex)
-        //{
-        //    MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //}
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-    }
+
+    
+    
     /// <summary>
     /// close window
     /// </summary>
@@ -122,7 +119,19 @@ public partial class OrderTrackinkWindow : Window
     /// <param name="e"></param>
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => this.Close();
 
-  
+    /// <summary>
+    /// show tracking of the selected order in the combobox
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        BO.OrderTracking    selectedOrder = ((BO.OrderTracking)((ComboBox)sender).SelectedItem);
+        tracking = bl.order.OrderTracking(selectedOrder.ID);
+
+    }
+
+
 
 
 

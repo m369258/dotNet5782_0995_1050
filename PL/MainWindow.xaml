@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="406,72,0,319" RenderTransformOrigin="-1.054,1.652" Grid.Column="1"/>
         <Button x:Name="btnCategory" Content="Catalog" HorizontalAlignment="Left" VerticalAlignment="Center" Click="category_Click" Grid.Column="1" Margin="248,0,0,0"/>
-        <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="263,288,0,0" TextWrapping="Wrap" Text="order id" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273" Grid.Column="1"/>
+        <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="263,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273" Grid.Column="1"/>
         <Button x:Name="btnTrack" Content="Track" HorizontalAlignment="Left" Margin="248,315,0,0" VerticalAlignment="Top" Click="btnTrack_Click" Grid.Column="1"/>
         <Button x:Name="btnCustomer"  Content="Customer" HorizontalAlignment="Left" Margin="118,72,0,0" VerticalAlignment="Top" Click="btnCustomer_Click" Grid.Column="1"/>
         <Button>

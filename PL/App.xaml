@@ -4,7 +4,16 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+
+
+        <!--<local:ConvertPathToBitmapImage x:Key="ImagePathToBitmap" />
+        <local:NullCartToVisibilityConverter x:Key="nullCartToVisibility" />
+        <local:EnabledConverter x:Key="enabledConverter"/>
+        <local:InStockConverter x:Key="inStockConverter"/>
+        <local:InStockColorConverter x:Key="inStockColorConverter"/>-->
+        <!--<local:Selected2DatesToVisibilityConverter x:Key="selected2DatesToVisibilityConverter"/>
+        <local:SelectedDateToVisibilityConverter x:Key="selectedDateToVisibilityConverter"/>-->
+        <!--<local:NullCartToBackConverter x:Key="nullCartToBackConverter"/>-->
         <Style TargetType="Button">
             <Setter Property="Height" Value="43" />
             <Setter Property="Width" Value="150" />
@@ -21,6 +30,17 @@
             <Setter Property="Foreground" Value="#ffbdbd"/>
             <Setter Property="FontSize" Value="25" />
             <Setter Property="FontFamily" Value="Bauhaus 93"/>
+        </Style>
+
+        <Style x:Key="managerWindow" TargetType="Window">
+            <Setter Property="WindowStyle" Value="None"/>
+            <Setter Property="FontFamily" Value="Consolas"/>
+            <!--<Setter Property="Background">
+                --><!--<Setter.Value>
+                    <ImageBrush ImageSource="/1-JkhdPT.png"/>
+                </Setter.Value>--><!--
+            </Setter>-->
+            <Setter Property="FontFamily" Value="Consolas"/>
         </Style>
 
     </Application.Resources>
