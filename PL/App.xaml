@@ -14,7 +14,7 @@
         <!--<local:Selected2DatesToVisibilityConverter x:Key="selected2DatesToVisibilityConverter"/>
         <local:SelectedDateToVisibilityConverter x:Key="selectedDateToVisibilityConverter"/>-->
         <!--<local:NullCartToBackConverter x:Key="nullCartToBackConverter"/>-->
-        <Style TargetType="Button">
+        <!--<Style TargetType="Button">-->
         
         <!--<Style TargetType="Button">
             <Setter Property="Height" Value="43" />

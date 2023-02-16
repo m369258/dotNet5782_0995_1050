@@ -22,9 +22,21 @@ namespace PL
     {
         private BlApi.IBl bl = BlApi.Factory.Get();
 
-        public SignInWindow(BO.TypeOfUser possion)
+        public BO.Users user
         {
+            get { return (BO.Users)GetValue(userProperty); }
+            set { SetValue(userProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for user.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty userProperty =
+            DependencyProperty.Register("user", typeof(BO.Users), typeof(Window), new PropertyMetadata(null));
+
+        public SignInWindow(BO.TypeOfUser position)
+        {
+            user = new BO.Users();
             InitializeComponent();
+            user.TypeOfUser = position;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -32,29 +44,45 @@ namespace PL
             if (txtName.Text == "" || txtAddress.Text == "" || txtEmail.Text == "" || !checkEmail() ||
                 txtPassword.Text == "" || txtConfirmPassword.Text == "")
             {
-                if(txtName.Text == "")
+                if (txtName.Text == "")
                     txtName.BorderBrush = Brushes.Red;
-                if(txtAddress.Text == "")
+                if (txtAddress.Text == "")
                     txtAddress.BorderBrush = Brushes.Red;
-                if(txtEmail.Text=="")
+                if (txtEmail.Text == "")
                     txtEmail.BorderBrush = Brushes.Red;
                 else if (!checkEmail())
                 {
                     txtEmail.BorderBrush = Brushes.Red;
                     txtEmail.Text = "❌     Email Is Invalid";
                 }
-                if(txtPassword.Text=="")
+                if (txtPassword.Text == "")
                     txtPassword.BorderBrush = Brushes.Red;
-                if(txtConfirmPassword.Text!=txtPassword.Text)
+                if (txtConfirmPassword.Text != txtPassword.Text)
                     txtConfirmPassword.BorderBrush = Brushes.Red;
-
-
-                //try
-                //{
-                //    bl.user.AddUser(user);
-                //}
-
+                return;
             }
+
+            try
+            {
+                bl.user.AddUser(user);
+            }
+            //catch (BO.BlDetailInvalidException ex)
+            //{
+            //    System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+            //catch (BO.BlAlreadyExistsEntityException ex)
+            //{
+            //    System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            System.Windows.MessageBox.Show("You've successfully signed up!😊", "💍", MessageBoxButton.OK);
+            this.Close();
         }
 
 

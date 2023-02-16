@@ -8,7 +8,4 @@ public interface IBl
     public IProduct product { get; }
     public ICart cart { get; }
     public IUser user { get; }
-
-    public IUser user { get; }
-
 }
