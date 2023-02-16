@@ -1,9 +1,7 @@
-﻿using PL.Product;
-using System.Globalization;
+﻿using System.Globalization;
 using System;
 using System.Windows;
 using System.Windows.Data;
-
 namespace PL.Order;
 
 /// <summary>
@@ -34,10 +32,10 @@ public partial class OrderWindow : Window
 
 
 
-    public OrderWindow()
-    {
-        InitializeComponent();
-    }
+    //public OrderWindow()
+    //{
+    //    InitializeComponent();
+    //}
     public OrderWindow(int id)
     {
         InitializeComponent();

@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-namespace BlApi;
+﻿namespace BlApi;
 
 public interface IBl
 {
@@ -8,7 +6,4 @@ public interface IBl
     public IProduct product { get; }
     public ICart cart { get; }
     public IUser user { get; }
-
-    public IUser user { get; }
-
 }

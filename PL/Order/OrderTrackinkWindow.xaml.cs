@@ -1,19 +1,7 @@
-﻿using PL.Order;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 namespace PL.Order;
 
 /// <summary>
@@ -23,9 +11,6 @@ public partial class OrderTrackinkWindow : Window
 {
     BlApi.IBl bl = BlApi.Factory.Get();
     string email;
-
-   
-
 
     public ObservableCollection<BO.OrderTracking?> OrdersID
     {
@@ -37,10 +22,6 @@ public partial class OrderTrackinkWindow : Window
     public static readonly DependencyProperty OrdersIDProperty =
         DependencyProperty.Register("OrdersID", typeof(ObservableCollection<BO.OrderTracking?>), typeof(OrderTrackinkWindow), new PropertyMetadata(null));
 
-
-
-
-    BO.Order? order;
     //dp
     public BO.OrderTracking? tracking
     {
@@ -61,13 +42,13 @@ public partial class OrderTrackinkWindow : Window
     {
         InitializeComponent();
         this.email = email;
+
         try
         {
             if (email != "")   //show user's orders
             {
                 var temp = bl.order.OrdersOfUsers(email);
                 OrdersID = temp == null ? new() : new(temp);
-
             }
             else    //show all orders (for manager)
             {
@@ -88,30 +69,17 @@ public partial class OrderTrackinkWindow : Window
     /// <param name="e"></param>
     private void btnOrderDetails_Click(object sender, RoutedEventArgs e)
     {
-        //if (cmbOrders.SelectedItem as BO.OrderForList != null)
-        //{
-       //  new OrderWindow(order.ID).ShowDialog();
-            //try
-            //{
-              //  if (mail != null)   //show user's orders
-                //{
-                //    //cmbOrders.ItemsSource = bl.order.GetListOfOrders(mail);
-                //    cmbOrders.ItemsSource = bl.order.GetListOfOrders();
 
-                //}
-                //else    //show all orders (for manager)
-                    //cmbOrders.ItemsSource = bl.order.GetListOfOrders();
-            //}
-            //catch (BO.BlNullPropertyException ex)
-            //{
-            //    MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            //}
-           // lstTracking.ItemsSource = null;
-        //}
+        if (tracking == null)
+            MessageBox.Show("To view items select an order"); 
+        else
+        {
+            int orderid = tracking.ID;
+            OrderWindow orderWindow = new OrderWindow(orderid);
+            orderWindow.ShowDialog();
+        }
     }
 
-    
-    
     /// <summary>
     /// close window
     /// </summary>
@@ -126,71 +94,8 @@ public partial class OrderTrackinkWindow : Window
     /// <param name="e"></param>
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        BO.OrderTracking    selectedOrder = ((BO.OrderTracking)((ComboBox)sender).SelectedItem);
+        BO.OrderTracking selectedOrder = ((BO.OrderTracking)((ComboBox)sender).SelectedItem);
         tracking = bl.order.OrderTracking(selectedOrder.ID);
-
     }
-
-
-
-
-
-
-    //private static void TargetComboBox_Loaded(object sender, RoutedEventArgs e)
-    //{
-    //    var targetComboBox = sender as ComboBox;
-    //    var targetTextBox = targetComboBox?.Template.FindName("PART_EditableTextBox", targetComboBox) as TextBox;
-
-    //    if (targetTextBox == null) return;
-
-    //    targetComboBox.Tag = "TextInput";
-    //    targetComboBox.StaysOpenOnEdit = true;
-    //    targetComboBox.IsEditable = true;
-    //    targetComboBox.IsTextSearchEnabled = false;
-
-    //    targetTextBox.TextChanged += (o, args) =>
-    //    {
-    //        var textBox = (TextBox)o;
-
-    //        var searchText = textBox.Text;
-
-    //        if (targetComboBox.Tag.ToString() == "Selection")
-    //        {
-    //            targetComboBox.Tag = "TextInput";
-    //            targetComboBox.IsDropDownOpen = true;
-    //        }
-    //        else
-    //        {
-    //            if (targetComboBox.SelectionBoxItem != null)
-    //            {
-    //                targetComboBox.SelectedItem = null;
-    //                targetTextBox.Text = searchText;
-    //                textBox.CaretIndex = int.MaxValue;
-    //            }
-
-    //            if (string.IsNullOrEmpty(searchText))
-    //            {
-    //                targetComboBox.Items.Filter = item => true;
-    //                targetComboBox.SelectedItem = default(object);
-    //            }
-    //            else
-    //                targetComboBox.Items.Filter = item =>
-    //                        item.ToString().StartsWith(searchText, true, CultureInfo.InvariantCulture);
-
-    //            Keyboard.ClearFocus();
-    //            Keyboard.Focus(targetTextBox);
-    //            targetTextBox.CaretIndex = int.MaxValue;
-    //            targetComboBox.IsDropDownOpen = true;
-    //        }
-    //    };
-
-
-    //    targetComboBox.SelectionChanged += (o, args) =>
-    //    {
-    //        var comboBox = o as ComboBox;
-    //        if (comboBox?.SelectedItem == null) return;
-    //        comboBox.Tag = "Selection";
-    //    };
-    //}
 }
 
