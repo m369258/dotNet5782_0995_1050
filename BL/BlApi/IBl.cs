@@ -1,6 +1,4 @@
-﻿using System.Security.Principal;
-
-namespace BlApi;
+﻿namespace BlApi;
 
 public interface IBl
 {

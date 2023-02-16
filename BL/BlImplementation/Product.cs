@@ -1,11 +1,10 @@
-﻿using BlApi;
-using BO;
-using Do;
-
+﻿using BO;
 namespace BlImplementation;
+
 internal class Product : BlApi.IProduct
 {
     DalApi.IDal myDal = DalApi.Factory.Get();
+
     public delegate bool conditionFunction(Product entity);
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts(int numCategory)
     {
