@@ -284,5 +284,3 @@ public class NotBooleanToVisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
-
-
