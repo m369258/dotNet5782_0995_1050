@@ -14,11 +14,23 @@
 
 		<ItemGroup>
 		  <None Remove="44.png" />
+		  <None Remove="img\ilovecupcakes_tlv-16022023-0001.mp4" />
 		  <None Remove="img\inst.png" />
 		  <None Remove="img\logo.png" />
 		  <None Remove="img\pint.png" />
 		  <None Remove="img\Twitter-logo.svg.png" />
 		  <None Remove="img\youtube.png" />
+		  <None Remove="img\יומעיון.mp4" />
+		  <None Remove="MainPages\managerr.png" />
+		</ItemGroup>
+
+		<ItemGroup>
+		  <Content Include="img\ilovecupcakes_tlv-16022023-0001.mp4">
+		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  </Content>
+		  <Content Include="img\יומעיון.mp4">
+		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  </Content>
 		</ItemGroup>
 
 		
@@ -38,6 +50,7 @@
 		  <Resource Include="img\pint.png" />
 		  <Resource Include="img\Twitter-logo.svg.png" />
 		  <Resource Include="img\youtube.png" />
+		  <Resource Include="MainPages\managerr.png" />
 		</ItemGroup>
 
 	</Project>

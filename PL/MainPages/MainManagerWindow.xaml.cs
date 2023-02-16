@@ -80,5 +80,7 @@ namespace PL.MainPages
         private void btnProducts_Click(object sender, RoutedEventArgs e) => new ProductForListWindow().ShowDialog();
 
         private void btnOrders_Click(object sender, RoutedEventArgs e) => new OrderForListWindow().ShowDialog();
+
+        private void Button_Click(object sender, RoutedEventArgs e) => new OrderTrackinkWindow().ShowDialog();
     }
 }

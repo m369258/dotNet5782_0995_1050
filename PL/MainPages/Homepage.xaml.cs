@@ -1,139 +1,105 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+namespace PL.MainPages;
 
-//using System;
-//using System.Collections.Generic;
-//using System.Diagnostics;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Windows;
-//using System.Windows.Controls;
-//using System.Windows.Data;
-//using System.Windows.Documents;
-//using System.Windows.Input;
-//using System.Windows.Media;
-//using System.Windows.Media.Imaging;
-//using System.Windows.Navigation;
-//using System.Windows.Shapes;
-//using BlImplementation;
-//using PL.Orders;
-//using PL.Products;
-
-//namespace PL;
-
-namespace PL.MainPages
+/// <summary>
+/// Interaction logic for MainWindow.xaml
+/// </summary>
+public partial class Homepage : Window
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Bl object to have an access to the Bl functions
     /// </summary>
-    public partial class Homepage : Window
+    private BlApi.IBl bl = BlApi.Factory.Get();
+    bool played = true;
+    public Homepage()
     {
-        /// <summary>
-        /// Bl object to have an access to the Bl functions
-        /// </summary>
-        private BlApi.IBl bl = BlApi.Factory.Get();
-        bool played = true;
-        public Homepage()
-        {
-            InitializeComponent();
-            VideoControl.Play();
-        }
-        /// <summary>
-        /// button for logging in
-        /// </summary>
-        /// <param name="sender">the sender to the event</param>
-        /// <param name="e">the event</param>
-        private void BtnLogIn_Click(object sender, RoutedEventArgs e) => new LogInWindow().ShowDialog();
-        /// <summary>
-        /// button to close the window
-        /// </summary>
-        /// <param name="sender">the sender to the event</param>
-        /// <param name="e">the event</param>
-        private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
+        InitializeComponent();
+        VideoControl.Play();
+    }
+    /// <summary>
+    /// button for logging in
+    /// </summary>
+    /// <param name="sender">the sender to the event</param>
+    /// <param name="e">the event</param>
+    private void BtnLogIn_Click(object sender, RoutedEventArgs e) => new LogInWindow().ShowDialog();
+    /// <summary>
+    /// button to close the window
+    /// </summary>
+    /// <param name="sender">the sender to the event</param>
+    /// <param name="e">the event</param>
+    private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
 
-        /// <summary>
-        /// open instagram link
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void inst_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    /// <summary>
+    /// open instagram link
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void inst_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new ProcessStartInfo
         {
-            System.Diagnostics.Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://www.instagram.com/theofficialpandora/",
-                UseShellExecute = true
-            });
-        }
-        /// <summary>
-        /// open twitter link
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void twitter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+            FileName = "https://www.instagram.com/ilovecupcakes_tlv/",
+            UseShellExecute = true
+        });
+    }
+    /// <summary>
+    /// open twitter link
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void twitter_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new ProcessStartInfo
         {
-            System.Diagnostics.Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://twitter.com/pandora_uk",
-                UseShellExecute = true
-            });
-        }
-        /// <summary>
-        /// open pinterest link
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void pinterest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+            FileName = "https://twitter.com/ilovecupcakesll",
+            UseShellExecute = true
+        });
+    }
+    /// <summary>
+    /// open pinterest link
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void pinterest_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new ProcessStartInfo
         {
-            System.Diagnostics.Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://www.pinterest.com/officialpandora/",
-                UseShellExecute = true
-            });
-        }
-        /// <summary>
-        /// open youtube link
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void youtube_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+            FileName = "https://www.pinterest.com/officialpandora/",
+            UseShellExecute = true
+        });
+    }
+    /// <summary>
+    /// open youtube link
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void youtube_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        System.Diagnostics.Process.Start(new ProcessStartInfo
         {
-            System.Diagnostics.Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://www.youtube.com/@TheOfficialPandora",
-                UseShellExecute = true
-            });
-        }
-        /// <summary>
-        /// when window is activated, play video
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ___Pandora_Israel___Activated(object sender, EventArgs e)
-        {
-            VideoControl.Play();
-        }
-        /// <summary>
-        /// when window is deactivated, pause video
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ___Pandora_Israel___Deactivated(object sender, EventArgs e)
-        {
-            VideoControl.Pause();
-        }
+            FileName = "https://www.facebook.com/ilovecupcakes.co.il/",
+            UseShellExecute = true
+        });
+    }
+    /// <summary>
+    /// when window is activated, play video
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ___Pandora_Israel___Activated(object sender, EventArgs e)
+    {
+        VideoControl.Play();
+    }
+    /// <summary>
+    /// when window is deactivated, pause video
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void ___Pandora_Israel___Deactivated(object sender, EventArgs e)
+    {
+        VideoControl.Pause();
     }
 }

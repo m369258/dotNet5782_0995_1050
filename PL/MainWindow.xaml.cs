@@ -12,6 +12,7 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
+        //VideoControl.Play();
     }
 
     private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new MainPages.MainManagerWindow().ShowDialog();
@@ -24,11 +25,12 @@ public partial class MainWindow : Window
 
     private void btnTrack_Click(object sender, RoutedEventArgs e)
     {
-        string email =txtOrderId.Text;
-        if (email==null)
-            MessageBox.Show(" pleas insert your email:");
-        else
-            new OrderTrackinkWindow(email).Show(); ;
+        string input = Interaction.InputBox("הקש מספר הזמנה למעקב", "", "", 10, 10);
+        //string email =txtOrderId.Text;
+        //if (email==null)
+        //    MessageBox.Show(" pleas insert your email:");
+        //else
+            new OrderTrackinkWindow(input).Show(); ;
 
    }
 
