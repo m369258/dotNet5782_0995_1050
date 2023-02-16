@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,28 +14,62 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
-{
-    /// <summary>
-    /// Interaction logic for LogInWindow.xaml
-    /// </summary>
-    public partial class LogInWindow : Window
-    {
-        private BlApi.IBl bl = BlApi.Factory.Get();
-        public LogInWindow()
-        {
-            InitializeComponent();
-        }
+namespace PL;
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+/// <summary>
+/// Interaction logic for LogInWindow.xaml
+/// </summary>
+public partial class LogInWindow : Window
+{
+
+
+    public BO.Users CurrUser
+    {
+        get { return (BO.Users)GetValue(CurrUserProperty); }
+        set { SetValue(CurrUserProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for CurrUser.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty CurrUserProperty =
+        DependencyProperty.Register("CurrUser", typeof(BO.Users), typeof(LogInWindow), new PropertyMetadata(null));
+
+
+
+
+    public bool IsFill
+    {
+        get { return (bool)GetValue(IsFillProperty); }
+        set { SetValue(IsFillProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for IsFill.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsFillProperty =
+        DependencyProperty.Register("IsFill", typeof(bool), typeof(LogInWindow), new PropertyMetadata(false));
+
+
+
+    private BlApi.IBl bl = BlApi.Factory.Get();
+    public LogInWindow()
+    {
+        InitializeComponent();
+
+    }
+
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        if (CurrUser == null || CurrUser.Email == "" || CurrUser.Password == "")
+            IsFill = false;
+        else
+            IsFill = true;
+        if(IsFill)
         {
-            BO.Users currUser = new BO.Users();
-            try { currUser = bl.user.GetUser(txtEmail.Text, txtPassword.Text); }
-            catch {
+            try { CurrUser = bl.user.GetUser(CurrUser.Email, CurrUser.Password); }
+            catch
+            {
                 string message = "You are not in out system, Do you want to sign in?";
                 string title = "Close Window";
 
-                if (MessageBox.Show(message, title, MessageBoxButton.YesNo)==MessageBoxResult.Yes)
+                if (MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     this.Close();
                     new SignInWindow(BO.TypeOfUser.customer).Show();
@@ -41,40 +77,73 @@ namespace PL
                 }
                 else
                 {
-                    this.Close(); 
+                    this.Close();
                     return;
                 }
             }
 
-            if (currUser.TypeOfUser == BO.TypeOfUser.manager)
+            if (CurrUser.TypeOfUser == BO.TypeOfUser.manager)
             {
                 this.Close();
-                new MainPages.MainManagerWindow(currUser.Name).Show();
+                new MainPages.MainManagerWindow(CurrUser.Name).Show();
             }
             else
             {
                 this.Close();
                 BO.Cart cart = new BO.Cart
                 {
-                    CustomerName = currUser.Name,
-                    CustomerAddress = currUser.Address,
-                    CustomerEmail = currUser.Email,
+                    CustomerName = CurrUser.Name,
+                    CustomerAddress = CurrUser.Address,
+                    CustomerEmail = CurrUser.Email,
                     items = new List<BO.OrderItem?>(),
                     TotalPrice = 0
                 };
                 new MainCustomerWindow(cart).Show();
             }
-        }
 
-        private void btnSignIn_Click(object sender, RoutedEventArgs e)
-        {
-            new SignInWindow(BO.TypeOfUser.customer).Show();
-        }
 
-        private void btnSignInn_Click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-            new SignInWindow(BO.TypeOfUser.customer).Show();
         }
+       
+    }
+
+    private void btnSignIn_Click(object sender, RoutedEventArgs e)
+    {
+        new SignInWindow(BO.TypeOfUser.customer).Show();
+    }
+
+    private void btnSignInn_Click(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+        new SignInWindow(BO.TypeOfUser.customer).Show();
+    }
+
+    private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        
     }
 }
+
+
+public class NotBooleanToVisibileConverter : IValueConverter
+{
+    //convert from source property type to target property type
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        bool isVisible = (bool)value;
+        if (isVisible)
+        {
+            return Visibility.Visible; //Visibility.Collapsed;
+        }
+        else
+        {
+            return Visibility.Hidden;
+        }
+    }
+
+    //convert from target property type to source property type
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
