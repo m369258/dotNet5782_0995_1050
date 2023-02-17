@@ -7,10 +7,12 @@
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
         Title="SignInWindow" Height="450" Width="800">
+    
     <Window.Resources>
         <local:NotBooleanToVisibileConverter
 x:Key="notBooleanToVisibileConverter" />
     </Window.Resources>
+    
     <Grid>
         <Grid Margin="0,-1,0,1">
             <Grid.RowDefinitions>
