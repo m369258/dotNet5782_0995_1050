@@ -9,9 +9,9 @@ internal class DalUser : IUser
     public int Add(Users user)
     {
         int i = 0;
-        for (i = 0; i < DataSource.users.Count && (DataSource.users[i]?.ID != user.ID); i++) ;
-        if (i == DataSource.users.Count)
-            throw new Do.DalAlreadyExistsException(user.ID, "user", "this user is exsist");
+        for (i = 0; i < DataSource.users.Count && (DataSource.users[i]?.Email != user.Email); i++) ;
+        if (i != DataSource.users.Count)
+            throw new Do.DalAlreadyExistsException(user.ID, "user", "this email user is exsist");
         DataSource.users.Add(user);
         return user.ID;
     }

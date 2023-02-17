@@ -1,4 +1,5 @@
-﻿using PL.Cart;
+﻿using BO;
+using PL.Cart;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -50,16 +51,16 @@ public partial class MainCustomerWindow : Window
     /// <param name="cart">the cart of the user</param>
     public MainCustomerWindow()
     {
-        MyCart =new BO.Cart();
+        MyCart = new BO.Cart();
         //curOrderItem=new BO.OrderItem();
         InitializeComponent();
-        try
-        {
-            //catalog.ItemsSource = bl.product.GetListOfProducts();
-            IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
-            //var temp = bl.product.GetCatalog();
-            MyProductItems = temp == null ? new() : new(temp);
-        }
+        ////try
+        ////{
+        //catalog.ItemsSource = bl.product.GetListOfProducts();
+        IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
+        //var temp = bl.product.GetCatalog();
+        MyProductItems = temp == null ? new() : new(temp);
+        ////}
         //catch (BO.BlNullPropertyException ex)
         //{
         //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -68,10 +69,10 @@ public partial class MainCustomerWindow : Window
         //{
         //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
         //}
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+        ////catch (Exception ex)
+        ////{
+        ////    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        ////}
         // prod = new ObservableCollection<BO.ProductForList>(bl.Product.ListOfProducts().OrderBy(x => x?.ID));
         // this.DataContext = prod;
     }
@@ -149,11 +150,11 @@ public partial class MainCustomerWindow : Window
         {
             if (strCat != "Popular")
             {
-               BO.Category.TryParse(strCat, out c);
+                BO.Category.TryParse(strCat, out c);
 
                 var temp = bl.product.GetCatalog((int)c, MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
-              
+
 
                 //  catalog.ItemsSource = bl.product.GetListOfProducts((int)c);
             }
@@ -185,12 +186,12 @@ public partial class MainCustomerWindow : Window
     /// <param name="e"></param>
     private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        try
-        {
-            var temp = bl.product.GetCatalog();
-            MyProductItems = temp == null ? new() : new(temp);
-           // catalog.ItemsSource = bl.product.GetListOfProducts();
-        }
+        //// try
+        ////  {
+        var temp = bl.product.GetCatalog();
+        MyProductItems = temp == null ? new() : new(temp);
+        // catalog.ItemsSource = bl.product.GetListOfProducts();
+        ////  }
         //catch (BO.BlNullPropertyException ex)
         //{
         //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -199,10 +200,10 @@ public partial class MainCustomerWindow : Window
         //{
         //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
         //}
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
+        ////catch (Exception ex)
+        ////{
+        ////    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        ////}
     }
     /// <summary>
     /// open my orders window
@@ -212,31 +213,54 @@ public partial class MainCustomerWindow : Window
 
     // private void menuOrders_Click(object sender, RoutedEventArgs e) => new OrderWindow(cart.CustomerEmail).ShowDialog();
 
-     //private void menuTracking_Click(object sender, RoutedEventArgs e) => new OrderTrackinkWindow().ShowDialog();
+    //private void menuTracking_Click(object sender, RoutedEventArgs e) => new OrderTrackinkWindow().ShowDialog();
 
 
     private void menuLogOut_Click(object sender, RoutedEventArgs e) => this.Close();
 
     private void btnPlus_Click(object sender, RoutedEventArgs e)
     {
-          BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
-
-        if (selectionProductItem.InStock)
+        BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
+        try
         {
-            if (selectionProductItem.Amount == 0)
+            if (selectionProductItem.InStock)
             {
-                MyCart = bl.cart.Add(MyCart, selectionProductItem.ProductID);
+                if (selectionProductItem.Amount == 0)
+                {
+                    MyCart = bl.cart.Add(MyCart, selectionProductItem.ProductID);
+                }
+                else
+                {
+                    MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount + 1);
+                }
+
+                var temp = bl.product.GetCatalog(0, MyCart.items);
+                MyProductItems = temp == null ? new() : new(temp);
             }
             else
-            {
-                MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount + 1);
-            }
-
-            var temp = bl.product.GetCatalog(0, MyCart.items);
-            MyProductItems = temp == null ? new() : new(temp);
+                MessageBox.Show("Product out of stock");
         }
-        else
-            MessageBox.Show("Product out of stock");
+
+        catch (BO.InvalidInputException ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+        catch (BO.InternalErrorException ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+        catch (BO.NotEnoughInStockException ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+        catch (Exception ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
     }
 
     private void btnMinus_Click(object sender, RoutedEventArgs e)
@@ -244,43 +268,47 @@ public partial class MainCustomerWindow : Window
         BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
 
 
-            if (selectionProductItem.Amount != 0)
+        if (selectionProductItem.Amount != 0)
+        {
+            try { MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount - 1); }
+            catch (BO.InvalidInputException ex)
             {
-          
-                MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount - 1);
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+            catch (BO.InternalErrorException ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            catch (BO.NotEnoughInStockException ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
 
-            var temp = bl.product.GetCatalog(0, MyCart.items);
-            MyProductItems = temp == null ? new() : new(temp);
- 
+        var temp = bl.product.GetCatalog(0, MyCart.items);
+        MyProductItems = temp == null ? new() : new(temp);
+
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         if (MyCart.items != null)
         {
-            Customer_CartWindow customer_CartWindow =new Customer_CartWindow(MyCart);
+            Customer_CartWindow customer_CartWindow = new Customer_CartWindow(MyCart);
             customer_CartWindow.ShowDialog();
 
             MyCart = customer_CartWindow.MyCart;
-      
+
             var temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
         }
-    }
-}
-
-public class NotBooleanToVisibilityConverter : IValueConverter
-{
-    //convert from source property type to target property type
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        ObservableCollection < BO.ProductItem > my = (ObservableCollection<BO.ProductItem>)value;
-        return my != null && my.Any(product=>product.Amount > 0) ;
-    }
-    //convert from target property type to source property type
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
     }
 }
