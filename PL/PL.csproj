@@ -28,9 +28,6 @@
 		  <Content Include="img\ilovecupcakes_tlv-16022023-0001.mp4">
 		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		  </Content>
-		  <Content Include="img\יומעיון.mp4">
-		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		  </Content>
 		</ItemGroup>
 
 		

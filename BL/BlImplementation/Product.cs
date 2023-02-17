@@ -22,8 +22,8 @@ internal class Product : BlApi.IProduct
             ID = ((Do.Product)item!).ID,
             Name = ((Do.Product)item!).Name,
             Price = ((Do.Product)item!).Price,
-            category = (BO.Category)(((Do.Product)item!).Category)!
-            //Img = 
+            category = (BO.Category)(((Do.Product)item!).Category)!,
+            Img = ((Do.Product)item!).Img
         });
     }
 
@@ -90,7 +90,8 @@ internal class Product : BlApi.IProduct
             Name = product.Name != null ? product.Name : throw new BO.InvalidArgumentException("Empty name"),
             Price = product.Price >= 0 ? product.Price : throw new BO.InvalidArgumentException("Negative price"),
             InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidArgumentException("Unfavorable inStock"),
-            Category = (Do.Category)(product.Category ?? throw new BO.InvalidArgumentException("No category received"))
+            Category = (Do.Category)(product.Category ?? throw new BO.InvalidArgumentException("No category received")),
+            Img= product.Img != null ? product.Img : throw new BO.InvalidArgumentException("No image")  
         });
     }
 
@@ -125,8 +126,8 @@ internal class Product : BlApi.IProduct
         p.Price = product.Price >= 0 ? product.Price : throw new BO.InvalidArgumentException("Negative price");
         p.InStock = product.InStock > 0 ? product.InStock : throw new BO.InvalidArgumentException("Unfavorable inStock");
         p.Category = (Do.Category)(product.Category ?? throw new BO.InvalidArgumentException("No category received"));
+        p.Img = product.Img;
         myDal.product.Update(p);
-
     }
 
     public IEnumerable<BO.ProductItem> GetCatalog(int numCategory,IEnumerable<BO.OrderItem?>? items)
@@ -146,25 +147,9 @@ internal class Product : BlApi.IProduct
                              Price = ((Do.Product)item!).Price,
                              Category = (BO.Category)(((Do.Product)item!).Category)!,
                              InStock = ((Do.Product)item!).InStock > 0 ? true : false,
-                             Amount = amount ?? 0  
+                             Amount = amount ?? 0  ,
+                             Img=((Do.Product)item!).Img
                      };
-        return result;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+        return result;    
     }
 }

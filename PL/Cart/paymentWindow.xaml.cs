@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Security.Policy;
+using System.Windows;
 namespace PL.Cart;
 
 /// <summary>
@@ -8,6 +10,7 @@ public partial class paymentWindow : Window
 {
     private BlApi.IBl bl = BlApi.Factory.Get();
 
+    //dp
     public BO.Cart MyCart
     {
         get { return (BO.Cart)GetValue(MyCartProperty); }
@@ -21,23 +24,32 @@ public partial class paymentWindow : Window
     public paymentWindow(BO.Cart getCart)
     {
         InitializeComponent();
-        MyCart=getCart;
+        MyCart = getCart;
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e)
-    {
-        this.Close();
-    }
+    private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
 
+
+    /// <summary>
+    /// Completing an order and throwing appropriate exceptions
+    /// </summary>
+    /// <param name="sender">button</param>
+    /// <param name="e"></param>
     private void Button_Click_1(object sender, RoutedEventArgs e)
     {
-        try
-        {
-            bl.cart.MakeAnOrder(MyCart);
-        }
-        catch (BO.InvalidArgumentException ex) { MessageBox.Show("Please change the" + ex.Message); }
-        catch(BO.InternalErrorException ex) { MessageBox.Show(ex.Message); }
-        MessageBox.Show("theOrder made");
+        //Saving an order in the system
+        try { bl.cart.MakeAnOrder(MyCart); }
+
+        //One of the items is missing or incorrect
+        catch (BO.InvalidArgumentException ex) { MessageBox.Show("Your" + ex.Message);return; }
+
+        //The basket is empty or one of the products does not exist
+        catch (BO.InternalErrorException ex) { MessageBox.Show("pay attention"+ex.Message);return; }
+
+        catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+
+        //If everything is in order, we will inform the customer
+        MessageBox.Show("Your order is on its way...😊");
     }
 
 }

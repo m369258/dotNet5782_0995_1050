@@ -70,7 +70,7 @@ internal static class DataSource
         string[] productNames = { "מארז 12 קאפקייקס בינוני ליום הולדת", "בייבי בלו קייק", "קנדי קייק קטנה", "מיניקייק קרמל", "מארז גדול של מקרונים COOL BLUE", "מארז קטן של מקרונים PRIDE", "מארז גדול של מקרונים LOVE", "מארז קטן של מקרונים UNICORN", "מארז גדול של מקרונים CHOCOHOLIC", "בלונדיז", "נשיקות מרנג", "בלון לידת בת", "בלון לידת בן", "עוגת יום הולדת", "עוגת אוראו" };
         int[] categories = { 1, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 5, 5, 2, 2 };
         float[] prices = { 158, 285, 285, 125, 220, 85, 220, 85, 220, 42, 22, 28, 28, 200, 285 };
-        string[] images = { "/img/.png", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
+        string[] images = { "/img/catalog/bigCake.png", "", "", "", "", "", "", "", "", "", "", "", "", "", "" };
         for (int i = 0; i < 15; i++)
         {
             Product product = new Product();
@@ -82,7 +82,7 @@ internal static class DataSource
                 product.InStock = 0;
             else
                 product.InStock = i * 100;
-            product.Img = images[i];
+            product.Img = "/img/catalog/bigCake.png";
             products.Add(product);
         }
     }
@@ -96,6 +96,7 @@ internal static class DataSource
             user.ID = Config.AutomaticUsers;
             user.Email = usersName[i] ;
             user.Password =( i * 12356).ToString();
+            user.TypeOfUser = (Do.TypeOfUser) rand.Next(0, 2);
             users.Add(user);
         }
     }

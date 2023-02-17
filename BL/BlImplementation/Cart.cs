@@ -70,12 +70,12 @@ internal class Cart : BlApi.ICart
     {
         //In case the customer's name or address is empty, an error will be thrown
         if (myCart.CustomerName == null)
-            throw new BO.InvalidArgumentException("empty customer name");
+            throw new BO.InvalidArgumentException("customer name is empty");
         if (myCart.CustomerAddress == null)
-            throw new BO.InvalidArgumentException("empty customer address");
+            throw new BO.InvalidArgumentException("customer address  is empty");
         //In case the email address is not correct
         if (!myCart.CustomerEmail!.Contains("@") || !myCart.CustomerEmail.Contains("."))
-            throw new BO.InvalidArgumentException("Invalid email");
+            throw new BO.InvalidArgumentException("email is Invalid ");
 
         //If there are no items in the basket, an error will be thrown
         _ = myCart.items ?? throw new BO.InternalErrorException("there arent items in the cart");
@@ -103,7 +103,7 @@ internal class Cart : BlApi.ICart
                          {
                              OrderId = idOrder,
                              ProductId = item?.ProductId ?? 0,
-                             Amount = item?.QuantityPerItem > 0 ? item?.QuantityPerItem ?? 0 : throw new BO.InvalidArgumentException("negative quantity"),
+                             Amount = item?.QuantityPerItem > 0 ? item?.QuantityPerItem ?? 0 : throw new BO.InvalidArgumentException("quantity negative "),
                              Price = item?.TotalPrice ?? 0,
                          }),
                          product = new Do.Product

@@ -31,7 +31,7 @@ public struct Product
     /// </summary>
     public int InStock { get; set; }
 
-    public string Img { get; set; }
+    public string? Img { get; set; }
 
     /// <summary>
     /// The function returns a string representing a product

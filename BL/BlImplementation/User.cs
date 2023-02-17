@@ -55,7 +55,7 @@ internal class User : BlApi.IUser
         Do.Users? user;
 
         try { user = myDal.users.Get(item => item?.Email == email&& item?.Password==password); }
-        catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id doesnt exsist", ex); }
+        catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this email doesnt exsist", ex); }
 
         //Building a new object from the display product type
         BO.Users boUser = new BO.Users();
