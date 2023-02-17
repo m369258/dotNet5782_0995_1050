@@ -64,3 +64,32 @@ public class NotBooleanToVisibilityConverter : IValueConverter
     }
 }
 
+
+class ConvertPathToBitmapImage : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        try
+        {
+            string imageRelativeName = (string)value;
+            string currentDir = Environment.CurrentDirectory[..^4];
+            string imageFullName = currentDir + imageRelativeName;//direction of the picture
+            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName));//makes the picture
+            return bitmapImage;
+        }
+        catch
+        {
+            string imageRelativeName = @"\pics\default.jpg";//default picture
+            string currentDir = Environment.CurrentDirectory[..^4];
+            string imageFullName = currentDir + imageRelativeName;//direction of the picture
+            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName));//makes the picture
+            return bitmapImage;
+        }
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+

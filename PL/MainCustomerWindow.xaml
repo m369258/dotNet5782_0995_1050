@@ -11,6 +11,8 @@
 
         <local:NotBooleanToVisibilityConverter
 x:Key="notBooleanToVisibilityConverter" />
+
+        <local:ConvertPathToBitmapImage x:Key="convertPathToBitmapImage"/>
         <!--<local:NotBooleanToVisibilityConverter11 x:Key="notBooleanToVisibilityConverter11"/>-->
 
         <Style TargetType="Label">
@@ -27,18 +29,19 @@ x:Key="notBooleanToVisibilityConverter" />
             <Setter Property="FontSize" Value="16" />
             <Setter Property="FontFamily" Value="Bauhaus 93" />
         </Style>
+        
         <DataTemplate x:Key="oneProduct" DataType="local: Product">
             <Border BorderBrush="#FFD62899"  BorderThickness="2">
+                
                 <Grid Name="gridCatalog" Width="260" Height="300" >
-                    <!--<Grid.Background>
-                    <ImageBrush ImageSource="/333.jpg"/>
-                </Grid.Background>-->
+                   
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="3*" />
                         <RowDefinition Height="0.5*" />
                         <RowDefinition Height="0.5*" />
-                        <RowDefinition Height="*" />
+                        <RowDefinition Height="0.8*" />
                     </Grid.RowDefinitions>
+                    
                     <Grid Name="AddOrSubtractFromTheAmount" Grid.Row="3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -51,9 +54,11 @@ x:Key="notBooleanToVisibilityConverter" />
                         <TextBox x:Name="txtAmount" Text="{Binding Amount}" Grid.Column="2" Height="20" Width="25"/>
                         <Button x:Name="btnPlus" Style="{StaticResource plusOrminus}" Grid.Column="3"  Content="+" Height="20" Width="25" Click="btnPlus_Click"/>
                     </Grid>
-                    <Image Grid.Row="0" HorizontalAlignment="Center" Height="60" VerticalAlignment="Bottom" Width="60" Source="/image3.png" Stretch="UniformToFill"/>
-                    <Label Name="lblName" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Grid.Row="1" Content="{Binding Name}" Width="250" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="20" />
-                    <Label Name="lblPrice" Grid.Row="2" Content="{Binding Price}" VerticalContentAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" VerticalAlignment="Top" Foreground="{Binding ElementName=lblName, Path=Foreground, Mode=TwoWay}"/>
+                    
+                    <Image Source="{Binding Img, Converter={StaticResource convertPathToBitmapImage}}" Height="200" Width="200" Grid.Row="0"/>
+                    <!--<Image Grid.Row="0" HorizontalAlignment="Center" Height="60" VerticalAlignment="Bottom" Width="60" Source="/image3.png" Stretch="UniformToFill"/>-->
+                    <Label Name="lblName" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom" Grid.Row="1" Content="{Binding Name}" Width="150" HorizontalContentAlignment="Center" HorizontalAlignment="Center" FontSize="18" />
+                    <Label Name="lblPrice" Grid.Row="2" Content="{Binding Price}" VerticalContentAlignment="Top" HorizontalAlignment="Center" HorizontalContentAlignment="Center" FontSize="18" VerticalAlignment="Top" Foreground="{Binding ElementName=lblName, Path=Foreground, Mode=TwoWay}"/>
                 </Grid>
             </Border>
         </DataTemplate>
