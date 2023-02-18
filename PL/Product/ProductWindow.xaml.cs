@@ -28,7 +28,7 @@ public partial class ProductWindow : Window
         InitializeComponent();
         productCurrent = new BO.Product();
         cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        btnAddOrUpdateProduct.Content = "הוספה";
+        btnAddOrUpdateProduct.Content = "Add";
         txtID.IsEnabled = true;
     }
 
@@ -40,18 +40,18 @@ public partial class ProductWindow : Window
     {
         InitializeComponent();
         //Product request by ID from the logical layer
-        try { productCurrent=bl.product.GetProduct(id); }
+        try { productCurrent = bl.product.GetProduct(id); }
         catch (BO.InternalErrorException) { MessageBox.Show("מוצר לא קיים"); }
 
         //The name of the selected category
         cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        btnAddOrUpdateProduct.Content = "עידכון";
+        btnAddOrUpdateProduct.Content = "Update";
 
         //Locks the option to change ID
         txtID.IsEnabled = false;
     }
 
-    public ProductWindow(int id,string fromWhichWindow)
+    public ProductWindow(int id, string fromWhichWindow)
     {
         InitializeComponent();
         //Product request by ID from the logical layer
@@ -87,9 +87,9 @@ public partial class ProductWindow : Window
         }
 
         //Checking the correctness of the information received
-        if (!int.TryParse(txtID.Text, out id)) { MessageBox.Show("מזהה לא חוקי"); return; } ;
-        if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("מחיר לא חוקי"); return; } ;
-        if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("כמות במלאי לא חוקית"); return; } ;
+        if (!int.TryParse(txtID.Text, out id)) { MessageBox.Show("מזהה לא חוקי"); return; };
+        if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("מחיר לא חוקי"); return; };
+        if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("כמות במלאי לא חוקית"); return; };
 
         //In case of addition, a product will be added to the logical layer
         if (btnAddOrUpdateProduct.Content.ToString() == "הוספה")
@@ -98,7 +98,7 @@ public partial class ProductWindow : Window
             {
                 bl.product.AddProduct(productCurrent);
             }
-            catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי");}
+            catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
         }
         //In case of an update, the product will be updated to the logical layer
         else
@@ -107,10 +107,5 @@ public partial class ProductWindow : Window
             catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
         }
         this.Close();
-    }
-
-    private void btnAddOrUpdateProduct_PreviewDrop(object sender, DragEventArgs e)
-    {
-
     }
 }

@@ -14,7 +14,12 @@ x:Key="notBooleanToVisibilityConverter" />
 
         <local:ConvertPathToBitmapImage x:Key="convertPathToBitmapImage"/>
         <!--<local:NotBooleanToVisibilityConverter11 x:Key="notBooleanToVisibilityConverter11"/>-->
-
+        
+        <Style TargetType="TextBlock" x:Key="textAmount">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+     
         <Style TargetType="Label">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
@@ -22,12 +27,16 @@ x:Key="notBooleanToVisibilityConverter" />
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="plusOrminus" TargetType="Button">
-            <Setter Property="Height" Value="43" />
-            <Setter Property="Width" Value="150" />
-            <Setter Property="Foreground" Value="Black" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="FontFamily" Value="Bauhaus 93" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Foreground" Value="#FFD62899" />
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontFamily" Value="Comic Sans MS" />
         </Style>
         
         <DataTemplate x:Key="oneProduct" DataType="local: Product">
@@ -50,9 +59,9 @@ x:Key="notBooleanToVisibilityConverter" />
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="btnMinus" Style="{StaticResource plusOrminus}" Grid.Column="1" Content="--" Height="20" Width="25" Click="btnMinus_Click"/>
-                        <TextBox x:Name="txtAmount" Text="{Binding Amount}" Grid.Column="2" Height="20" Width="25"/>
-                        <Button x:Name="btnPlus" Style="{StaticResource plusOrminus}" Grid.Column="3"  Content="+" Height="20" Width="25" Click="btnPlus_Click"/>
+                        <Button x:Name="btnMinus" Style="{StaticResource plusOrminus}" Grid.Column="1" Content="-" Click="btnMinus_Click"/>
+                        <TextBlock x:Name="txtAmount" Text="{Binding Amount}" Style="{StaticResource textAmount}" Grid.Column="2" Height="20" Width="25"/>
+                        <Button x:Name="btnPlus" Style="{StaticResource plusOrminus}" Grid.Column="3"  Content="+" Click="btnPlus_Click"/>
                     </Grid>
                     
                     <Image Source="{Binding Img, Converter={StaticResource convertPathToBitmapImage}}" Height="200" Width="200" Grid.Row="0"/>
@@ -96,7 +105,9 @@ x:Key="notBooleanToVisibilityConverter" />
                 </EventTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="noneStyle" TargetType="Button"></Style>
+        <Style x:Key="noneStyle" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -123,23 +134,24 @@ x:Key="notBooleanToVisibilityConverter" />
             <TextBlock Grid.Column="5" Text="sweets" RenderTransformOrigin="6.514,0.29" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="6" Text="ballons" RenderTransformOrigin="8.346,-0.172" Style="{StaticResource categoryStyle}"/>
             <Image Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"  MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
-            <Grid Name="leftButtonsGrid" Grid.Column="8">
+            <!--<Grid Name="leftButtonsGrid" Grid.Column="8">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image HorizontalAlignment="Left" Height="30" Margin="14,0,0,0" VerticalAlignment="Center" Width="26"  Grid.Column="1"/>
-                <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="2" Click="Button_Click"  Style="{StaticResource noneStyle}">
-                    <Image  Source="/44.png" HorizontalAlignment="Center" Height="30" VerticalAlignment="Center" Width="36" RenderTransformOrigin="0.317,0.528"/>
+                </Grid.ColumnDefinitions>-->
+                <!--<Image HorizontalAlignment="Left" Height="30" Margin="14,0,0,0" VerticalAlignment="Center" Width="26"  Grid.Column="1"/>-->
+                
+                <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="9" Height="75" Width="85" Click="Button_Click"  Style="{StaticResource noneStyle}">
+                    <Image  Source="/44.png" HorizontalAlignment="Center" Height="70" VerticalAlignment="Center" Width="80" RenderTransformOrigin="0.317,0.528"/>
                 </Button>
 
                 <!--<Label Content="kkkkkkkkkk" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter}, Mode=TwoWay}" />-->
 
-                <Menu Grid.ColumnSpan="3" VerticalAlignment="Top" Background="Transparent" Margin="55,-2,55,0" Height="101" >
+                <Menu Grid.Row="0" Grid.Column="0" Background="Transparent" Margin="55,-2,55,0" Height="101" >
                     <MenuItem Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
                         <MenuItem x:Name="menuOrders" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="💌" Header="My Orders" FontWeight="Bold" />
-                        <MenuItem x:Name="menuTracking" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="🚛" Header="Track Orders" FontWeight="Bold"/>
+                        <MenuItem x:Name="menuTracking" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="🚛" Header="Track Orders" FontWeight="Bold" Click="menuTracking_Click"/>
                         <Separator />
                         <MenuItem x:Name="menuLogOut" FontFamily="Consolas" FontSize="16" Header="Log Out" FontWeight="Bold" BorderBrush="Black" Background="#FFFBD6D6" Click="menuLogOut_Click">
 
@@ -147,7 +159,7 @@ x:Key="notBooleanToVisibilityConverter" />
                     </MenuItem>
                 </Menu>
 
-                <Image Grid.Column="0" HorizontalAlignment="Center" Height="28" Margin="11,0,0,0" VerticalAlignment="Center" Width="30" />
+                <!--<Image Grid.Column="0" HorizontalAlignment="Center" Height="28" Margin="11,0,0,0" VerticalAlignment="Center" Width="30" />-->
                 <!--<Menu Grid.ColumnSpan="3" VerticalAlignment="Top" Background="Transparent" Margin="55,-2,55,0" Height="101">
                     <MenuItem Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
                         <MenuItem x:Name="menuOrders" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="💌" Header="My Orders" FontWeight="Bold" />
@@ -157,7 +169,7 @@ x:Key="notBooleanToVisibilityConverter" />
                         </MenuItem>
                     </MenuItem>
                 </Menu>-->
-            </Grid>
+            <!--</Grid>-->
         </Grid>
         <ScrollViewer Grid.Row="1">
             <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding MyProductItems,Mode=TwoWay }" ItemTemplate="{StaticResource oneProduct}">

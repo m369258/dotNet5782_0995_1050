@@ -1,5 +1,6 @@
 ﻿using BO;
 using PL.Cart;
+using PL.Order;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -310,5 +311,10 @@ public partial class MainCustomerWindow : Window
             var temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
         }
+    }
+
+    private void menuTracking_Click(object sender, RoutedEventArgs e)
+    {
+        new OrderTrackinkWindow().ShowDialog();
     }
 }
