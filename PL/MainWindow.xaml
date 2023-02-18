@@ -8,18 +8,20 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="77*"/>
-            <ColumnDefinition Width="723*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <!--<MediaElement x:Name="VideoControl" Source="/img/ilovecupcakes_tlv-16022023-0001.mp4" Width="NaN" Grid.ColumnSpan="2" Margin="0,0,554,0"/>-->
-        <Button x:Name="bntManager" Content="Manager" Click="ShowProductsButton_Click" HorizontalAlignment="Left" Margin="38,381,0,13" Grid.ColumnSpan="2"/>
-        <Button x:Name="btnCategory" Content="Catalog" HorizontalAlignment="Left" VerticalAlignment="Top" Click="category_Click" Grid.Column="1" Margin="529,110,0,0"/>
-        <TextBox x:Name="txtOrderId" HorizontalAlignment="Left" Margin="544,190,0,0" TextWrapping="Wrap" Text="order id" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.422,-1.273" Grid.Column="1"/>
-        <Button x:Name="btnTrack" Content="Track" HorizontalAlignment="Left" Margin="529,218,0,0" VerticalAlignment="Top" Click="btnTrack_Click" Grid.Column="1"/>
-        <Button x:Name="btnCustomer"  Content="Customer" HorizontalAlignment="Left" Margin="251,381,0,0" VerticalAlignment="Top" Click="btnCustomer_Click" Grid.Column="1"/>
-        <Button Grid.Column="1" Content="Homepage" HorizontalAlignment="Left" Margin="248,218,0,0" VerticalAlignment="Top" Click="Button_Click"/>
-        <Button Grid.Column="1" Content="Sign in" HorizontalAlignment="Left" Margin="269,327,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>
+        <MediaElement x:Name="VideoControl" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"  Source="img/ilovecupcakes_tlv-16022023-0001.mp4" Volume="0.01" UnloadedBehavior="Manual" LoadedBehavior="Manual"/>
+        <Button Content="Manager" Click="ShowProductsButton_Click"  Grid.Column="0" Grid.Row="1"/>
+        <Button Content="Guest" Click="btnCustomer_Click" Grid.Column="1" Grid.Row="1"/>
+        <Button Content="Customer" Click="Button_Click" Grid.Column="2" Grid.Row="1"/>
 
 
     </Grid>

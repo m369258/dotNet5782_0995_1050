@@ -12,37 +12,24 @@ public partial class MainWindow : Window
     public MainWindow()
     {
         InitializeComponent();
-        //VideoControl.Play();
+        VideoControl.Play();
     }
 
-    private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new MainPages.MainManagerWindow().ShowDialog();
-
-    private void category_Click(object sender, RoutedEventArgs e)
+    private void ShowProductsButton_Click(object sender, RoutedEventArgs e) 
     {
-        new Order.CatalogWindow().Show();
-
+        new MainPages.MainManagerWindow().Show();
+        this.Close();
     }
 
-    private void btnTrack_Click(object sender, RoutedEventArgs e)
+    private void btnCustomer_Click(object sender, RoutedEventArgs e)
     {
-        string input = Interaction.InputBox("הקש מספר הזמנה למעקב", "", "", 10, 10);
-        //string email =txtOrderId.Text;
-        //if (email==null)
-        //    MessageBox.Show(" pleas insert your email:");
-        //else
-            new OrderTrackinkWindow(input).Show(); ;
-
-   }
-
-    private void btnCustomer_Click(object sender, RoutedEventArgs e) =>new MainCustomerWindow().Show();
+        new MainCustomerWindow().Show();
+        this.Close();
+    }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         new Homepage().Show();
-    }
-
-    private void Button_Click_1(object sender, RoutedEventArgs e)
-    {
-        new WindowTםDELETE(BO.TypeOfUser.customer).Show();
+        this.Close();
     }
 }

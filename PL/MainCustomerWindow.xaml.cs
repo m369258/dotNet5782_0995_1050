@@ -317,4 +317,9 @@ public partial class MainCustomerWindow : Window
     {
         new OrderTrackinkWindow().ShowDialog();
     }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+
+    }
 }

@@ -112,7 +112,8 @@ internal class Cart : BlApi.ICart
                              Price = temp?.Price ?? 0,
                              Category = temp?.Category ?? 0,
                              InStock = temp?.InStock > item?.QuantityPerItem ? temp?.InStock - item?.QuantityPerItem ?? 0 : throw new BO.NotEnoughInStockException(item.ProductId, "No quantity in stock"),
-                             Name = temp?.Name
+                             Name = temp?.Name,
+                             Img = temp?.Img
                          }
                      };
 

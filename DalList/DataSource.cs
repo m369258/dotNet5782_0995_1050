@@ -82,19 +82,24 @@ internal static class DataSource
                 product.InStock = 0;
             else
                 product.InStock = i * 100;
-            product.Img = "/PL/img/catalog/bigCake.png";
+            product.Img = "/img/catalog/bigCake.png";
             products.Add(product);
         }
     }
 
     private static void creatUsers()
     {
-        string[] usersName = { "shira6557@gmail.com", "michal.grinboim@gmail.com", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
+        string[] usersName = { "shira6557", "michal.grinboim", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
+        string[] usersEmail = { "shira6557@gmail.com", "michal.grinboim@gmail.com", "זיסי לוי", "אורית כץ", "מירי ויזל", "מימי רוט", "חני כהן", "ציפורה אולמן", "נועה לובין", " שני פורייס", " דבי רוזנברג", "נחמי לב", "תמר פריימן", "משה שטיינמץ ", "הילה איצקוביץ ", " דניאל וייס", " יהונתן בלחדב", "נעם ברקוביץ", " שולמית גוגיג", " מאיר רוט" };
+        string[] usersAddress = { "בעל התניא 20 בני ברק", "גולומב 5 בני ברק", "יצחק אלחנן 2 תל-אביב-יפו", "גורדון 22 בני ברק", "שדרות ירושלים 66 רמת גן", "אבן גבירול 8 בני ברק", "רשי 5 בני ברק", "שבזי 2 בני ברק", "חרמון 3 רעננה", "הבנים 77 הוד השרון", "הרי גולן 113 הרצליה", "שבט נפתלי 1 אשדוד", "רחבת מבצע ארז 3 באר שבע", "גנתון 43 גינתון", "חברון 13 תל אביב - יפו", "כפר הס 9931 כפר הס", "דוד רמז 5 לוד", "עין ורד 159 עין ורד", "דקר 5 בני ברק", "ירושלים 11 בני ברק" };
+
         for (int i = 0; i < 15; i++)
         {
             Users user = new Users();
             user.ID = Config.AutomaticUsers;
-            user.Email = usersName[i] ;
+            user.Name = usersName[i];
+            user.Address = usersAddress[i];
+            user.Email = usersEmail[i] ;
             user.Password =( i * 12356).ToString();
             user.TypeOfUser = (Do.TypeOfUser) rand.Next(0, 2);
             users.Add(user);

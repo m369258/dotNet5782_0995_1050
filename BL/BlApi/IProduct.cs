@@ -48,4 +48,7 @@ public interface IProduct
     /// </summary>
     /// <param name="product">Product to be updated</param>
     public void UpDateProduct(BO.Product product);
+
+    public IEnumerable<BO.ProductForList?> PopularItems();
+
 }

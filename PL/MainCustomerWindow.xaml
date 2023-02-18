@@ -27,6 +27,8 @@ x:Key="notBooleanToVisibilityConverter" />
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+      
         
         <Style x:Key="plusOrminus" TargetType="Button">
             <Setter Property="Height" Value="50" />
@@ -105,8 +107,11 @@ x:Key="notBooleanToVisibilityConverter" />
                 </EventTrigger>
             </Style.Triggers>
         </Style>
+        
         <Style x:Key="noneStyle" TargetType="Button">
             <Setter Property="Background" Value="White"/>
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="50"/>
         </Style>
     </Window.Resources>
 
@@ -133,20 +138,23 @@ x:Key="notBooleanToVisibilityConverter" />
             <TextBlock Grid.Column="4" Text="macarons" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="5" Text="sweets" RenderTransformOrigin="6.514,0.29" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="6" Text="ballons" RenderTransformOrigin="8.346,-0.172" Style="{StaticResource categoryStyle}"/>
-            <Image Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"  MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
-            <!--<Grid Name="leftButtonsGrid" Grid.Column="8">
+            <TextBlock Grid.Column="7" Text="popular" RenderTransformOrigin="8.346,-0.172"/>
+            <!--<Image Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"  MouseLeftButtonDown="Image_MouseLeftButtonDown"/>-->
+
+            <Grid Grid.Column="9" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>-->
-                <!--<Image HorizontalAlignment="Left" Height="30" Margin="14,0,0,0" VerticalAlignment="Center" Width="26"  Grid.Column="1"/>-->
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Style="{StaticResource noneStyle}" Click="Button_Click_1">
+</Button>
                 
-                <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="9" Height="75" Width="85" Click="Button_Click"  Style="{StaticResource noneStyle}">
+                <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="1" Height="75" Width="85" Click="Button_Click"  Style="{StaticResource noneStyle}">
                     <Image  Source="/44.png" HorizontalAlignment="Center" Height="70" VerticalAlignment="Center" Width="80" RenderTransformOrigin="0.317,0.528"/>
                 </Button>
 
-                <!--<Label Content="kkkkkkkkkk" Visibility="{Binding MyCart,Converter={StaticResource notBooleanToVisibilityConverter}, Mode=TwoWay}" />-->
+            </Grid>
+                
 
                 <Menu Grid.Row="0" Grid.Column="0" Background="Transparent" Margin="55,-2,55,0" Height="101" >
                     <MenuItem Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">

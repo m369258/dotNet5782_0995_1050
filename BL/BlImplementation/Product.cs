@@ -1,4 +1,6 @@
 ﻿using BO;
+using DalApi;
+
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
@@ -49,6 +51,34 @@ internal class Product : BlApi.IProduct
         }
         else throw new BO.InvalidArgumentException("Negative ID");
     }
+
+    public IEnumerable<BO.ProductForList?> PopularItems()
+    {
+        //creat a list of groups of items that appear in order, by ID
+        var popGroup = from item in myDal.orderItems.GetAll()
+                       group item by ((Do.OrderItem?)(item))?.ProductId into g
+                       select new { id = g.Key, Items = g };
+        //take the 10 that appear in the biggest amount of orders 
+        popGroup = popGroup.OrderByDescending(x => x.Items.Count()).Take(10);
+        //return the 10 popular items:
+      
+            return from item in popGroup
+                   let prod = myDal.product.Get(it=>it?.ID== item.id)
+                   select new BO.ProductForList
+                   {
+                       ID = prod.ID,
+                       Name = prod.Name,
+                       Price = prod.Price,
+                       category = ((BO.Category)prod.Category),
+                       Img = prod.Img ?? @"\pics\img.jpg",
+                   };
+       
+        //catch (DalMissingIdException ex)
+        //{
+        //    throw new BO.BlMissingEntityException("Product does not exist", ex);
+        //}
+    }
+
 
 
     public BO.ProductItem GetProduct(int idProduct, BO.Cart cart)

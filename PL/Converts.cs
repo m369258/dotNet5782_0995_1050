@@ -5,8 +5,8 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Security.Permissions;
+using System.Threading;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
@@ -69,13 +69,19 @@ class ConvertPathToBitmapImage : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
+
         try
         {
-            string imageRelativeName = (string)value;
-            string currentDir = Environment.CurrentDirectory[..^4];
-            string imageFullName = currentDir + imageRelativeName;//direction of the picture
-            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName));//makes the picture
-            return bitmapImage;
+            if (value == null)
+            {
+                return null;
+            }
+                string imageRelativeName = (string)value;
+                string currentDir = Environment.CurrentDirectory[..^4];
+                string imageFullName = currentDir + imageRelativeName;//direction of the picture
+                BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
+                return bitmapImage;
+         
         }
         catch
         {
