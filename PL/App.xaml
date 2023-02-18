@@ -28,10 +28,10 @@
 
         <Style TargetType="Label">
             <Setter Property="Height" Value="52"/>
-            <Setter Property="Width" Value="200"/>
+            <Setter Property="Width" Value="250"/>
             <Setter Property="Foreground" Value="#ffbdbd"/>
             <Setter Property="FontSize" Value="25" />
-            <Setter Property="FontFamily" Value="Bauhaus 93"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
         </Style>
 
 
@@ -39,7 +39,7 @@
             <Setter Property="Foreground" Value="Black"/>
             <Setter Property="Foreground" Value="#FF0E0D0E"/>
             <Setter Property="Background" Value="#FFFFEFF2"/>
-            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <Setter Property="FontSize" Value="16"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="BorderBrush" Value="#FFB5ADAD"/>
@@ -74,13 +74,12 @@
 
         <Style x:Key="managerWindow" TargetType="Window">
             <Setter Property="WindowStyle" Value="None"/>
-            <Setter Property="FontFamily" Value="Consolas"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
             <!--<Setter Property="Background">
                 --><!--<Setter.Value>
                     <ImageBrush ImageSource="/1-JkhdPT.png"/>
                 </Setter.Value>--><!--
             </Setter>-->
-            <Setter Property="FontFamily" Value="Consolas"/>
         </Style>
 
     </Application.Resources>

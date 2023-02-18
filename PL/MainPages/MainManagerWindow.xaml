@@ -17,7 +17,7 @@
             <ColumnDefinition Width="6*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        <Image Source="managerr.png" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"/>
+        <Image Source="/MainPages/managerr.png" Grid.Row="1" Grid.RowSpan="3" Grid.Column="0"/>
         <Label Content="hello manager!!!" Grid.Column="0" Grid.Row="0" Margin="85,10,77,35"/>
         <Button x:Name="btnOrders" Content="Orders" Grid.Column="1" Click="btnOrders_Click" Grid.Row="1"/>
         <Button x:Name="btnProducts" Content="Products" Grid.Column="1" Click="btnProducts_Click" Grid.Row="2"/>

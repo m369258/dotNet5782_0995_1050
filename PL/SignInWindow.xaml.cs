@@ -89,7 +89,7 @@ public partial class SignInWindow : Window
         else
             IsInvalidEmail = false;//צריך את זה??
 
-       
+
         if ((string?)ConfirmPassword != user.Password)
             NoTheSamePassword = true;
         else

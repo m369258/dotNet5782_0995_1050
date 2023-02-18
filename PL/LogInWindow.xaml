@@ -5,35 +5,57 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        DataContext="{Binding  RelativeSource={RelativeSource Mode=Self}}"
         Title="LogInWindow" Height="450" Width="800">
     <Window.Resources>
-        <local:NotBooleanToVisibileConverter
-x:Key="notBooleanToVisibileConverter" />
+
+        <local:NotBooleanToVisibileConverter x:Key="notBooleanToVisibileConverter" />
+
+        <Style x:Key="labeleFill" TargetType="Label">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+            <Setter Property="Foreground" Value="red"/>
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        
+        
+        <Style TargetType="TextBox">
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black"/>
+                        <GradientStop Color="#FFEB52B7" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
     </Window.Resources>
+    
     <Grid>
-        <Label Content="Log In to the system" HorizontalAlignment="Left" Margin="293,66,0,0" VerticalAlignment="Top" Width="261"/>
-        <Label Content="Email address" HorizontalAlignment="Left" Margin="223,140,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtEmail" Text="{Binding Password, Mode=TwoWay}" HorizontalAlignment="Left" Margin="446,158,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtEmail_TextChanged">
-            <TextBox.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFEB52B7" Offset="1"/>
-                </LinearGradientBrush>
-            </TextBox.BorderBrush>
-        </TextBox>
-        <Label Content="Password" HorizontalAlignment="Left" Margin="223,226,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtPassword" Text="{Binding Password, Mode=TwoWay}" HorizontalAlignment="Left" Margin="446,244,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120">
-            <TextBox.BorderBrush>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black"/>
-                    <GradientStop Color="#FFDA51AB" Offset="1"/>
-                </LinearGradientBrush>
-            </TextBox.BorderBrush>
-        </TextBox>
-        <Button Content="Log in" Margin="317,297,317,82" Click="Button_Click"/>
-        <Button x:Name="btnSignInn" Content="Click to sign in" HorizontalAlignment="Left" Margin="610,375,0,0" VerticalAlignment="Top" Click="btnSignInn_Click" Width="149" Height="32" FontSize="14" Foreground="#FFF971C1"/>
-        <Label Content="אנא מלא את כל הפרטים" Visibility="{Binding IsFill,Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" HorizontalAlignment="Center" Margin="0,345,0,0" VerticalAlignment="Top" Width="287"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Label Content="Log In to the system" Grid.ColumnSpan="4" Grid.Column="0" Grid.Row="0"/>
+        <Label Content="Email address" Grid.Column="1" Grid.Row="1"/>
+        <TextBox Text="{Binding CurrUser.Email, Mode=TwoWay}" Width="150" Height="25" Grid.Column="2" Grid.Row="1"/>
+        <Label Content="Password" Grid.Column="1" Grid.Row="2"/>
+        <TextBox Text="{Binding CurrUser.Password, Mode=TwoWay}" Grid.Column="2" Width="150" Height="25" Grid.Row="2"/>
+        <Button Content="Log in" Click="Button_Click" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="2"/>
+        <Button Content="Click to sign in" Grid.Column="2" Grid.ColumnSpan="2" Grid.Row="5" Click="btnSignInn_Click" Width="149" Height="32" FontSize="14" Foreground="#FFF971C1"/>
+        <Label Content="Please fill in all items" Style="{StaticResource labeleFill}" Visibility="{Binding IsVisibility,Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" Grid.Column="0" Grid.ColumnSpan="2"  Grid.Row="5" Width="287"/>
 
     </Grid>
 </Window>

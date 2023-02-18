@@ -11,9 +11,9 @@ namespace PL.Cart;
 /// </summary>
 public partial class Customer_CartWindow : Window
 {
-    List<Tuple<int, int>> items = new List<Tuple<int, int>>();
-
     private BlApi.IBl bl = BlApi.Factory.Get();
+
+    List<Tuple<int, int>> items = new List<Tuple<int, int>>();
 
     public bool state
     {
@@ -47,7 +47,11 @@ public partial class Customer_CartWindow : Window
     {
         foreach (var item in items)
         {
-            MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2);
+            try { MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2); }
+            catch (BO.InvalidInputException ex) { MessageBox.Show("Pay attention" + ex.Message); }
+            catch (BO.InternalErrorException ex) { MessageBox.Show("Pay attention" + ex.Message); }
+            catch (BO.NotEnoughInStockException) { MessageBox.Show("We are sorry but the item is out of stock"); }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
         }
     }
 
@@ -68,7 +72,9 @@ public partial class Customer_CartWindow : Window
     private void btnDeleteItemFromCart_Click(object sender, RoutedEventArgs e)
     {
         BO.OrderItem selection = ((BO.OrderItem)((Button)sender).DataContext);
-        MyCart = bl.cart.Delete(MyCart, selection.ProductId);
+        try { MyCart = bl.cart.Delete(MyCart, selection.ProductId); }
+        catch(BO.InternalErrorException) { MessageBox.Show("We are sorry but the item is not exsist"); }
+        catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
     }
 
     private void btnPayment_Click(object sender, RoutedEventArgs e)
@@ -80,15 +86,6 @@ public partial class Customer_CartWindow : Window
     {
         this.Close();
     }
-
-
-
-    //private void Button_Click(object sender, RoutedEventArgs e)
-    //{
-    //   BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
-    //    MyCart = bl.cart
-
-    //}
 }
 
 
@@ -98,7 +95,7 @@ public class NotBooleanToVisibilityConverter : IValueConverter
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         BO.Cart cart = (BO.Cart)value;
-        if (cart!=null&&cart.items != null && cart.items.Count != 0)
+        if (cart != null && cart.items != null && cart.items.Count != 0)
         {
             return Visibility.Hidden; //Visibility.Collapsed;
         }
@@ -114,7 +111,7 @@ public class NotBooleanToVisibilityConverter : IValueConverter
         throw new NotImplementedException();
     }
 
-   // private void btnPayment_Click(object sender, RoutedEventArgs e) => new paymentWindow(MyCart).ShowDialog();
+    // private void btnPayment_Click(object sender, RoutedEventArgs e) => new paymentWindow(MyCart).ShowDialog();
 }
 
 public class NotBooleanToVisibilityConverter2 : IValueConverter

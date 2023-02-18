@@ -1,19 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
 namespace PL;
 
 /// <summary>
@@ -21,8 +11,9 @@ namespace PL;
 /// </summary>
 public partial class LogInWindow : Window
 {
+    private BlApi.IBl bl = BlApi.Factory.Get();
 
-
+    //dp
     public BO.Users CurrUser
     {
         get { return (BO.Users)GetValue(CurrUserProperty); }
@@ -33,38 +24,37 @@ public partial class LogInWindow : Window
     public static readonly DependencyProperty CurrUserProperty =
         DependencyProperty.Register("CurrUser", typeof(BO.Users), typeof(LogInWindow), new PropertyMetadata(null));
 
-
-
-
-    public bool IsFill
+    //dp
+    public bool IsVisibility
     {
-        get { return (bool)GetValue(IsFillProperty); }
-        set { SetValue(IsFillProperty, value); }
+        get { return (bool)GetValue(IsVisibilityProperty); }
+        set { SetValue(IsVisibilityProperty, value); }
     }
 
-    // Using a DependencyProperty as the backing store for IsFill.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsFillProperty =
-        DependencyProperty.Register("IsFill", typeof(bool), typeof(LogInWindow), new PropertyMetadata(false));
+    // Using a DependencyProperty as the backing store for IsVisibility.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsVisibilityProperty =
+        DependencyProperty.Register("IsVisibility", typeof(bool), typeof(LogInWindow), new PropertyMetadata(false));
 
-
-
-    private BlApi.IBl bl = BlApi.Factory.Get();
     public LogInWindow()
     {
+        CurrUser = new BO.Users();
         InitializeComponent();
-
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        if (CurrUser == null || CurrUser.Email == "" || CurrUser.Password == "")
-            IsFill = false;
+        if (CurrUser.Email == null || CurrUser.Password == null)
+            IsVisibility = true;
         else
-            IsFill = true;
-        if(IsFill)
+            IsVisibility = false;
+
+        if (!IsVisibility)
         {
-            try { CurrUser = bl.user.GetUser(CurrUser.Email, CurrUser.Password); }
-            catch
+            try
+            {
+                CurrUser = bl.user.GetUser(CurrUser.Email, CurrUser.Password);
+            }
+            catch (BO.InternalErrorException)
             {
                 string message = "You are not in out system, Do you want to sign in?";
                 string title = "Close Window";
@@ -72,7 +62,7 @@ public partial class LogInWindow : Window
                 if (MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     this.Close();
-                    new SignInWindow(BO.TypeOfUser.customer).Show();
+                    new SignInWindow(BO.TypeOfUser.customer).ShowDialog();
                     return;
                 }
                 else
@@ -81,11 +71,12 @@ public partial class LogInWindow : Window
                     return;
                 }
             }
+            catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
 
             if (CurrUser.TypeOfUser == BO.TypeOfUser.manager)
             {
                 this.Close();
-                new MainPages.MainManagerWindow(CurrUser.Name).Show();
+                new MainPages.MainManagerWindow(CurrUser.Name).ShowDialog();
             }
             else
             {
@@ -100,10 +91,7 @@ public partial class LogInWindow : Window
                 };
                 new MainCustomerWindow(cart).Show();
             }
-
-
         }
-       
     }
 
     private void btnSignIn_Click(object sender, RoutedEventArgs e)
@@ -119,6 +107,6 @@ public partial class LogInWindow : Window
 
     private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
     {
-        
+
     }
 }
