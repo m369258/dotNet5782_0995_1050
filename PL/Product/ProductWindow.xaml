@@ -5,23 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        DataContext="{Binding productCurrent, RelativeSource={RelativeSource Mode=Self}}"
         Title="ProductWindow" Height="450" Width="800">
 
     <Window.Resources>
-
-        <local:AddOrUpdate x:Key="addOrUpdate"/>
-        
         <Style TargetType="TextBox">
-            <Setter Property="IsEnabled" Value="{Binding IsItForEditing}"/>
             <Setter Property="Width" Value="120"/>
             <Setter Property="Height" Value="30"/>
         </Style>
-        
     </Window.Resources>
-    
-    <Grid>
 
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -40,22 +34,21 @@
         </Grid.RowDefinitions>
 
         <Label x:Name="lblID" Content="IdItem" Grid.Row="1" Grid.Column="1"/>
-        <TextBox x:Name="txtID" Text="{Binding productCurrent.ID}" Grid.Row="1" Grid.Column="2"/>
+        <TextBox x:Name="txtID" Text="{Binding ID}" Grid.Row="1" Grid.Column="2"/>
 
         <Label x:Name="lblName" Content="NameItem" Grid.Row="2" Grid.Column="1"/>
-        <TextBox x:Name="txtName" Text="{Binding productCurrent.Name}" Grid.Column="2" Grid.Row="2"/>
+        <TextBox x:Name="txtName" Text="{Binding Name}" Grid.Column="2" Grid.Row="2"/>
 
         <Label x:Name="lblCategory" Content="Category" Grid.Row="3" Grid.Column="1"/>
-        <ComboBox x:Name="cbxCategory" Text="{Binding productCurrent.Category}" IsEnabled="{Binding IsItForEditing}" Grid.Row="3" Grid.Column="2" Width="120" Height="30"/>
+        <ComboBox x:Name="cbxCategory" Text="{Binding Category}" Grid.Row="3" Grid.Column="2" Width="120" Height="30"/>
 
         <Label x:Name="lblPrice" Content="Price" Grid.Row="4" Grid.Column="1"/>
-        <TextBox x:Name="txtPrice" Text="{Binding productCurrent.Price}" Grid.Row="4"  Grid.Column="2"/>
+        <TextBox x:Name="txtPrice" Text="{Binding Price}" Grid.Row="4"  Grid.Column="2"/>
 
         <Label x:Name="lblInStock" Content="InStock" Grid.Row="5" Grid.Column="1"/>
-        <TextBox x:Name="txtInStock" Text="{Binding productCurrent.InStock}" Grid.Row="5" Grid.Column="2"/>
+        <TextBox x:Name="txtInStock" Text="{Binding InStock}" Grid.Row="5" Grid.Column="2"/>
 
-        <Button x:Name="btnAddOrUpdateProduct" Content="{Binding IsItForEditing, Converter={StaticResource addOrUpdate}}" Grid.Row="6" Click="btnAddOrUpdateProduct_Click" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnAddOrUpdateProduct" Grid.Row="6" Click="btnAddOrUpdateProduct_Click" Grid.Column="1" Grid.ColumnSpan="2"/>
         <TextBlock Name="txtBack" Grid.Row="7" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
-
     </Grid>
 </Window>

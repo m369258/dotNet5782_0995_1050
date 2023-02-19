@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Globalization;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Input;
+
 namespace PL.Product;
 
 /// <summary>
@@ -12,17 +11,6 @@ public partial class ProductWindow : Window
 {
     //A private variable to access the logic layer
     BlApi.IBl bl = BlApi.Factory.Get();
-
-    //IEnumerable<BO.Category> categories;
-    public bool IsItForEditing
-    {
-        get { return (bool)GetValue(IsItForEditingProperty); }
-        set { SetValue(IsItForEditingProperty, value); }
-    }
-
-    // Using a DependencyProperty as the backing store for IsItForEditing.  This enables animation, styling, binding, etc...
-    public static readonly DependencyProperty IsItForEditingProperty =
-        DependencyProperty.Register("IsItForEditing", typeof(bool), typeof(ProductWindow), new PropertyMetadata(true));
 
     public BO.Product productCurrent
     {
@@ -37,35 +25,24 @@ public partial class ProductWindow : Window
     /// <summary>
     /// A constructive action for the state of adding a product
     /// </summary>
-    //public ProductWindow()
-    //{
-    //    InitializeComponent();
-    //    productCurrent = new BO.Product();
-    //    cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));   
-    //    btnAddOrUpdateProduct.Content = "Add";
-    //    txtID.IsEnabled = true;
-    //}
+    public ProductWindow()
+    {
+        InitializeComponent();
+        productCurrent = new BO.Product();
+        cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        btnAddOrUpdateProduct.Content = "Add";
+        txtID.IsEnabled = true;
+    }
 
     /// <summary>
     /// Constructive action for product update status
     /// </summary>
     /// <param name="id">ID product</param>
-    public ProductWindow(int id = 0, string fromWindow = "")
+    public ProductWindow(int id)
     {
-        if (fromWindow == "tt")
-            IsItForEditing = false;
         InitializeComponent();
-        // categories= Enum.GetValues(typeof(BO.Category));
-        cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        
         //Product request by ID from the logical layer
-        try { 
-            if (id != 0)
-            {
-                productCurrent = bl.product.GetProduct(id);
-                IsItForEditing = false;
-            }
-        }
+        try { productCurrent = bl.product.GetProduct(id); }
         catch (BO.InternalErrorException ex)
         {
             System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK);
@@ -84,30 +61,30 @@ public partial class ProductWindow : Window
 
         //The name of the selected category
         cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        //btnAddOrUpdateProduct.Content = "Update";
+        btnAddOrUpdateProduct.Content = "Update";
 
         //Locks the option to change ID
-        //txtID.IsEnabled = false;
+        txtID.IsEnabled = false;
     }
 
-    //public ProductWindow(int id, string fromWhichWindow)
-    //{
-    //    InitializeComponent();
-    //    //Product request by ID from the logical layer
-    //    try { productCurrent = bl.product.GetProduct(id); }
-    //    catch (BO.InternalErrorException) { MessageBox.Show("Product does not exist"); }
+    public ProductWindow(int id, string fromWhichWindow)
+    {
+        InitializeComponent();
+        //Product request by ID from the logical layer
+        try { productCurrent = bl.product.GetProduct(id); }
+        catch (BO.InternalErrorException) { MessageBox.Show("Product does not exist"); }
 
-    //    //The name of the selected category
-    //    cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //The name of the selected category
+        cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
-    //    //Locks the option to change ID
-    //    txtID.IsEnabled = false;
-    //    txtName.IsEnabled = false;
-    //    cbxCategory.IsEnabled = false;
-    //    txtPrice.IsEnabled = false;
-    //    txtInStock.IsEnabled = false;
-    //    btnAddOrUpdateProduct.Visibility = Visibility.Collapsed;
-    //}
+        //Locks the option to change ID
+        txtID.IsEnabled = false;
+        txtName.IsEnabled = false;
+        cbxCategory.IsEnabled = false;
+        txtPrice.IsEnabled = false;
+        txtInStock.IsEnabled = false;
+        btnAddOrUpdateProduct.Visibility = Visibility.Collapsed;
+    }
 
     /// <summary>
     /// A function that updates or adds a product
@@ -129,6 +106,7 @@ public partial class ProductWindow : Window
         if (!int.TryParse(txtID.Text, out id)) { MessageBox.Show("Invalid ID"); return; };
         if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("Invalid price"); return; };
         if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("Invalid stock quantity"); return; };
+        if (id > 100000 && id < 1000000) { MessageBox.Show("the id invalid"); return; };
 
         //In case of addition, a product will be added to the logical layer
         if (btnAddOrUpdateProduct.Content.ToString() == "Add")
@@ -148,36 +126,10 @@ public partial class ProductWindow : Window
         new ProductForListWindow().Show();
         this.Close();
     }
+
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         new ProductForListWindow().Show();
         this.Close();
     }
 }
-
-
-
-public class AddOrUpdate : IValueConverter
-{
-    //convert from source property type to target property type
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        bool isVisible = (bool)value;
-        if (isVisible)
-        {
-            return "Add"; //Visibility.Collapsed;
-        }
-        else
-        {
-            return "Update";
-        }
-    }
-
-    //convert from target property type to source property type
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
-
-

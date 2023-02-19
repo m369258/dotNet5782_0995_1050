@@ -79,10 +79,7 @@ x:Key="notBooleanToVisibileConverter" />
                         </LinearGradientBrush>
                     </TextBox.BorderBrush>
                 </TextBox>
-
             </Grid>
-
-
 
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
