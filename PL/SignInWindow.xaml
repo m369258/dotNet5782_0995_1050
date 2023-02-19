@@ -17,11 +17,12 @@ x:Key="notBooleanToVisibileConverter" />
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Rectangle HorizontalAlignment="Left" Height="286" Margin="63,66,0,0" Stroke="Black" VerticalAlignment="Top" Width="692"/>
-            <Grid Width="341" Height="200" x:Name="gridSignUp" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="236,109,0,0">
+            <Rectangle HorizontalAlignment="Center" Height="286"  Stroke="Black" VerticalAlignment="Center" Width="692"/>
+            <Grid Height="200" x:Name="gridSignUp" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="1.5*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
@@ -30,12 +31,15 @@ x:Key="notBooleanToVisibileConverter" />
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                <Label Content="❌ Email Is Invalid" Visibility="{Binding IsInvalidEmail , Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" Grid.Row="2" Grid.Column="2"   Height="24" FontSize="10"  />
+                <Label Content="not same password" Visibility="{Binding NoTheSamePassword,Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" Grid.Row="3" Grid.Column="2" Height="24" FontSize="10"/>
+
                 <Label Content="name" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"/>
                 <Label Content="address" HorizontalAlignment="Left" Grid.Row="1" VerticalAlignment="Center" FontSize="18"/>
                 <Label Content="email" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" FontSize="18"/>
                 <Label Content="password" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" FontSize="18"/>
                 <Label Content="confirm password" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" FontSize="18"/>
-                <TextBox x:Name="txtName" Text="{Binding user.Name}" Grid.Column="1" HorizontalAlignment="Left" Margin="43,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+                <TextBox x:Name="txtName" Text="{Binding user.Name}" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
                     <TextBox.BorderBrush>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black"/>
@@ -43,7 +47,7 @@ x:Key="notBooleanToVisibileConverter" />
                         </LinearGradientBrush>
                     </TextBox.BorderBrush>
                 </TextBox>
-                <TextBox x:Name="txtAddress" Text="{Binding user.Address}" Grid.Column="1" HorizontalAlignment="Left" Margin="43,0,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+                <TextBox x:Name="txtAddress" Text="{Binding user.Address}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
                     <TextBox.BorderBrush>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black"/>
@@ -51,7 +55,7 @@ x:Key="notBooleanToVisibileConverter" />
                         </LinearGradientBrush>
                     </TextBox.BorderBrush>
                 </TextBox>
-                <TextBox x:Name="txtEmail" Text="{Binding user.Email, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Left" Margin="43,0,0,0" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+                <TextBox x:Name="txtEmail" Text="{Binding user.Email, Mode=TwoWay}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
                     <TextBox.BorderBrush>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black"/>
@@ -59,7 +63,7 @@ x:Key="notBooleanToVisibileConverter" />
                         </LinearGradientBrush>
                     </TextBox.BorderBrush>
                 </TextBox>
-                <TextBox x:Name="txtPassword" Text="{Binding user.Password}" Grid.Column="1" HorizontalAlignment="Left" Margin="43,0,0,0" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+                <TextBox x:Name="txtPassword" Text="{Binding user.Password}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
                     <TextBox.BorderBrush>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black"/>
@@ -67,7 +71,7 @@ x:Key="notBooleanToVisibileConverter" />
                         </LinearGradientBrush>
                     </TextBox.BorderBrush>
                 </TextBox>
-                <TextBox x:Name="txtConfirmPassword" Text="{Binding ConfirmPassword}" Grid.Column="1" HorizontalAlignment="Left" Margin="43,0,0,0" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
+                <TextBox x:Name="txtConfirmPassword" Text="{Binding ConfirmPassword}" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" TextWrapping="Wrap" VerticalAlignment="Center" Width="120">
                     <TextBox.BorderBrush>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="Black"/>
@@ -75,11 +79,19 @@ x:Key="notBooleanToVisibileConverter" />
                         </LinearGradientBrush>
                     </TextBox.BorderBrush>
                 </TextBox>
+
             </Grid>
-            <Button Content="sign in" HorizontalAlignment="Left" Margin="636,0,0,0" Grid.Row="1" VerticalAlignment="Center" Click="Button_Click"/>
-            <Label Content="אנא מלא את כל הפרטים" Visibility="{Binding IsFill,Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" HorizontalAlignment="Left" Margin="134,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="302"/>
-            <Label Content="Invalid email" Visibility="{Binding IsInvalidEmail , Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" HorizontalAlignment="Left" Margin="591,199,0,0" VerticalAlignment="Top" Width="135" Height="20" FontSize="10"/>
-            <Label Content="❌ Email Is Invalid" Visibility="{Binding NoTheSamePassword,Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" HorizontalAlignment="Left" Margin="591,256,0,0" VerticalAlignment="Top" Width="135" Height="24" FontSize="10"/>
+
+
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Content="sign in" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Click="Button_Click"/>
+                <Label Content="אנא מלא את כל הפרטים" Visibility="{Binding IsFill,Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="302"/>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

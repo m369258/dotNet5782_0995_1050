@@ -54,7 +54,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="70*"/>
                 <RowDefinition Height="99*"/>
-                <RowDefinition Height="29*"/>
+                <RowDefinition Height="35*"/>
             </Grid.RowDefinitions>
             <Grid>
                 <Grid.RowDefinitions>
@@ -101,11 +101,12 @@
                 <TextBlock Text="{Binding ShipDate}" Grid.Row="4" Grid.Column="5"/>
             </Grid>
             <!--<TextBlock Text="Items" Grid.Row="1"/>-->
-            <ListView Grid.Row="1" ItemTemplate="{StaticResource OneProductItem}" ItemsSource="{Binding items, Mode=TwoWay}" ScrollViewer.CanContentScroll="False"/>
+
+            <ListView Grid.Row="1" ItemTemplate="{StaticResource OneProductItem}" ItemsSource="{Binding items}" ScrollViewer.CanContentScroll="False"/>
 
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="3*"/>
                     <RowDefinition Height="5*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
@@ -117,8 +118,8 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="totalPrice" Grid.Row="0" Grid.Column="0" />
-                <TextBlock Text="{Binding totalPrice}" Grid.Row="0" Grid.Column="1"/>
+                <TextBlock Text="totalPrice" Grid.Row="0" Grid.Column="0" FontSize="18" Foreground="#FFFFBDBD" />
+                <TextBlock Text="{Binding totalPrice}" Grid.Row="0" Grid.Column="1" FontSize="18" Foreground="#FFFFBDBD"/>
                 <Button x:Name="btnUpdate" Content="UpdateStatus" Grid.Row="1" Grid.Column="5" Click="btnUpdate_Click"  FontSize="14"/>
 
             </Grid>
