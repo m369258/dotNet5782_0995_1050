@@ -55,7 +55,7 @@ public partial class CatalogWindow : Window
     {
         if (lsvCatlog.SelectedIndex != -1)
         {
-            new ProductWindow(((BO.ProductItem)lsvCatlog.SelectedItem).ProductID, "FromCatalogWindow").Show();
+            new ProductWindow(((BO.ProductItem)lsvCatlog.SelectedItem).ProductID).Show();
             lsvCatlog.SelectedIndex = -1;
             cmbSelectCategory.SelectedIndex = 5;
             // ProductListview.ItemsSource = bl.product.GetListOfProducts();
