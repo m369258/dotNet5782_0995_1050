@@ -10,6 +10,7 @@ public partial class SignInWindow : Window
 {
     private BlApi.IBl bl = BlApi.Factory.Get();
 
+    #region dp
     public BO.Users user
     {
         get { return (BO.Users)GetValue(userProperty); }
@@ -30,7 +31,6 @@ public partial class SignInWindow : Window
     public static readonly DependencyProperty ConfirmPasswordProperty =
         DependencyProperty.Register("ConfirmPassword", typeof(string), typeof(SignInWindow), new PropertyMetadata(""));
 
-
     public bool IsFill
     {
         get { return (bool)GetValue(IsFillProperty); }
@@ -41,7 +41,6 @@ public partial class SignInWindow : Window
     public static readonly DependencyProperty IsFillProperty =
         DependencyProperty.Register("IsFill", typeof(bool), typeof(SignInWindow), new PropertyMetadata(false));
 
-    //עבור אימייל לא תקין
     public bool IsInvalidEmail
     {
         get { return (bool)GetValue(IsInvalidEmailProperty); }
@@ -61,7 +60,12 @@ public partial class SignInWindow : Window
     // Using a DependencyProperty as the backing store for NoTheSamePassword.  This enables animation, styling, binding, etc...
     public static readonly DependencyProperty NoTheSamePasswordProperty =
         DependencyProperty.Register("NoTheSamePassword", typeof(bool), typeof(SignInWindow), new PropertyMetadata(false));
+    #endregion
 
+    /// <summary>
+    /// constructive action
+    /// </summary>
+    /// <param name="position">customer or manager</param>
     public SignInWindow(BO.TypeOfUser position)
     {
         user = new BO.Users();
@@ -69,12 +73,17 @@ public partial class SignInWindow : Window
         user.TypeOfUser = position;
     }
 
+    /// <summary>
+    /// sign in to the system
+    /// </summary>
+    /// <param name="sender">btn sign in</param>
+    /// <param name="e">more details</param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         if (!checkEmail())
             IsInvalidEmail = true;
         else
-            IsInvalidEmail = false;//צריך את זה??
+            IsInvalidEmail = false;
 
         if ((string?)ConfirmPassword != user.Password)
             NoTheSamePassword = true;
@@ -89,7 +98,6 @@ public partial class SignInWindow : Window
             {
                 IsFill = false;
                 try { bl.user.AddUser(user); }
-                //יש לנו גם לייבל שזורק מייל לא תקין וגם שגיאה, האם אפשר לוותר על הזריקת החריגה???????????????..
                 catch (BO.InvalidArgumentException ex)
                 {
                     System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);

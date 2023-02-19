@@ -126,6 +126,7 @@ public partial class ProductWindow : Window
         new ProductForListWindow().Show();
         this.Close();
     }
+
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         new ProductForListWindow().Show();
