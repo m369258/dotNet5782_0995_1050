@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Windows;
 using System.Windows.Input;
 
@@ -43,8 +44,22 @@ public partial class ProductWindow : Window
         InitializeComponent();
         //Product request by ID from the logical layer
         try { productCurrent = bl.product.GetProduct(id); }
-        catch (BO.InternalErrorException) { MessageBox.Show("Product does not exist"); }
-
+        catch (BO.InternalErrorException ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK);
+            return;
+        }
+        catch (BO.InvalidArgumentException ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK);
+            return;
+        }
+        catch (Exception ex)
+        {
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            return;
+        }
+        
         //The name of the selected category
         cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
         btnAddOrUpdateProduct.Content = "Update";
