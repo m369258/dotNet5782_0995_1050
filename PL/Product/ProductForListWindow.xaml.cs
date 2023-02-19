@@ -69,7 +69,8 @@ public partial class ProductForListWindow : Window
     /// <param name="e">Details on the add button</param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        new ProductWindow().ShowDialog();
+        new ProductWindow().Show();
+        this.Close();
 
         //Refreshing the list of existing products
         var temp = bl.product.GetListOfProducts();
@@ -86,7 +87,8 @@ public partial class ProductForListWindow : Window
     {
         if (DGProducts.SelectedIndex != -1)
         {
-            new ProductWindow(((BO.ProductForList)DGProducts.SelectedItem).ID).ShowDialog();
+            new ProductWindow(((BO.ProductForList)DGProducts.SelectedItem).ID).Show();
+            this.Close();
             DGProducts.SelectedIndex = -1;
             cmxCategorySelector.SelectedIndex = 5;
             // ProductListview.ItemsSource = bl.product.GetListOfProducts();

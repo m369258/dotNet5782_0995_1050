@@ -123,6 +123,7 @@ public partial class ProductWindow : Window
             try { bl.product.UpDateProduct(productCurrent); }
             catch { MessageBox.Show("Product not added due to invalid input"); }
         }
+        new ProductForListWindow().Show();
         this.Close();
     }
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
