@@ -108,6 +108,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="3*"/>
                     <RowDefinition Height="5*"/>
+                    <RowDefinition Height="3.5*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -120,7 +121,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="totalPrice" Grid.Row="0" Grid.Column="0" FontSize="18" Foreground="#FFFFBDBD" />
                 <TextBlock Text="{Binding totalPrice}" Grid.Row="0" Grid.Column="1" FontSize="18" Foreground="#FFFFBDBD"/>
-                <Button x:Name="btnUpdate" Content="UpdateStatus" Grid.Row="1" Grid.Column="5" Click="btnUpdate_Click"  FontSize="14"/>
+                <Button x:Name="btnUpdate" Content="UpdateStatus" Grid.Row="1" Grid.Column="5" Click="btnUpdate_Click" Grid.RowSpan="2" FontSize="14"/>
+                <TextBlock Name="txtBack" Grid.Row="2" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
 
             </Grid>
         </Grid>
