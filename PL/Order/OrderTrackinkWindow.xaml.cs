@@ -38,7 +38,7 @@ public partial class OrderTrackinkWindow : Window
     /// <summary>
     /// ctor for order tracking window
     /// </summary>
-    public OrderTrackinkWindow(string email=null)
+    public OrderTrackinkWindow(string email = null)
     {
         InitializeComponent();
         this.email = email;
@@ -71,7 +71,7 @@ public partial class OrderTrackinkWindow : Window
     {
 
         if (tracking == null)
-            MessageBox.Show("To view items select an order"); 
+            MessageBox.Show("To view items select an order");
         else
         {
             int orderid = tracking.ID;
@@ -85,7 +85,14 @@ public partial class OrderTrackinkWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => this.Close();
+    private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (email == null)
+            new MainPages.MainManagerWindow().Show();
+        else
+            new MainCustomerWindow().Show();
+        this.Close();
+    }
 
     /// <summary>
     /// show tracking of the selected order in the combobox

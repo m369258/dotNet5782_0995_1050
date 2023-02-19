@@ -1,14 +1,10 @@
-﻿using BO;
-using PL.Cart;
+﻿using PL.Cart;
 using PL.Order;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Input;
 namespace PL;
 
@@ -42,48 +38,75 @@ public partial class MainCustomerWindow : Window
     public static readonly DependencyProperty MyCartProperty =
     DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
+    ///// <summary>
+    ///// ctor for customer window
+    ///// </summary>
+    ///// <param name="cart">the cart of the user</param>
+    //public MainCustomerWindow()
+    //{
+    //    MyCart = new BO.Cart();
+    //    InitializeComponent();
+    //    ////try
+    //    ////{
+    //    //catalog.ItemsSource = bl.product.GetListOfProducts();
+    //    IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
+    //    //var temp = bl.product.GetCatalog();
+    //    MyProductItems = temp == null ? new() : new(temp);
+    //    ////}
+    //    //catch (BO.BlNullPropertyException ex)
+    //    //{
+    //    //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    //}
+    //    //catch (BO.BlWrongCategoryException ex)
+    //    //{
+    //    //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    //}
+    //    ////catch (Exception ex)
+    //    ////{
+    //    ////    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    ////}
+    //    // prod = new ObservableCollection<BO.ProductForList>(bl.Product.ListOfProducts().OrderBy(x => x?.ID));
+    //    // this.DataContext = prod;
+    //}    ///// <summary>
+    ///// ctor for customer window
+    ///// </summary>
+    ///// <param name="cart">the cart of the user</param>
+    //public MainCustomerWindow()
+    //{
+    //    MyCart = new BO.Cart();
+    //    InitializeComponent();
+    //    ////try
+    //    ////{
+    //    //catalog.ItemsSource = bl.product.GetListOfProducts();
+    //    IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
+    //    //var temp = bl.product.GetCatalog();
+    //    MyProductItems = temp == null ? new() : new(temp);
+    //    ////}
+    //    //catch (BO.BlNullPropertyException ex)
+    //    //{
+    //    //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    //}
+    //    //catch (BO.BlWrongCategoryException ex)
+    //    //{
+    //    //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    //}
+    //    ////catch (Exception ex)
+    //    ////{
+    //    ////    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+    //    ////}
+    //    // prod = new ObservableCollection<BO.ProductForList>(bl.Product.ListOfProducts().OrderBy(x => x?.ID));
+    //    // this.DataContext = prod;
+    //}
 
-    //BO.Cart MyCart = new BO.Cart();
-
-
-    /// <summary>
-    /// ctor for customer window
-    /// </summary>
-    /// <param name="cart">the cart of the user</param>
-    public MainCustomerWindow()
+    public MainCustomerWindow(BO.Cart cart = null)
     {
-        MyCart = new BO.Cart();
-        //curOrderItem=new BO.OrderItem();
         InitializeComponent();
-        ////try
-        ////{
-        //catalog.ItemsSource = bl.product.GetListOfProducts();
-        IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
-        //var temp = bl.product.GetCatalog();
-        MyProductItems = temp == null ? new() : new(temp);
-        ////}
-        //catch (BO.BlNullPropertyException ex)
-        //{
-        //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-        //}
-        //catch (BO.BlWrongCategoryException ex)
-        //{
-        //    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-        //}
-        ////catch (Exception ex)
-        ////{
-        ////    MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-        ////}
-        // prod = new ObservableCollection<BO.ProductForList>(bl.Product.ListOfProducts().OrderBy(x => x?.ID));
-        // this.DataContext = prod;
-    }
+        if (cart != null)
+            MyCart = cart;
+        else
+            MyCart = new BO.Cart();
 
-    public MainCustomerWindow(BO.Cart cart)
-    {
-        MyCart = new BO.Cart();
-        MyCart = cart;
         //curOrderItem=new BO.OrderItem();
-        InitializeComponent();
         try
         {
             //catalog.ItemsSource = bl.product.GetListOfProducts();
@@ -149,22 +172,17 @@ public partial class MainCustomerWindow : Window
         string? strCat = (sender as TextBlock)?.Text;
         try
         {
-            if (strCat != "Popular")
+            if (strCat != "popular")
             {
                 BO.Category.TryParse(strCat, out c);
 
                 var temp = bl.product.GetCatalog((int)c, MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
-
-
-                //  catalog.ItemsSource = bl.product.GetListOfProducts((int)c);
             }
             else
             {
-                var temp = bl.product.GetCatalog(0, MyCart.items);
+                var temp = bl.product.PopularItems();
                 MyProductItems = temp == null ? new() : new(temp);
-                //catalog.ItemsSource = bl.product.GetListOfProducts();
-
             }
         }
         //catch (BO.BlNullPropertyException ex)
@@ -315,11 +333,8 @@ public partial class MainCustomerWindow : Window
 
     private void menuTracking_Click(object sender, RoutedEventArgs e)
     {
-        new OrderTrackinkWindow().ShowDialog();
+        new OrderTrackinkWindow().Show();
+        this.Close();
     }
 
-    private void Button_Click_1(object sender, RoutedEventArgs e)
-    {
-
-    }
 }

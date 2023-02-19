@@ -12,6 +12,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.3*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="6*"/>
@@ -22,5 +23,7 @@
         <Button x:Name="btnOrders" Content="Orders" Grid.Column="1" Click="btnOrders_Click" Grid.Row="1"/>
         <Button x:Name="btnProducts" Content="Products" Grid.Column="1" Click="btnProducts_Click" Grid.Row="2"/>
         <Button Content="Tracking" Grid.Column="1" Grid.Row="3" Click="Button_Click"/>
+        <TextBlock Name="txtBack" Grid.Row="4" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
+
     </Grid>
 </Window>

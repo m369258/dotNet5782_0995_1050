@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Input;
+
 namespace PL.Product;
 
 /// <summary>
@@ -41,7 +43,7 @@ public partial class ProductWindow : Window
         InitializeComponent();
         //Product request by ID from the logical layer
         try { productCurrent = bl.product.GetProduct(id); }
-        catch (BO.InternalErrorException) { MessageBox.Show("מוצר לא קיים"); }
+        catch (BO.InternalErrorException) { MessageBox.Show("Product does not exist"); }
 
         //The name of the selected category
         cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -56,7 +58,7 @@ public partial class ProductWindow : Window
         InitializeComponent();
         //Product request by ID from the logical layer
         try { productCurrent = bl.product.GetProduct(id); }
-        catch (BO.InternalErrorException) { MessageBox.Show("מוצר לא קיים"); }
+        catch (BO.InternalErrorException) { MessageBox.Show("Product does not exist"); }
 
         //The name of the selected category
         cbxCategory.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -82,30 +84,35 @@ public partial class ProductWindow : Window
         //A message will be displayed if one of the fields is empty
         if (txtID.Text == "" || txtName.Text == "" || txtPrice.Text == "" || txtInStock.Text == "" || cbxCategory.SelectedIndex == -1)
         {
-            MessageBox.Show("אנא מלא את כל השדות");
+            MessageBox.Show("Please fill in all fields");
             return;
         }
 
         //Checking the correctness of the information received
-        if (!int.TryParse(txtID.Text, out id)) { MessageBox.Show("מזהה לא חוקי"); return; };
-        if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("מחיר לא חוקי"); return; };
-        if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("כמות במלאי לא חוקית"); return; };
+        if (!int.TryParse(txtID.Text, out id)) { MessageBox.Show("Invalid ID"); return; };
+        if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("Invalid price"); return; };
+        if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("Invalid stock quantity"); return; };
 
         //In case of addition, a product will be added to the logical layer
-        if (btnAddOrUpdateProduct.Content.ToString() == "הוספה")
+        if (btnAddOrUpdateProduct.Content.ToString() == "Add")
         {
             try
             {
                 bl.product.AddProduct(productCurrent);
             }
-            catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
+            catch { MessageBox.Show("Product not added due to invalid input"); }
         }
         //In case of an update, the product will be updated to the logical layer
         else
         {
             try { bl.product.UpDateProduct(productCurrent); }
-            catch { MessageBox.Show("מוצר לא התווסף משום קלט לא חוקי"); }
+            catch { MessageBox.Show("Product not added due to invalid input"); }
         }
+        this.Close();
+    }
+    private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        new ProductForListWindow().Show();
         this.Close();
     }
 }

@@ -72,10 +72,10 @@ class ConvertPathToBitmapImage : IValueConverter
 
         try
         {
-            if (value == null)
-            {
-                return null;
-            }
+            //if (value == null)
+            //{
+            //    return null;
+            //}
                 string imageRelativeName = (string)value;
                 string currentDir = Environment.CurrentDirectory[..^4];
                 string imageFullName = currentDir + imageRelativeName;//direction of the picture
@@ -98,4 +98,7 @@ class ConvertPathToBitmapImage : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+
+
 

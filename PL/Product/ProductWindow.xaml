@@ -31,6 +31,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
         <Label x:Name="lblID" Content="IdItem" Grid.Row="1" Grid.Column="1"/>
@@ -49,5 +50,7 @@
         <TextBox x:Name="txtInStock" Text="{Binding InStock}" Grid.Row="5" Grid.Column="2"/>
 
         <Button x:Name="btnAddOrUpdateProduct" Grid.Row="6" Click="btnAddOrUpdateProduct_Click" Grid.Column="1" Grid.ColumnSpan="2"/>
+        <TextBlock Name="txtBack" Grid.Row="7" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
+
     </Grid>
 </Window>

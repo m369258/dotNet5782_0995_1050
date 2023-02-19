@@ -23,24 +23,23 @@
     </Window.Resources>
 
     <Grid>
-      
-        
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="8*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         
         <Label x:Name="lblCategory" Grid.Row="0" Content="Orders" />
         <DataGrid  CanUserAddRows="False" Background="White"  Name="DGProducts" Grid.Row="1" ItemsSource="{Binding}" AutoGenerateColumns="False" SelectionChanged="DGProducts_SelectionChanged">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="OrderID"  Width="3*" Binding="{Binding Path=OrderID}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="OrderID"  Width="0.7*" Binding="{Binding Path=OrderID}" IsReadOnly="True"/>
                 <DataGridTextColumn Header="CustomerName" Width="*" Binding="{Binding Path=CustomerName}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="status" Width="2*" Binding="{Binding Path=status}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="AmountForItems" Width="2*" Binding="{Binding Path=AmountForItems}" IsReadOnly="True"/>
-                <DataGridTextColumn Header="TotalPrice" Width="2*" Binding="{Binding Path=TotalPrice}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="status" Width="*" Binding="{Binding Path=status}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="AmountForItems" Width="*" Binding="{Binding Path=AmountForItems}" IsReadOnly="True"/>
+                <DataGridTextColumn Header="TotalPrice" Width="*" Binding="{Binding Path=TotalPrice}" IsReadOnly="True"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+        <TextBlock Name="txtBack" Grid.Row="2" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
+
     </Grid>
 </Window>

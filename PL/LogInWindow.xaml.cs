@@ -75,12 +75,11 @@ public partial class LogInWindow : Window
 
             if (CurrUser.TypeOfUser == BO.TypeOfUser.manager)
             {
+                new MainPages.MainManagerWindow().Show();
                 this.Close();
-                new MainPages.MainManagerWindow(CurrUser.Name).ShowDialog();
             }
             else
             {
-                this.Close();
                 BO.Cart cart = new BO.Cart
                 {
                     CustomerName = CurrUser.Name,
@@ -90,6 +89,7 @@ public partial class LogInWindow : Window
                     TotalPrice = 0
                 };
                 new MainCustomerWindow(cart).Show();
+                this.Close();
             }
         }
     }
@@ -97,16 +97,12 @@ public partial class LogInWindow : Window
     private void btnSignIn_Click(object sender, RoutedEventArgs e)
     {
         new SignInWindow(BO.TypeOfUser.customer).Show();
+        this.Close();
     }
 
     private void btnSignInn_Click(object sender, RoutedEventArgs e)
     {
-        this.Close();
         new SignInWindow(BO.TypeOfUser.customer).Show();
-    }
-
-    private void txtEmail_TextChanged(object sender, TextChangedEventArgs e)
-    {
-
+        this.Close();
     }
 }

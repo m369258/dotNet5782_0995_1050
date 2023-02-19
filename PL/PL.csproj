@@ -18,6 +18,7 @@
 		  <None Remove="img\catalog\bigCake.png" />
 		  <None Remove="img\ilovecupcakes_tlv-16022023-0001.mp4" />
 		  <None Remove="img\inst.png" />
+		  <None Remove="img\istockphoto-1251362621-1024x1024.jpg" />
 		  <None Remove="img\logo.png" />
 		  <None Remove="img\pint.png" />
 		  <None Remove="img\Twitter-logo.svg.png" />
@@ -47,6 +48,7 @@
 		  <Resource Include="img\carttt.png" />
 		  <Resource Include="img\catalog\bigCake.png" />
 		  <Resource Include="img\inst.png" />
+		  <Resource Include="img\istockphoto-1251362621-1024x1024.jpg" />
 		  <Resource Include="img\logo.png" />
 		  <Resource Include="img\pint.png" />
 		  <Resource Include="img\Twitter-logo.svg.png" />

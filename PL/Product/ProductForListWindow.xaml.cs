@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+
 namespace PL.Product;
 
 /// <summary>
@@ -33,7 +35,7 @@ public partial class ProductForListWindow : Window
         cmxCategorySelector.SelectedIndex = 5;
 
         //Request the logical layer to bring all the products
-        var temp=bl.product.GetListOfProducts();
+        var temp = bl.product.GetListOfProducts();
         Products = temp == null ? new() : new(temp);
         //Put all the categories
         cmxCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
@@ -47,15 +49,15 @@ public partial class ProductForListWindow : Window
     private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         //Filter products by category if selected
-         if (cmxCategorySelector.SelectedIndex != 5)
-         {
-          BO.Category currCategorySelect = (BO.Category)cmxCategorySelector.SelectedItem;
-          var temp = bl.product.GetListOfProducts((int)currCategorySelect);
-          Products = temp == null ? new() : new(temp);
+        if (cmxCategorySelector.SelectedIndex != 5)
+        {
+            BO.Category currCategorySelect = (BO.Category)cmxCategorySelector.SelectedItem;
+            var temp = bl.product.GetListOfProducts((int)currCategorySelect);
+            Products = temp == null ? new() : new(temp);
         }
         else
         {
-           var temp = bl.product.GetListOfProducts();
+            var temp = bl.product.GetListOfProducts();
             Products = temp == null ? new() : new(temp);
         }
     }
@@ -93,5 +95,10 @@ public partial class ProductForListWindow : Window
 
         }
     }
-    
+    private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        new MainPages.MainManagerWindow().Show();
+        this.Close();
+    }
+
 }

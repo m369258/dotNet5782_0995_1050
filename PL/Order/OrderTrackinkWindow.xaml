@@ -9,35 +9,24 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="OrderTrackinkWindow" Height="450" Width="800">
 
-    <Window.Resources>
-        <Style x:Key="backTxt" TargetType="{x:Type TextBlock}">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Foreground" Value="#FFF66161" />
-                    <Setter Property="TextDecorations" Value="Underline" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
-
     <Grid Background="White">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition Height="5*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         
-        <ComboBox ItemsSource="{Binding OrdersID}" Grid.Row="0" SelectionChanged="ComboBox_SelectionChanged" IsTextSearchEnabled="True" TextSearch.TextPath="ID"  IsEditable="True" RenderTransformOrigin="0.494,-0.141" FontWeight="Bold" FontSize="15" FontFamily="Consolas" BorderBrush="#FFF6E3DD" BorderThickness="3,3,3,3" HorizontalAlignment="Center" Width="374" VerticalAlignment="Center" Height="41">
+        <ComboBox ItemsSource="{Binding OrdersID}" Grid.Row="0" SelectionChanged="ComboBox_SelectionChanged" IsTextSearchEnabled="True" TextSearch.TextPath="ID"  IsEditable="True" RenderTransformOrigin="0.494,-0.141" FontWeight="Bold" FontSize="18" FontFamily="Consolas" BorderBrush="#FFF6E3DD" BorderThickness="3,3,3,3" HorizontalAlignment="Center" Width="360" VerticalAlignment="Center" Height="41">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <WrapPanel Height="45" Background="#FFF6E3DD">
-                        <Label x:Name="IDorder"  Content="{Binding ID}" Width="250" FontWeight="Bold" ContentStringFormat="Order ID:{0} "
+                        <Label x:Name="IDorder"  Content="{Binding ID}" Width="180" FontSize="16" FontWeight="Bold" ContentStringFormat="Order ID:{0} "
                                TextBlock.TextAlignment="Center" 
                                 VerticalAlignment="Center"/>
                         <Separator/>
-                        <Label x:Name="name"  Content="{Binding Status}" Width="250" ContentStringFormat="Status:{0} "
+                        <Label x:Name="name"  Content="{Binding Status}" Width="180" FontSize="16" ContentStringFormat="Status:{0} "
                                TextBlock.TextAlignment="Center" 
                                 VerticalAlignment="Center"/>
                     </WrapPanel>
@@ -45,18 +34,17 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <ListView x:Name="lstTracking" ItemsSource="{Binding tracking.Tracking}" Grid.Row="1" HorizontalAlignment="Center" Height="158"  Width="445" Background="#FFF6E3DD" BorderBrush="#FF626367" FontWeight="ExtraBold" FontSize="18" FontFamily="Consolas"  ScrollViewer.VerticalScrollBarVisibility="Auto">
+        <ListView x:Name="lstTracking" ItemsSource="{Binding tracking.Tracking}" Grid.Row="1" HorizontalAlignment="Center" Height="158"  Width="550" Background="#FFF6E3DD" BorderBrush="#FF626367" FontWeight="ExtraBold" FontSize="18" FontFamily="Consolas"  ScrollViewer.VerticalScrollBarVisibility="Auto">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Date" Width="230" DisplayMemberBinding="{Binding Item1}"/>
-                    <GridViewColumn Header="Status" Width="170" DisplayMemberBinding="{Binding Item2}"/>
+                    <GridViewColumn Header="Date" Width="275" DisplayMemberBinding="{Binding Item1}"/>
+                    <GridViewColumn Header="Status" Width="275" DisplayMemberBinding="{Binding Item2}"/>
                 </GridView>
             </ListView.View>
         </ListView>
 
-        <Button x:Name="btnOrderDetails" Grid.Row="2" Content="Show Order Details" Height="38" Width="176" Click="btnOrderDetails_Click" Background="#FFF6E3DD" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,21,0,0" Grid.RowSpan="2" FontSize="14"/>
-        <PL:UserControlBack  Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Margin="0,124,0,0" Grid.RowSpan="2" Width="800" />
-        <!--<TextBlock Name="txtBack" Grid.Row="3" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18" Margin="12,31,0,0"/>-->
+        <Button x:Name="btnOrderDetails" Grid.Row="2" Content="Show Order Details" Height="38" Width="176" Click="btnOrderDetails_Click" Background="#FFF6E3DD" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" FontSize="14"/>
+        <TextBlock Name="txtBack" Grid.Row="3" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
 
     </Grid>
 </Window>

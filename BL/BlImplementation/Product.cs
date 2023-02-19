@@ -52,7 +52,7 @@ internal class Product : BlApi.IProduct
         else throw new BO.InvalidArgumentException("Negative ID");
     }
 
-    public IEnumerable<BO.ProductForList?> PopularItems()
+    public IEnumerable<BO.ProductItem> PopularItems()
     {
         //creat a list of groups of items that appear in order, by ID
         var popGroup = from item in myDal.orderItems.GetAll()
@@ -64,12 +64,12 @@ internal class Product : BlApi.IProduct
       
             return from item in popGroup
                    let prod = myDal.product.Get(it=>it?.ID== item.id)
-                   select new BO.ProductForList
+                   select new BO.ProductItem
                    {
-                       ID = prod.ID,
+                       ProductID=prod.ID,
                        Name = prod.Name,
                        Price = prod.Price,
-                       category = ((BO.Category)prod.Category),
+                       Category = ((BO.Category)prod.Category),
                        Img = prod.Img ?? @"\pics\img.jpg",
                    };
        

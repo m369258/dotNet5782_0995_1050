@@ -34,6 +34,14 @@
             <Setter Property="FontFamily" Value="Comic Sans MS"/>
         </Style>
 
+        <Style x:Key="backTxt" TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#FFF66161" />
+                    <Setter Property="TextDecorations" Value="Underline" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
         <Style TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>

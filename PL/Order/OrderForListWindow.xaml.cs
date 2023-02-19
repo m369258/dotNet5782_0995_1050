@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace PL.Order;
 
@@ -33,8 +33,14 @@ public partial class OrderForListWindow : Window
 
     private void DGProducts_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
-         int idOrder=((BO.OrderForList)((DataGrid)sender).CurrentItem).OrderID;
+        int idOrder = ((BO.OrderForList)((DataGrid)sender).CurrentItem).OrderID;
+        new OrderWindow(idOrder).Show();
+        this.Close();
+    }
 
-          new OrderWindow(idOrder).ShowDialog();
+    private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        new MainPages.MainManagerWindow().Show();
+        this.Close();
     }
 }
