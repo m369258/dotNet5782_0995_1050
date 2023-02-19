@@ -3,8 +3,10 @@ using PL.Order;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
 namespace PL;
 
@@ -337,4 +339,13 @@ public partial class MainCustomerWindow : Window
         this.Close();
     }
 
+    private void menuSignIn_Click(object sender, RoutedEventArgs e)
+    {
+        //new SignInWindow().Show();
+        this.Close();
+    }
 }
+
+
+
+

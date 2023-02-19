@@ -11,7 +11,14 @@
 
         <local:NotBooleanToVisibilityConverter
 x:Key="notBooleanToVisibilityConverter" />
+        
+        <local:NotConvertStringToVisibility
+x:Key="notConvertStringToVisibility" />
 
+        <local:ConvertStringToVisibility
+x:Key="convertStringToVisibility" />
+
+        
         <local:ConvertPathToBitmapImage x:Key="convertPathToBitmapImage"/>
         <!--<local:NotBooleanToVisibilityConverter11 x:Key="notBooleanToVisibilityConverter11"/>-->
 
@@ -149,11 +156,16 @@ x:Key="notBooleanToVisibilityConverter" />
                 </Grid.ColumnDefinitions>
 
                 <Menu Grid.Column="0" Grid.Row="0" Width="150"  Background="Transparent" Height="101" >
-                    <MenuItem Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+                    <MenuItem Visibility="{Binding  MyCart.CustomerEmail, Converter={StaticResource notConvertStringToVisibility}}" Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
                         <MenuItem x:Name="menuOrders" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="💌" Header="My Orders" FontWeight="Bold" />
                         <MenuItem x:Name="menuTracking" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="🚛" Header="Track Orders" FontWeight="Bold" Click="menuTracking_Click"/>
                         <Separator />
                         <MenuItem x:Name="menuLogOut" FontFamily="Consolas" FontSize="16" Header="Log Out" FontWeight="Bold" BorderBrush="Black" Background="#FFFBD6D6" Click="menuLogOut_Click">
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Visibility="{Binding MyCart.CustomerEmail,Converter={StaticResource convertStringToVisibility}}" Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+                        <Separator />
+                        <MenuItem x:Name="menuSignIn" FontFamily="Consolas" FontSize="16" Header="Sign in" FontWeight="Bold" BorderBrush="Black" Background="#FFFBD6D6" Click="menuSignIn_Click">
                         </MenuItem>
                     </MenuItem>
                 </Menu>

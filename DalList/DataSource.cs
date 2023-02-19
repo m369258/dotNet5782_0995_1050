@@ -101,7 +101,7 @@ internal static class DataSource
             user.Address = usersAddress[i];
             user.Email = usersEmail[i] ;
             user.Password =( i * 12356).ToString();
-            user.TypeOfUser = (Do.TypeOfUser) rand.Next(0, 2);
+            user.TypeOfUser = (Do.TypeOfUser)1 /*rand.Next(0, 2)*/;
             users.Add(user);
         }
     }
