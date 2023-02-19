@@ -100,7 +100,6 @@
                 <TextBlock Text="ShipDate" Grid.Row="4" Grid.Column="4" />
                 <TextBlock Text="{Binding ShipDate}" Grid.Row="4" Grid.Column="5"/>
             </Grid>
-            <!--<TextBlock Text="Items" Grid.Row="1"/>-->
 
             <ListView Grid.Row="1" ItemTemplate="{StaticResource OneProductItem}" ItemsSource="{Binding items}" ScrollViewer.CanContentScroll="False"/>
 

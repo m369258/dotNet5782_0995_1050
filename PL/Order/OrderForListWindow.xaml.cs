@@ -31,6 +31,11 @@ public partial class OrderForListWindow : Window
         orders = temp == null ? new() : new(temp);
     }
 
+    /// <summary>
+    /// Opens the details of the selected order
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void DGProducts_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
         int idOrder = ((BO.OrderForList)((DataGrid)sender).CurrentItem).OrderID;
@@ -38,6 +43,11 @@ public partial class OrderForListWindow : Window
         this.Close();
     }
 
+    /// <summary>
+    /// Opens the page I came from and closes the current one
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         new MainPages.MainManagerWindow().Show();

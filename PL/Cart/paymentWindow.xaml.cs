@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Security.Policy;
+using System.Text.RegularExpressions;
 using System.Windows;
 namespace PL.Cart;
 
@@ -37,6 +37,17 @@ public partial class paymentWindow : Window
     /// <param name="e"></param>
     private void Button_Click_1(object sender, RoutedEventArgs e)
     {
+        if (MyCart.CustomerAddress == null || MyCart.CustomerName == null || MyCart.CustomerEmail == null)
+        {
+            MessageBox.Show("pleas fill all of the fields");
+            return;
+        }
+            if (!checkEmail())
+        {
+            MessageBox.Show("email invalid");
+            return;
+        }
+
         //Saving an order in the system
         try { bl.cart.MakeAnOrder(MyCart); }
 
@@ -50,6 +61,13 @@ public partial class paymentWindow : Window
 
         //If everything is in order, we will inform the customer
         MessageBox.Show("Your order is on its way...😊");
+    }
+    private bool checkEmail()
+    {
+        string email = MyCart.CustomerEmail;
+        Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+        Match match = regex.Match(email);
+        return match.Success;
     }
 
 }

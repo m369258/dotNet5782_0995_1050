@@ -72,14 +72,7 @@ internal class Product : BlApi.IProduct
                        Category = ((BO.Category)prod.Category),
                        Img = prod.Img ?? @"\pics\img.jpg",
                    };
-       
-        //catch (DalMissingIdException ex)
-        //{
-        //    throw new BO.BlMissingEntityException("Product does not exist", ex);
-        //}
     }
-
-
 
     public BO.ProductItem GetProduct(int idProduct, BO.Cart cart)
     {

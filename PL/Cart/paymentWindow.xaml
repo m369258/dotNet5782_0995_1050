@@ -8,7 +8,7 @@
         DataContext="{Binding MyCart, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
         Title="paymentWindow" Height="450" Width="800">
     <Window.Resources>
-        
+
         <DataTemplate x:Key="OneProductItem" DataType="local:MyData">
             <Border Cursor="ArrowCD" BorderThickness="0,0,0,2" BorderBrush="Black" Margin="100,0,100,0" >
                 <Grid>
@@ -90,13 +90,6 @@
             <ListBox ItemsSource="{Binding items}" Margin="0" BorderThickness="0" ItemTemplate="{StaticResource OneProductItem}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#FAF7F2" ScrollViewer.CanContentScroll="False"/>
         </Grid>
 
-        <!--<Grid Grid.Column="1" Grid.ColumnSpan="2" Margin="230,62,37,0" Grid.RowSpan="2">
-         
-            <TextBlock Text="CustomerName" Margin="15,15,15,15" Grid.Column="0" Grid.Row="0"/>
-            <TextBox Text="{Binding CustomerName}" Grid.Row="0" Grid.ColumnSpan="3" Margin="133,0,0,0"/>
-            <TextBlock Text="CustomerAddress" Margin="15,15,15,15"  Grid.Column="0" Grid.Row="1"/>
-            <TextBox Text="{Binding CustomerAddress}" Grid.ColumnSpan="3" Margin="133,103,0,103" Grid.RowSpan="3"/>
-        </Grid>-->
         <Grid Grid.Row="2" Grid.ColumnSpan="3" Background="#FAF7F2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -113,10 +106,9 @@
             <TextBox Text="{Binding CustomerAddress}"  Grid.Row="1" Grid.Column="1" BorderBrush="#FFCF04AD"/>
             <TextBlock Text="CustomerEmail" Margin="5" Grid.Column="3" Grid.Row="0"/>
             <TextBox Text="{Binding CustomerEmail}" Grid.Row="1" Grid.Column="3" BorderBrush="#FFCF04AD"/>
-
         </Grid>
         <Button Content="confirmation" Grid.Column="2" Grid.Row="3" Click="Button_Click_1"/>
-        
+
     </Grid>
 </Window>
     

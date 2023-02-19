@@ -1,9 +1,5 @@
-﻿using System.Globalization;
-using System;
+﻿using System;
 using System.Windows;
-using System.Windows.Data;
-using BO;
-using PL.Product;
 using System.Windows.Input;
 
 namespace PL.Order;
@@ -45,6 +41,11 @@ public partial class OrderWindow : Window
         }
     }
 
+    /// <summary>
+    /// Status update according to order status
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void btnUpdate_Click(object sender, RoutedEventArgs e)
     {
         try
@@ -69,6 +70,12 @@ public partial class OrderWindow : Window
             return;
         }
     }
+
+    /// <summary>
+    /// Opens the previous page and closes the current one
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         new OrderForListWindow().Show();

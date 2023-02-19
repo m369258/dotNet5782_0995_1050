@@ -165,7 +165,7 @@ x:Key="convertStringToVisibility" />
                     </MenuItem>
                     <MenuItem Visibility="{Binding MyCart.CustomerEmail,Converter={StaticResource convertStringToVisibility}}" Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
                         <Separator />
-                        <MenuItem x:Name="menuSignIn" FontFamily="Consolas" FontSize="16" Header="Sign in" FontWeight="Bold" BorderBrush="Black" Background="#FFFBD6D6" Click="menuSignIn_Click">
+                        <MenuItem x:Name="menuLogIn" FontFamily="Consolas" FontSize="16" Header="Log in" FontWeight="Bold" BorderBrush="Black" Background="#FFFBD6D6" Click="menuSignIn_Click">
                         </MenuItem>
                     </MenuItem>
                 </Menu>

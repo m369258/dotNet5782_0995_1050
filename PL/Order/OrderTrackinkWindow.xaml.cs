@@ -36,7 +36,7 @@ public partial class OrderTrackinkWindow : Window
 
 
     /// <summary>
-    /// ctor for order tracking window
+    /// If it is a manager login, it will bring all the orders, otherwise it will bring the customer's orders
     /// </summary>
     public OrderTrackinkWindow(string email = null)
     {
@@ -56,11 +56,7 @@ public partial class OrderTrackinkWindow : Window
                 OrdersID = temp == null ? new() : new(temp);
             }
         }
-        catch { }
-        //catch (BO.BlNullPropertyException ex)
-        //{
-        //    MessageBox.Show(ex.ToString(), "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //}
+        catch(BO.InternalErrorException) { MessageBox.Show("Sorry this order was not found");return; }
     }
     /// <summary>
     /// button for getting the order to track by id
@@ -81,7 +77,7 @@ public partial class OrderTrackinkWindow : Window
     }
 
     /// <summary>
-    /// close window
+    /// Opens the page I came from
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

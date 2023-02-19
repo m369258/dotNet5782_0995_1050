@@ -106,6 +106,7 @@ public partial class ProductWindow : Window
         if (!int.TryParse(txtID.Text, out id)) { MessageBox.Show("Invalid ID"); return; };
         if (!double.TryParse(txtPrice.Text, out price)) { MessageBox.Show("Invalid price"); return; };
         if (!int.TryParse(txtInStock.Text, out inStock)) { MessageBox.Show("Invalid stock quantity"); return; };
+        if (id > 100000 && id < 1000000) { MessageBox.Show("the id invalid");return; };
 
         //In case of addition, a product will be added to the logical layer
         if (btnAddOrUpdateProduct.Content.ToString() == "Add")
