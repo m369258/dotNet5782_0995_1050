@@ -3,6 +3,8 @@ using System;
 using System.Windows;
 using System.Windows.Data;
 using BO;
+using PL.Product;
+using System.Windows.Input;
 
 namespace PL.Order;
 
@@ -66,6 +68,11 @@ public partial class OrderWindow : Window
             System.Windows.MessageBox.Show(ex.Message, "aaaa:(", MessageBoxButton.OK);
             return;
         }
+    }
+    private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        new OrderForListWindow().Show();
+        this.Close();
     }
 }
 
