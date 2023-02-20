@@ -41,17 +41,6 @@
             <!--<ColumnDefinition Width="*"/>-->
             <ColumnDefinition Width="0.005*"/>
         </Grid.ColumnDefinitions>
-   
-        <Label ContentStringFormat="" VerticalAlignment="Top" MouseDoubleClick="Hyperlink_RequestNavigate" Height="37" Margin="249,522,238,0" Grid.Column="2">
-            <Label.Background>
-                <ImageBrush ImageSource="/הורדה.jpg" Stretch="UniformToFill"/>
-            </Label.Background>
-        </Label>
-        <Label ContentStringFormat="" VerticalAlignment="Top" HorizontalAlignment="Right" MouseDoubleClick="Hyperlink_RequestNavigate" Width="30" Height="35" Margin="0,522,188,0" Grid.Column="2">
-            <Label.Background>
-                <ImageBrush ImageSource="/הורדה.jpg" Stretch="UniformToFill"/>
-            </Label.Background>
-        </Label>
 
         <MediaElement Name="VideoControl" LoadedBehavior="Manual" UnloadedBehavior="Manual" Source="Sunshine state of mind.mp4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="NaN"/>
         <Image Height="67" VerticalAlignment="Top" HorizontalAlignment="Center" Source="pack://application:,,,/img/logo.png" Margin="0,533,0,0" Width="210"/>
