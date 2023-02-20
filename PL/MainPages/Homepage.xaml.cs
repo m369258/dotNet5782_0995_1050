@@ -24,7 +24,7 @@ public partial class Homepage : Window
     /// </summary>
     /// <param name="sender">the sender to the event</param>
     /// <param name="e">the event</param>
-    private void BtnLogIn_Click(object sender, RoutedEventArgs e) => new LogInWindow().ShowDialog();
+    private void BtnLogIn_Click(object sender, RoutedEventArgs e)  {new LogInWindow().Show(); this.Close(); }
     /// <summary>
     /// button to close the window
     /// </summary>

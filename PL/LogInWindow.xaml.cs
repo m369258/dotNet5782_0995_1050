@@ -105,4 +105,10 @@ public partial class LogInWindow : Window
         new SignInWindow(BO.TypeOfUser.customer).Show();
         this.Close();
     }
+
+    private void txtBack_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        new MainWindow().Show();
+        this.Close();
+    }
 }

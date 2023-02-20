@@ -9,11 +9,11 @@
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding prod ,RelativeSource={RelativeSource Self}}"
         Title="ProductWindow">
-    
+
     <Window.Resources>
         <local:ConvertPathToBitmapImag x:Key="convertPathToBitmapImag"/>
     </Window.Resources>
-    
+
     <Grid Opacity="1" MinWidth="3" Grid.IsSharedSizeScope="True" OpacityMask="#FFE23636">
         <Grid.RowDefinitions>
             <RowDefinition Height="12*"/>
@@ -21,12 +21,12 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="White" Opacity="0.7"/>
         <Rectangle Grid.Row="1" Fill="pink"/>
-       
+
         <Button x:Name="btnOK" Content="update" HorizontalAlignment="Left" Margin="638,0,0,0" VerticalAlignment="Center" Click="btnOK_Click" Width="120" Grid.Row="1" Background="White" BorderThickness="0"/>
         <Grid Height="280" Margin="467,85,20,7" Width="280">
             <Rectangle Width="280" Height="280" Fill="pink" Opacity="0.6"/>
             <Image x:Name="pbx" Grid.Row="0" Source="{Binding Img, Converter={StaticResource convertPathToBitmapImag}}" Margin="15,15,15,15" Width="250" Height="250"/>
-            <Image HorizontalAlignment="Center" Height="68" VerticalAlignment="Center" Width="70" Source="/img/pint.png" MouseLeftButtonDown="Image_MouseLeftButtonDown" RenderTransformOrigin="1.202,-0.316"/>
+            <Image HorizontalAlignment="Center" Height="40" VerticalAlignment="Center" Width="45" Source="/img/download.png" MouseLeftButtonDown="Image_MouseLeftButtonDown" RenderTransformOrigin="1.202,-0.316"/>
 
         </Grid>
         <Button Content="❌" HorizontalAlignment="Right" Margin="0,9,42,0" VerticalAlignment="Top" Width="30" Height="32" Click="Button_Click" FontSize="20" Foreground="#FFFFCAD4" Background="{x:Null}"/>
@@ -69,5 +69,3 @@
 
     </Grid>
 </Window>
-
-

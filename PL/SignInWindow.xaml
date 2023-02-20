@@ -16,6 +16,8 @@ x:Key="notBooleanToVisibileConverter" />
             <Grid.RowDefinitions>
                 <RowDefinition Height="6*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="0.4*"/>
+
             </Grid.RowDefinitions>
             <Rectangle HorizontalAlignment="Center" Height="286"  Stroke="Black" VerticalAlignment="Center" Width="692"/>
             <Grid Height="200" x:Name="gridSignUp" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -86,10 +88,12 @@ x:Key="notBooleanToVisibileConverter" />
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Content="sign in" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Center" Click="Button_Click"/>
+                <Button Content="sign in" HorizontalAlignment="Left" Grid.Column="1" VerticalAlignment="Bottom" Click="Button_Click" Margin="0,0,0,10"/>
                 <Label Content="אנא מלא את כל הפרטים" Visibility="{Binding IsFill,Converter={StaticResource notBooleanToVisibileConverter}, Mode=TwoWay}" HorizontalAlignment="Left"  Grid.Row="1" VerticalAlignment="Center" Width="302"/>
             </Grid>
+            <TextBlock Name="txtBack" Grid.Row="2" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
         </Grid>
+
     </Grid>
 </Window>
 

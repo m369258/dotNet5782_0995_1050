@@ -16,6 +16,7 @@
 		  <None Remove="44.png" />
 		  <None Remove="img\carttt.png" />
 		  <None Remove="img\catalog\bigCake.png" />
+		  <None Remove="img\download.png" />
 		  <None Remove="img\ilovecupcakes_tlv-16022023-0001.mp4" />
 		  <None Remove="img\inst.png" />
 		  <None Remove="img\istockphoto-1251362621-1024x1024.jpg" />
@@ -47,6 +48,7 @@
 		  <Resource Include="44.png" />
 		  <Resource Include="img\carttt.png" />
 		  <Resource Include="img\catalog\bigCake.png" />
+		  <Resource Include="img\download.png" />
 		  <Resource Include="img\inst.png" />
 		  <Resource Include="img\istockphoto-1251362621-1024x1024.jpg" />
 		  <Resource Include="img\logo.png" />

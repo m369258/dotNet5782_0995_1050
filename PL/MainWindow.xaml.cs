@@ -16,7 +16,7 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Existing customer login
+    ///Foreign customer entry
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -27,24 +27,13 @@ public partial class MainWindow : Window
     }
 
     /// <summary>
-    /// Foreign customer entry
+    ///  Existing customer login
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         new Homepage().Show();
-        this.Close();
-    }
-
-    /// <summary>
-    /// Admin login
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void Button_Click_2(object sender, RoutedEventArgs e)
-    {
-        new MainPages.MainManagerWindow().Show();
         this.Close();
     }
 }

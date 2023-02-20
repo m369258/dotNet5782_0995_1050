@@ -114,6 +114,8 @@ public partial class SignInWindow : Window
                     return;
                 }
                 System.Windows.MessageBox.Show("You've successfully signed up!😊", "🍰", MessageBoxButton.OK);
+                var temp = bl.user.GetUser("a@gmail.com", "11AAaa");
+                new LogInWindow().Show();
                 this.Close();
             }
         }
@@ -129,5 +131,11 @@ public partial class SignInWindow : Window
         Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         Match match = regex.Match(email);
         return match.Success;
+    }
+
+    private void txtBack_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+    {
+        new MainWindow().Show();
+        this.Close();
     }
 }
