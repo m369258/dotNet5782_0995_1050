@@ -138,7 +138,7 @@ internal class Order : BlApi.IOrder
         //Check if an order exists (in data layer).
         Do.Order doOrder = new Do.Order();
         try { doOrder = myDal.order.Get(item => item?.ID == orderId); }
-        catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no product with this id", ex); }
+        catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no order with this id", ex); }
 
         //If the order has been sent, an exception will be thrown
         if (doOrder.DeliveryDate != null)
@@ -177,10 +177,12 @@ internal class Order : BlApi.IOrder
     /// <exception cref="Exception"></exception>
     private BO.OrderForList CreateBoOrderFromDoOrder(Do.Order? item)
     {
-        var myDoOrderItems = myDal.orderItems.GetAll(x => x?.OrderId == (item?.ID ?? throw new Exception()));
+        var myDoOrderItems = myDal.orderItems.GetAll(x => x?.OrderId == (item?.ID ?? throw new Exception())).ToList();
 
         //Calculating the price of items in the product in order to arrive at the total price
-        double price = myDoOrderItems.Sum(it => it?.Price * it?.Amount ?? throw new Exception());
+        double price = myDoOrderItems.Sum(it => it?.Price  ?? throw new Exception());
+        //double price = myDoOrderItems.Sum(it => it?.Price * it?.Amount ?? throw new Exception());
+
 
         //Build an order list of the OrderForList type on the database
         BO.OrderForList boOrder = new BO.OrderForList();

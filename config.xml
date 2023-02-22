@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ids>
-	<userId>100026</userId>
-	<orderId>1004</orderId>
-	<orderItemId>100058</orderItemId>
-</ids>
+<Config>
+  <NextOrderId>1004</NextOrderId>
+  <NextOrderItem>10003</NextOrderItem>
+  <NextUserId>100026</NextUserId>
+</Config>

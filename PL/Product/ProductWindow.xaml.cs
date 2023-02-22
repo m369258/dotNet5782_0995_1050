@@ -360,7 +360,8 @@ public partial class ProductWindow : Window
     {
         if (prod.Img != null)
         {
-            string imageName = prod.Img.Substring(prod.Img.LastIndexOf("\\"));
+
+            string imageName = prod.Img.Substring(prod.Img.LastIndexOf("/"));
             if (!File.Exists(Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName))
                 File.Copy(prod.Img, Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName);
             prod.Img = @"/PL/img/catalog/" + imageName;
