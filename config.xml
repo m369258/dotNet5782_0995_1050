@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Config>
-	<AutomaticOrder>1000</AutomaticOrder>
-	<AutomaticOrderItem>1000</AutomaticOrderItem>
-	<AutomaticUsers>1000</AutomaticUsers>
-</Config>
+<ids>
+	<userId>100026</userId>
+	<orderId>1004</orderId>
+	<orderItemId>100058</orderItemId>
+</ids>

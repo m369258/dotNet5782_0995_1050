@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<orderItems>
+	<OrderItem>
+		<ID>10000</ID>
+		<OrderID>1001</OrderID>
+		<ProductID>100007</ProductID>
+		<Price>560</Price>
+		<Amount>2</Amount>
+	</OrderItem>
+	<OrderItem>
+		<ID>10001</ID>
+		<OrderID>1001</OrderID>
+		<ProductID>100013</ProductID>
+		<Price>23</Price>
+		<Amount>1</Amount>
+	</OrderItem>
+	<OrderItem>
+		<ID>10002</ID>
+		<OrderID>1002</OrderID>
+		<ProductID>100013</ProductID>
+		<Price>23</Price>
+		<Amount>1</Amount>
+	</OrderItem>
+</orderItems>

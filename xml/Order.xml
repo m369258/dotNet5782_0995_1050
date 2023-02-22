@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Orders>
+	<order>
+		<ID>1001</ID>
+		<CustomerName />
+		<CustomerAddress />
+		<CustomerEmail />
+		<ShipDate />
+		<DeliveryDate />
+		<OrderDate>16/01/2023</OrderDate>
+	</order>
+	<order>
+		<ID>1002</ID>
+		<CustomerName />
+		<CustomerAddress />
+		<CustomerEmail />
+		<ShipDate />
+		<DeliveryDate />
+		<OrderDate>16/01/2023</OrderDate>
+	</order>
+	<order>
+		<ID>1003</ID>
+		<CustomerName />
+		<CustomerAddress />
+		<CustomerEmail />
+		<ShipDate />
+		<DeliveryDate />
+		<OrderDate>16/01/2023</OrderDate>
+	</order>
+</Orders>

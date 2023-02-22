@@ -60,7 +60,7 @@ internal class Order : BlApi.IOrder
             boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
             boOrder.PaymentDate = doOrder.OrderDate;
             boOrder.PaymentDate = doOrder.OrderDate;
-            boOrder.items = ListOrderItems;
+           boOrder.items = ListOrderItems;
             boOrder.totalPrice = price;
             return boOrder;
         }

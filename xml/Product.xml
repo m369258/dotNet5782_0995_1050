@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Product>
+		<ID>100007</ID>
+		<Name>big cake</Name>
+		<Category>cakes</Category>
+		<Price>280</Price>
+		<InStock>54</InStock>
+		<Img>/img/catalog/bigCake.png</Img>
+	</Product>
+	<Product>
+		<ID>100013</ID>
+		<Name>capcakes</Name>
+		<Category>cakes</Category>
+		<Price>23</Price>
+		<InStock>12</InStock>
+		<Img>/img/catalog/bigCake.png</Img>
+	</Product>
+	<Product>
+		<ID>100015</ID>
+		<Name>small cakes</Name>
+		<Category>cakes</Category>
+		<Price>100</Price>
+		<InStock>12</InStock>
+		<Img>/img/catalog/bigCake.png</Img>
+	</Product>	
+</Products>

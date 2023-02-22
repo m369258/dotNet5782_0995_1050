@@ -36,4 +36,10 @@ public partial class MainWindow : Window
         new Homepage().Show();
         this.Close();
     }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+        new MainManagerWindow().Show();
+
+    }
 }
