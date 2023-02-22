@@ -136,7 +136,7 @@ internal class Order : IOrder
 
     public void Update(Do.Order updateEntity)
     {
-//        Add(updateEntity);
-//לשנות סטטוס
+        Delete(updateEntity.ID);
+        Add(updateEntity);
     }
 }
