@@ -38,7 +38,7 @@ public class DalAlreadyExistsException : Exception
     public DalAlreadyExistsException(int id, string name, string massage, Exception innerException)
         : base(massage, innerException) { EntityID = id; EntityName = name; }
     public override string ToString() =>
-        $"{EntityName} number {EntityID} already exists.";
+        $"{EntityName} number {EntityID} already exists";
 }
 
 public class InvalidInputExseption : Exception
