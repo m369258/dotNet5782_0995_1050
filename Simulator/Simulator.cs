@@ -1,9 +1,15 @@
 ﻿namespace Simulator;
 public static  class Simulator
 {
-    private static event EventHandler ReportStart;
-    private static event EventHandler ReportEnd;
-    private static event EventHandler ReportEndSim;
+    /// האם לעשות כאן ציבורי או לעשות פעולות שדרכם נרשמים
+
+    //private static event EventHandler RreportStart;
+    //private static event EventHandler ReportEnd;
+    //private static event EventHandler ReportEndSim;
+
+    public static event EventHandler reportStart;
+    public static event EventHandler reportEnd;
+    public static event EventHandler reportEndSim;
 
     private static BlApi.IBl bl = BlApi.Factory.Get();
     volatile private static bool isActive;
@@ -31,8 +37,8 @@ public static  class Simulator
                     }
                     Thread.Sleep(1000);
                 }
-                if (ReportEndSim != null)
-                    ReportEndSim(new(), new());
+                    //ReportEndSim();
             }).Start();
     }
+
 }

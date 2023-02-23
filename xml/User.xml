@@ -56,4 +56,20 @@
     <Password>gila12A</Password>
     <TypeOfUser>customer</TypeOfUser>
   </user>
+  <user>
+    <ID>61</ID>
+    <Name>aaaa</Name>
+    <Address>aaaa</Address>
+    <Email>michal.grinboim@gmail.com</Email>
+    <Password>11aaAA</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>62</ID>
+    <Name>aaa</Name>
+    <Address>aaa</Address>
+    <Email>gila47@gmail.com</Email>
+    <Password>1AAaa1</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
 </ArrayOfUsers>

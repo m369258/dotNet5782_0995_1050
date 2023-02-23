@@ -128,7 +128,7 @@ public partial class ProductWindow : Window
     private void btnOK_Click(object sender, RoutedEventArgs e)
     {
         prod.Category = (BO.Category)categoryComboBox.SelectedItem;
-        prod.Img= pbx.Source.ToString();
+        //prod.Img= pbx.Source.ToString();
         //for the binding
         iDTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
         nameTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();

@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL
 {
@@ -35,7 +25,7 @@ namespace PL
 
         private void Bw_ProgressChanged(object? sender, ProgressChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            this.txtClock.Text = DateTime.Now.ToString();
         }
 
         private void Bw_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
@@ -45,7 +35,36 @@ namespace PL
 
         private void Bw_DoWork(object? sender, DoWorkEventArgs e)
         {
-            //Simulator.Simulator.reportStart
+            Simulator.Simulator.reportStart += Simulator_reportStart;
+            Simulator.Simulator.reportEnd += Simulator_reportEnd;
+            Simulator.Simulator.reportEndSim += Simulator_reportEndSim;
+            Simulator.Simulator.Active();
+            while(!bw.WorkerSupportsCancellation)
+            {
+                Thread.Sleep(1000);
+                //bw.ReportProgress();
+
+            }
+        }
+
+        private void Simulator_reportEndSim(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Simulator_reportEnd(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Simulator_reportStart(object? sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            bw.CancelAsync();
         }
     }
 }
