@@ -1,199 +1,59 @@
-﻿﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUsers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<Users>
-		<Position>Customer</Position>
-		<Name>Avraham</Name>
-		<Password>123</Password>
-		<Email>Avraham@okMail.co.il</Email>
-		<Address>Alonei Mamreh the 4 doors house</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Sara</Name>
-		<Password>123</Password>
-		<Email>Sara@okMail.co.il</Email>
-		<Address>Alonei Mamreh the 4 doors house</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Yitzchak</Name>
-		<Password>123</Password>
-		<Email>Yitzchak@okMail.co.il</Email>
-		<Address>Daniel 20 st Bnei Brak il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Rivka</Name>
-		<Password>123</Password>
-		<Email>Rivka@okMail.co.il</Email>
-		<Address>Pinkas 10 st Bnei Brak il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Yaakov</Name>
-		<Password>123</Password>
-		<Email>Yaakov@okMail.co.il</Email>
-		<Address>Betuel 2 st Charan</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Rachel</Name>
-		<Password>123</Password>
-		<Email>Rachel@okMail.co.il</Email>
-		<Address>Lavan 33 st Charan</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Leah</Name>
-		<Password>123</Password>
-		<Email>Leah@okMail.co.il</Email>
-		<Address>Betuel 22 st Charan</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Moshe</Name>
-		<Password>123</Password>
-		<Email>Moshe@okMail.Mitzraim</Email>
-		<Address>Goshen 14 Mitzraim</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Tzipora</Name>
-		<Password>123</Password>
-		<Email>Tzipora@okMail.Mitzraim</Email>
-		<Address>Yitro 77 Midyan</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Miriam</Name>
-		<Password>123</Password>
-		<Email>Miriam@okMail.Mitzraim</Email>
-		<Address>Suf 46 Mitzraim</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Aharon</Name>
-		<Password>123</Password>
-		<Email>Aharon@okMail.Mitzraim</Email>
-		<Address>Suf 46 Mitzraim</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Yosef</Name>
-		<Password>123</Password>
-		<Email>Yosef.misneLamelech@okMail.com</Email>
-		<Address>Kings 29 Mitzraim</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>David</Name>
-		<Password>123</Password>
-		<Email>David.hamelech@gmail.org.co.il</Email>
-		<Address>Kings of Israel 87 il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Reuven</Name>
-		<Password>123</Password>
-		<Email>Reuven.oldest@okMail.co.il</Email>
-		<Address>Dudaim 8 il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Shimon</Name>
-		<Password>123</Password>
-		<Email>Shimon@okMail.co.il</Email>
-		<Address>Dudaim 55 il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Levi</Name>
-		<Password>123</Password>
-		<Email>Levi@okMail.co.il</Email>
-		<Address>Beit Mikdash 29 il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Yehuda</Name>
-		<Password>123</Password>
-		<Email>Yehuda@okMail.co.il</Email>
-		<Address>Kingsdon 99 il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Zvulun</Name>
-		<Password>123</Password>
-		<Email>Zvulun@okMail.co.il</Email>
-		<Address>Seashall 66 il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Dan</Name>
-		<Password>123</Password>
-		<Email>Dan@okMail.co.il</Email>
-		<Address>Natan Hanavi 1 il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Binyamin</Name>
-		<Password>123</Password>
-		<Email>Binyamin@gmail.com</Email>
-		<Address>Habanim 3 Bnei brak il</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Ester Nadler</Name>
-		<Password>123</Password>
-		<Email>yaknad.ester@gmail.com</Email>
-		<Address>Daniel 23 Bne-Braq</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Sari Zilberlicht</Name>
-		<Password>123</Password>
-		<Email>sarizillion@gmail.com</Email>
-		<Address>Natan Hanvi 1 Bne-Braq</Address>
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Efrat Amar</Name>
-		<Password>123</Password>
-		<Email>efrati.amar@gmail.com</Email>
-		<Address />
-	</Users>
-	<Users>
-		<Position>Customer</Position>
-		<Name>Shira Levinzon</Name>
-		<Password>123</Password>
-		<Email>shiralevinzon711@gmail.com</Email>
-		<Address />
-	</Users>
-	<Users>
-		<Position>Manager</Position>
-		<Name>Ester Nadler</Name>
-		<Password>Ester Nadler</Password>
-		<Email>en@.com</Email>
-		<Address>Daniel 23 Bne-Braq</Address>
-	</Users>
-	<Users>
-		<Position>Manager</Position>
-		<Name>Sari Zilberlicht</Name>
-		<Password>Sari Zilberlicht</Password>
-		<Email>sz@.com</Email>
-		<Address>Natan Hanvi 1 Bne-Braq</Address>
-	</Users>
-	<Users>
-		<Position>Manager</Position>
-		<Name>Efrat Amar</Name>
-		<Password>Efrat Amar</Password>
-		<Email>ea@.com</Email>
-		<Address />
-	</Users>
-	<Users>
-		<Position>Manager</Position>
-		<Name>Shira Levinzon</Name>
-		<Password>Shira Levinzon</Password>
-		<Email>sl@.com</Email>
-		<Address />
-	</Users>
+  <Users>
+    <ID>213673114</ID>
+    <Name>shira nussbacher</Name>
+    <Address>Alonei Mamreh the 4 doors house</Address>
+    <Email>shira6557@gmail.com</Email>
+    <Password>123koKO</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </Users>
+  <Users>
+    <ID>325321826</ID>
+    <Name>michal grinboim</Name>
+    <Address>Alonei Mamreh the 4 doors house</Address>
+    <Email>michal.grinboin@gmail.com</Email>
+    <Password>147loLO</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </Users>
+  <user>
+    <ID>12</ID>
+    <Name />
+    <Address />
+    <Email />
+    <Password />
+    <TypeOfUser>manager</TypeOfUser>
+  </user>
+  <user>
+    <ID>15</ID>
+    <Name>qwe</Name>
+    <Address>ghj</Address>
+    <Email>ggy@gmail.com</Email>
+    <Password>147koAW</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>58</ID>
+    <Name>jyu</Name>
+    <Address>juy</Address>
+    <Email>j@gmail.com</Email>
+    <Password>11AAaa</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>59</ID>
+    <Name>RTFYGUHIJ</Name>
+    <Address>GHJ</Address>
+    <Email>shira6557@gmail.com</Email>
+    <Password>aa11AA</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>60</ID>
+    <Name>gila</Name>
+    <Address>gordon 5 bne nrak</Address>
+    <Email>gila47@gmail.com</Email>
+    <Password>gila12A</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
 </ArrayOfUsers>

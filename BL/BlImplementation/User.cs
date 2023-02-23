@@ -21,8 +21,15 @@ internal class User : BlApi.IUser
         if (!user.Email!.Contains("@") || !user.Email.Contains("."))
             throw new BO.InvalidArgumentException("Invalid email");
 
-        Do.Users myUser = new Do.Users();
-        myUser.CopyBetweenEnriries(user);
+        Do.Users myUser = new Do.Users()
+        {
+            ID = user.ID,
+            Name = user.Name,
+            Address = user.Address,
+            Email = user.Email,
+            Password = user.Password,
+            TypeOfUser = Do.TypeOfUser.customer
+        };
 
         try
         {
