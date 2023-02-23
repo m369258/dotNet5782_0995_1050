@@ -1,0 +1,14 @@
+﻿<Window x:Class="PL.SimulatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="SimulatorWindow" Height="600" Width="1050" FontFamily="Consolas" WindowStartupLocation="CenterScreen" WindowStyle="None" >
+
+    <Grid>
+        <Button Content="Finish imaging" Margin="469,529,441,31"/>
+
+    </Grid>
+</Window>

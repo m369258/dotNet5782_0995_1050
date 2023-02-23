@@ -1,4 +1,5 @@
-﻿using BO;
+﻿using BlApi;
+using BO;
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
@@ -221,5 +222,40 @@ internal class Order : BlApi.IOrder
         return boOrderItem;
     }
 
+    public int? GetOldestOrder()
+    {
+        IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
+        DateTime? dateTime = new DateTime();
+        int? id=-1;
+        //int id= from ord in doOrders
+        //        let date=ord?.OrderDate
+        //        where (ord?.ShipDate!=null||ord?.DeliveryDate!=null)&&date<dateTime
+        foreach (var ord in doOrders)
+        {
+            if (ord?.OrderDate!=null&&ord?.OrderDate< dateTime&& ord?.ShipDate == null && ord?.DeliveryDate == null)
+            {
+                dateTime = ord?.OrderDate;
+                id = ord?.ID;
+            }
+            else if(ord?.ShipDate==null&& ord?.DeliveryDate != null && ord?.DeliveryDate < dateTime)
+            {
+                dateTime=ord?.DeliveryDate;
+                id=ord?.ID;
+            }   
+        }
+        return id;
+    }
+
+    public void UpdateStatus(int id)
+    {
+        Do.Order order = myDal.order.Get(item=>item?.ID == id);
+        if (order.DeliveryDate == null)
+            OrderDeliveryUpdate(id);
+        else if (order.ShipDate == null)
+            OrderShippingUpdate(id);
+        else
+            throw new BO.InternalErrorException("the order shipped");
+
+    }
 }
 

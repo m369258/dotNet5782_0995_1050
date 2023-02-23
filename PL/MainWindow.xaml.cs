@@ -42,4 +42,10 @@ public partial class MainWindow : Window
         new MainManagerWindow().Show();
 
     }
+
+    private void Button_Click_2(object sender, RoutedEventArgs e)
+    {
+        new SimulatorWindow().Show();
+        this.Close();
+    }
 }
