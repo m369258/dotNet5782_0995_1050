@@ -1,4 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Users>
-	
-</Users>
+<ArrayOfUsers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Users>
+    <ID>213673114</ID>
+    <Name>shira nussbacher</Name>
+    <Address>Alonei Mamreh the 4 doors house</Address>
+    <Email>shira6557@gmail.com</Email>
+    <Password>123koKO</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </Users>
+  <Users>
+    <ID>325321826</ID>
+    <Name>michal grinboim</Name>
+    <Address>Alonei Mamreh the 4 doors house</Address>
+    <Email>michal.grinboin@gmail.com</Email>
+    <Password>147loLO</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </Users>
+  <user>
+    <ID>12</ID>
+    <Name />
+    <Address />
+    <Email />
+    <Password />
+    <TypeOfUser>manager</TypeOfUser>
+  </user>
+  <user>
+    <ID>15</ID>
+    <Name>qwe</Name>
+    <Address>ghj</Address>
+    <Email>ggy@gmail.com</Email>
+    <Password>147koAW</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>58</ID>
+    <Name>jyu</Name>
+    <Address>juy</Address>
+    <Email>j@gmail.com</Email>
+    <Password>11AAaa</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>59</ID>
+    <Name>RTFYGUHIJ</Name>
+    <Address>GHJ</Address>
+    <Email>shira6557@gmail.com</Email>
+    <Password>aa11AA</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>60</ID>
+    <Name>gila</Name>
+    <Address>gordon 5 bne nrak</Address>
+    <Email>gila47@gmail.com</Email>
+    <Password>gila12A</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+</ArrayOfUsers>

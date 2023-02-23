@@ -59,7 +59,7 @@ public partial class paymentWindow : Window
 
         catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
 
-        //If everything is in order, we will inform the customer
+        //If everything is in order, we will inform the customer   
         MessageBox.Show("Your order is on its way...😊");
     }
     private bool checkEmail()
