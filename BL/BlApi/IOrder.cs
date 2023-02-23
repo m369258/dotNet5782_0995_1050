@@ -43,5 +43,6 @@ public interface IOrder
     /// <param name="email"></param>
     /// <returns></returns>
     public IEnumerable<BO.OrderTracking?> OrdersOfUsers(string? email=null);
-
+    int? GetOldestOrder();
+    void UpdateStatus(int id);
 }
