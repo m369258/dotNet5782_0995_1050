@@ -10,6 +10,7 @@
     <Grid>
         <Button Content="Finish imaging" Margin="469,529,441,31" Click="Button_Click"/>
         <TextBlock x:Name="txtClock" TextWrapping="Wrap" Width="100" Text="TextBlock" Margin="475,240,475,300"/>
+        <Label Name="idd" Content="Label"/>
 
     </Grid>
 </Window>

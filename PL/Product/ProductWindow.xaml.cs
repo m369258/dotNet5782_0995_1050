@@ -15,6 +15,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Globalization;
 using BO;
+using Path = System.IO.Path;
 
 namespace PL.Product;
 
@@ -363,14 +364,19 @@ public partial class ProductWindow : Window
         if (prod.Img != null)
         {
 
-            string imageName = prod.Img.Substring(prod.Img.LastIndexOf("/"));
+            //string imageName = prod.Img.Substring(prod.Img.LastIndexOf("/"));
+            //if (!File.Exists(Environment.CurrentDirectory[..^4] + @"/PL/img/catalog" + imageName))
+            //    File.Copy(prod.Img, Environment.CurrentDirectory[..^4] + @"/PL/img/catalog" + imageName);
+            //prod.Img = @"/img/catalog" + imageName;
+            string imageName = Path.GetFileName(prod.Img);
+           
             if (!File.Exists(Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName))
                 File.Copy(prod.Img, Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName);
-            prod.Img = @"/PL/img/catalog/" + imageName;
+            prod.Img = @"/img/catalog/" + imageName;
+          
         }
     }
 }
-
 
 class ConvertPathToBitmapImag : IValueConverter
 {
