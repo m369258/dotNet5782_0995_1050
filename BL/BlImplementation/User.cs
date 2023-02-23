@@ -12,6 +12,10 @@ internal class User : BlApi.IUser
     public void AddUser(BO.Users user)
     {
         //בדיקה שהמייל לא קיים
+        IEnumerable<Do.Users?> users = myDal.users.GetAll();
+        users.Where(item=>item?.Email==user.Email);
+        if (user != null)
+            throw new BO.AlreadyExsist("You are registered in the system");
 
         string pass = user.Password ?? throw new InvalidInputException("no password");
 
