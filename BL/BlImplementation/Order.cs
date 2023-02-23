@@ -225,11 +225,8 @@ internal class Order : BlApi.IOrder
     public int? GetOldestOrder()
     {
         IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
-        DateTime? dateTime = new DateTime();
-        int? id=-1;
-        //int id= from ord in doOrders
-        //        let date=ord?.OrderDate
-        //        where (ord?.ShipDate!=null||ord?.DeliveryDate!=null)&&date<dateTime
+        DateTime? dateTime = DateTime.Now;
+        int? id=null;
         foreach (var ord in doOrders)
         {
             if (ord?.OrderDate!=null&&ord?.OrderDate< dateTime&& ord?.ShipDate == null && ord?.DeliveryDate == null)
@@ -249,10 +246,12 @@ internal class Order : BlApi.IOrder
     public void UpdateStatus(int id)
     {
         Do.Order order = myDal.order.Get(item=>item?.ID == id);
+
         if (order.DeliveryDate == null)
-            OrderDeliveryUpdate(id);
-        else if (order.ShipDate == null)
             OrderShippingUpdate(id);
+
+        else if (order.ShipDate == null)
+            OrderDeliveryUpdate(id);
         else
             throw new BO.InternalErrorException("the order shipped");
 

@@ -11,7 +11,7 @@ internal class User : BlApi.IUser
 
     public void AddUser(BO.Users user)
     {
-        //בדיקה שהמייל לא קיים
+        //Checking that the email is not saved in the system
         IEnumerable<Do.Users?> users = myDal.users.GetAll();
         Do.Users? isExsistUser = null;
         isExsistUser = users.FirstOrDefault(item => item?.Email == user.Email);
