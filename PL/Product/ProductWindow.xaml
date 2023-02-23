@@ -22,7 +22,7 @@
         <Rectangle Fill="White" Opacity="0.7"/>
         <Rectangle Grid.Row="1" Fill="pink"/>
 
-        <Button x:Name="btnOK" Content="update" HorizontalAlignment="Left" Margin="638,0,0,0" VerticalAlignment="Center" Click="btnOK_Click" Width="120" Grid.Row="1" Background="White" BorderThickness="0"/>
+        <Button x:Name="btnOK" Content="update" HorizontalAlignment="Left" Margin="638,0,0,0" VerticalAlignment="Bottom" Click="btnOK_Click" Width="120" Grid.Row="1" Background="White" BorderThickness="0"/>
         <Grid Height="280" Margin="467,85,20,7" Width="280">
             <Rectangle Width="280" Height="280" Fill="pink" Opacity="0.6"/>
             <Image x:Name="pbx" Grid.Row="0" Source="{Binding Img, Converter={StaticResource convertPathToBitmapImag}}" Margin="15,15,15,15" Width="250" Height="250"/>
