@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="Pandora" Height="600" Width="1050" FontFamily="Consolas" WindowStartupLocation="CenterScreen" WindowStyle="None" Activated="___Pandora_Israel___Activated" Deactivated="___Pandora_Israel___Deactivated">
+        Title="I Love Cupcakes" Height="600" Width="1050" FontFamily="Consolas" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
         <Style x:Key="login" TargetType="Button">
             <Setter Property="Foreground" Value="Black"/>
