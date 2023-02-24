@@ -35,13 +35,17 @@ public partial class OrderTrackinkWindow : Window
 
 
 
+    private BO.Cart cart;
+
+
     /// <summary>
     /// If it is a manager login, it will bring all the orders, otherwise it will bring the customer's orders
     /// </summary>
-    public OrderTrackinkWindow(string email = null)
+    public OrderTrackinkWindow(BO.Cart currCart=null)//!
     {
         InitializeComponent();
-        this.email = email;
+        this.email = currCart.CustomerEmail;//!
+        cart= currCart;//!
 
         try
         {
@@ -86,7 +90,7 @@ public partial class OrderTrackinkWindow : Window
         if (email == null)
             new MainPages.MainManagerWindow().Show();
         else
-            new MainCustomerWindow().Show();
+            new MainCustomerWindow(cart).Show();//!
         this.Close();
     }
 

@@ -18,6 +18,7 @@ public partial class MainCustomerWindow : Window
     /// </summary>
     private BlApi.IBl bl = BlApi.Factory.Get();
 
+    private int numCategory;
 
     public bool IsInStock
     {
@@ -69,18 +70,21 @@ public partial class MainCustomerWindow : Window
             MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    
+
     private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         BO.Category c;
         string? strCat = (sender as TextBlock)?.Text;
         try
         {
+            BO.Category.TryParse(strCat, out c);
+            numCategory = (int)c;
+
             if (strCat != "popular")
             {
-                BO.Category.TryParse(strCat, out c);
+                //BO.Category.TryParse(strCat, out c);
 
-                var temp = bl.product.GetCatalog((int)c, MyCart.items);
+                var temp = bl.product.GetCatalog(numCategory, MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
             }
             else
@@ -94,17 +98,17 @@ public partial class MainCustomerWindow : Window
             MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    /// <summary>
-    /// reset for the page
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    {
-        var temp = bl.product.GetCatalog();
-        MyProductItems = temp == null ? new() : new(temp);
-    }
-    private void menuLogOut_Click(object sender, RoutedEventArgs e) => this.Close();
+    ///// <summary>
+    ///// reset for the page
+    ///// </summary>
+    ///// <param name="sender"></param>
+    ///// <param name="e"></param>
+    //private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    //{
+    //    var temp = bl.product.GetCatalog();
+    //    MyProductItems = temp == null ? new() : new(temp);
+    //}
+    private void menuLogOut_Click(object sender, RoutedEventArgs e) { MyCart = null; new MainWindow().Show();this.Close(); }//this.Close();
 
     private void btnPlus_Click(object sender, RoutedEventArgs e)
     {
@@ -122,7 +126,7 @@ public partial class MainCustomerWindow : Window
                     MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount + 1);
                 }
 
-                var temp = bl.product.GetCatalog(0, MyCart.items);
+                var temp = bl.product.GetCatalog(numCategory, MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
             }
             else
@@ -132,7 +136,6 @@ public partial class MainCustomerWindow : Window
                 return;
             }
         }
-
         catch (BO.InvalidInputException ex)
         {
             System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -187,7 +190,7 @@ public partial class MainCustomerWindow : Window
             }
         }
 
-        var temp = bl.product.GetCatalog(0, MyCart.items);
+        var temp = bl.product.GetCatalog(numCategory, MyCart.items);
         MyProductItems = temp == null ? new() : new(temp);
 
     }
@@ -208,7 +211,7 @@ public partial class MainCustomerWindow : Window
 
     private void menuTracking_Click(object sender, RoutedEventArgs e)
     {
-        new OrderTrackinkWindow(MyCart.CustomerEmail).Show();
+        new OrderTrackinkWindow(MyCart).Show();//!
         this.Close();
     }
 
