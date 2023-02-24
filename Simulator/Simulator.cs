@@ -43,7 +43,7 @@ public static  class Simulator
                             //reportEnd?.Invoke(null, args1);
                         bl.order.UpdateStatus((int)oldId);
                     }
-                    Thread.Sleep(2000);
+                    Thread.Sleep(1000);
                 }
                 reportEndSim?.Invoke(null,EventArgs.Empty);
             }).Start();
@@ -62,4 +62,3 @@ public class EventStatusArgs:EventArgs
     public BO.OrderStatus now { get; set; }
     public BO.OrderStatus will { get; set; }
 }
-

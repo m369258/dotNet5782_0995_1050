@@ -18,6 +18,19 @@ public partial class MainCustomerWindow : Window
     /// </summary>
     private BlApi.IBl bl = BlApi.Factory.Get();
 
+
+    public bool IsInStock
+    {
+        get { return (bool)GetValue(IsInStockProperty); }
+        set { SetValue(IsInStockProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for IsInStock.  This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty IsInStockProperty =
+        DependencyProperty.Register("IsInStock", typeof(bool), typeof(MainCustomerWindow), new PropertyMetadata(true));
+
+
+
     public ObservableCollection<BO.ProductItem> MyProductItems
     {
         get { return (ObservableCollection<BO.ProductItem>)GetValue(MyProductItemsProperty); }
@@ -113,7 +126,11 @@ public partial class MainCustomerWindow : Window
                 MyProductItems = temp == null ? new() : new(temp);
             }
             else
+            {
+                IsInStock = false;
                 MessageBox.Show("Product out of stock");
+                return;
+            }
         }
 
         catch (BO.InvalidInputException ex)
@@ -126,9 +143,11 @@ public partial class MainCustomerWindow : Window
             System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
             return;
         }
-        catch (BO.NotEnoughInStockException ex)
+        catch (BO.NotEnoughInStockException)
         {
-            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            IsInStock = false;
+
+            System.Windows.MessageBox.Show("This product is out of stock");
             return;
         }
         catch (Exception ex)
@@ -158,7 +177,7 @@ public partial class MainCustomerWindow : Window
             }
             catch (BO.NotEnoughInStockException ex)
             {
-                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(ex.Message, "Problrm:(", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             catch (Exception ex)

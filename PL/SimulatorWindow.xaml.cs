@@ -3,7 +3,8 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows;
- 
+using System.Windows.Controls;
+
 namespace PL
 {
 
@@ -14,18 +15,9 @@ namespace PL
     public partial class SimulatorWindow : Window
     {
 
-        public EventStatusArgs MyArgsSimulator
-        {
-            get { return (EventStatusArgs)GetValue(MyArgsSimulatorProperty); }
-            set { SetValue(MyArgsSimulatorProperty, value); }
-        }
+      
 
-        // Using a DependencyProperty as the backing store for MyArgsSimulator.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MyArgsSimulatorProperty =
-            DependencyProperty.Register("MyArgsSimulator", typeof(EventStatusArgs), typeof(SimulatorWindow), new PropertyMetadata(null));
-
-
-
+        //ProgressBar ProgressBar;
         BackgroundWorker bw;
         public SimulatorWindow()
         {
@@ -86,7 +78,7 @@ namespace PL
             Simulator.Simulator.Active();
             while(!bw.CancellationPending)
             {
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
                 bw.ReportProgress((int)UpdateType.UPDATECLOCK);
             }
         }

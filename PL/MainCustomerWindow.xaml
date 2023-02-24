@@ -168,19 +168,15 @@ x:Key="convertStringToVisibility" />
                         </MenuItem>
                     </MenuItem>
                 </Menu>
+                
                 <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="1" Height="75" Width="85" Click="Button_Click"  Style="{StaticResource noneStyle}">
                     <Image  Source="/img/istockphoto-1251362621-1024x1024.jpg" HorizontalAlignment="Center" Height="70" VerticalAlignment="Center" Width="80" RenderTransformOrigin="0.317,0.528"/>
                 </Button>
 
             </Grid>
-
-
-           
-
-        
         </Grid>
         <ScrollViewer Grid.Row="1">
-            <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding MyProductItems,Mode=TwoWay }" ItemTemplate="{StaticResource oneProduct}">
+            <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding MyProductItems,Mode=TwoWay}" ItemTemplate="{StaticResource oneProduct}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>

@@ -111,7 +111,7 @@ internal class Cart : BlApi.ICart
                              ID = temp == null ? throw new BO.InternalErrorException("product does not exist") : item?.ProductId ?? 0,
                              Price = temp?.Price ?? 0,
                              Category = temp?.Category ?? 0,
-                             InStock = temp?.InStock > item?.QuantityPerItem ? temp?.InStock - item?.QuantityPerItem ?? 0 : throw new BO.NotEnoughInStockException(item.ProductId, "No quantity in stock"),
+                             InStock = temp?.InStock >= item?.QuantityPerItem ? temp?.InStock - item?.QuantityPerItem ?? 0 : throw new BO.NotEnoughInStockException(item.ProductId, "No quantity in stock"),
                              Name = temp?.Name,
                              Img = temp?.Img
                          }
