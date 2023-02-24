@@ -14,7 +14,7 @@ public partial class Customer_CartWindow : Window
     private BlApi.IBl bl = BlApi.Factory.Get();
 
     List<Tuple<int, int>> items = new List<Tuple<int, int>>();
-
+    int amountG;
     public bool state
     {
         get { return (bool)GetValue(stateProperty); }
@@ -47,10 +47,14 @@ public partial class Customer_CartWindow : Window
     {
         foreach (var item in items)
         {
+             
             try { MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2); }
             catch (BO.InvalidInputException ex) { MessageBox.Show("Pay attention" + ex.Message); }
             catch (BO.InternalErrorException ex) { MessageBox.Show("Pay attention" + ex.Message); }
-            catch (BO.NotEnoughInStockException) { MessageBox.Show("We are sorry but the item is out of stock"); }
+            catch (BO.NotEnoughInStockException) {
+                
+                MessageBox.Show("We are sorry but the item is out of stock"); 
+            }
             catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
         }
     }
@@ -63,6 +67,7 @@ public partial class Customer_CartWindow : Window
         if (amount != oldAmount)
         {
             state = true;
+            amountG = oldAmount;
             BO.OrderItem selection = ((BO.OrderItem)((TextBox)sender).DataContext);
             items?.Add(new Tuple<int, int>(selection.ProductId, amount));
         }

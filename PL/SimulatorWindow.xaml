@@ -10,7 +10,7 @@
         <Style TargetType="TextBlock">
             <Setter Property="Width" Value="200"/>
             <Setter Property="Height" Value="50"/>
-            <Setter Property="Background" Value="Aqua"/>
+            <Setter Property="Background" Value="#ffbdbd"/>
         </Style>
     </Window.Resources>
     <Grid>
@@ -31,6 +31,11 @@
         <TextBlock x:Name="txtStatusNow" Grid.Column="1"/>
         <TextBlock x:Name="txtStatusWill" Grid.Column="2"/>
         <TextBlock Name="idd" Grid.Column="3"/>
+        <!--<StatusBar Name="SBar"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom" >
+            <StatusBarItem Height="80" >
+                <TextBlock Width="72" FontSize="20">Status:</TextBlock>
+            </StatusBarItem>
+        </StatusBar>-->
 
     </Grid>
 </Window>
