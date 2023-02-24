@@ -86,6 +86,21 @@ public partial class SignInWindow : Window
                       user.Password == ""))
             IsFill = true;
         else
+            IsFill = false;
+
+        if (!checkEmail())
+            IsInvalidEmail = true;
+        else
+            IsInvalidEmail = false;
+
+        if ((string?)ConfirmPassword != user.Password)
+            NoTheSamePassword = true;
+        else
+        {
+            NoTheSamePassword = false;
+        }
+
+        if (NoTheSamePassword == false && IsInvalidEmail == false && IsFill == false)
         {
             IsFill = false;
             try { bl.user.AddUser(user); }
@@ -110,17 +125,7 @@ public partial class SignInWindow : Window
             this.Close();
             return;
         }
-        if (!checkEmail())
-            IsInvalidEmail = true;
-        else
-            IsInvalidEmail = false;
 
-        if ((string?)ConfirmPassword != user.Password)
-            NoTheSamePassword = true;
-        else
-        {
-            NoTheSamePassword = false;
-        }
         //if (!checkEmail())
         //    IsInvalidEmail = true;
         //else

@@ -108,11 +108,11 @@ public partial class LogInWindow : Window
         }
     }
 
-    private void btnSignIn_Click(object sender, RoutedEventArgs e)
-    {
-        new SignInWindow(BO.TypeOfUser.customer).Show();
-        this.Close();
-    }
+    //private void btnSignIn_Click(object sender, RoutedEventArgs e)
+    //{
+    //    new SignInWindow(BO.TypeOfUser.customer).Show();
+    //    this.Close();
+    //}
 
     private void btnSignInn_Click(object sender, RoutedEventArgs e)
     {
