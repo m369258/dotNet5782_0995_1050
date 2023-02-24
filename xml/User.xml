@@ -24,4 +24,36 @@
     <Password>gila12A</Password>
     <TypeOfUser>customer</TypeOfUser>
   </user>
+  <user>
+    <ID>4</ID>
+    <Name>yael</Name>
+    <Address>levi</Address>
+    <Email>yeallevi12@gmail.com</Email>
+    <Password>11aaAA</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>5</ID>
+    <Name>yakov</Name>
+    <Address>bluy</Address>
+    <Email>y05023658@gmail.com</Email>
+    <Password>22bbBB</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>11</ID>
+    <Name>yakov</Name>
+    <Address>grossman</Address>
+    <Email>h@gmail.com</Email>
+    <Password>11LLll</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>12</ID>
+    <Name>ester</Name>
+    <Address>lubin</Address>
+    <Email>m@gmail.com</Email>
+    <Password>55MMmm</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
 </ArrayOfUsers>
