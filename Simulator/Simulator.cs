@@ -18,7 +18,7 @@ public static  class Simulator
                 isActive = true;
                 while (isActive)
                 {
-                    int? oldId = bl.order.GetOldestOrder();//ליצור ב BL
+                    int? oldId = bl.order.GetOldestOrder();
                     if (oldId != null)
                     {
                         BO.Order boOrder = bl.order.GetOrderDetails((int)oldId);
@@ -40,10 +40,10 @@ public static  class Simulator
                         {
                             OrderId = (int)oldId
                         };
-                            reportEnd?.Invoke(null, args1);
+                            //reportEnd?.Invoke(null, args1);
                         bl.order.UpdateStatus((int)oldId);
                     }
-                    Thread.Sleep(1000);
+                    Thread.Sleep(2000);
                 }
                 reportEndSim?.Invoke(null,EventArgs.Empty);
             }).Start();

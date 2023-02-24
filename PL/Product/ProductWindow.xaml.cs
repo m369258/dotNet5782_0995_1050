@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
 using System.Globalization;
-using BO;
 using Path = System.IO.Path;
 
 namespace PL.Product;
@@ -388,7 +381,10 @@ class ConvertPathToBitmapImag : IValueConverter
             string imageRelativeName = (string)value;
             string currentDir = Environment.CurrentDirectory[..^4];
             string imageFullName = currentDir + imageRelativeName;//direction of the picture
+           // string imageFullName = Path.Combine(currentDir, imageRelativeName);
             BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
+           // BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName));//makes the picture
+
             return bitmapImage;
         }
         catch
