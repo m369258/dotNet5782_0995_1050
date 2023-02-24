@@ -96,4 +96,36 @@
     <Password>11BBbb</Password>
     <TypeOfUser>customer</TypeOfUser>
   </user>
+  <user>
+    <ID>66</ID>
+    <Name>ewdsdcd</Name>
+    <Address>aerf</Address>
+    <Email>s@gmail.com</Email>
+    <Password>22bbBB</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>67</ID>
+    <Name>nn</Name>
+    <Address>nn</Address>
+    <Email>e@gmail.com</Email>
+    <Password>22bbBB</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>68</ID>
+    <Name>pppp</Name>
+    <Address>pppp</Address>
+    <Email>p@gmail.com</Email>
+    <Password>33ccCC</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>69</ID>
+    <Name>ooo</Name>
+    <Address>ooo</Address>
+    <Email>o@gmail.com</Email>
+    <Password>44ddDD</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
 </ArrayOfUsers>
