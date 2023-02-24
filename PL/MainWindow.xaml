@@ -18,7 +18,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <MediaElement x:Name="VideoControl" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0"  Source="img/ilovecupcakes_tlv-16022023-0001.mp4" Volume="0.00001" UnloadedBehavior="Manual" LoadedBehavior="Manual"/>
+        <MediaElement x:Name="VideoControl" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0"  Source="img/vidio.mp4" Volume="0.00001" UnloadedBehavior="Manual" LoadedBehavior="Manual"/>
         <Button Content="Guest" Click="btnCustomer_Click" Grid.Column="0" Grid.Row="1"/>
         <Button Content="User" Click="Button_Click" Grid.Column="1" Grid.Row="1"/>
         <Button Content="Button" HorizontalAlignment="Left" Margin="50,282,0,0" VerticalAlignment="Top" Click="Button_Click_1"/>

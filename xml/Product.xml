@@ -1,1 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Product><ID>100004</ID><Name>height Cake</Name><Category>cakes</Category><Price>200</Price><InStock>48</InStock><Img>/img/catalog/heightCake.PNG</Img></Product><Product><ID>100005</ID><Name>happy Birthday Cake</Name><Category>cakes</Category><Price>250</Price><InStock>0</InStock><Img>/img/catalog/happyBirthday.png</Img></Product><Product><ID>100003</ID><Name>Big Cake</Name><Category>cakes</Category><Price>316</Price><InStock>1</InStock><Img>/img/catalog/bigCake.png</Img></Product></ArrayOfProduct>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Product>
+		<ID>100005</ID>
+		<Name>happy Birthday Cake</Name>
+		<Category>cakes</Category>
+		<Price>900</Price>
+		<InStock>50</InStock>
+		<Img>/img/catalog/oreo-cake-416x416.png</Img>
+	</Product>
+	<Product>
+		<ID>100004</ID>
+		<Name>height Cake</Name>
+		<Category>cakes</Category>
+		<Price>200</Price>
+		<InStock>48</InStock>
+		<Img>/img/catalog/heightCake.PNG</Img>
+	</Product>
+	<Product>
+		<ID>100003</ID>
+		<Name>Big Cake</Name>
+		<Category>macarons</Category>
+		<Price>316</Price>
+		<InStock>3</InStock>
+		<Img>/img/catalog/IMG-9162-416x416.png</Img>
+	</Product>
+</ArrayOfProduct>

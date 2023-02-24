@@ -87,16 +87,6 @@ public partial class LogInWindow : Window
                 return;
             }
 
-
-
-
-
-
-
-
-
-
-
             if (CurrUser.TypeOfUser == BO.TypeOfUser.manager)
             {
                 new MainPages.MainManagerWindow().Show();

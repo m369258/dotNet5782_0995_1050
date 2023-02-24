@@ -18,7 +18,12 @@
 		  <None Remove="img\catalog\bigCake.png" />
 		  <None Remove="img\catalog\happyBirthday.png" />
 		  <None Remove="img\catalog\heightCake.png" />
+		  <None Remove="img\catalog\IMG-9108-416x416.png" />
+		  <None Remove="img\catalog\IMG-9156-416x416.png" />
+		  <None Remove="img\catalog\IMG-9162-416x416.png" />
 		  <None Remove="img\catalog\IMG-9165-416x416.png" />
+		  <None Remove="img\catalog\IMG-9167-416x416.png" />
+		  <None Remove="img\catalog\oreo-cake-416x416.png" />
 		  <None Remove="img\download.png" />
 		  <None Remove="img\ilovecupcakes_tlv-16022023-0001.mp4" />
 		  <None Remove="img\inst.png" />
@@ -26,6 +31,7 @@
 		  <None Remove="img\logo.png" />
 		  <None Remove="img\pint.png" />
 		  <None Remove="img\Twitter-logo.svg.png" />
+		  <None Remove="img\vidio.mp4" />
 		  <None Remove="img\youtube.png" />
 		  <None Remove="img\יומעיון.mp4" />
 		  <None Remove="MainPages\managerr.png" />
@@ -33,6 +39,9 @@
 
 		<ItemGroup>
 		  <Content Include="img\ilovecupcakes_tlv-16022023-0001.mp4">
+		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		  </Content>
+		  <Content Include="img\vidio.mp4">
 		    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		  </Content>
 		</ItemGroup>
@@ -54,7 +63,12 @@
 		  <Resource Include="img\catalog\bigCake.png" />
 		  <Resource Include="img\catalog\happyBirthday.png" />
 		  <Resource Include="img\catalog\heightCake.png" />
+		  <Resource Include="img\catalog\IMG-9108-416x416.png" />
+		  <Resource Include="img\catalog\IMG-9156-416x416.png" />
+		  <Resource Include="img\catalog\IMG-9162-416x416.png" />
 		  <Resource Include="img\catalog\IMG-9165-416x416.png" />
+		  <Resource Include="img\catalog\IMG-9167-416x416.png" />
+		  <Resource Include="img\catalog\oreo-cake-416x416.png" />
 		  <Resource Include="img\download.png" />
 		  <Resource Include="img\inst.png" />
 		  <Resource Include="img\istockphoto-1251362621-1024x1024.jpg" />
