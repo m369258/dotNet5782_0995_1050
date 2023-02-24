@@ -43,7 +43,10 @@ public partial class LogInWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        if (CurrUser.Email == null || CurrUser.Password == null)
+        string currPassword = CurrUser.Password;
+        string currectPassword;
+        //פה אני משווה גם ל מרכאות ריקות ..
+        if (CurrUser.Email == null || CurrUser.Password == null|| CurrUser.Password == ""|| CurrUser.Email == "")
             IsVisibility = true;
         else
             IsVisibility = false;
@@ -52,7 +55,7 @@ public partial class LogInWindow : Window
         {
             try
             {
-                CurrUser = bl.user.GetUser(CurrUser.Email, CurrUser.Password);
+                 CurrUser = bl.user.GetUser(CurrUser.Email);
             }
             catch (BO.InternalErrorException)
             {
@@ -61,8 +64,8 @@ public partial class LogInWindow : Window
 
                 if (MessageBox.Show(message, title, MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
+                    new SignInWindow(BO.TypeOfUser.customer).Show();
                     this.Close();
-                    new SignInWindow(BO.TypeOfUser.customer).ShowDialog();
                     return;
                 }
                 else
@@ -72,6 +75,27 @@ public partial class LogInWindow : Window
                 }
             }
             catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+
+            if(CurrUser.Password!=currPassword)
+            {
+                BO.Users tmpUser = new BO.Users();
+                tmpUser.Password = currPassword;
+                tmpUser.Email = CurrUser.Email;
+                CurrUser = tmpUser;
+                MessageBox.Show("the password is uncurrect");
+
+                return;
+            }
+
+
+
+
+
+
+
+
+
+
 
             if (CurrUser.TypeOfUser == BO.TypeOfUser.manager)
             {

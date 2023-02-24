@@ -81,7 +81,9 @@ public partial class SignInWindow : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         if ((user.Name == null || user.Address == null || user.Email == null ||
-                      user.Password == null || ConfirmPassword == null))
+                      user.Password == null || ConfirmPassword == null || ConfirmPassword == "" ||
+                      user.Name == "" || user.Address == "" || user.Email == "" ||
+                      user.Password == ""))
             IsFill = true;
         else
         {
@@ -103,9 +105,10 @@ public partial class SignInWindow : Window
                 return;
             }
             System.Windows.MessageBox.Show("You've successfully signed up!😊", "🍰", MessageBoxButton.OK);
-            var temp = bl.user.GetUser("a@gmail.com", "11AAaa");
+            //var temp = bl.user.GetUser("a@gmail.com", "11AAaa");
             new LogInWindow().Show();
             this.Close();
+            return;
         }
         if (!checkEmail())
             IsInvalidEmail = true;
