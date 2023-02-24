@@ -72,4 +72,28 @@
     <Password>1AAaa1</Password>
     <TypeOfUser>customer</TypeOfUser>
   </user>
+  <user>
+    <ID>63</ID>
+    <Name>jjjj</Name>
+    <Address>kkk</Address>
+    <Email>f@gmail.com</Email>
+    <Password>11AAss</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>64</ID>
+    <Name>aaa</Name>
+    <Address>bbb</Address>
+    <Email>G@gmail.com</Email>
+    <Password>11AAss</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>65</ID>
+    <Name>ruti</Name>
+    <Address>even gvirol</Address>
+    <Email>ruti@gamil.com</Email>
+    <Password>11BBbb</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
 </ArrayOfUsers>

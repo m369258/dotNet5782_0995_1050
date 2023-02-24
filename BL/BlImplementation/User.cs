@@ -13,8 +13,9 @@ internal class User : BlApi.IUser
     {
         //Checking that the email is not saved in the system
         IEnumerable<Do.Users?> users = myDal.users.GetAll();
-        users.Where(item=>item?.Email==user.Email);
-        if (user != null)
+        Do.Users? isExsistUser = null;
+        isExsistUser = users.FirstOrDefault(item => item?.Email == user.Email);
+        if (isExsistUser != null)
             throw new BO.AlreadyExsist("You are registered in the system");
 
         string pass = user.Password ?? throw new InvalidInputException("no password");
@@ -61,11 +62,11 @@ internal class User : BlApi.IUser
 
     }
 
-    public BO.Users GetUser(string email,string password)
+    public BO.Users GetUser(string email, string password)
     {
         Do.Users? user;
 
-        try { user = myDal.users.Get(item => item?.Email == email&& item?.Password==password); }
+        try { user = myDal.users.Get(item => item?.Email == email && item?.Password == password); }
         catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this email doesnt exsist", ex); }
 
         //Building a new object from the display product type

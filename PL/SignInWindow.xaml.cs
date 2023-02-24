@@ -80,6 +80,33 @@ public partial class SignInWindow : Window
     /// <param name="e">more details</param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
+        if ((user.Name == null || user.Address == null || user.Email == null ||
+                      user.Password == null || ConfirmPassword == null))
+            IsFill = true;
+        else
+        {
+            IsFill = false;
+            try { bl.user.AddUser(user); }
+            catch (BO.InvalidArgumentException ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            catch (BO.AlreadyExsist ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            System.Windows.MessageBox.Show("You've successfully signed up!😊", "🍰", MessageBoxButton.OK);
+            var temp = bl.user.GetUser("a@gmail.com", "11AAaa");
+            new LogInWindow().Show();
+            this.Close();
+        }
         if (!checkEmail())
             IsInvalidEmail = true;
         else
@@ -90,35 +117,46 @@ public partial class SignInWindow : Window
         else
         {
             NoTheSamePassword = false;
-
-            if ((user.Name == null || user.Address == null || user.Email == null ||
-                       user.Password == null || ConfirmPassword == null))
-                IsFill = true;
-            else
-            {
-                IsFill = false;
-                try { bl.user.AddUser(user); }
-                catch (BO.InvalidArgumentException ex)
-                {
-                    System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                catch (BO.AlreadyExsist ex)
-                {
-                    System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
-                System.Windows.MessageBox.Show("You've successfully signed up!😊", "🍰", MessageBoxButton.OK);
-                var temp = bl.user.GetUser("a@gmail.com", "11AAaa");
-                new LogInWindow().Show();
-                this.Close();
-            }
         }
+        //if (!checkEmail())
+        //    IsInvalidEmail = true;
+        //else
+        //    IsInvalidEmail = false;
+
+        //if ((string?)ConfirmPassword != user.Password)
+        //    NoTheSamePassword = true;
+        //else
+        //{
+        //    NoTheSamePassword = false;
+
+        //    if ((user.Name == null || user.Address == null || user.Email == null ||
+        //               user.Password == null || ConfirmPassword == null))
+        //        IsFill = true;
+        //    else
+        //    {
+        //        IsFill = false;
+        //        try { bl.user.AddUser(user); }
+        //        catch (BO.InvalidArgumentException ex)
+        //        {
+        //            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        //            return;
+        //        }
+        //        catch (BO.AlreadyExsist ex)
+        //        {
+        //            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        //            return;
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+        //            return;
+        //        }
+        //        System.Windows.MessageBox.Show("You've successfully signed up!😊", "🍰", MessageBoxButton.OK);
+        //        var temp = bl.user.GetUser("a@gmail.com", "11AAaa");
+        //        new LogInWindow().Show();
+        //        this.Close();
+        //    }
+        //}
     }
 
     /// <summary>
