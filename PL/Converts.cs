@@ -113,23 +113,20 @@ class ConvertPathToBitmapImage : IValueConverter
 
         try
         {
-            //if (value == null)
-            //{
-            //    return null;
-            //}
+            if (value == "")
+                throw new Exception();
                 string imageRelativeName = (string)value;
                 string currentDir = Environment.CurrentDirectory[..^4];
                 string imageFullName = currentDir + imageRelativeName;//direction of the picture
                 BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
                 return bitmapImage;
-         
         }
         catch
         {
-            string imageRelativeName = @"\img\logo.pnp";//default picture
+            string imageRelativeName = @"\img\logo.png";//default picture
             string currentDir = Environment.CurrentDirectory[..^4];
             string imageFullName = currentDir + imageRelativeName;//direction of the picture
-            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName));//makes the picture
+            BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
             return bitmapImage;
         }
     }
