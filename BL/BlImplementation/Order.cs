@@ -58,8 +58,9 @@ internal class Order : BlApi.IOrder
             //Building a logical order based on the data and returning it
             BO.Order boOrder = new BO.Order();
             doOrder.CopyBetweenEnriries(boOrder);
-            boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
-            boOrder.PaymentDate = doOrder.OrderDate;
+            boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.DeliveryDate != null) ? 2 : 1);
+
+            //boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
             boOrder.PaymentDate = doOrder.OrderDate;
            boOrder.items = ListOrderItems;
             boOrder.totalPrice = price;
@@ -100,7 +101,8 @@ internal class Order : BlApi.IOrder
         BO.Order order = new BO.Order();
         doOrder.CopyBetweenEnriries(order);
         order.ID = idOrder;
-        order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
+        //order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
+        order.status = OrderStatus.OrderProvided;
         order.PaymentDate = doOrder.OrderDate;
         order.items = boOrderItems;
         order.totalPrice = price;
@@ -144,6 +146,7 @@ internal class Order : BlApi.IOrder
         //If the order has been sent, an exception will be thrown
         if (doOrder.DeliveryDate != null)
             throw new InternalErrorException("The order has already been sent");
+
         //Check if an order exists (in the data layer) and has not yet been sent
         else
         {
@@ -160,9 +163,16 @@ internal class Order : BlApi.IOrder
 
             //Creating an order from the logical extent of an order based on the data
             BO.Order boOrder = new BO.Order();
-            doOrder.CopyBetweenEnriries(boOrder);
+            //doOrder.CopyBetweenEnriries(boOrder);
+            boOrder.ID = doOrder.ID;
+            boOrder.CustomerName = doOrder.CustomerName;
+            boOrder.CustomerAddress = doOrder.CustomerAddress;
+            boOrder.CustomerEmail = doOrder.CustomerEmail;
             boOrder.PaymentDate = doOrder.OrderDate;
             boOrder.status = OrderStatus.OrderSend;
+            boOrder.DeliveryDate = doOrder.DeliveryDate;
+            boOrder.PaymentDate = doOrder.OrderDate;
+            boOrder.ShipDate = doOrder.ShipDate;
             boOrder.items = boItems;
             boOrder.totalPrice = price;
             return boOrder;

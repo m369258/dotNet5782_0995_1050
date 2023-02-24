@@ -13,6 +13,19 @@ namespace PL
     /// </summary>
     public partial class SimulatorWindow : Window
     {
+
+        public EventStatusArgs MyArgsSimulator
+        {
+            get { return (EventStatusArgs)GetValue(MyArgsSimulatorProperty); }
+            set { SetValue(MyArgsSimulatorProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for MyArgsSimulator.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyArgsSimulatorProperty =
+            DependencyProperty.Register("MyArgsSimulator", typeof(EventStatusArgs), typeof(SimulatorWindow), new PropertyMetadata(null));
+
+
+
         BackgroundWorker bw;
         public SimulatorWindow()
         {
@@ -32,16 +45,28 @@ namespace PL
             {
                 case UpdateType.UPDATECLOCK:
                     {
-                        this.txtClock.Text = DateTime.Now.ToString();
+                        this.txtClockNow.Text = DateTime.Now.ToString();
                         break;
                     }
                 case UpdateType.UPDATESTART:
                     {
-                        idd.Content = ((EventStatusArgs)e.UserState).OrderId;
+                        idd.Text = (((EventStatusArgs)e.UserState).OrderId).ToString();
+                        this.txtClockNow.Text = (((EventStatusArgs)e.UserState).start).ToString();
+                        this.txtClockWill.Text = (((EventStatusArgs)e.UserState).finish).ToString();
+                        this.txtStatusNow.Text = (((EventStatusArgs)e.UserState).now).ToString();
+                        this.txtStatusWill.Text = (((EventStatusArgs)e.UserState).will).ToString();
+                        //MyArgsSimulator.OrderId = ((EventStatusArgs)e.UserState).OrderId;
+                        //MyArgsSimulator.start = ((EventStatusArgs)e.UserState).start;
+                        //MyArgsSimulator.finish= ((EventStatusArgs)e.UserState).finish;
+                        //MyArgsSimulator.now= ((EventStatusArgs)e.UserState).now;    
+                        //MyArgsSimulator.will= ((EventStatusArgs)e.UserState).will;
                         break;
                     }
                 case UpdateType.UPDATEEND:
-                    break;
+                    {
+
+                        break;
+                    }
                 default:
                     break;
             }
@@ -49,7 +74,8 @@ namespace PL
 
         private void Bw_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
-            MessageBox.Show("kkk");
+            MessageBox.Show("tanks");
+            this.Close();
         }
 
         private void Bw_DoWork(object? sender, DoWorkEventArgs e)
@@ -60,7 +86,7 @@ namespace PL
             Simulator.Simulator.Active();
             while(!bw.CancellationPending)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 bw.ReportProgress((int)UpdateType.UPDATECLOCK);
             }
         }
@@ -72,12 +98,12 @@ namespace PL
 
         private void Simulator_reportEnd(object? sender, EventArgs e)
         {
-            bw.ReportProgress((int)UpdateType.UPDATESTART, e);
+            bw.ReportProgress((int)UpdateType.UPDATEEND, e);
         }
 
         private void Simulator_reportStart(object? sender, EventStatusArgs e)
         {
-            bw.ReportProgress((int)UpdateType.UPDATEEND, e);
+            bw.ReportProgress((int)UpdateType.UPDATESTART, e);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

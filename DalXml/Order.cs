@@ -1,4 +1,6 @@
 ﻿using DalApi;
+using Do;
+
 namespace Dal;
 
 internal class Order : IOrder
@@ -45,7 +47,13 @@ internal class Order : IOrder
 
     public void Update(Do.Order updateEntity)
     {
-        Delete(updateEntity.ID);
-        Add(updateEntity);
+        List<Do.Order?> listOrders = Tools.LoadListFromXMLSerializer<Do.Order>(s_order);
+
+        if (listOrders.RemoveAll(order => order?.ID == updateEntity.ID) == 0)
+            throw new Exception("Missing id");
+        listOrders.Add(updateEntity);
+
+        Tools.SaveListToXMLSerializer(listOrders, s_order);
+
     }
 }
