@@ -126,7 +126,7 @@ class ConvertPathToBitmapImage : IValueConverter
         }
         catch
         {
-            string imageRelativeName = @"\pics\default.jpg";//default picture
+            string imageRelativeName = @"\img\logo.pnp";//default picture
             string currentDir = Environment.CurrentDirectory[..^4];
             string imageFullName = currentDir + imageRelativeName;//direction of the picture
             BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName));//makes the picture

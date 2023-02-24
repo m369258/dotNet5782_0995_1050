@@ -68,7 +68,15 @@ internal class OrderItem : IOrderItems
 
     public void Update(Do.OrderItem updateEntity)
     {
-        Delete(updateEntity.ID);
-        Add(updateEntity);
+        //Delete(updateEntity.ID);
+        //Add(updateEntity);
+
+        List<Do.OrderItem?> listOrdeItemss = Tools.LoadListFromXMLSerializer<Do.OrderItem>(s_orderItem);
+
+        if (listOrdeItemss.RemoveAll(item => item?.ID == updateEntity.ID) == 0)
+            throw new Exception("Missing id");
+        listOrdeItemss.Add(updateEntity);
+
+        Tools.SaveListToXMLSerializer(listOrdeItemss, s_orderItem);
     }
 }

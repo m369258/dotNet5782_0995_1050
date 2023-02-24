@@ -1,99 +1,27 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUsers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Users>
-    <ID>213673114</ID>
+    <ID>1</ID>
     <Name>shira nussbacher</Name>
     <Address>Alonei Mamreh the 4 doors house</Address>
     <Email>shira6557@gmail.com</Email>
     <Password>123koKO</Password>
-    <TypeOfUser>customer</TypeOfUser>
+    <TypeOfUser>manager</TypeOfUser>
   </Users>
   <Users>
-    <ID>325321826</ID>
+    <ID>2</ID>
     <Name>michal grinboim</Name>
     <Address>Alonei Mamreh the 4 doors house</Address>
     <Email>michal.grinboin@gmail.com</Email>
     <Password>147loLO</Password>
-    <TypeOfUser>customer</TypeOfUser>
+    <TypeOfUser>manager</TypeOfUser>
   </Users>
   <user>
-    <ID>12</ID>
-    <Name />
-    <Address />
-    <Email />
-    <Password />
-    <TypeOfUser>manager</TypeOfUser>
-  </user>
-  <user>
-    <ID>15</ID>
-    <Name>qwe</Name>
-    <Address>ghj</Address>
-    <Email>ggy@gmail.com</Email>
-    <Password>147koAW</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>58</ID>
-    <Name>jyu</Name>
-    <Address>juy</Address>
-    <Email>j@gmail.com</Email>
-    <Password>11AAaa</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>59</ID>
-    <Name>RTFYGUHIJ</Name>
-    <Address>GHJ</Address>
-    <Email>shira6557@gmail.com</Email>
-    <Password>aa11AA</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>60</ID>
+    <ID>3</ID>
     <Name>gila</Name>
     <Address>gordon 5 bne nrak</Address>
     <Email>gila47@gmail.com</Email>
     <Password>gila12A</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>61</ID>
-    <Name>aaaa</Name>
-    <Address>aaaa</Address>
-    <Email>michal.grinboim@gmail.com</Email>
-    <Password>11aaAA</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>62</ID>
-    <Name>aaa</Name>
-    <Address>aaa</Address>
-    <Email>gila47@gmail.com</Email>
-    <Password>1AAaa1</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>63</ID>
-    <Name>jjjj</Name>
-    <Address>kkk</Address>
-    <Email>f@gmail.com</Email>
-    <Password>11AAss</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>64</ID>
-    <Name>aaa</Name>
-    <Address>bbb</Address>
-    <Email>G@gmail.com</Email>
-    <Password>11AAss</Password>
-    <TypeOfUser>customer</TypeOfUser>
-  </user>
-  <user>
-    <ID>65</ID>
-    <Name>ruti</Name>
-    <Address>even gvirol</Address>
-    <Email>ruti@gamil.com</Email>
-    <Password>11BBbb</Password>
     <TypeOfUser>customer</TypeOfUser>
   </user>
 </ArrayOfUsers>

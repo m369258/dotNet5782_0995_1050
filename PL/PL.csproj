@@ -16,6 +16,8 @@
 		  <None Remove="44.png" />
 		  <None Remove="img\carttt.png" />
 		  <None Remove="img\catalog\bigCake.png" />
+		  <None Remove="img\catalog\happyBirthday.png" />
+		  <None Remove="img\catalog\heightCake.png" />
 		  <None Remove="img\catalog\IMG-9165-416x416.png" />
 		  <None Remove="img\download.png" />
 		  <None Remove="img\ilovecupcakes_tlv-16022023-0001.mp4" />
@@ -50,6 +52,8 @@
 		  <Resource Include="44.png" />
 		  <Resource Include="img\carttt.png" />
 		  <Resource Include="img\catalog\bigCake.png" />
+		  <Resource Include="img\catalog\happyBirthday.png" />
+		  <Resource Include="img\catalog\heightCake.png" />
 		  <Resource Include="img\catalog\IMG-9165-416x416.png" />
 		  <Resource Include="img\download.png" />
 		  <Resource Include="img\inst.png" />
