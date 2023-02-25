@@ -61,6 +61,7 @@ public partial class paymentWindow : Window
 
         //If everything is in order, we will inform the customer   
         MessageBox.Show("Your order is on its way...😊");
+        
     }
     private bool checkEmail()
     {

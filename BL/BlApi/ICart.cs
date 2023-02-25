@@ -25,6 +25,7 @@ public interface ICart
         /// <param name="myCart">You will receive a shopping basket (which this time includes the buyer's information - name, email address, address)</param>
         public void MakeAnOrder(BO.Cart myCart);
 
-    public BO.Cart Delete(BO.Cart myCart, int idProduct);
+    public BO.Cart Delete(BO.Cart myCart, int idProduct, List<Tuple<int, int>> items = null);
+     //public BO.Cart Delete(BO.Cart myCart, int idProduct);
 
 }

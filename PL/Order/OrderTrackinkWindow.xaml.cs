@@ -75,8 +75,9 @@ public partial class OrderTrackinkWindow : Window
         else
         {
             int orderid = tracking.ID;
-            OrderWindow orderWindow = new OrderWindow(orderid);
-            orderWindow.ShowDialog();
+            OrderWindow orderWindow = new OrderWindow(orderid,cart,"fromOrderTracking");
+            orderWindow.Show();
+            this.Close();
         }
     }
 

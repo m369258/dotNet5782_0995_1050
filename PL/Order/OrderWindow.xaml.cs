@@ -20,9 +20,13 @@ public partial class OrderWindow : Window
     public static readonly DependencyProperty myOrderProperty =
         DependencyProperty.Register("myOrder", typeof(BO.Order), typeof(OrderWindow), new PropertyMetadata(null));
 
-    public OrderWindow(int id)
+    string? fromWindow;
+    BO.Cart? cart = new BO.Cart();
+    public OrderWindow(int id, BO.Cart cart = null, string from = null)
     {
         InitializeComponent();
+        this.cart = cart;
+        fromWindow = from;
         try { myOrder = bl.order.GetOrderDetails(id); }
         catch (BO.InternalErrorException ex)
         {
@@ -52,14 +56,14 @@ public partial class OrderWindow : Window
         {
             if (myOrder.status == (BO.OrderStatus)1)
             {
-               BO.Order temp= bl.order.OrderShippingUpdate(myOrder.ID);
+                BO.Order temp = bl.order.OrderShippingUpdate(myOrder.ID);
                 myOrder = new BO.Order();
                 myOrder = temp;
                 MessageBox.Show("Order Sended😊", "🍰", MessageBoxButton.OK);
             }
             else
             {
-               BO.Order temp= bl.order.OrderDeliveryUpdate(myOrder.ID);
+                BO.Order temp = bl.order.OrderDeliveryUpdate(myOrder.ID);
                 myOrder = new BO.Order();
                 myOrder = temp;
                 MessageBox.Show("Order Shippded😊", "🍰", MessageBoxButton.OK);
@@ -84,7 +88,10 @@ public partial class OrderWindow : Window
     /// <param name="e"></param>
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
-        new OrderForListWindow().Show();
+        if (fromWindow == "fromOrderTracking")
+            new OrderTrackinkWindow(cart).Show();
+        else
+            new OrderForListWindow().Show();
         this.Close();
     }
 }
