@@ -8,6 +8,7 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         Title="CustomerWindow" Height="700" Width="1120">
     <Window.Resources>
+        <!--WindowStartupLocation="CenterScreen"-->
 
         <local:NotBooleanToVisibilityConverter
 x:Key="notBooleanToVisibilityConverter" />
@@ -137,6 +138,7 @@ x:Key="convertStringToVisibility" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="1" Text="↺" Style="{StaticResource categoryStyle}"/>
@@ -147,33 +149,33 @@ x:Key="convertStringToVisibility" />
             <TextBlock Grid.Column="6" Text="ballons" RenderTransformOrigin="8.346,-0.172" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="7" Text="popular" RenderTransformOrigin="8.346,-0.172" Style="{StaticResource categoryStyle}" />
 
-            <Grid Grid.Column="9" >
+            <Grid Grid.Column="8" Grid.ColumnSpan="2" HorizontalAlignment="Left" Width="101" >
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Menu Grid.Column="0" Grid.Row="0" Width="150"  Background="Transparent" Height="101" >
-                    <MenuItem Visibility="{Binding  MyCart.CustomerEmail, Converter={StaticResource notConvertStringToVisibility}}" Icon="💌" Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+                <Menu Grid.Column="0">
+                    <MenuItem Grid.Row="0" Grid.Column="0" Visibility="{Binding  MyCart.CustomerEmail, Converter={StaticResource notConvertStringToVisibility}}" Icon="💌" Background="Transparent" Header="" Height="100" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center"   >
                         <!--<MenuItem x:Name="menuOrders" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="💌" Header="My Orders" FontWeight="Bold" />-->
                         <MenuItem x:Name="menuTracking" FontFamily="Consolas" FontSize="16" BorderBrush="Black" Background="LightPink" Icon="🚛" Header="Track Orders" FontWeight="Bold" Click="menuTracking_Click"/>
                         <Separator />
                         <MenuItem x:Name="menuLogOut" FontFamily="Consolas" FontSize="16" Header="Log Out" FontWeight="Bold" BorderBrush="Black" Background="#FFFBD6D6" Click="menuLogOut_Click">
                         </MenuItem>
                     </MenuItem>
-                    <MenuItem Grid.Column="1" Icon="💌" Visibility="{Binding MyCart.CustomerEmail,Converter={StaticResource convertStringToVisibility}}" Background="Transparent" Header="" Height="100" Width="54" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center">
+                </Menu>
+                <Menu Grid.Column="1">
+                    <MenuItem Grid.Row="0" Grid.Column="1" Icon="💌" Visibility="{Binding MyCart.CustomerEmail,Converter={StaticResource convertStringToVisibility}}"  Background="Transparent" Header="" Height="100" FlowDirection="RightToLeft" HorizontalContentAlignment="Center" HorizontalAlignment="Center"    >
                         <Separator />
                         <MenuItem x:Name="menuLogIn" FontFamily="Consolas" FontSize="16" Header="Log in" FontWeight="Bold" BorderBrush="Black" Background="#FFFBD6D6" Click="menuSignIn_Click">
                         </MenuItem>
                     </MenuItem>
                 </Menu>
-                
-                <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="1" Height="75" Width="85" Click="Button_Click"  Style="{StaticResource noneStyle}">
-                    <Image  Source="/img/istockphoto-1251362621-1024x1024.jpg" HorizontalAlignment="Center" Height="70" VerticalAlignment="Center" Width="80" RenderTransformOrigin="0.317,0.528"/>
-                </Button>
-
             </Grid>
+            <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="9" Height="75" Width="85" Click="Button_Click"  Style="{StaticResource noneStyle}">
+                <Image  Source="/img/istockphoto-1251362621-1024x1024.jpg" HorizontalAlignment="Center" Height="70" VerticalAlignment="Center" Width="80" RenderTransformOrigin="0.317,0.528"/>
+            </Button>
         </Grid>
         <ScrollViewer Grid.Row="1">
             <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Stretch" ItemsSource="{Binding MyProductItems,Mode=TwoWay}" ItemTemplate="{StaticResource oneProduct}">

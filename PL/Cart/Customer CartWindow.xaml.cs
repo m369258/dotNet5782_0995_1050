@@ -38,14 +38,26 @@ public partial class Customer_CartWindow : Window
         MyCart = new BO.Cart();
         InitializeComponent();
         MyCart = getCart;
-
     }
 
     private void btnUpdateCart_Click(object sender, RoutedEventArgs e)
     {
         foreach (var item in items)
         {
-            try { MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2); }
+            try
+            {
+                //MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2);//במקום השורה היחידההה הזאת שיניתי לכל ההמשך כאן
+                //BO.Cart tmp1Cart = MyCart;
+                //tmp1Cart.TotalPrice = 0;
+                //MyCart = new BO.Cart();
+                //MyCart = tmp1Cart;
+
+                BO.Cart tmp2Cart = bl.cart.Update(MyCart, item.Item1, item.Item2);
+                MyCart = new BO.Cart();
+                MyCart = tmp2Cart;
+
+
+            }
             catch (BO.InvalidInputException ex) { MessageBox.Show("Pay attention" + ex.Message); }
             catch (BO.InternalErrorException ex) { MessageBox.Show("Pay attention" + ex.Message); }
             catch (BO.NotEnoughInStockException) { MessageBox.Show("We are sorry but the item is out of stock"); }

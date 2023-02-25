@@ -144,7 +144,10 @@ internal class Cart : BlApi.ICart
                 //we will check if it is in stock and we will update the details
                 if (newQuantity <= myProduct.InStock)
                 {
-                    myCart.TotalPrice += (newQuantity - boOrderItem.QuantityPerItem) * boOrderItem.productPrice;
+                    myCart.TotalPrice += (newQuantity - boOrderItem.QuantityPerItem) * boOrderItem.productPrice;//שינית לשורה מתחת
+                    //myCart.TotalPrice += newQuantity * boOrderItem.productPrice;//חשבתי אולי לשנות לזה ובסוף שיניתי לשורה הבאה
+                    //myCart.TotalPrice = myCart.TotalPrice;
+
                     boOrderItem.QuantityPerItem = newQuantity;
                     boOrderItem.TotalPrice = boOrderItem.productPrice * newQuantity;
                 }
@@ -161,10 +164,15 @@ internal class Cart : BlApi.ICart
                 //check if it is still in stock and update the details
                 if (newQuantity <= myProduct.InStock)
                 {
+                    //myCart.TotalPrice -= (boOrderItem.QuantityPerItem - newQuantity) * boOrderItem.productPrice;//שיניתי את השורה הזאת לשורה הבאה
                     myCart.TotalPrice -= (boOrderItem.QuantityPerItem - newQuantity) * boOrderItem.productPrice;
                     boOrderItem.QuantityPerItem = newQuantity;
                     boOrderItem.TotalPrice = boOrderItem.productPrice * newQuantity;
                 }
+            }
+            else if(newQuantity == boOrderItem.QuantityPerItem)
+            {
+                
             }
             //If the quantity became 0 - delete the corresponding item from the basket and update the total price of the shopping basket
             else
