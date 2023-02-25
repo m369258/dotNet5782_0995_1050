@@ -17,7 +17,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
-        
+
         <ComboBox ItemsSource="{Binding OrdersID}" Grid.Row="0" SelectionChanged="ComboBox_SelectionChanged" IsTextSearchEnabled="True" TextSearch.TextPath="ID"  IsEditable="True" RenderTransformOrigin="0.494,-0.141" FontWeight="Bold" FontSize="18" FontFamily="Consolas" BorderBrush="#FFF6E3DD" BorderThickness="3,3,3,3" HorizontalAlignment="Center" Width="360" VerticalAlignment="Center" Height="41">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -43,7 +43,7 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="btnOrderDetails" Grid.Row="2" Content="Show Order Details" Height="38" Width="176" Click="btnOrderDetails_Click" Background="#FFF6E3DD" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" FontSize="14"/>
+        <Button x:Name="btnOrderDetails" Grid.Row="2" Content="Show Order Details" Height="NaN" Width="176" Click="btnOrderDetails_Click" Background="#FFF6E3DD" FontFamily="Consolas" FontWeight="Bold" HorizontalAlignment="Center" FontSize="14" Margin="0,8,0,8"/>
         <TextBlock Name="txtBack" Grid.Row="3" Grid.Column="0" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18"/>
 
     </Grid>

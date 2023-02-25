@@ -1,5 +1,4 @@
-﻿using BlApi;
-using BO;
+﻿using BO;
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
@@ -36,7 +35,7 @@ internal class Cart : BlApi.ICart
                 myOrderItem.TotalPrice = doProduct.Price;
                 //adding it to the list of details in the basket
                 if (myCart.items == null)
-                    myCart.items = new List<OrderItem?>();
+                    myCart.items = new List<BO.OrderItem?>();
 
                 myCart.items?.Add(myOrderItem);
 
@@ -170,9 +169,9 @@ internal class Cart : BlApi.ICart
                     boOrderItem.TotalPrice = boOrderItem.productPrice * newQuantity;
                 }
             }
-            else if(newQuantity == boOrderItem.QuantityPerItem)
+            else if (newQuantity == boOrderItem.QuantityPerItem)
             {
-                
+
             }
             //If the quantity became 0 - delete the corresponding item from the basket and update the total price of the shopping basket
             else
@@ -189,9 +188,9 @@ internal class Cart : BlApi.ICart
         return myCart;
     }
 
-    public BO.Cart Delete(BO.Cart myCart, int idProduct)
+    public BO.Cart Delete(BO.Cart myCart, int idProduct, List<Tuple<int, int>> items = null)
     {
-        
+
         Do.Product myProduct;
         try { myProduct = myDal.product.Get(item => item?.ID == idProduct); }
         catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id product is not exsist", ex); }
@@ -199,14 +198,33 @@ internal class Cart : BlApi.ICart
         BO.Cart myNewCart = new BO.Cart();
         //cart.CopyBetweenEnriries(myCart);
         myCart.CopyBetweenEnriries(myNewCart);
+        if (items == null)
+            myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
+        else
+        {
+            myNewCart.items = (from item in items
+                       where item?.Item1 != idProduct
+                       let it = myCart.items?.FirstOrDefault(x => x?.ProductId == item?.Item1)
+                       select new BO.OrderItem
+                       {
+                           ID = it?.ID ?? throw new BO.InvalidArgumentException(),
+                           NameProduct = it?.NameProduct,
+                           productPrice = it?.productPrice ?? throw new BO.InvalidArgumentException(),
+                           TotalPrice = it?.TotalPrice ?? throw new BO.InvalidArgumentException(),
+                           ProductId = idProduct,
+                           QuantityPerItem = item?.Item2 ?? 0
+                       }).ToList();
+        }
 
-        myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
         BO.OrderItem myOrderItem = new BO.OrderItem();
         myOrderItem = myCart.items.FirstOrDefault(item => item?.ProductId == idProduct);
         myNewCart.TotalPrice -= myProduct.Price * myOrderItem.QuantityPerItem;
 
         return myNewCart;
     }
+
+
+
 
     //Local helper functions:
     /// <summary>

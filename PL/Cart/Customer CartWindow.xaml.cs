@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -46,17 +47,9 @@ public partial class Customer_CartWindow : Window
         {
             try
             {
-                //MyCart = bl.cart.Update(MyCart, item.Item1, item.Item2);//במקום השורה היחידההה הזאת שיניתי לכל ההמשך כאן
-                //BO.Cart tmp1Cart = MyCart;
-                //tmp1Cart.TotalPrice = 0;
-                //MyCart = new BO.Cart();
-                //MyCart = tmp1Cart;
-
                 BO.Cart tmp2Cart = bl.cart.Update(MyCart, item.Item1, item.Item2);
                 MyCart = new BO.Cart();
                 MyCart = tmp2Cart;
-
-
             }
             catch (BO.InvalidInputException ex) { MessageBox.Show("Pay attention" + ex.Message); }
             catch (BO.InternalErrorException ex) { MessageBox.Show("Pay attention" + ex.Message); }
@@ -90,7 +83,12 @@ public partial class Customer_CartWindow : Window
     private void btnDeleteItemFromCart_Click(object sender, RoutedEventArgs e)
     {
         BO.OrderItem selection = ((BO.OrderItem)((Button)sender).DataContext);
-        try { MyCart = bl.cart.Delete(MyCart, selection.ProductId); }
+
+        try
+        {
+            MyCart = bl.cart.Delete(MyCart, selection.ProductId,items);
+            
+        }
         catch (BO.InternalErrorException) { MessageBox.Show("We are sorry but the item is not exsist"); }
         catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
     }
