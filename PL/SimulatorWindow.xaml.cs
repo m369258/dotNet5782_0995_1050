@@ -85,7 +85,11 @@ namespace PL
 
         private void Simulator_reportEndSim(object? sender, EventArgs e)
         {
-            bw.CancelAsync();   
+            bw.CancelAsync();
+            Simulator.Simulator.DereportStart(Simulator_reportStart);
+            Simulator.Simulator.DereportEnd(Simulator_reportEnd);
+            Simulator.Simulator.DereportEndSim(Simulator_reportEndSim);
+
         }
 
         private void Simulator_reportEnd(object? sender, EventArgs e)

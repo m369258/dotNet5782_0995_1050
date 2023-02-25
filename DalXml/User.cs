@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using Do;
-using System.Net;
 using System.Xml.Linq;
 namespace Dal;
 

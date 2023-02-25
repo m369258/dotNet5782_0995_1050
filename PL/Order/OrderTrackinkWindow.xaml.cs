@@ -44,12 +44,12 @@ public partial class OrderTrackinkWindow : Window
     public OrderTrackinkWindow(BO.Cart currCart=null)//!
     {
         InitializeComponent();
-        this.email = currCart.CustomerEmail;//!
-        cart= currCart;//!
+        this.email = currCart?.CustomerEmail;
+        cart= currCart;
 
         try
         {
-            if (email != "")   //show user's orders
+            if (email != ""&&email!=null)   //show user's orders
             {
                 var temp = bl.order.OrdersOfUsers(email);
                 OrdersID = temp == null ? new() : new(temp);

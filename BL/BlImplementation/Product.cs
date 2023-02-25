@@ -70,7 +70,7 @@ internal class Product : BlApi.IProduct
                        Name = prod.Name,
                        Price = prod.Price,
                        Category = ((BO.Category)prod.Category),
-                       Img = prod.Img ?? @"/img/catalog/bigCake.png",
+                       Img = prod.Img ?? @"logo.png",
                    };
     }
 

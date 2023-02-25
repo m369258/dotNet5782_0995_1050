@@ -31,7 +31,7 @@ internal class Order : BlApi.IOrder
             doUserOrders = myDal.order.GetAll(item => item?.CustomerEmail == email);
 
         ordersIds = doUserOrders.Select(item => item?.ID);
-        orderTrackings = ordersIds.Select(item => OrderTracking(item??throw new BO.InternalErrorException("problem with idOrder")));
+        orderTrackings = ordersIds.Select(item => OrderTracking(item ?? throw new BO.InternalErrorException("problem with idOrder")));
 
         return orderTrackings;
     }
@@ -58,11 +58,21 @@ internal class Order : BlApi.IOrder
             //Building a logical order based on the data and returning it
             BO.Order boOrder = new BO.Order();
             doOrder.CopyBetweenEnriries(boOrder);
-            boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.DeliveryDate != null) ? 2 : 1);
+            boOrder.PaymentDate = doOrder.OrderDate;
+            //boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.DeliveryDate != null) ? 2 : 1);
+            boOrder.status = OrderStatus.OrderConfirmed;
+            //Order status check
+            if (doOrder.DeliveryDate != null && doOrder.ShipDate == null)
+                boOrder.status = OrderStatus.OrderSend;
+
+            else if (doOrder.ShipDate != null)
+                boOrder.status = OrderStatus.OrderProvided;
+
+
 
             //boOrder.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
             boOrder.PaymentDate = doOrder.OrderDate;
-           boOrder.items = ListOrderItems;
+            boOrder.items = ListOrderItems;
             boOrder.totalPrice = price;
             return boOrder;
         }
@@ -101,7 +111,6 @@ internal class Order : BlApi.IOrder
         BO.Order order = new BO.Order();
         doOrder.CopyBetweenEnriries(order);
         order.ID = idOrder;
-        //order.status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
         order.status = OrderStatus.OrderProvided;
         order.PaymentDate = doOrder.OrderDate;
         order.items = boOrderItems;
@@ -121,15 +130,17 @@ internal class Order : BlApi.IOrder
         myOrderTracking.Tracking = new List<Tuple<DateTime?, string?>?>();
         myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.OrderDate, "The order has been confirmed"));
         myOrderTracking.ID = idOrder;
-        myOrderTracking.Status = (BO.OrderStatus)((doOrder.DeliveryDate != null && doOrder.ShipDate != null) ? 3 : (doOrder.ShipDate != null) ? 2 : 1);
+        myOrderTracking.Status = OrderStatus.OrderConfirmed;
 
         //Order status check
-        if (myOrderTracking.Status == OrderStatus.OrderSend || myOrderTracking.Status == OrderStatus.OrderProvided)
+        if (doOrder.DeliveryDate != null)
         {
+            myOrderTracking.Status = OrderStatus.OrderSend;
             myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was sent"));
         }
-        if (myOrderTracking.Status == OrderStatus.OrderProvided)
+        if (doOrder.ShipDate != null)
         {
+            myOrderTracking.Status = OrderStatus.OrderProvided;
             myOrderTracking.Tracking?.Add(new Tuple<DateTime?, string?>(doOrder.DeliveryDate, "The order was delivered"));
         }
         return myOrderTracking;
@@ -191,15 +202,22 @@ internal class Order : BlApi.IOrder
         var myDoOrderItems = myDal.orderItems.GetAll(x => x?.OrderId == (item?.ID ?? throw new Exception())).ToList();
 
         //Calculating the price of items in the product in order to arrive at the total price
-        double price = myDoOrderItems.Sum(it => it?.Price  ?? throw new Exception());
-        //double price = myDoOrderItems.Sum(it => it?.Price * it?.Amount ?? throw new Exception());
+        double price = myDoOrderItems.Sum(it => it?.Price ?? throw new Exception());
 
 
         //Build an order list of the OrderForList type on the database
         BO.OrderForList boOrder = new BO.OrderForList();
         item.CopyBetweenEnriries(boOrder);
+
+        boOrder.status = OrderStatus.OrderConfirmed;
+        //Order status check
+        if (item?.DeliveryDate != null&& item?.ShipDate == null)
+            boOrder.status = OrderStatus.OrderSend;
+
+        else if (item?.ShipDate != null)
+            boOrder.status = OrderStatus.OrderProvided;
+
         boOrder.OrderID = item?.ID ?? throw new BO.InternalErrorException("item without ID");
-        boOrder.status = (BO.OrderStatus)((item?.DeliveryDate != null && item?.ShipDate != null) ? 3 : (item?.ShipDate != null) ? 2 : 1);//??????????????????/
         boOrder.AmountForItems = myDoOrderItems.Count();
         boOrder.TotalPrice = price;
         return boOrder;
@@ -236,26 +254,26 @@ internal class Order : BlApi.IOrder
     {
         IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
         DateTime? dateTime = DateTime.Now;
-        int? id=null;
+        int? id = null;
         foreach (var ord in doOrders)
         {
-            if (ord?.OrderDate!=null&&ord?.OrderDate< dateTime&& ord?.ShipDate == null && ord?.DeliveryDate == null)
+            if (ord?.OrderDate != null && ord?.OrderDate < dateTime && ord?.ShipDate == null && ord?.DeliveryDate == null)
             {
                 dateTime = ord?.OrderDate;
                 id = ord?.ID;
             }
-            else if(ord?.ShipDate==null&& ord?.DeliveryDate != null && ord?.DeliveryDate < dateTime)
+            else if (ord?.ShipDate == null && ord?.DeliveryDate != null && ord?.DeliveryDate < dateTime)
             {
-                dateTime=ord?.DeliveryDate;
-                id=ord?.ID;
-            }   
+                dateTime = ord?.DeliveryDate;
+                id = ord?.ID;
+            }
         }
         return id;
     }
 
     public void UpdateStatus(int id)
     {
-        Do.Order order = myDal.order.Get(item=>item?.ID == id);
+        Do.Order order = myDal.order.Get(item => item?.ID == id);
 
         if (order.DeliveryDate == null)
             OrderShippingUpdate(id);

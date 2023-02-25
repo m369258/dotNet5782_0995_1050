@@ -9,7 +9,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Globalization;
 using Path = System.IO.Path;
-
+using System.Windows.Shapes;
 namespace PL.Product;
 
 enum AddOrUpdate { ADD, UPDATE };
@@ -333,7 +333,10 @@ public partial class ProductWindow : Window
     /// <param name="e"></param>
     private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
+
         OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;";
+
         if (openFileDialog.ShowDialog() == true)
         {
             pbx.Source = new BitmapImage(new Uri(openFileDialog.FileName));
@@ -342,47 +345,12 @@ public partial class ProductWindow : Window
         }
     }
 
-
-
-
-
     /// <summary>
     /// close the current window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
-
-    //ourrr
-    //private void treatImage()
-    //{
-    //    if (prod.Img != null)
-    //    {
-
-    //        //string imageName = prod.Img.Substring(prod.Img.LastIndexOf("/"));
-    //        //if (!File.Exists(Environment.CurrentDirectory[..^4] + @"/PL/img/catalog" + imageName))
-    //        //    File.Copy(prod.Img, Environment.CurrentDirectory[..^4] + @"/PL/img/catalog" + imageName);
-    //        //prod.Img = @"/img/catalog" + imageName;
-    //        string imageName = Path.GetFileName(prod.Img);
-
-    //        if (!File.Exists(Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName))
-    //            File.Copy(prod.Img, Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName);
-    //        prod.Img = @"/img/catalog/" + imageName;
-
-    //    }
-    //}
-
-    //ester
-    //private void treatImage()
-    //{
-    //    if (prod.PictureName != null)
-    //    {
-    //        string imageName = prod.PictureName.Substring(prod.PictureName.LastIndexOf("\\"));
-    //        if (!File.Exists(Environment.CurrentDirectory[..^4] + @"\pics\" + imageName))
-    //            File.Copy(prod.PictureName, Environment.CurrentDirectory[..^4] + @"\pics\" + imageName);
-    //        prod.PictureName = @"\pics\" + imageName;
-    //    }
-    //}
 
     /// <summary>
     /// the function treats the things of the image
@@ -395,74 +363,10 @@ public partial class ProductWindow : Window
 
                     if (!File.Exists(Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName))
                         File.Copy(prod.Img, Environment.CurrentDirectory[..^4] + @"/PL/img/catalog/" + imageName);
-                    prod.Img = @"/img/catalog/" + imageName;
-
+                    prod.Img =  imageName;
         }
+        else
+            prod.Img= @"logo.png";
+
     }
 }
-
-
-
-//class ConvertPathToBitmapImage : IValueConverter
-//{
-//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        try
-//        {
-//            string imageRelativeName = (string)value;
-//            string currentDir = Environment.CurrentDirectory[..^4];
-//            string imageFullName = currentDir + imageRelativeName;//direction of the picture
-//            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName));//makes the picture
-//            return bitmapImage;
-//        }
-//        catch
-//        {
-//            string imageRelativeName = @"\pics\default.jpg";//default picture
-//            string currentDir = Environment.CurrentDirectory[..^4];
-//            string imageFullName = currentDir + imageRelativeName;//direction of the picture
-//            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName));//makes the picture
-//            return bitmapImage;
-//        }
-//    }
-
-//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        throw new NotImplementedException();
-//    }
-//}
-
-
-
-
-class ConvertPathToBitmapImag : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-
-        try
-        {
-            if (value == "")
-                throw new Exception();
-            string imageRelativeName = (string)value;
-            string currentDir = Environment.CurrentDirectory[..^4];
-            string imageFullName = currentDir + imageRelativeName;//direction of the picture
-            BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
-            return bitmapImage;
-        }
-        catch
-        {
-            string imageRelativeName = @"\img\logo.png";//default picture
-            string currentDir = Environment.CurrentDirectory[..^4];
-            string imageFullName = currentDir + imageRelativeName;//direction of the picture
-            BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
-            return bitmapImage;
-        }
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-}
-
-

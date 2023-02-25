@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
+        xmlns:PL="clr-namespace:PL"
         mc:Ignorable="d"
         FontSize="20"
         WindowStartupLocation="CenterScreen"
@@ -11,7 +12,7 @@
         Title="ProductWindow">
 
     <Window.Resources>
-        <local:ConvertPathToBitmapImag x:Key="convertPathToBitmapImag"/>
+        <PL:ConvertPathToBitmapImage x:Key="convertPathToBitmapImag"/>
     </Window.Resources>
 
     <Grid Opacity="1" MinWidth="3" Grid.IsSharedSizeScope="True" OpacityMask="#FFE23636">

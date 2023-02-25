@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
@@ -108,25 +109,30 @@ public class NotBooleanToVisibilityConverter : IValueConverter
 
 class ConvertPathToBitmapImage : IValueConverter
 {
+
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
+        const string imagesDirectory = @"PL\img\catalog";
 
         try
         {
-            if (value == "")
+            if (value == "" || value == null)
                 throw new Exception();
-                string imageRelativeName = (string)value;
-                string currentDir = Environment.CurrentDirectory[..^4];
-                string imageFullName = currentDir + imageRelativeName;//direction of the picture
-                BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
-                return bitmapImage;
+            string imageRelativeName = (string)value;
+            string? currentDir = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
+            string imageFullName = Path.Combine(currentDir ?? throw new Exception(), imagesDirectory, imageRelativeName);
+            //string imageFullName = currentDir + imageRelativeName;//direction of the picture
+            // BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
+            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName, UriKind.Absolute));//makes the picture
+
+            return bitmapImage;
         }
         catch
         {
-            string imageRelativeName = @"\img\logo.png";//default picture
-            string currentDir = Environment.CurrentDirectory[..^4];
-            string imageFullName = currentDir + imageRelativeName;//direction of the picture
-            BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
+            string imageRelativeName = @"logo.png";//default picture
+            string? currentDir = Directory.GetParent(Environment.CurrentDirectory)?.FullName;
+            string imageFullName = Path.Combine(currentDir ?? throw new Exception(), imagesDirectory, imageRelativeName);
+            BitmapImage bitmapImage = new BitmapImage(new Uri(imageFullName, UriKind.Absolute));//makes the picture
             return bitmapImage;
         }
     }
@@ -136,5 +142,40 @@ class ConvertPathToBitmapImage : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+
+
+
+
+//class ConvertPathToBitmapImage : IValueConverter
+//{
+//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+
+//        try
+//        {
+//            if (value == "" || value == null)
+//                throw new Exception();
+//            string imageRelativeName = (string)value;
+//                string currentDir = Environment.CurrentDirectory[..^4];
+//                string imageFullName = currentDir + imageRelativeName;//direction of the picture
+//                BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
+//                return bitmapImage;
+//        }
+//        catch
+//        {
+//            string imageRelativeName = @"\img\logo.png";//default picture
+//            string currentDir = Environment.CurrentDirectory[..^4];
+//            string imageFullName = currentDir + imageRelativeName;//direction of the picture
+//            BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
+//            return bitmapImage;
+//        }
+//    }
+
+//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}
 
 

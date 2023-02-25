@@ -50,23 +50,29 @@ public partial class OrderWindow : Window
     {
         try
         {
-            if (myOrder.status == (BO.OrderStatus)2)
+            if (myOrder.status == (BO.OrderStatus)1)
             {
-                bl.order.OrderDeliveryUpdate(myOrder.ID);
+               BO.Order temp= bl.order.OrderShippingUpdate(myOrder.ID);
+                myOrder = new BO.Order();
+                myOrder = temp;
+                MessageBox.Show("Order Sended😊", "🍰", MessageBoxButton.OK);
             }
             else
             {
-                bl.order.OrderShippingUpdate(myOrder.ID);
+               BO.Order temp= bl.order.OrderDeliveryUpdate(myOrder.ID);
+                myOrder = new BO.Order();
+                myOrder = temp;
+                MessageBox.Show("Order Shippded😊", "🍰", MessageBoxButton.OK);
             }
         }
         catch (BO.InternalErrorException ex)
         {
-            System.Windows.MessageBox.Show(ex.Message, "bbbb:(", MessageBoxButton.OK);
+            System.Windows.MessageBox.Show(ex.Message, "🍰", MessageBoxButton.OK);
             return;
         }
         catch (Exception ex)
         {
-            System.Windows.MessageBox.Show(ex.Message, "aaaa:(", MessageBoxButton.OK);
+            System.Windows.MessageBox.Show(ex.Message, "🍰", MessageBoxButton.OK);
             return;
         }
     }
@@ -82,6 +88,3 @@ public partial class OrderWindow : Window
         this.Close();
     }
 }
-
-
-

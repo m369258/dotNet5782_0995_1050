@@ -50,8 +50,15 @@ public static  class Simulator
     }
 
     public static void ReportStart(EventHandler<EventStatusArgs> ev) => reportStart += ev;
+
+    public static void DereportStart(EventHandler<EventStatusArgs> ev) => reportStart -= ev;
+
     public static void ReportEnd(EventHandler<EventStatusArgs> ev) => reportEnd += ev;
+    public static void DereportEnd(EventHandler<EventStatusArgs> ev) => reportEnd -= ev;
+
     public static void ReportEndSim(EventHandler ev) => reportEndSim += ev;
+    public static void DereportEndSim(EventHandler ev) => reportEndSim -= ev;
+
 }
 
 public class EventStatusArgs:EventArgs

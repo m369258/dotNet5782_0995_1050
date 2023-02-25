@@ -82,7 +82,7 @@ internal static class DataSource
                 product.InStock = 0;
             else
                 product.InStock = i * 100;
-            product.Img = "/img/catalog/bigCake.png";
+            product.Img = "bigCake.png";
             products.Add(product);
         }
     }
@@ -121,20 +121,25 @@ internal static class DataSource
             order.CustomerName = customerNames[i];
             order.CustomerEmail = customerNames[i];
             order.CustomerAddress = customerAddresses[i];
-            order.OrderDate = DateTime.MinValue + new TimeSpan(rand.Next(2001, 2022) * 365, 0, 0, 0);
+            //order.OrderDate = DateTime.MinValue + new TimeSpan(rand.Next(2001, 2022) * 365, 0, 0, 0);
+
+            order.OrderDate=DateTime.Now;
+            order.ShipDate = null;
+            order.DeliveryDate = null;
 
             //About 80% of the orders will have a delivery date that must be after the order creation time
-            if (i <= 0.8 * 20)
-                order.ShipDate = order.OrderDate + new TimeSpan(2, 0, 0, 0);
-            else
-                order.ShipDate = order.OrderDate;
-            //About 60% of orders sent will have a delivery date
-            if (i <= 0.6 * 20)
-                order.DeliveryDate = order.ShipDate + new TimeSpan(3, 0, 0, 0);
-            else
-                order.DeliveryDate = order.ShipDate;
+            //if (i <= 0.8 * 20)
+            //    order.ShipDate = order.OrderDate + new TimeSpan(2, 0, 0, 0);
+            //else
+            //    order.ShipDate = order.OrderDate;
+            ////About 60% of orders sent will have a delivery date
+            //if (i <= 0.6 * 20)
+            //    order.DeliveryDate = order.ShipDate + new TimeSpan(3, 0, 0, 0);
+            //else
+            //    order.DeliveryDate = order.ShipDate;
             orders.Add(order);
         }
+        
     }
 
     /// <summary>
