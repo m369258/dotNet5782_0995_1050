@@ -34,7 +34,7 @@ public partial class OrderWindow : Window
     public OrderWindow(int id, BO.Cart cart = null, string from = null)
     {
         InitializeComponent();
-        cart = new BO.Cart();
+        //cart = new BO.Cart();
         this.cart = cart;
         fromWindow = from;
 

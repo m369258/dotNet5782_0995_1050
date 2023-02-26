@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
         DataContext="{Binding MyCart, RelativeSource={RelativeSource Mode=Self}, Mode=OneWay}"
-        Title="paymentWindow" Height="450" Width="800">
+        Title="paymentWindow" Height="550" Width="950"  WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.Resources>
 
         <DataTemplate x:Key="OneProductItem" DataType="local:MyData">

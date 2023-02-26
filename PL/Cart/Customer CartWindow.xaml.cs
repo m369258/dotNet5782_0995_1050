@@ -90,11 +90,15 @@ public partial class Customer_CartWindow : Window
 
     private void btnPayment_Click(object sender, RoutedEventArgs e)
     {
-        new paymentWindow(MyCart).ShowDialog();
+        new paymentWindow(MyCart).Show();
+        this.Close();
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
+        //this.Close();//היה רק את זה
+
+        new MainCustomerWindow(MyCart).Show();
         this.Close();
     }
 }

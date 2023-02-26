@@ -6,12 +6,37 @@ namespace Dal;
 internal class User : IUser
 {
     const string s_users = @"User";
+    //public int Add(Users entity)
+    //{
+    //    entity.ID = Tools.getNextID(@"NextUserId");
+    //    XElement userRootElem = Tools.LoadListFromXMLElement(s_users);
+    //    XElement? user = (from us in userRootElem.Elements()
+    //                      where Convert.ToInt32(us.Element("ID").Value) == entity.ID
+    //                      select us).FirstOrDefault();
+
+    //    if (user != null)
+    //        throw new Do.DalAlreadyExistsException(entity.ID, "id is already exsist");
+
+    //    XElement userElement = new XElement("user",
+    //        new XElement("ID", entity.ID),
+    //        new XElement("Name", entity.Name),
+    //        new XElement("Address", entity.Address),
+    //                    new XElement("Email", entity.Email),
+    //        new XElement("Password", entity.Password),
+    //        new XElement("TypeOfUser", entity.TypeOfUser));
+    //    userRootElem.Add(userElement);
+    //    Tools.SaveListFromXMLElement(userRootElem, s_users);
+    //    return entity.ID;
+
+    //}
+
+
     public int Add(Users entity)
     {
         entity.ID = Tools.getNextID(@"NextUserId");
         XElement userRootElem = Tools.LoadListFromXMLElement(s_users);
         XElement? user = (from us in userRootElem.Elements()
-                          where Convert.ToInt32(us.Element("ID").Value) == entity.ID
+                          where (us.Element("Email").Value) == entity.Email
                           select us).FirstOrDefault();
 
         if (user != null)

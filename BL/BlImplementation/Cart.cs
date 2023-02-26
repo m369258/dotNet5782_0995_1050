@@ -200,6 +200,7 @@ internal class Cart : BlApi.ICart
         BO.Cart myNewCart = new BO.Cart();
         //cart.CopyBetweenEnriries(myCart);
         myCart.CopyBetweenEnriries(myNewCart);
+        if (items == null||items.Count==0)
 
         myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
         BO.OrderItem myOrderItem = new BO.OrderItem();

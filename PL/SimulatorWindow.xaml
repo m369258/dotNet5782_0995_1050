@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="SimulatorWindow" Height="600" Width="1050" FontFamily="Consolas" WindowStartupLocation="CenterScreen" WindowStyle="None" >
+        Title="SimulatorWindow" FontFamily="Consolas" WindowStartupLocation="CenterScreen" WindowStyle="None" >
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Width" Value="200"/>

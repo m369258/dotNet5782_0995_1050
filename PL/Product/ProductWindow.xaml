@@ -7,10 +7,8 @@
         xmlns:PL="clr-namespace:PL"
         mc:Ignorable="d"
         FontSize="20"
-        WindowStartupLocation="CenterScreen"
         DataContext="{Binding prod ,RelativeSource={RelativeSource Self}}"
-        Title="ProductWindow">
-
+        Title="ProductWindow"  WindowStartupLocation="CenterScreen" Height="550" Width="950"  WindowStyle="None">
     <Window.Resources>
         <PL:ConvertPathToBitmapImage x:Key="convertPathToBitmapImag"/>
     </Window.Resources>

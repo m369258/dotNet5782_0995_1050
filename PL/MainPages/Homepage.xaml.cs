@@ -24,13 +24,13 @@ public partial class Homepage : Window
     /// </summary>
     /// <param name="sender">the sender to the event</param>
     /// <param name="e">the event</param>
-    private void BtnLogIn_Click(object sender, RoutedEventArgs e)  {new LogInWindow().Show(); this.Close(); }
+    private void BtnLogIn_Click(object sender, RoutedEventArgs e) { new LogInWindow().Show(); this.Close(); }
     /// <summary>
     /// button to close the window
     /// </summary>
     /// <param name="sender">the sender to the event</param>
     /// <param name="e">the event</param>
-    private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
+    private void Button_Click(object sender, RoutedEventArgs e){new MainWindow().Show(); this.Close(); }
 
     /// <summary>
     /// open instagram link

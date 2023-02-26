@@ -50,7 +50,7 @@
 
             </Rectangle.Fill>
         </Rectangle>
-        <Image x:Name="inst" HorizontalAlignment="Left" Height="28" Margin="903,552,0,0" VerticalAlignment="Top" Width="24" Source="/img/inst.png" MouseLeftButtonDown="inst_MouseLeftButtonDown"/>
+        <Image x:Name="inst" HorizontalAlignment="Left" Height="28" Margin="881,552,0,0" VerticalAlignment="Top" Width="24" Source="/img/inst.png" MouseLeftButtonDown="inst_MouseLeftButtonDown"/>
         <Image x:Name="twitter" HorizontalAlignment="Left" Height="28" Margin="811,552,0,0" VerticalAlignment="Top" Width="24" Source="/img/Twitter-logo.svg.png" MouseLeftButtonDown="twitter_MouseLeftButtonDown"/>
         <!--<Image x:Name="pinterest" HorizontalAlignment="Left" Margin="853,556,0,11" Width="34" Source="/img/pint.png" MouseLeftButtonDown="/pinterest_MouseLeftButtonDown"/>-->
         <Image x:Name="youtube" HorizontalAlignment="Left" Height="17" Margin="948,557,0,0" VerticalAlignment="Top" Width="24" Source="/img/youtube.png" MouseLeftButtonDown="youtube_MouseLeftButtonDown"/>

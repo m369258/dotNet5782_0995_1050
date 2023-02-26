@@ -197,6 +197,7 @@ public partial class ProductWindow : Window
                 treatImage();//the fuction treat all things relevant to the image
                 bl.product.AddProduct(prod);
                 MessageBox.Show("Product Added Successfuly😊", "🍰", MessageBoxButton.OK);
+                new ProductForListWindow().Show();
                 this.Close();
             }
             catch (BO.InvalidArgumentException ex)
@@ -218,6 +219,7 @@ public partial class ProductWindow : Window
                 treatImage();//the fuction treat all things relevant to the image
                 bl.product.UpDateProduct(prod);
                 MessageBox.Show("Product Updated Successfuly😊", "🍰", MessageBoxButton.OK);
+                new ProductForListWindow().Show();
                 this.Close();
             }
             catch (BO.InternalErrorException ex)
@@ -350,7 +352,8 @@ public partial class ProductWindow : Window
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
+    private void Button_Click(object sender, RoutedEventArgs e) 
+    {new ProductForListWindow().Show(); this.Close(); }
 
     /// <summary>
     /// the function treats the things of the image
