@@ -7,7 +7,6 @@ using System.Runtime.CompilerServices;
 
 internal class DalOrderItem : IOrderItems
 {
-
     /// <summary>
     /// This action adds an orderItem to the system if there is an available space
     /// </summary>
@@ -21,27 +20,20 @@ internal class DalOrderItem : IOrderItems
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
         int i;
         //Checking whether the product ID exists in any other case will throw an error
-        Do.Product? p = DataSource.products.Find(currenProduct => {return (currenProduct?.ID == orderItem.ProductId); });
+        Do.Product? p = DataSource.products.Find(currenProduct => { return (currenProduct?.ID == orderItem.ProductId); });
 
         for (i = 0; i < DataSource.products.Count && DataSource.products[i]?.ID != orderItem.ProductId; i++) ;
-        if (i == DataSource.products.Count)
-        {
-            throw new Do.DalAlreadyExistsException(orderItem.ID, "orderItem", "this product is exsist");
-        }
+        if (i == DataSource.products.Count) { throw new Do.DalAlreadyExistsException(orderItem.ID, "orderItem", "this product is exsist"); }
 
         //Checking if the order ID exists in any other case will throw an error
         for (i = 0; i < DataSource.orders.Count && DataSource.orders[i]?.ID != orderItem.OrderId; i++) ;
-        if (i == DataSource.orders.Count)
-        {
-            throw new Do.DalAlreadyExistsException(orderItem.ID, "orderItem", "this order is exsist");
-        }
+        if (i == DataSource.orders.Count) { throw new Do.DalAlreadyExistsException(orderItem.ID, "orderItem", "this order is exsist"); }
 
         //Adding the order item to the database and updating the actual quantity
         DataSource.orderItems.Add(orderItem);
 
         return orderItem.ID;
     }
-
 
     /// <summary>
     /// This returns the correct order by some ID number
@@ -52,7 +44,6 @@ internal class DalOrderItem : IOrderItems
     [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(Func<OrderItem?, bool> condition)
     {
-
         return DataSource.orderItems.FirstOrDefault(myOrderItem => condition(myOrderItem)) ??
           throw new Do.DalDoesNotExistException("there are no orderItem with this id");
     }
@@ -74,13 +65,12 @@ internal class DalOrderItem : IOrderItems
         return -1;
     }
 
-
     /// <summary>
     /// This operation accepts an order and updates its details if it exists, otherwise it will throw an error
     /// </summary>
     /// <param name="updateOrder">orderItem to update</param>
     /// <exception cref="DalDoesNotExistException">Throw an error if the requested orderItem does not exist</exception>
-   
+
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem updateOrderItem)
     {
@@ -101,14 +91,9 @@ internal class DalOrderItem : IOrderItems
     public void Delete(int idOrderItem)
     {
         int ind = GetIndex(idOrderItem);
-        if (ind != -1)
-        {
-            DataSource.orderItems.RemoveAt(ind);
-        }
-        else
-            throw new Do.DalDoesNotExistException(idOrderItem, "orderItem", "there is no this id orderItem");
+        if (ind != -1) { DataSource.orderItems.RemoveAt(ind); }
+        else throw new Do.DalDoesNotExistException(idOrderItem, "orderItem", "there is no this id orderItem");
     }
-
 
     /// <summary>
     /// This returns all orderIAtems

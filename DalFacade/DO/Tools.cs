@@ -1,14 +1,10 @@
 ﻿using System.Reflection;
-
 namespace DO;
 
-/// <summary>
-/// 
-/// </summary>
 static class Tools
 {
     /// <summary>
-    /// 
+    /// Society of extension to String
     /// </summary>
     /// <typeparam name="T"></typeparam>
     /// <param name="t"></param>

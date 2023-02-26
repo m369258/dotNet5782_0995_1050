@@ -37,13 +37,6 @@ public partial class MainWindow : Window
         this.Close();
     }
 
-    private void Button_Click_1(object sender, RoutedEventArgs e)
-    {
-        new MainManagerWindow().Show();
-        this.Close();
-
-    }
-
     private void Button_Click_2(object sender, RoutedEventArgs e)
     {
         new SimulatorWindow().Show();

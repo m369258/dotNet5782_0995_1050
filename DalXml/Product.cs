@@ -18,10 +18,7 @@ internal class Product : IProduct
         &&
         listProducts[i]?.ID != entity.ID;
         i++) ;
-        if (i != listProducts.Count)
-        {
-            throw new Do.DalAlreadyExistsException(entity.ID, "product", "this product is exsist");
-        }
+        if (i != listProducts.Count) { throw new Do.DalAlreadyExistsException(entity.ID, "product", "this product is exsist"); }
         listProducts.Add(entity);
         Tools.SaveListToXMLSerializer(listProducts, s_product);
         return entity.ID;

@@ -5,7 +5,6 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
-
 namespace PL;
 
 enum UpdateType {UPDATECLOCK,UPDATESTART,UPDATEEND }
@@ -17,10 +16,6 @@ public partial class SimulatorWindow : Window
 {
     //ProgressBar ProgressBar;
     BackgroundWorker bw;
-    ProgressBar ProgressBar;
-    Duration duration;
-    DoubleAnimation doubleanimation;
-
     public SimulatorWindow()
     {
         InitializeComponent();
@@ -35,15 +30,11 @@ public partial class SimulatorWindow : Window
 
     private void Bw_ProgressChanged(object? sender, ProgressChangedEventArgs e)
     {
-        int seconds;
         switch ((UpdateType)e.ProgressPercentage)
         {
             case UpdateType.UPDATECLOCK:
                 {
-                    this.txtClockNow.Text = DateTime.Now.ToString();
-
-
-                    break;
+                    this.txtClockNow.Text = DateTime.Now.ToString();break;
                 }
             case UpdateType.UPDATESTART:
                 {
@@ -52,14 +43,10 @@ public partial class SimulatorWindow : Window
                     this.txtClockWill.Text = (((EventStatusArgs)e.UserState).finish).ToString();
                     this.txtStatusNow.Text = (((EventStatusArgs)e.UserState).now).ToString();
                     this.txtStatusWill.Text = (((EventStatusArgs)e.UserState).will).ToString();
-                    seconds = ((EventStatusArgs)e.UserState).seconds;
-                    ProgressBarStart(seconds);
-
                     break;
                 }
             case UpdateType.UPDATEEND:
                 {
-
                     break;
                 }
             default:
@@ -109,19 +96,5 @@ public partial class SimulatorWindow : Window
     {
         Simulator.Simulator.Deactive();
        
-    }
-    void ProgressBarStart(int s)
-    {
-        if (ProgressBar != null) SBar.Items.Remove(ProgressBar);
-        ProgressBar = new ProgressBar();
-        ProgressBar.IsIndeterminate = false;
-        ProgressBar.Orientation = Orientation.Horizontal;
-        ProgressBar.Width = 500;
-        ProgressBar.Height = 30;
-        duration = new Duration(TimeSpan.FromSeconds(s * 2));
-        doubleanimation = new DoubleAnimation(200.0, duration);
-        ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
-
-        SBar.Items.Add(ProgressBar);
     }
 }

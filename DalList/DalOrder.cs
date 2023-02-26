@@ -35,7 +35,6 @@ internal class DalOrder : IOrder
             throw new Do.DalDoesNotExistException("there are no order with this id");
     }
 
-
     /// <summary>
     /// This returns all orders
     /// </summary>

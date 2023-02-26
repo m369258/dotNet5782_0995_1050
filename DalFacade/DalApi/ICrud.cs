@@ -1,5 +1,4 @@
-﻿
-namespace DalApi
+﻿namespace DalApi
 {
     public interface ICrud<T> where T : struct
     {
