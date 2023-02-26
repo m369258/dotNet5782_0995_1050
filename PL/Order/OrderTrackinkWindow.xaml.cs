@@ -9,9 +9,13 @@ namespace PL.Order;
 /// </summary>
 public partial class OrderTrackinkWindow : Window
 {
+    //A private variable to access the logic layer
     BlApi.IBl bl = BlApi.Factory.Get();
+
+    private BO.Cart cart;
     string email;
 
+    //A private pledging that keeps all orders to the
     public ObservableCollection<BO.OrderTracking?> OrdersID
     {
         get { return (ObservableCollection<BO.OrderTracking?>)GetValue(OrdersIDProperty); }
@@ -22,7 +26,7 @@ public partial class OrderTrackinkWindow : Window
     public static readonly DependencyProperty OrdersIDProperty =
         DependencyProperty.Register("OrdersID", typeof(ObservableCollection<BO.OrderTracking?>), typeof(OrderTrackinkWindow), new PropertyMetadata(null));
 
-    //dp
+    //dp OrderTracking
     public BO.OrderTracking? tracking
     {
         get { return (BO.OrderTracking?)GetValue(trackingProperty); }
@@ -33,23 +37,19 @@ public partial class OrderTrackinkWindow : Window
     public static readonly DependencyProperty trackingProperty =
         DependencyProperty.Register("tracking", typeof(BO.OrderTracking), typeof(OrderTrackinkWindow), new PropertyMetadata(null));
 
-
-
-    private BO.Cart cart;
-
-
     /// <summary>
-    /// If it is a manager login, it will bring all the orders, otherwise it will bring the customer's orders
+    /// 
     /// </summary>
-    public OrderTrackinkWindow(BO.Cart currCart=null)//!
+    /// <param name="currCart"></param>
+    public OrderTrackinkWindow(BO.Cart currCart = null)
     {
         InitializeComponent();
         this.email = currCart?.CustomerEmail;
-        cart= currCart;
+        cart = currCart;
 
         try
         {
-            if (email != ""&&email!=null)   //show user's orders
+            if (email != "" && email != null)   //show user's orders
             {
                 var temp = bl.order.OrdersOfUsers(email);
                 OrdersID = temp == null ? new() : new(temp);
@@ -60,8 +60,9 @@ public partial class OrderTrackinkWindow : Window
                 OrdersID = temp == null ? new() : new(temp);
             }
         }
-        catch(BO.InternalErrorException) { MessageBox.Show("Sorry this order was not found");return; }
+        catch (BO.InternalErrorException) { MessageBox.Show("Sorry this order was not found"); return; }
     }
+
     /// <summary>
     /// button for getting the order to track by id
     /// </summary>
@@ -71,11 +72,11 @@ public partial class OrderTrackinkWindow : Window
     {
 
         if (tracking == null)
-            MessageBox.Show("To view items select an order");
+            MessageBox.Show("To view items select an order", "OK?", MessageBoxButton.OK);
         else
         {
             int orderid = tracking.ID;
-            OrderWindow orderWindow = new OrderWindow(orderid,cart,"fromOrderTracking");
+            OrderWindow orderWindow = new OrderWindow(orderid, cart, "fromOrderTracking");
             orderWindow.Show();
             this.Close();
         }
@@ -103,7 +104,10 @@ public partial class OrderTrackinkWindow : Window
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         BO.OrderTracking selectedOrder = ((BO.OrderTracking)((ComboBox)sender).SelectedItem);
-        tracking = bl.order.OrderTracking(selectedOrder.ID);
+
+        //
+        try { tracking = bl.order.OrderTracking(selectedOrder.ID); }
+        catch { MessageBox.Show("Sorry has a problem with a requested order of order", "ERROR:(", MessageBoxButton.OK); }
     }
 }
 
