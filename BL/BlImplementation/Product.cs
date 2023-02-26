@@ -56,6 +56,7 @@ internal class Product : BlApi.IProduct
         else throw new BO.InvalidArgumentException("Negative ID");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> PopularItems(IEnumerable<BO.OrderItem?>? items)
     {
         //creat a list of groups of items that appear in order, by ID
