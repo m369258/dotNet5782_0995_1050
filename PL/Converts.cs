@@ -142,40 +142,51 @@ class ConvertPathToBitmapImage : IValueConverter
         throw new NotImplementedException();
     }
 }
+public class NotBooleanToVisibilityConverter1 : IValueConverter
+{
+    //convert from source property type to target property type
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.Cart cart = (BO.Cart)value;
+        if (cart != null && cart.items != null && cart.items.Count != 0)
+        {
+            return Visibility.Hidden;
+        }
+        else
+        {
+            return Visibility.Visible;
+        }
+    }
 
+    //convert from target property type to source property type
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
 
+    // private void btnPayment_Click(object sender, RoutedEventArgs e) => new paymentWindow(MyCart).ShowDialog();
+}
 
+public class NotBooleanToVisibilityConverter2 : IValueConverter
+{
+    //convert from source property type to target property type
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        BO.Cart cart = (BO.Cart)value;
+        if (cart != null && cart.items != null && cart.items.Count != 0)
+        {
+            return Visibility.Visible; //Visibility.Collapsed;
+        }
+        else
+        {
+            return Visibility.Hidden;
+        }
+    }
 
-
-//class ConvertPathToBitmapImage : IValueConverter
-//{
-//    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-
-//        try
-//        {
-//            if (value == "" || value == null)
-//                throw new Exception();
-//            string imageRelativeName = (string)value;
-//                string currentDir = Environment.CurrentDirectory[..^4];
-//                string imageFullName = currentDir + imageRelativeName;//direction of the picture
-//                BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
-//                return bitmapImage;
-//        }
-//        catch
-//        {
-//            string imageRelativeName = @"\img\logo.png";//default picture
-//            string currentDir = Environment.CurrentDirectory[..^4];
-//            string imageFullName = currentDir + imageRelativeName;//direction of the picture
-//            BitmapImage bitmapImage = new BitmapImage(new Uri(imageRelativeName, UriKind.Relative));//makes the picture
-//            return bitmapImage;
-//        }
-//    }
-
-//    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-//    {
-//        throw new NotImplementedException();
-//    }
-//}
-
+    //convert from target property type to source property type
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
 

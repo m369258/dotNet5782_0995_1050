@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -84,12 +83,7 @@ public partial class Customer_CartWindow : Window
     {
         BO.OrderItem selection = ((BO.OrderItem)((Button)sender).DataContext);
 
-        try
-        {
-             MyCart = bl.cart.Delete(MyCart, selection.ProductId,items);
-           // MyCart = bl.cart.Delete(MyCart, selection.ProductId);
-
-        }
+        try { MyCart = bl.cart.Delete(MyCart, selection.ProductId); }
         catch (BO.InternalErrorException) { MessageBox.Show("We are sorry but the item is not exsist"); }
         catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }
     }
@@ -102,54 +96,5 @@ public partial class Customer_CartWindow : Window
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         this.Close();
-    }
-}
-
-
-public class NotBooleanToVisibilityConverter : IValueConverter
-{
-    //convert from source property type to target property type
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        BO.Cart cart = (BO.Cart)value;
-        if (cart != null && cart.items != null && cart.items.Count != 0)
-        {
-            return Visibility.Hidden; //Visibility.Collapsed;
-        }
-        else
-        {
-            return Visibility.Visible;
-        }
-    }
-
-    //convert from target property type to source property type
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }
-
-    // private void btnPayment_Click(object sender, RoutedEventArgs e) => new paymentWindow(MyCart).ShowDialog();
-}
-
-public class NotBooleanToVisibilityConverter2 : IValueConverter
-{
-    //convert from source property type to target property type
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        BO.Cart cart = (BO.Cart)value;
-        if (cart != null && cart.items != null && cart.items.Count != 0)
-        {
-            return Visibility.Visible; //Visibility.Collapsed;
-        }
-        else
-        {
-            return Visibility.Hidden;
-        }
-    }
-
-    //convert from target property type to source property type
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
     }
 }

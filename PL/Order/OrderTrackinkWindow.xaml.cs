@@ -104,10 +104,7 @@ public partial class OrderTrackinkWindow : Window
     private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         BO.OrderTracking selectedOrder = ((BO.OrderTracking)((ComboBox)sender).SelectedItem);
-
-        //
-        try { tracking = bl.order.OrderTracking(selectedOrder.ID); }
-        catch { MessageBox.Show("Sorry has a problem with a requested order of order", "ERROR:(", MessageBoxButton.OK); }
+        tracking=selectedOrder;
     }
 }
 

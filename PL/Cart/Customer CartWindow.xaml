@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Cart"
+        xmlns:PL="clr-namespace:PL"
         mc:Ignorable="d"
         DataContext="{Binding ., RelativeSource={RelativeSource Mode=Self}}"
         Title="Customer_CartWindow" Height="450" Width="800">
     <Window.Resources>
-        <local:NotBooleanToVisibilityConverter
+        <PL:NotBooleanToVisibilityConverter1
 x:Key="notBooleanToVisibilityConverter" />
-        <local:NotBooleanToVisibilityConverter2
+        <PL:NotBooleanToVisibilityConverter2
 x:Key="notBooleanToVisibilityConverter2" />
+        
         
         <Style x:Key="noneStyle" TargetType="Button">
             <Setter Property="Width" Value="40px" />

@@ -39,12 +39,12 @@ public partial class paymentWindow : Window
     {
         if (MyCart.CustomerAddress == null || MyCart.CustomerName == null || MyCart.CustomerEmail == null)
         {
-            MessageBox.Show("pleas fill all of the fields");
+            MessageBox.Show("pleas fill all of the fields", "OK?", MessageBoxButton.OK);
             return;
         }
             if (!checkEmail())
         {
-            MessageBox.Show("email invalid");
+            MessageBox.Show("email invalid", "OK?", MessageBoxButton.OK);
             return;
         }
 

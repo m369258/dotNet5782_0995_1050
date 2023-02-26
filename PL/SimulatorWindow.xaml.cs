@@ -14,9 +14,6 @@ namespace PL
     /// </summary>
     public partial class SimulatorWindow : Window
     {
-
-      
-
         //ProgressBar ProgressBar;
         BackgroundWorker bw;
         public SimulatorWindow()
