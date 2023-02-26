@@ -190,7 +190,44 @@ internal class Cart : BlApi.ICart
         return myCart;
     }
 
-    public BO.Cart Delete(BO.Cart myCart, int idProduct, List<Tuple<int, int>> items = null)
+    //public BO.Cart Delete(BO.Cart myCart, int idProduct, List<Tuple<int, int>> items = null)
+    //{
+
+    //    Do.Product myProduct;
+    //    try { myProduct = myDal.product.Get(item => item?.ID == idProduct); }
+    //    catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id product is not exsist", ex); }
+
+    //    BO.Cart myNewCart = new BO.Cart();
+    //    //cart.CopyBetweenEnriries(myCart);
+    //    myCart.CopyBetweenEnriries(myNewCart);
+    //    if (items == null||items.Count==0)
+
+    //        myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
+    //    else
+    //    {
+    //        myNewCart.items = (from item in items
+    //                           where item?.Item1 != idProduct
+    //                           let it = myCart.items?.FirstOrDefault(x => x?.ProductId == item?.Item1)
+    //                           select new BO.OrderItem
+    //                           {
+    //                               ID = it?.ID ?? throw new BO.InvalidArgumentException(),
+    //                               NameProduct = it?.NameProduct,
+    //                               productPrice = it?.productPrice ?? throw new BO.InvalidArgumentException(),
+    //                               TotalPrice = it?.TotalPrice ?? throw new BO.InvalidArgumentException(),
+    //                               ProductId = idProduct,
+    //                               QuantityPerItem = item?.Item2 ?? 0
+    //                           }).ToList();
+    //    }
+
+    //    BO.OrderItem myOrderItem = new BO.OrderItem();
+    //    myOrderItem = myCart.items.FirstOrDefault(item => item?.ProductId == idProduct);
+    //    myNewCart.TotalPrice -= myProduct.Price * myOrderItem.QuantityPerItem;
+
+    //    return myNewCart;
+    //}
+
+
+    public BO.Cart Delete(BO.Cart myCart, int idProduct)
     {
 
         Do.Product myProduct;
@@ -198,33 +235,18 @@ internal class Cart : BlApi.ICart
         catch (Do.DalDoesNotExistException ex) { throw new BO.InternalErrorException("this id product is not exsist", ex); }
 
         BO.Cart myNewCart = new BO.Cart();
-        //cart.CopyBetweenEnriries(myCart);
-        myCart.CopyBetweenEnriries(myNewCart);
-        if (items == null||items.Count==0)
+        //cart.CopyBetweenEnriries(myCart);
+        myCart.CopyBetweenEnriries(myNewCart);
 
-            myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
-        else
-        {
-            myNewCart.items = (from item in items
-                               where item?.Item1 != idProduct
-                               let it = myCart.items?.FirstOrDefault(x => x?.ProductId == item?.Item1)
-                               select new BO.OrderItem
-                               {
-                                   ID = it?.ID ?? throw new BO.InvalidArgumentException(),
-                                   NameProduct = it?.NameProduct,
-                                   productPrice = it?.productPrice ?? throw new BO.InvalidArgumentException(),
-                                   TotalPrice = it?.TotalPrice ?? throw new BO.InvalidArgumentException(),
-                                   ProductId = idProduct,
-                                   QuantityPerItem = item?.Item2 ?? 0
-                               }).ToList();
-        }
-
+        myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
         BO.OrderItem myOrderItem = new BO.OrderItem();
         myOrderItem = myCart.items.FirstOrDefault(item => item?.ProductId == idProduct);
         myNewCart.TotalPrice -= myProduct.Price * myOrderItem.QuantityPerItem;
 
         return myNewCart;
     }
+
+
 
     //Local helper functions:
     /// <summary>

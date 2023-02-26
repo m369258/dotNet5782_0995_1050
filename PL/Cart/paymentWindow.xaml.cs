@@ -27,7 +27,7 @@ public partial class paymentWindow : Window
         MyCart = getCart;
     }
 
-    private void Button_Click(object sender, RoutedEventArgs e) => this.Close();
+    private void Button_Click(object sender, RoutedEventArgs e) {new Customer_CartWindow(MyCart).Show(); this.Close(); }
 
 
     /// <summary>
@@ -61,7 +61,8 @@ public partial class paymentWindow : Window
 
         //If everything is in order, we will inform the customer   
         MessageBox.Show("Your order is on its way...😊");
-        
+        new MainWindow().Show(); 
+        this.Close();      
     }
     private bool checkEmail()
     {

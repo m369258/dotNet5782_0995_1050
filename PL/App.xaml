@@ -90,10 +90,11 @@
             </Setter>-->
         </Style>
 
-        <!--<Style TargetType="Window">
-            <Setter Property="Height" Value=""/>
-            <Setter Property="Height" Value=""/>
-        </Style>-->
+        <Style TargetType="Window">
+            <Setter Property="Height" Value="950"/>
+            <Setter Property="Width" Value="550"/>
+            <Setter Property="WindowStyle" Value="None"/>
+        </Style>
     </Application.Resources>
 </Application>
     
