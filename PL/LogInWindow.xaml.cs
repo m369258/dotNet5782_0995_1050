@@ -35,17 +35,22 @@ public partial class LogInWindow : Window
     public static readonly DependencyProperty IsVisibilityProperty =
         DependencyProperty.Register("IsVisibility", typeof(bool), typeof(LogInWindow), new PropertyMetadata(false));
 
+    /// <summary>
+    /// ctor
+    /// </summary>
     public LogInWindow()
     {
         CurrUser = new BO.Users();
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Existing customer login attempt.
+    /// </summary>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         string currPassword = CurrUser.Password;
         string currectPassword;
-        //פה אני משווה גם ל מרכאות ריקות ..
         if (CurrUser.Email == null || CurrUser.Password == null|| CurrUser.Password == ""|| CurrUser.Email == "")
             IsVisibility = true;
         else
@@ -108,18 +113,18 @@ public partial class LogInWindow : Window
         }
     }
 
-    //private void btnSignIn_Click(object sender, RoutedEventArgs e)
-    //{
-    //    new SignInWindow(BO.TypeOfUser.customer).Show();
-    //    this.Close();
-    //}
-
+    /// <summary>
+    /// Sending to the system login page.
+    /// </summary>
     private void btnSignInn_Click(object sender, RoutedEventArgs e)
     {
         new SignInWindow(BO.TypeOfUser.customer).Show();
         this.Close();
     }
 
+    /// <summary>
+    /// Return to the appropriate page and close the current page.
+    /// </summary>
     private void txtBack_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         new MainWindow().Show();
