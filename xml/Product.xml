@@ -1,1 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?><ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"><Product><ID>158159</ID><Name>huhu</Name><Category>macarons</Category><Price>180</Price><InStock>14</InStock><Img>IMG-20220524-WA0066.jpg</Img></Product><Product><ID>126985</ID><Name>gygy</Name><Category>ballons</Category><Price>125</Price><InStock>148</InStock><Img>PHOTO-2023-01-30-20-12-32.jpg</Img></Product><Product><ID>124578</ID><Name>tttt</Name><Category>ballons</Category><Price>159</Price><InStock>10</InStock><Img>20210922_141608.jpg</Img></Product><Product><ID>159894</ID><Name>Personalized family cakes</Name><Category>cupcakes</Category><Price>220</Price><InStock>18</InStock><Img>12_medium_birthday_-copy-2-416x416.png</Img></Product><Product><ID>159875</ID><Name>large box macarons</Name><Category>macarons</Category><Price>350</Price><InStock>5</InStock><Img>IMG-9165-416x416.png</Img></Product><Product><ID>100004</ID><Name>height Cake</Name><Category>cakes</Category><Price>400</Price><InStock>46</InStock><Img>IMG_2564-2-324x324.png</Img></Product><Product><ID>100003</ID><Name>Big Cake</Name><Category>cakes</Category><Price>320</Price><InStock>11</InStock><Img>IMG_2722-2-324x324.png</Img></Product><Product><ID>100005</ID><Name>happy Birthday Cake</Name><Category>cakes</Category><Price>900</Price><InStock>46</InStock><Img>IMG-20220401-WA0013.jpg</Img></Product><Product><ID>123123</ID><Name>koko</Name><Category>macarons</Category><Price>120</Price><InStock>6</InStock><Img>love_12-copy-2-416x416.png</Img></Product><Product><ID>159889</ID><Name>jdjdjd</Name><Category>ballons</Category><Price>158</Price><InStock>10</InStock><Img>logo.png</Img></Product></ArrayOfProduct>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<Product>
+		<ID>159894</ID>
+		<Name>Personalized family cakes</Name>
+		<Category>cupcakes</Category>
+		<Price>220</Price>
+		<InStock>18</InStock>
+		<Img>12_medium_birthday_-copy-2-416x416.png</Img>
+	</Product>
+	<Product>
+		<ID>159875</ID>
+		<Name>large box macarons</Name>
+		<Category>macarons</Category>
+		<Price>350</Price>
+		<InStock>15</InStock>
+		<Img>IMG-9165-416x416.png</Img>
+	</Product>
+	<Product>
+		<ID>100004</ID>
+		<Name>height Cake</Name>
+		<Category>cakes</Category>
+		<Price>400</Price>
+		<InStock>46</InStock>
+		<Img>IMG_2564-2-324x324.png</Img>
+	</Product>
+</ArrayOfProduct>
