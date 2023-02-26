@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         DataContext="{Binding myOrder, RelativeSource={RelativeSource Mode=Self}}"
-        Title="OrderWindow" Height="450" Width="800">
+        Title="OrderWindow" WindowStartupLocation="CenterScreen" Height="550" Width="950"  WindowStyle="None">
 
     <Window.Resources>
 
@@ -120,7 +120,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="totalPrice" Grid.Row="0" Grid.Column="0" FontSize="18" Foreground="#FFFFBDBD" />
                 <TextBlock Text="{Binding totalPrice}" Grid.Row="0" Grid.Column="1" FontSize="18" Foreground="#FFFFBDBD"/>
-                <Button x:Name="btnUpdate" Content="UpdateStatus" Grid.Row="1" Grid.Column="5" Click="btnUpdate_Click" Grid.RowSpan="2" FontSize="14" Height="44" Margin="15,0,14,7" VerticalAlignment="Bottom"/>
+                <Button x:Name="btnUpdate" Content="UpdateStatus" Grid.Row="1" Grid.Column="5" Click="btnUpdate_Click" Grid.RowSpan="2" FontSize="14" Height="44" VerticalAlignment="Bottom"/>
                 <TextBlock Name="txtBack" Grid.Row="2" Text="⬅️Back" HorizontalAlignment="Left" Style="{StaticResource backTxt}" MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="18" Height="24" VerticalAlignment="Top"/>
 
             </Grid>

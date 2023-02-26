@@ -7,7 +7,7 @@
         xmlns:PL="clr-namespace:PL" x:Class="PL.Order.OrderTrackinkWindow"
         mc:Ignorable="d"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
-        Title="OrderTrackinkWindow" Height="450" Width="800">
+        Title="OrderTrackinkWindow" WindowStartupLocation="CenterScreen" Height="550" Width="950"  WindowStyle="None">
 
     <Grid Background="White">
 

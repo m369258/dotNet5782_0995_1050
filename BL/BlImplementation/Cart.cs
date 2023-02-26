@@ -214,8 +214,6 @@ internal class Cart : BlApi.ICart
         return myNewCart;
     }
 
-
-
     //Local helper functions:
     /// <summary>
     /// A private function of the department that adds a product to the shopping cart according to the desired quantity for this item

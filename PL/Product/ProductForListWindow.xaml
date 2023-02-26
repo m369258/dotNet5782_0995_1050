@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
         DataContext="{Binding Products, RelativeSource={RelativeSource Mode=Self}}"
-        Title="ProductForListWindow" Height="550" Width="950" WindowStyle="None">
+        Title="ProductForListWindow" WindowStartupLocation="CenterScreen" Height="550" Width="950"  WindowStyle="None"  >
     
     <Window.Resources>
         <Style TargetType="DataGridRow">

@@ -3,6 +3,7 @@ using PL.Order;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -30,8 +31,6 @@ public partial class MainCustomerWindow : Window
     public static readonly DependencyProperty IsInStockProperty =
         DependencyProperty.Register("IsInStock", typeof(bool), typeof(MainCustomerWindow), new PropertyMetadata(true));
 
-
-
     public ObservableCollection<BO.ProductItem> MyProductItems
     {
         get { return (ObservableCollection<BO.ProductItem>)GetValue(MyProductItemsProperty); }
@@ -52,6 +51,13 @@ public partial class MainCustomerWindow : Window
     public static readonly DependencyProperty MyCartProperty =
     DependencyProperty.Register("MyCart", typeof(BO.Cart), typeof(MainCustomerWindow), new PropertyMetadata(null));
 
+
+    private string? clickOn = "";
+
+    /// <summary>
+    /// ctor - Reboots the page for the catalog of all products.
+    /// </summary>
+    /// <param name="cart"></param>
     public MainCustomerWindow(BO.Cart cart = null)
     {
         InitializeComponent();
@@ -62,7 +68,7 @@ public partial class MainCustomerWindow : Window
 
         try
         {
-            IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog(0,MyCart.items);
+            IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
         }
         catch (Exception ex)
@@ -71,25 +77,28 @@ public partial class MainCustomerWindow : Window
         }
     }
 
+    /// <summary>
+    /// Filtering the catalog by desired category.
+    /// </summary>
+    /// <param name="sender">The textblock on which the catalog is filtered</param>
     private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         BO.Category c;
         string? strCat = (sender as TextBlock)?.Text;
         try
         {
+            clickOn = strCat;
             BO.Category.TryParse(strCat, out c);
             numCategory = (int)c;
 
             if (strCat != "popular")
             {
-                //BO.Category.TryParse(strCat, out c);
-
                 var temp = bl.product.GetCatalog(numCategory, MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
             }
             else
             {
-                var temp = bl.product.PopularItems();
+                var temp = bl.product.PopularItems(MyCart.items);
                 MyProductItems = temp == null ? new() : new(temp);
             }
         }
@@ -98,18 +107,16 @@ public partial class MainCustomerWindow : Window
             MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
-    ///// <summary>
-    ///// reset for the page
-    ///// </summary>
-    ///// <param name="sender"></param>
-    ///// <param name="e"></param>
-    //private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-    //{
-    //    var temp = bl.product.GetCatalog();
-    //    MyProductItems = temp == null ? new() : new(temp);
-    //}
-    private void menuLogOut_Click(object sender, RoutedEventArgs e) { MyCart = null; new MainWindow().Show();this.Close(); }//this.Close();
 
+    /// <summary>
+    /// log out from the system
+    /// </summary>
+    private void menuLogOut_Click(object sender, RoutedEventArgs e) { MyCart = null; new MainWindow().Show(); this.Close(); }
+
+    /// <summary>
+    /// Adding a quantity to an item.
+    /// </summary>
+    /// <param name="sender">The visual button to increase the quantity in 1.</param>
     private void btnPlus_Click(object sender, RoutedEventArgs e)
     {
         BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
@@ -126,8 +133,16 @@ public partial class MainCustomerWindow : Window
                     MyCart = bl.cart.Update(MyCart, selectionProductItem.ProductID, selectionProductItem.Amount + 1);
                 }
 
-                var temp = bl.product.GetCatalog(numCategory, MyCart.items);
-                MyProductItems = temp == null ? new() : new(temp);
+                if (clickOn != "popular")
+                {
+                    var temp = bl.product.GetCatalog(numCategory, MyCart.items);
+                    MyProductItems = temp == null ? new() : new(temp);
+                }
+                else
+                {
+                    var temp = bl.product.PopularItems(MyCart.items);
+                    MyProductItems = temp == null ? new() : new(temp);
+                }
             }
             else
             {
@@ -160,6 +175,10 @@ public partial class MainCustomerWindow : Window
         }
     }
 
+    /// <summary>
+    /// Quantity reduction per item.
+    /// </summary>
+    /// <param name="sender">The visual button to decrease the quantity by 1.</param>
     private void btnMinus_Click(object sender, RoutedEventArgs e)
     {
         BO.ProductItem selectionProductItem = ((BO.ProductItem)((Button)sender).DataContext);
@@ -190,11 +209,24 @@ public partial class MainCustomerWindow : Window
             }
         }
 
-        var temp = bl.product.GetCatalog(numCategory, MyCart.items);
-        MyProductItems = temp == null ? new() : new(temp);
+        if (clickOn != "popular")
+        {
+            var temp = bl.product.GetCatalog(numCategory, MyCart.items);
+            MyProductItems = temp == null ? new() : new(temp);
+        }
+        else
+        {
+            var temp = bl.product.PopularItems(MyCart.items);
+            MyProductItems = temp == null ? new() : new(temp);
+        }
 
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         if (MyCart.items != null)
@@ -212,7 +244,7 @@ public partial class MainCustomerWindow : Window
 
     private void menuTracking_Click(object sender, RoutedEventArgs e)
     {
-        new OrderTrackinkWindow(MyCart).Show();//!
+        new OrderTrackinkWindow(MyCart).Show();
         this.Close();
     }
 
@@ -228,7 +260,3 @@ public partial class MainCustomerWindow : Window
         this.Close();
     }
 }
-
-
-
-
