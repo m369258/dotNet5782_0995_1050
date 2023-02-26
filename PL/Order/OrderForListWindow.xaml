@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
         DataContext="{Binding orders, RelativeSource={RelativeSource Mode=Self}}"
-        Title="OrderForListWindow" Height="450" Width="800">
+        Title="OrderForListWindow" WindowStartupLocation="CenterScreen" Height="550" Width="950"  WindowStyle="None">
 
     <Window.Resources>
 

@@ -52,7 +52,7 @@ internal class Product : BlApi.IProduct
         else throw new BO.InvalidArgumentException("Negative ID");
     }
 
-    public IEnumerable<BO.ProductItem> PopularItems()
+    public IEnumerable<BO.ProductItem> PopularItems(IEnumerable<BO.OrderItem?>? items)
     {
         //creat a list of groups of items that appear in order, by ID
         var popGroup = from item in myDal.orderItems.GetAll()
@@ -64,13 +64,21 @@ internal class Product : BlApi.IProduct
       
             return from item in popGroup
                    let prod = myDal.product.Get(it=>it?.ID== item.id)
+                   let amount = items?.FirstOrDefault(it => it?.ProductId == (item).id)?.QuantityPerItem
                    select new BO.ProductItem
                    {
                        ProductID=prod.ID,
                        Name = prod.Name,
                        Price = prod.Price,
                        Category = ((BO.Category)prod.Category),
+                       Amount = amount ?? 0,
                        Img = prod.Img ?? @"logo.png",
+
+
+
+
+                       InStock = prod.InStock > 0 ? true : false,//לא צריך גם את זה??
+
                    };
     }
 
