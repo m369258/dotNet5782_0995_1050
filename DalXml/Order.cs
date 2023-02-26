@@ -1,11 +1,14 @@
 ﻿using DalApi;
 using Do;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 
 internal class Order : IOrder
 {
     const string s_order = @"Order";
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Do.Order entity)
     {
         List<Do.Order?> listOrders = Tools.LoadListFromXMLSerializer<Do.Order>(s_order);
@@ -19,6 +22,7 @@ internal class Order : IOrder
         return entity.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<Do.Order?> listOrders = Tools.LoadListFromXMLSerializer<Do.Order>(s_order);
@@ -36,6 +40,7 @@ internal class Order : IOrder
             throw new Do.DalDoesNotExistException("there are no order with this id");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Do.Order?> GetAll(Func<Do.Order?, bool>? condition = null)
     {
         List<Do.Order?> listOrders = Tools.LoadListFromXMLSerializer<Do.Order>(s_order);
@@ -45,6 +50,7 @@ internal class Order : IOrder
             return listOrders.Where(condition);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Do.Order updateEntity)
     {
         List<Do.Order?> listOrders = Tools.LoadListFromXMLSerializer<Do.Order>(s_order);

@@ -3,6 +3,8 @@ namespace Dal;
 using DalApi;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 internal class DalOrderItem : IOrderItems
 {
 
@@ -12,6 +14,8 @@ internal class DalOrderItem : IOrderItems
     /// <param name="orderItem">OrderItem to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(OrderItem orderItem)
     {
         orderItem.ID = DataSource.Config.AutomaticOrderItem;
@@ -45,6 +49,7 @@ internal class DalOrderItem : IOrderItems
     /// <param name="idOrderItem">ID number of desired OrderItem</param>
     /// <returns>Returns the desired OrderItem</returns>
     /// <exception cref="Exception">If the required OrderItem does not exist, an error will be thrown</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public OrderItem Get(Func<OrderItem?, bool> condition)
     {
 
@@ -75,6 +80,8 @@ internal class DalOrderItem : IOrderItems
     /// </summary>
     /// <param name="updateOrder">orderItem to update</param>
     /// <exception cref="DalDoesNotExistException">Throw an error if the requested orderItem does not exist</exception>
+   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(OrderItem updateOrderItem)
     {
         int ind = GetIndex(updateOrderItem.ID);
@@ -90,6 +97,7 @@ internal class DalOrderItem : IOrderItems
     /// </summary>
     /// <param name="idOrder">OrderItem ID number</param>
     /// <exception cref="DalDoesNotExistException">In case the order does not exist in the database, an error will be thrown</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int idOrderItem)
     {
         int ind = GetIndex(idOrderItem);
@@ -106,6 +114,7 @@ internal class DalOrderItem : IOrderItems
     /// This returns all orderIAtems
     /// </summary>
     /// <returns>All orderItems</returns>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Do.OrderItem?> GetAll(Func<Do.OrderItem?, bool>? condition)
     {
         return condition != null ?

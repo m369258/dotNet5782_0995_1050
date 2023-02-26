@@ -1,4 +1,6 @@
 ﻿using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace Dal;
 
 internal class OrderItem : IOrderItems
@@ -7,6 +9,7 @@ internal class OrderItem : IOrderItems
     const string s_product = @"Product";
     const string s_order = @"Order";
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Do.OrderItem orderItem)
     {
         List<Do.OrderItem?> listOrderItems = Tools.LoadListFromXMLSerializer<Do.OrderItem>(s_orderItem);
@@ -40,6 +43,7 @@ internal class OrderItem : IOrderItems
         return orderItem.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<Do.OrderItem?> listOrderItem = Tools.LoadListFromXMLSerializer<Do.OrderItem>(s_orderItem);
@@ -50,6 +54,7 @@ internal class OrderItem : IOrderItems
         Tools.SaveListToXMLSerializer(listOrderItem, s_orderItem);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Do.OrderItem Get(Func<Do.OrderItem?, bool> condition)
     {
         List<Do.OrderItem?> listOrderItem = Tools.LoadListFromXMLSerializer<Do.OrderItem>(s_orderItem);
@@ -57,6 +62,7 @@ internal class OrderItem : IOrderItems
         throw new Do.DalDoesNotExistException("there are no orderItem with this id");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Do.OrderItem?> GetAll(Func<Do.OrderItem?, bool>? condition = null)
     {
         List<Do.OrderItem?> listOrderItem = Tools.LoadListFromXMLSerializer<Do.OrderItem>(s_orderItem);
@@ -66,11 +72,9 @@ internal class OrderItem : IOrderItems
             return listOrderItem.Where(condition);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Do.OrderItem updateEntity)
     {
-        //Delete(updateEntity.ID);
-        //Add(updateEntity);
-
         List<Do.OrderItem?> listOrdeItemss = Tools.LoadListFromXMLSerializer<Do.OrderItem>(s_orderItem);
 
         if (listOrdeItemss.RemoveAll(item => item?.ID == updateEntity.ID) == 0)

@@ -2,6 +2,7 @@
 using BO;
 using DalApi;
 using Do;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -9,6 +10,7 @@ internal class User : BlApi.IUser
 {
     DalApi.IDal myDal = DalApi.Factory.Get();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void AddUser(BO.Users user)
     {
         //Checking that the email is not saved in the system
@@ -44,6 +46,7 @@ internal class User : BlApi.IUser
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.Users> GetListOfUsers()
     {
         IEnumerable<Do.Users?> doUsers;
@@ -62,6 +65,7 @@ internal class User : BlApi.IUser
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Users GetUser(string email, string password)
     {
         Do.Users? user;

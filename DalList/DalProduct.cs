@@ -1,6 +1,7 @@
 ﻿using Do;
 namespace Dal;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 internal class DalProduct : IProduct
 {
@@ -11,6 +12,7 @@ internal class DalProduct : IProduct
     /// <param name="order">Product to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Product product)
     {
         int i = 0;
@@ -34,6 +36,8 @@ internal class DalProduct : IProduct
     /// <param name="idProduct">ID number of desired product</param>
     /// <returns>Returns the desired product</returns>
     /// <exception cref="Exception">If the required product does not exist, an error will be thrown</exception>
+   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(Func<Product?, bool> condition)
     {
         return DataSource.products.FirstOrDefault(myProduct => condition(myProduct)) ??
@@ -44,6 +48,8 @@ internal class DalProduct : IProduct
     /// This returns all products
     /// </summary>
     /// <returns>All products</returns>
+   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product?> GetAll(Func<Product?, bool>? condition = null)
     {
         return condition != null ?
@@ -56,6 +62,8 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="idProduct">Product ID number</param>
     /// <exception cref="Exception">In case the product does not exist in the database, an error will be thrown</exception>
+  
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int idProduct)
     {
         int ind = GetIndex(idProduct);
@@ -92,6 +100,8 @@ internal class DalProduct : IProduct
     /// </summary>
     /// <param name="updateProduct">Product to update</param>
     /// <exception cref="Exception">Throw an error if the requested product does not exist</exception>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product updateProduct)
     {
         int ind = GetIndex(updateProduct.ID);
