@@ -86,8 +86,9 @@ public partial class Customer_CartWindow : Window
 
         try
         {
-            MyCart = bl.cart.Delete(MyCart, selection.ProductId,items);
-            
+             MyCart = bl.cart.Delete(MyCart, selection.ProductId,items);
+           // MyCart = bl.cart.Delete(MyCart, selection.ProductId);
+
         }
         catch (BO.InternalErrorException) { MessageBox.Show("We are sorry but the item is not exsist"); }
         catch (Exception ex) { MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error); return; }

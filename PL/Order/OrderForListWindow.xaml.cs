@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-
 namespace PL.Order;
 
 /// <summary>
@@ -23,7 +22,9 @@ public partial class OrderForListWindow : Window
     public static readonly DependencyProperty ordersProperty =
         DependencyProperty.Register("orders", typeof(ObservableCollection<BO.OrderForList?>), typeof(OrderForListWindow), new PropertyMetadata(null));
 
-
+    /// <summary>
+    /// Imports the display layer all orders and presents them
+    /// </summary>
     public OrderForListWindow()
     {
         InitializeComponent();

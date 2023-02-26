@@ -15,7 +15,7 @@ internal class Order : BlApi.IOrder
         IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
 
         //Build an order list of the OrderForList type (logical entity) based on the database
-        boListOrders = doOrders.Select(item => CreateBoOrderFromDoOrder(item)).ToList();
+        boListOrders = doOrders.Select(item => createBoOrderFromDoOrder(item)).ToList();
         return boListOrders;
     }
 
@@ -88,7 +88,7 @@ internal class Order : BlApi.IOrder
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
         Do.Order doOrder;
         try { doOrder = myDal.order.Get(item => item?.ID == idOrder); }
-        catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("this id doesnt exsist", ex); }
+        catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("There is no order with this id", ex); }
 
         //In the event that the order was sent and not delivered - updating its delivery to now, in any other case appropriate exceptions will be thrown
         if (doOrder.ShipDate != null)
@@ -190,6 +190,41 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    public int? GetOldestOrder()
+    {
+        IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
+        DateTime? dateTime = DateTime.Now;
+        int? id = null;
+        foreach (var ord in doOrders)
+        {
+            if (ord?.OrderDate != null && ord?.OrderDate < dateTime && ord?.ShipDate == null && ord?.DeliveryDate == null)
+            {
+                dateTime = ord?.OrderDate;
+                id = ord?.ID;
+            }
+            else if (ord?.ShipDate == null && ord?.DeliveryDate != null && ord?.DeliveryDate < dateTime)
+            {
+                dateTime = ord?.DeliveryDate;
+                id = ord?.ID;
+            }
+        }
+        return id;
+    }
+
+    public void UpdateStatus(int id)
+    {
+        Do.Order order = myDal.order.Get(item => item?.ID == id);
+
+        if (order.DeliveryDate == null)
+            OrderShippingUpdate(id);
+
+        else if (order.ShipDate == null)
+            OrderDeliveryUpdate(id);
+        else
+            throw new BO.InternalErrorException("the order shipped");
+
+    }
+
     //Local helper functions:
     /// <summary>
     /// A helper function that accepts a data layer order and converts it to be orderForList
@@ -197,7 +232,7 @@ internal class Order : BlApi.IOrder
     /// <param name="item">Order data layer</param>
     /// <returns>OrderForList-display layer</returns>
     /// <exception cref="Exception"></exception>
-    private BO.OrderForList CreateBoOrderFromDoOrder(Do.Order? item)
+    private BO.OrderForList createBoOrderFromDoOrder(Do.Order? item)
     {
         var myDoOrderItems = myDal.orderItems.GetAll(x => x?.OrderId == (item?.ID ?? throw new Exception())).ToList();
 
@@ -250,39 +285,6 @@ internal class Order : BlApi.IOrder
         return boOrderItem;
     }
 
-    public int? GetOldestOrder()
-    {
-        IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
-        DateTime? dateTime = DateTime.Now;
-        int? id = null;
-        foreach (var ord in doOrders)
-        {
-            if (ord?.OrderDate != null && ord?.OrderDate < dateTime && ord?.ShipDate == null && ord?.DeliveryDate == null)
-            {
-                dateTime = ord?.OrderDate;
-                id = ord?.ID;
-            }
-            else if (ord?.ShipDate == null && ord?.DeliveryDate != null && ord?.DeliveryDate < dateTime)
-            {
-                dateTime = ord?.DeliveryDate;
-                id = ord?.ID;
-            }
-        }
-        return id;
-    }
-
-    public void UpdateStatus(int id)
-    {
-        Do.Order order = myDal.order.Get(item => item?.ID == id);
-
-        if (order.DeliveryDate == null)
-            OrderShippingUpdate(id);
-
-        else if (order.ShipDate == null)
-            OrderDeliveryUpdate(id);
-        else
-            throw new BO.InternalErrorException("the order shipped");
-
-    }
+   
 }
 

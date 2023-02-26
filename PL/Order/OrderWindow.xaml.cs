@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
-
 namespace PL.Order;
 
 /// <summary>
@@ -9,7 +8,13 @@ namespace PL.Order;
 /// </summary>
 public partial class OrderWindow : Window
 {
+    //Varies access to the display layer
     BlApi.IBl bl = BlApi.Factory.Get();
+
+    string? fromWindow;
+    BO.Cart? cart;
+
+    //dp order
     public BO.Order myOrder
     {
         get { return (BO.Order)GetValue(myOrderProperty); }
@@ -20,27 +25,24 @@ public partial class OrderWindow : Window
     public static readonly DependencyProperty myOrderProperty =
         DependencyProperty.Register("myOrder", typeof(BO.Order), typeof(OrderWindow), new PropertyMetadata(null));
 
-    string? fromWindow;
-    BO.Cart? cart = new BO.Cart();
+    /// <summary>
+    /// Brings invitation details from
+    /// </summary>
+    /// <param name="id">Invitation ID for presentation</param>
+    /// <param name="cart">To the extent that preserves the current basket</param>
+    /// <param name="from">A local variable that keeps the page that time i</param>
     public OrderWindow(int id, BO.Cart cart = null, string from = null)
     {
         InitializeComponent();
+        cart = new BO.Cart();
         this.cart = cart;
         fromWindow = from;
+
+        //Pulling Invitation Information, if a problem is always the problem will be in the order of order ID
         try { myOrder = bl.order.GetOrderDetails(id); }
-        catch (BO.InternalErrorException ex)
+        catch (Exception)
         {
-            System.Windows.MessageBox.Show(ex.Message, "ok:(", MessageBoxButton.OK);
-            return;
-        }
-        catch (BO.InvalidArgumentException ex)
-        {
-            System.Windows.MessageBox.Show(ex.Message, "OK:(", MessageBoxButton.OK);
-            return;
-        }
-        catch (Exception ex)
-        {
-            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK, MessageBoxImage.Error);
+            MessageBox.Show("Sorry has a problem with a requested order of order", "ERROR:(", MessageBoxButton.OK);
             return;
         }
     }
@@ -52,31 +54,30 @@ public partial class OrderWindow : Window
     /// <param name="e"></param>
     private void btnUpdate_Click(object sender, RoutedEventArgs e)
     {
+        BO.Order temp;
         try
         {
             if (myOrder.status == (BO.OrderStatus)1)
             {
-                BO.Order temp = bl.order.OrderShippingUpdate(myOrder.ID);
-                myOrder = new BO.Order();
-                myOrder = temp;
+                temp = bl.order.OrderShippingUpdate(myOrder.ID);
                 MessageBox.Show("Order Sended😊", "🍰", MessageBoxButton.OK);
             }
             else
             {
-                BO.Order temp = bl.order.OrderDeliveryUpdate(myOrder.ID);
-                myOrder = new BO.Order();
-                myOrder = temp;
+                temp = bl.order.OrderDeliveryUpdate(myOrder.ID);
                 MessageBox.Show("Order Shippded😊", "🍰", MessageBoxButton.OK);
             }
+            myOrder = new BO.Order();
+            myOrder = temp;
         }
         catch (BO.InternalErrorException ex)
         {
-            System.Windows.MessageBox.Show(ex.Message, "🍰", MessageBoxButton.OK);
+            System.Windows.MessageBox.Show(ex.Message, "OK?", MessageBoxButton.OK);
             return;
         }
         catch (Exception ex)
         {
-            System.Windows.MessageBox.Show(ex.Message, "🍰", MessageBoxButton.OK);
+            System.Windows.MessageBox.Show(ex.Message, "ERROR:(", MessageBoxButton.OK);
             return;
         }
     }
