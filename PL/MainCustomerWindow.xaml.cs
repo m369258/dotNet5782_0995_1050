@@ -62,7 +62,7 @@ public partial class MainCustomerWindow : Window
 
         try
         {
-            IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog();
+            IEnumerable<BO.ProductItem> temp = bl.product.GetCatalog(0,MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
         }
         catch (Exception ex)
@@ -200,12 +200,13 @@ public partial class MainCustomerWindow : Window
         if (MyCart.items != null)
         {
             Customer_CartWindow customer_CartWindow = new Customer_CartWindow(MyCart);
-            customer_CartWindow.ShowDialog();
+            customer_CartWindow.Show();
 
             MyCart = customer_CartWindow.MyCart;
 
             var temp = bl.product.GetCatalog(0, MyCart.items);
             MyProductItems = temp == null ? new() : new(temp);
+            this.Close();
         }
     }
 
@@ -218,6 +219,12 @@ public partial class MainCustomerWindow : Window
     private void menuSignIn_Click(object sender, RoutedEventArgs e)
     {
         new LogInWindow().Show();
+        this.Close();
+    }
+
+    private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        new MainWindow().Show();
         this.Close();
     }
 }

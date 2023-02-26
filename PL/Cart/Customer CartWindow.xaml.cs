@@ -100,6 +100,9 @@ public partial class Customer_CartWindow : Window
 
     private void Button_Click(object sender, RoutedEventArgs e)
     {
+        //this.Close();//היה רק את זה
+
+        new MainCustomerWindow(MyCart).Show();
         this.Close();
     }
 }

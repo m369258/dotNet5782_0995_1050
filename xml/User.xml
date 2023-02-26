@@ -56,4 +56,36 @@
     <Password>55MMmm</Password>
     <TypeOfUser>customer</TypeOfUser>
   </user>
+  <user>
+    <ID>6</ID>
+    <Name>ftshg</Name>
+    <Address>adsf</Address>
+    <Email>af@gmail.com</Email>
+    <Password>11FFff</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>7</ID>
+    <Name>zsdfgfghhj</Name>
+    <Address>jkl</Address>
+    <Email>fff@gmail.com</Email>
+    <Password>22FFff</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>8</ID>
+    <Name>ytuhijkl</Name>
+    <Address>gfgvh</Address>
+    <Email>ef@gmail.com</Email>
+    <Password>11FFff</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
+  <user>
+    <ID>9</ID>
+    <Name>dhckl</Name>
+    <Address>vgf</Address>
+    <Email>aff@gmail.com</Email>
+    <Password>11FFff</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
 </ArrayOfUsers>

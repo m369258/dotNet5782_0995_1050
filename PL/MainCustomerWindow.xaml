@@ -141,6 +141,7 @@ x:Key="convertStringToVisibility" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="1.5*"/>
             </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Name="txtBack" Text="⬅️Back"  Style="{StaticResource backTxt}"  MouseLeftButtonDown="txtBack_MouseLeftButtonDown" FontSize="15"/>
             <TextBlock Grid.Column="1" Text="↺" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="2" Text="cupcakes" Style="{StaticResource categoryStyle}"/>
             <TextBlock Grid.Column="3" Text="cakes" Style="{StaticResource categoryStyle}"/>
@@ -174,7 +175,7 @@ x:Key="convertStringToVisibility" />
                 </Menu>
             </Grid>
             <Button IsEnabled="{Binding MyProductItems,Converter={StaticResource notBooleanToVisibilityConverter}}" Grid.Column="9" Height="75" Width="85" Click="Button_Click"  Style="{StaticResource noneStyle}">
-                <Image  Source="/img/istockphoto-1251362621-1024x1024.jpg" HorizontalAlignment="Center" Height="70" VerticalAlignment="Center" Width="80" RenderTransformOrigin="0.317,0.528"/>
+                <Image Source="/img/istockphoto-1251362621-1024x1024.jpg" HorizontalAlignment="Center" Height="70" VerticalAlignment="Center" Width="80" RenderTransformOrigin="0.317,0.528"/>
             </Button>
         </Grid>
         <ScrollViewer Grid.Row="1">
