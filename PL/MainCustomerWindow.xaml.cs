@@ -223,10 +223,8 @@ public partial class MainCustomerWindow : Window
     }
 
     /// <summary>
-    /// 
+    /// Opening the basket only if there are products.
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         if (MyCart.items != null)
@@ -242,18 +240,27 @@ public partial class MainCustomerWindow : Window
         }
     }
 
+    /// <summary>
+    /// Opening the tracking window and closing the current window.
+    /// </summary>
     private void menuTracking_Click(object sender, RoutedEventArgs e)
     {
         new OrderTrackinkWindow(MyCart).Show();
         this.Close();
     }
 
+    /// <summary>
+    /// Opening the login window and closing the current window.
+    /// </summary>
     private void menuSignIn_Click(object sender, RoutedEventArgs e)
     {
         new LogInWindow().Show();
         this.Close();
     }
 
+    /// <summary>
+    /// Back to the appropriate page
+    /// </summary>
     private void txtBack_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
     {
         new MainWindow().Show();
