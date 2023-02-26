@@ -1,5 +1,6 @@
 ﻿using BO;
 using DalApi;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -8,6 +9,8 @@ internal class Product : BlApi.IProduct
     DalApi.IDal myDal = DalApi.Factory.Get();
 
     public delegate bool conditionFunction(Product entity);
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     IEnumerable<BO.ProductForList> BlApi.IProduct.GetListOfProducts(int numCategory)
     {
         IEnumerable<Do.Product?> doProducts;
@@ -29,6 +32,7 @@ internal class Product : BlApi.IProduct
         });
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Product GetProduct(int idProduct)
     {
         //Checking whether the ID is negative
@@ -52,6 +56,7 @@ internal class Product : BlApi.IProduct
         else throw new BO.InvalidArgumentException("Negative ID");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> PopularItems()
     {
         //creat a list of groups of items that appear in order, by ID
@@ -74,6 +79,7 @@ internal class Product : BlApi.IProduct
                    };
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.ProductItem GetProduct(int idProduct, BO.Cart cart)
     {
 
@@ -104,6 +110,7 @@ internal class Product : BlApi.IProduct
         else throw new BO.InvalidArgumentException("Negative ID");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void AddProduct(BO.Product product)
     {
         //Building a data product based on a logical product+Validity checks and appropriate error throwing
@@ -118,7 +125,7 @@ internal class Product : BlApi.IProduct
         });
     }
 
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void DeleteProduct(int idProduct)
     {
         //Request from the data layer of all orders
@@ -136,6 +143,7 @@ internal class Product : BlApi.IProduct
         catch (Do.DalDoesNotExistException ex) { throw new InternalErrorException("A non-existent product cannot be deleted", ex); }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpDateProduct(BO.Product product)
     {
         //A product request based on the data layer identifier, if the information has not arrived, will throw an error
@@ -153,6 +161,7 @@ internal class Product : BlApi.IProduct
         myDal.product.Update(p);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.ProductItem> GetCatalog(int numCategory,IEnumerable<BO.OrderItem?>? items)
     {
         IEnumerable<Do.Product?> doProducts;

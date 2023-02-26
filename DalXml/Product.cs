@@ -1,11 +1,13 @@
 ﻿using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace Dal;
 
 internal class Product : IProduct
 {
     const string s_product = @"Product";
-    //const string s_config = @"cinfig";
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Do.Product entity)
     {
         List<Do.Product?> listProducts = Tools.LoadListFromXMLSerializer<Do.Product>(s_product);
@@ -25,6 +27,7 @@ internal class Product : IProduct
         return entity.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         List<Do.Product?> listProducts = Tools.LoadListFromXMLSerializer<Do.Product>(s_product);
@@ -35,6 +38,7 @@ internal class Product : IProduct
         Tools.SaveListToXMLSerializer(listProducts, s_product);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Do.Product Get(Func<Do.Product?, bool> condition)
     {
         List<Do.Product?> listProducts = Tools.LoadListFromXMLSerializer<Do.Product>(s_product);
@@ -42,6 +46,7 @@ internal class Product : IProduct
       throw new Do.DalDoesNotExistException("there are no product with this id");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Do.Product?> GetAll(Func<Do.Product?, bool>? condition = null)
     {
         List<Do.Product?> listProducts = Tools.LoadListFromXMLSerializer<Do.Product>(s_product);
@@ -50,6 +55,7 @@ internal class Product : IProduct
               listProducts.Select(currProduct => currProduct);
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Do.Product updateEntity)
     {
         Delete(updateEntity.ID);

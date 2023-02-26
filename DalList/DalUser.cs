@@ -4,9 +4,11 @@ using DalApi;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 internal class DalUser : IUser
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Users user)
     {
         int i = 0;
@@ -17,12 +19,14 @@ internal class DalUser : IUser
         return user.ID;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Users Get(Func<Users?, bool> condition)
     {
         return DataSource.users.FirstOrDefault(myuser => condition(myuser)) ??
       throw new Do.DalDoesNotExistException("there are no user with this id");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Users?> GetAll(Func<Users?, bool>? condition = null)
     {
         return condition != null ?

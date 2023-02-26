@@ -1,6 +1,8 @@
 ﻿using Do;
 namespace Dal;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 //using System;
 //using System.Collections.Generic;
 internal class DalOrder : IOrder
@@ -11,6 +13,8 @@ internal class DalOrder : IOrder
     /// <param name="order">Order to add</param>
     /// <returns>Return the ID number of the added object</returns>
     /// <exception cref="Exception">If there is no space available for a new order, an error will be thrown</exception>
+    /// 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order order)
     {
         order.ID = DataSource.Config.AutomaticOrder;
@@ -24,6 +28,7 @@ internal class DalOrder : IOrder
     /// <param name="idOrder">ID number of desired order</param>
     /// <returns>Returns the desired order</returns>
     /// <exception cref="Exception">If the required order does not exist, an error will be thrown</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order?, bool> condition)
     {
         return DataSource.orders.FirstOrDefault(myOrder => condition(myOrder)) ??
@@ -35,6 +40,8 @@ internal class DalOrder : IOrder
     /// This returns all orders
     /// </summary>
     /// <returns>All orders</returns>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order?> GetAll(Func<Order?, bool>? condition)
     {
         return condition != null ?
@@ -47,6 +54,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="idOrder">Order ID number</param>
     /// <exception cref="Exception">In case the order does not exist in the database, an error will be thrown</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int idOrder)
     {
         int ind = GetIndex(idOrder);
@@ -84,6 +92,8 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="updateOrder">Invitation to update</param>
     /// <exception cref="Exception">Throw an error if the requested order does not exist</exception>
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order updateOrder)
     {
         int ind = GetIndex(updateOrder.ID);

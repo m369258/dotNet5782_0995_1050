@@ -16,6 +16,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="0.2*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -25,17 +26,16 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="Finish imaging" Grid.Column="2" Grid.Row="1" Click="Button_Click"/>
+        <Button Content="Finish imaging" Grid.Column="2" Grid.Row="2" Click="Button_Click"/>
         <TextBlock x:Name="txtClockNow" Grid.Column="4"/>
         <TextBlock x:Name="txtClockWill" Grid.Column="0"/>
         <TextBlock x:Name="txtStatusNow" Grid.Column="1"/>
         <TextBlock x:Name="txtStatusWill" Grid.Column="2"/>
         <TextBlock Name="idd" Grid.Column="3"/>
-        <!--<StatusBar Name="SBar"  Grid.Column="0" Grid.Row="0" VerticalAlignment="Bottom" >
-            <StatusBarItem Height="80" >
+        <StatusBar Name="SBar"  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="5" VerticalAlignment="Bottom" >
+            <StatusBarItem Height="80"  >
                 <TextBlock Width="72" FontSize="20">Status:</TextBlock>
             </StatusBarItem>
-        </StatusBar>-->
-
+        </StatusBar>
     </Grid>
 </Window>

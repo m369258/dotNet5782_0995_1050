@@ -1,36 +1,14 @@
 ﻿using DalApi;
 using Do;
+using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 namespace Dal;
 
 internal class User : IUser
 {
     const string s_users = @"User";
-    //public int Add(Users entity)
-    //{
-    //    entity.ID = Tools.getNextID(@"NextUserId");
-    //    XElement userRootElem = Tools.LoadListFromXMLElement(s_users);
-    //    XElement? user = (from us in userRootElem.Elements()
-    //                      where Convert.ToInt32(us.Element("ID").Value) == entity.ID
-    //                      select us).FirstOrDefault();
 
-    //    if (user != null)
-    //        throw new Do.DalAlreadyExistsException(entity.ID, "id is already exsist");
-
-    //    XElement userElement = new XElement("user",
-    //        new XElement("ID", entity.ID),
-    //        new XElement("Name", entity.Name),
-    //        new XElement("Address", entity.Address),
-    //                    new XElement("Email", entity.Email),
-    //        new XElement("Password", entity.Password),
-    //        new XElement("TypeOfUser", entity.TypeOfUser));
-    //    userRootElem.Add(userElement);
-    //    Tools.SaveListFromXMLElement(userRootElem, s_users);
-    //    return entity.ID;
-
-    //}
-
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Users entity)
     {
         entity.ID = Tools.getNextID(@"NextUserId");
@@ -55,6 +33,7 @@ internal class User : IUser
 
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     static Do.Users? creatUserFromXElement(XElement xUser)
     {
         Do.TypeOfUser t;
@@ -70,6 +49,7 @@ internal class User : IUser
         };
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Do.Users Get(Func<Users?, bool> condition)
     {
         IEnumerable<Do.Users?> users = new List<Do.Users?>();
@@ -83,6 +63,7 @@ internal class User : IUser
      throw new Do.DalDoesNotExistException("there are no user with this id");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Do.Users?> GetAll(Func<Do.Users?, bool>? condition = null)
     {
         XElement userRootElem = Tools.LoadListFromXMLElement(s_users);

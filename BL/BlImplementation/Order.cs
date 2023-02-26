@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using System.Runtime.CompilerServices;
 namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
@@ -7,6 +8,7 @@ internal class Order : BlApi.IOrder
     //Request access to the data layer
     DalApi.IDal myDal = DalApi.Factory.Get();
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderForList> GetListOfOrders()
     {
         List<BO.OrderForList> boListOrders = new List<BO.OrderForList>();//Order list
@@ -19,6 +21,7 @@ internal class Order : BlApi.IOrder
         return boListOrders;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<BO.OrderTracking?> OrdersOfUsers(string? email)
     {
         IEnumerable<BO.OrderTracking> orderTrackings;
@@ -36,6 +39,7 @@ internal class Order : BlApi.IOrder
         return orderTrackings;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order GetOrderDetails(int idOrder)
     {
         double price = 0.0;
@@ -79,6 +83,7 @@ internal class Order : BlApi.IOrder
         else throw new BO.InvalidArgumentException("Negative ID");
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order OrderDeliveryUpdate(int idOrder)
     {
         IEnumerable<Do.OrderItem?> doOrderItems = new List<Do.OrderItem?>();
@@ -118,6 +123,7 @@ internal class Order : BlApi.IOrder
         return order;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.OrderTracking OrderTracking(int idOrder)
     {
         //A order request based on the data layer identifier, if the information has not arrived, will throw an error
@@ -146,6 +152,7 @@ internal class Order : BlApi.IOrder
         return myOrderTracking;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order OrderShippingUpdate(int orderId)
     {
         double price = 0.0;
@@ -190,6 +197,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int? GetOldestOrder()
     {
         IEnumerable<Do.Order?> doOrders = myDal.order.GetAll();
@@ -211,6 +219,7 @@ internal class Order : BlApi.IOrder
         return id;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void UpdateStatus(int id)
     {
         Do.Order order = myDal.order.Get(item => item?.ID == id);

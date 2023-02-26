@@ -304,4 +304,12 @@
     <Password>99KKkk</Password>
     <TypeOfUser>customer</TypeOfUser>
   </user>
+  <user>
+    <ID>4</ID>
+    <Name>tirza</Name>
+    <Address>tirzaaa 44</Address>
+    <Email>tirza6557@gmail.com</Email>
+    <Password>errRR3</Password>
+    <TypeOfUser>customer</TypeOfUser>
+  </user>
 </ArrayOfUsers>

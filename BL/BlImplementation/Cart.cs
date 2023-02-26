@@ -1,5 +1,6 @@
 ﻿using BO;
 using Do;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 
@@ -7,6 +8,8 @@ internal class Cart : BlApi.ICart
 {
     //Request access to the data layer
     DalApi.IDal myDal = DalApi.Factory.Get();
+
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Add(BO.Cart cart, int idProduct)
     {
         BO.Cart myCart = new BO.Cart();
@@ -67,6 +70,7 @@ internal class Cart : BlApi.ICart
         return myCart;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void MakeAnOrder(BO.Cart myCart)
     {
         //In case the customer's name or address is empty, an error will be thrown
@@ -121,6 +125,7 @@ internal class Cart : BlApi.ICart
         result.ToList().ForEach(res => myDal.product.Update(res.product));
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Update(BO.Cart myCart, int idProduct, int newQuantity)
     {
         int productId;
@@ -190,6 +195,7 @@ internal class Cart : BlApi.ICart
         return myCart;
     }
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Delete(BO.Cart myCart, int idProduct)
     {
 
@@ -200,8 +206,6 @@ internal class Cart : BlApi.ICart
         BO.Cart myNewCart = new BO.Cart();
         //cart.CopyBetweenEnriries(myCart);
         myCart.CopyBetweenEnriries(myNewCart);
-        if (items == null||items.Count==0)
-
         myNewCart.items = myCart.items?.Where(item => item?.ProductId != idProduct).ToList();
         BO.OrderItem myOrderItem = new BO.OrderItem();
         myOrderItem = myCart.items.FirstOrDefault(item => item?.ProductId == idProduct);
